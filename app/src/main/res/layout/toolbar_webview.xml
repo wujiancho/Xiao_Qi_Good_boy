@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toobar"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+    <View
+        android:id="@+id/v_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/ic_back_dard"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:visibility="invisible"
+        android:layout_marginLeft="12dp"
+        android:id="@+id/v_finish"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_close"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/v_close"
+        app:layout_constraintStart_toEndOf="@+id/v_close"
+        app:layout_constraintTop_toTopOf="@+id/v_close" />
+
+    <TextView
+        android:maxLines="1"
+        android:gravity="center"
+        android:id="@+id/tv_title"
+        android:layout_width="220dp"
+        android:ellipsize="end"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@color/txt_normal"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="12344" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_share"
+        android:textColor="@color/txt_normal"
+        android:layout_marginRight="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分享"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_bg"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

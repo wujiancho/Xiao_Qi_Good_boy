@@ -1,0 +1,270 @@
+package com.lx.xqgg.ui.share;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
+import android.os.Looper;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.google.gson.Gson;
+import com.lx.xqgg.R;
+import com.lx.xqgg.api.ApiManage;
+import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.base.BaseData;
+import com.lx.xqgg.base.BaseSubscriber;
+import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
+import com.lx.xqgg.ui.vip.bean.PayListBean;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import butterknife.BindView;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
+/**
+ * 表层分享
+ */
+public class ShareFaceActivity extends BaseActivity {
+    @BindView(R.id.v_close)
+    View vClose;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.toobar)
+    ConstraintLayout toobar;
+    @BindView(R.id.imageView)
+    ImageView imageView;
+
+    private MaterialDialog materialDialog;
+
+    private String imgUrl="";
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_face_share;
+    }
+
+    @Override
+    protected void initView() {
+        tvTitle.setText("推荐有礼");
+    }
+
+    @Override
+    protected void initData() {
+        HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        paramsMap.put("group", "iosShare");
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
+                        Log.e("zlz", new Gson().toJson(listBaseData));
+                        Log.e("zlz",Config.IMGURL + listBaseData.getData().get(0).getValue());
+                        if (listBaseData.isSuccess()) {
+                            if (listBaseData.getData() != null) {
+                                imgUrl=Config.IMGURL + listBaseData.getData().get(0).getValue();
+                                Glide.with(mContext)
+                                        .load(Config.IMGURL + listBaseData.getData().get(0).getValue())
+                                        .apply(new RequestOptions().placeholder(R.drawable.ic_default).diskCacheStrategy(DiskCacheStrategy.NONE))
+                                        .into(imageView);
+                                imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View v) {
+                                        showSaveDialog(imgUrl);
+                                        return false;
+                                    }
+                                });
+                                return;
+                            }
+                        }
+                        toast("获取配置失败！");
+                        finish();
+                    }
+                }));
+    }
+
+    @OnClick({R.id.v_close,R.id.tv_share})
+    public void onViewClicked(View v) {
+        switch (v.getId()){
+            case R.id.v_close:
+                finish();
+                break;
+            case R.id.tv_share:
+                if(TextUtils.isEmpty(imgUrl)){
+                    toast("获取配置信息失败！请稍后尝试");
+                    return;
+                }
+                UMImage image = new UMImage(ShareFaceActivity.this, imgUrl);
+
+                new ShareAction(mContext)
+                        .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .setShareboardclickCallback(new ShareBoardlistener() {
+                            @Override
+                            public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                                if (share_media == SHARE_MEDIA.QQ) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.QZONE) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                }
+                            }
+                        }).open();
+                break;
+        }
+
+    }
+
+    UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            toast("分享成功");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            toast("分享失败" + t.toString());
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            toast("分享取消");
+        }
+    };
+
+
+    private void showSaveDialog(final String url) {
+        Log.e("zlz", url);
+        materialDialog = new MaterialDialog.Builder(this)
+                .title("提示")
+                .content("保存图片到相册")
+                .cancelable(false)
+                .positiveText(R.string.yes)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Observable.create(new ObservableOnSubscribe<File>() {
+                            @Override
+                            public void subscribe(ObservableEmitter<File> e) throws Exception {
+                                //通过gilde下载得到file文件,这里需要注意android.permission.INTERNET权限
+                                e.onNext(Glide.with(mContext)
+                                        .load(url)
+                                        .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                                        .get());
+                                e.onComplete();
+                            }
+                        }).subscribeOn(Schedulers.io())
+                                .observeOn(Schedulers.newThread())
+                                .subscribe(new Consumer<File>() {
+                                    @Override
+                                    public void accept(File file) throws Exception {
+                                        //获取到下载得到的图片，进行本地保存
+                                        File pictureFolder = Environment.getExternalStorageDirectory();
+                                        //第二个参数为你想要保存的目录名称
+                                        File appDir = new File(pictureFolder, "小麒乖乖");
+                                        if (!appDir.exists()) {
+                                            appDir.mkdirs();
+                                        }
+                                        String fileName = System.currentTimeMillis() + ".jpg";
+                                        File destFile = new File(appDir, fileName);
+                                        //把gilde下载得到图片复制到定义好的目录中去
+                                        copy(file, destFile);
+
+                                        // 最后通知图库更新
+                                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                                Uri.fromFile(new File(destFile.getPath()))));
+
+                                        Looper.prepare();
+                                        toast("保存成功");
+                                        Looper.loop();
+                                    }
+
+                                });
+                    }
+                })
+                .negativeText(R.string.no)
+                .negativeColorRes(R.color.txt_normal)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .build();
+        materialDialog.show();
+    }
+
+    public void copy(File source, File target) {
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileInputStream = new FileInputStream(source);
+            fileOutputStream = new FileOutputStream(target);
+            byte[] buffer = new byte[1024];
+            while (fileInputStream.read(buffer) > 0) {
+                fileOutputStream.write(buffer);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileInputStream.close();
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

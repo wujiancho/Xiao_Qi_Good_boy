@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:background="@color/qcc_blue"
+        android:textColor="@color/white"
+        android:layout_marginLeft="12dp"
+        android:id="@+id/tv_first"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:textColor="@color/txt_normal"
+        app:layout_constraintStart_toEndOf="@+id/tv_first"
+        app:layout_constraintTop_toTopOf="@+id/tv_first"
+        tools:text="张三" />
+
+    <TextView
+        android:id="@+id/tv_tag1"
+        android:background="#F7D3D1"
+        android:textSize="10sp"
+        android:textColor="#C14B61"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:text="大股东" />
+
+    <TextView
+        android:background="#DAE8F3"
+        android:textColor="#7999BE"
+        android:id="@+id/tv_tag2"
+        android:textSize="10sp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_tag1"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:text="大股东" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="认缴出资额"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_tag1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tag1" />
+
+    <TextView
+        android:id="@+id/tv_rjcze"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/txt_normal"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/txt1"
+        app:layout_constraintTop_toBottomOf="@+id/txt1"
+        tools:text="20万" />
+
+    <View
+        android:id="@+id/v_center"
+        android:background="@color/gray_f0"
+        android:layout_marginLeft="120dp"
+        android:layout_width="0.5dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toEndOf="@+id/txt1"
+        app:layout_constraintTop_toTopOf="@+id/txt1" />
+
+    <TextView
+        android:id="@+id/txt2"
+        android:layout_marginLeft="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="认缴出资日期"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/v_center"
+        app:layout_constraintTop_toTopOf="@+id/txt1" />
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        android:textColor="@color/txt_normal"
+        android:id="@+id/tv_rjcz_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/txt2"
+        app:layout_constraintTop_toBottomOf="@+id/txt2"
+        tools:text="20万" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="占股比例"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/txt1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rjcze" />
+
+    <TextView
+        android:id="@+id/tv_zgbl"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:text="20万" />
+
+    <View
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/gray_f0"
+        app:layout_constraintStart_toStartOf="@+id/tv_zgbl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_zgbl" />
+
+    <TextView
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/tv_company_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="他有10家企业" />
+</androidx.constraintlayout.widget.ConstraintLayout>

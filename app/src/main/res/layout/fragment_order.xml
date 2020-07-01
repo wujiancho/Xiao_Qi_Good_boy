@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/gray_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="36dp"
+            android:background="@drawable/icon_search" />
+
+        <EditText
+            android:textColorHint="@color/txt_search"
+            android:textColor="@color/txt_normal"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入标题或手机号或联系人姓名"
+            android:maxLines="1"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/layout_hor"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+    </HorizontalScrollView>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+        <RadioButton
+            android:id="@+id/rb_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_select"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:text="全部"
+            android:textColor="@drawable/txt_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_this_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_select"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:text="本月"
+            android:textColor="@drawable/txt_selector" />
+
+        <RadioButton
+            android:id="@+id/rb_last_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_select"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:text="上月"
+            android:textColor="@drawable/txt_selector" />
+
+
+
+
+
+        <RadioButton
+            android:id="@+id/rb_customize"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/rb_select"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:text="自定义"
+            android:textColor="@drawable/txt_selector" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/layout_select_time"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dp"
+            android:background="@drawable/txtsoild"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
+            android:text="2020-2-20" />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="1dp"
+            android:layout_margin="16dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/txtsoild"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
+            android:text="2020-2-20" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/btn_confirm_time"
+            android:layout_width="64dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/common_btn_yzm"
+            android:text="确定"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.tabs.TabLayout
+            app:tabIndicatorFullWidth="false"
+            app:tabPaddingStart="2dp"
+            app:tabPaddingEnd="2dp"
+            android:id="@+id/tablayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/btn_tj"
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/selctor_green"
+            android:text="统计"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:visibility="visible"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <include
+        android:visibility="gone"
+        android:id="@+id/layout_tj"
+        layout="@layout/layout_census"/>
+</LinearLayout>

@@ -1,0 +1,156 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.3"
+
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'nji9VFR$'
+            storeFile file('xq.jks')
+            storePassword 'nji9VFR$'
+        }
+        debug {
+            storeFile file('xq.jks')
+            storePassword 'nji9VFR$'
+            keyAlias = 'key0'
+            keyPassword 'nji9VFR$'
+        }
+    }
+//    ndk {
+//        // 设置支持的SO库架构
+//        abiFilters 'armeabi', 'armeabi-v7a','arm64-v8a','x86','x56_64'
+//    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+    defaultConfig {
+        applicationId "com.lx.xqgg"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 12
+        versionName "1.1.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x56_64'
+        }
+
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "47bd4ff33860f2837481bbe6", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+
+                qqappid: "1110290771"
+        ]
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = []
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    // network
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    //butterknife
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    //brvah
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    //fragementation
+    implementation 'me.yokeyword:fragmentation:1.3.8'
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+
+    //dialog
+    implementation('com.afollestad.material-dialogs:core:0.9.4.5') {
+        exclude group: 'com.android.support'
+    }
+    //bottombar
+    implementation 'com.roughike:bottom-bar:2.3.1'
+    //androidX 版本使用下面的依赖 xbanner
+    implementation 'com.github.xiaohaibin:XBanner:androidx_v1.0.6'
+    //圆形图片
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation files('libs/BaiduLBS_Android.jar')
+    //图片压缩tiny
+    implementation 'com.zxy.android:tiny:1.1.0'
+    //支付宝
+    implementation(name: 'alipaySdk-15.7.4-20200228192259', ext: 'aar')
+//    //微信
+//    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //七鱼客服
+    implementation 'com.qiyukf.unicorn:unicorn:+'
+    //腾讯tbs
+    implementation 'com.tencent.tbs.tbssdk:sdk:43903'
+    //bugly
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    //视频播放
+    implementation 'cn.jzvd:jiaozivideoplayer:6.2.12'
+    //更多textview
+    implementation 'com.hymane.expandtextview:library:1.0.2'
+    //激光推送
+    implementation 'cn.jiguang.sdk:jpush:3.5.6'  // 此处以JPush 3.5.6 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.2.8'  // 此处以JCore 2.2.8 版本为例。
+    //工具
+    implementation 'org.xutils:xutils:3.5.0'
+    //仿ios开关
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+
+    //友盟
+    implementation 'com.umeng.sdk:share-core:6.9.1'
+    implementation 'com.umeng.sdk:share-qq:6.9.1.1'
+    implementation 'com.umeng.sdk:share-wechat:6.9.1'
+    implementation 'com.umeng.sdk:common:1.5.1'
+    implementation 'com.umeng.sdk:analytics:7.5.0'
+    //左滑删除
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
+}

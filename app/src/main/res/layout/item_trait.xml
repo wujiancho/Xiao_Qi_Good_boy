@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="72dp"
+    android:layout_height="24dp"
+    android:gravity="center_vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/tv_name"
+        android:gravity="center"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        tools:text="12344"
+        android:layout_width="72dp"
+        android:layout_height="20dp"
+        android:background="@drawable/shape_trait"/>
+</LinearLayout>

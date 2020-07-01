@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    <color name="colorPrimary">#6200EE</color>-->
+    <color name="colorPrimary">#E93448</color>
+    <!--    <color name="colorPrimaryDark">#3700B3</color>-->
+    <color name="colorPrimaryDark">#E93448</color>
+    <!--    <color name="colorAccent">#03DAC5</color>-->
+    <color name="colorAccent">#E93448</color>
+    <color name="black">#000000</color>
+    <color name="appred">#E93448</color>
+    <color name="appreddard">#F04558</color>
+    <color name="white">#ffffff</color>
+    <color name="gray_normal">#696768</color>
+    <color name="gray_bg">#F5F2F5</color>
+    <color name="green">#009944</color>
+    <color name="green_dark">#109074</color>
+    <color name="vip_yellow">#FED284</color>
+    <color name="view_gray">#E9E9E9</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="blue">#6DA7D7</color>
+    <color name="txt_black">#666666</color>
+    <color name="txt_search">#999999</color>
+    <color name="txt_normal">#353535</color>
+    <color name="switch_green">#27BA6B</color>
+    <color name="gray_f0">#F0F0F0</color>
+    <color name="ctid_main_bg">#d5d5d5</color>
+    <color name="qcc_green">#FF89D393</color>
+    <color name="qcc_blue">#FF8AABDB</color>
+    <color name="txt_gray">#989898</color>
+    <color name="txt_gray_68">#FF686868</color>
+</resources>
