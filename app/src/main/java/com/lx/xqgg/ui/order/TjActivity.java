@@ -49,7 +49,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
+//统计页面
 public class TjActivity extends BaseActivity {
     @BindView(R.id.v_close)
     View vClose;

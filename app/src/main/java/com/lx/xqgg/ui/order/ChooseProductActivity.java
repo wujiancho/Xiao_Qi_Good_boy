@@ -4,15 +4,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.ui.product.ProductTypeFragment;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
-
+//订单搜索框加内层FrameLayout的订单内容 自选产品
 public class ChooseProductActivity extends BaseActivity {
     @BindView(R.id.v_close)
     View vClose;

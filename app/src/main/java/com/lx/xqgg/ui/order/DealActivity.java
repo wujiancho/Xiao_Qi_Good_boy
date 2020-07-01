@@ -38,7 +38,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
+//订单详情设置状态 订单立即处理页面
 public class DealActivity extends BaseActivity {
 
 

@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
+//用信额度 订单立即用信页面
 public class CreditNowActivity extends BaseActivity {
     @BindView(R.id.v_close)
     View vClose;

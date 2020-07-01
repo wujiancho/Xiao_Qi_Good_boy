@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
-
+//统计全屏页面
 public class TjFullScreenActivity extends BaseActivity {
     @BindView(R.id.v_close)
     View vClose;

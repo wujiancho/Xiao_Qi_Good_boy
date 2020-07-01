@@ -53,7 +53,7 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
- * 表层分享
+ * 表层分享 App二维码分享 长按二维码保存本地 加第三方分享
  */
 public class ShareFaceActivity extends BaseActivity {
     @BindView(R.id.v_close)
@@ -104,6 +104,7 @@ public class ShareFaceActivity extends BaseActivity {
                                     @Override
                                     public boolean onLongClick(View v) {
                                         showSaveDialog(imgUrl);
+                                        //二维码
                                         return false;
                                     }
                                 });
