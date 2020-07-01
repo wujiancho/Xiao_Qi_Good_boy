@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/tooblar_white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请人公司职务" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/tv_sqr_select"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:hint="请选择 >" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="申请人占股比例" />
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/et_zgbl"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="%" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="担任法人时间为" />
+
+                <EditText
+                    android:textColor="@color/txt_normal"
+                    android:inputType="number"
+                    android:id="@+id/et_frbg_month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:maxLines="1"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="月" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="公司类型" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/tv_company_type_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="请选择 >" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="公司所属行业" />
+
+                <TextView
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/tv_company_hy_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="公司成立至今时间" />
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/et_cl_month"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="number"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="月" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="纳税等级" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/tv_tax_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:hint="请选择 >" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="近12月累计开票额" />
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/et_12_kp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:text="万元" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="近12月累计纳税额" />
+
+                <EditText
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/et_12_ns"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:text="万元" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="经营性贷款笔数" />
+
+                <EditText
+                    android:id="@+id/et_jy_fd_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="笔" />
+            </LinearLayout>
+
+            <View
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="经营性贷款余额" />
+
+                <EditText
+                    android:id="@+id/et_jy_fd_number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:text="万元" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="近2个月贷款查询" />
+
+                <EditText
+                    android:textColor="@color/txt_normal"
+                    android:id="@+id/et_2_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="次" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="近6个月贷款查询" />
+
+                <EditText
+                    android:id="@+id/et_6_count"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal" />
+
+                <TextView
+                    android:textSize="15sp"
+                    android:textColor="@color/txt_normal"
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content"
+                    android:text="次" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_f0" />
+
+            <Button
+                android:id="@+id/btn_commit"
+                android:layout_width="124dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/common_btn_yzm"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

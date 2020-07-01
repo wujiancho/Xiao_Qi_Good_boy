@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/tv_message"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="1213455"/>
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:id="@+id/tv_time"
+            android:layout_marginRight="12dp"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="1213455"/>
+        <View
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_bg"/>
+    </LinearLayout>
+
+    <!-- 以下都是侧滑菜单的内容依序排列 -->
+
+
+    <Button
+        android:id="@+id/btn_del"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:background="@color/appred"
+        android:clickable="true"
+        android:text="删除"
+        android:textColor="@color/white"/>
+
+
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

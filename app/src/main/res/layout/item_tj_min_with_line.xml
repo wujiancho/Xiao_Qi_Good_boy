@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="92.5dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="92dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_jjl"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="进件量" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_spz"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="审批中" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_ysx"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="预授信" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_zs"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="终审" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_yx"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="用信" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_tgl"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="通过率" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_yxl"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="用信率" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_jj"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="件均" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_normal" />
+
+        <TextView
+            android:id="@+id/tv_yxe"
+            android:layout_width="92dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/txt_normal"
+            android:textSize="13sp"
+            tools:text="用信额" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_normal" />
+</LinearLayout>
