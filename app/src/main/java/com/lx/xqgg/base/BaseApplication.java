@@ -15,6 +15,7 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.zxy.tiny.Tiny;
 
 import org.xutils.x;
@@ -42,6 +43,8 @@ public class BaseApplication extends Application {
         x.Ext.init(this);
         Tiny.getInstance().init(this);
 
+        //初始化二维码工具类
+        ZXingLibrary.initDisplayOpinion(this);
         UMConfigure.setLogEnabled(true);
         UMConfigure.init(this, "5e8d2ea10cafb2461700002b", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
 //        MobclickAgent.set

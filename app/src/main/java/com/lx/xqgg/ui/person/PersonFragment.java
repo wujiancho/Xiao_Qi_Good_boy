@@ -63,7 +63,8 @@ public class PersonFragment extends BaseFragment {
     LinearLayout tvSetting;
     @BindView(R.id.tv_vip_msg)
     TextView tvVipMsg;
-
+     private String name;
+     private String phone;
     private HomeBaseAdapter homeBaseAdapter1;
     private List<MatterBean> list1;
     private HomeBaseAdapter homeBaseAdapter2;
@@ -80,10 +81,12 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
         list1 = new ArrayList<>();
         homeBaseAdapter1 = new HomeBaseAdapter(R.layout.item_person, list1);
         rvWdxx.setLayoutManager(new GridLayoutManager(mContext, 4));
         rvWdxx.setAdapter(homeBaseAdapter1);
+
         homeBaseAdapter1.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -98,6 +101,7 @@ public class PersonFragment extends BaseFragment {
                                 @Override
                                 public void onNext(BaseData<UserServiceBean> objectBaseData) {
                                     Log.e("zlz", new Gson().toJson(objectBaseData));
+
                                     Intent intent;
                                     if (objectBaseData.isSuccess()) {
                                         switch (objectBaseData.getCode()) {
@@ -159,7 +163,18 @@ public class PersonFragment extends BaseFragment {
                 }else {
                     try {
                         Intent intent = new Intent(list1.get(position).getAction());
-                        startActivity(intent);
+                        if(list1.get(position).getAction()=="ShareFaceActivity"){
+                            toast("推荐");
+                            if (name!=null){
+                                intent.putExtra("name",name);
+                            }
+                            if (phone!=null){
+                                intent.putExtra("phone",phone);
+                            }
+                            startActivity(intent);
+                        }else {
+                            startActivity(intent);
+                        }
                     } catch (Exception e) {
                         toast("功能暂未开放");
                     }
@@ -267,6 +282,10 @@ public class PersonFragment extends BaseFragment {
             }
         });
         tvPhone.setText(SharedPrefManager.getUser().getUsername() + "");
+        name= SharedPrefManager.getUser().getUsername();
+        phone=SharedPrefManager.getUser().getMobile();
+        Log.e("zlz", "name"+name);
+        Log.e("zlz", "phone"+phone);
         initUserInfo();
     }
 
