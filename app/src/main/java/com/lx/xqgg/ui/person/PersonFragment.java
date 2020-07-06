@@ -368,7 +368,7 @@ public class PersonFragment extends BaseFragment {
         if (SharedPrefManager.getUserInfo().getCrmuser()==1){
             list2.add(new MatterBean("CRM", "", R.drawable.crm));
         }
-       list2.add(new MatterBean("CRM", "", R.drawable.crm));
+        //list2.add(new MatterBean("CRM", "", R.drawable.crm));
         homeBaseAdapter2.notifyDataSetChanged();
 
         list3.add(new MatterBean("智能匹配", "MatchFirstActivity", R.drawable.ic_znpp));

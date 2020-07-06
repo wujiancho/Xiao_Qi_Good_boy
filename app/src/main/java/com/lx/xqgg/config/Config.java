@@ -38,6 +38,11 @@ public class Config {
     public static final String RFWURL = "http://zxgk.court.gov.cn/zhzxgk/";
 
     public static final String NORMALURL = URL+"view/invloancuts.html";
-        public static final String CRMURL = URL+"crm/view/serviceHome.html";
+
+    public static final String CRMURL = URL+"crm/view/serviceHome.html";
+
+    public static final String FUMIN_TITLE = "富民银行 - 富税贷";
+    public static final String  FUMIN_BANK = "https://h5rapidloan.cqfmbank.com/H5/page/blank/CAH001.html";
+
 
 }

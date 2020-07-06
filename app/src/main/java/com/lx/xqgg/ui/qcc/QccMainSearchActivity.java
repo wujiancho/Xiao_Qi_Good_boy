@@ -100,7 +100,7 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                     public void onNext(BaseData<String> s) {
                         if (s.isSuccess()) {
                             QccBean qccBean = new Gson().fromJson(s.getData(), QccBean.class);
-//                            Log.e("zlz", new Gson().toJson(qccBean));
+                            Log.e("qcc", new Gson().toJson(qccBean));
                             if (qccBean == null) {
                                 return;
                             }

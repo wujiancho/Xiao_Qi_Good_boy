@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,12 +51,17 @@ import com.lx.xqgg.ui.login.bean.MsgBean;
 import com.lx.xqgg.ui.product.bean.ApplyHistoryBean;
 import com.lx.xqgg.ui.product.bean.AuthBean;
 import com.lx.xqgg.ui.product.bean.CaseInfoBean;
+import com.lx.xqgg.ui.product.bean.FumingBean;
 import com.lx.xqgg.ui.product.bean.ProductBean;
 import com.lx.xqgg.ui.product.bean.QccBean;
 import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.CountDownTimerUtils;
 import com.lx.xqgg.util.FastClickUtil;
 
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,7 +82,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
 public class ApplyFragment extends DialogFragment {
     @BindView(R.id.v_close)
     View vClose;
@@ -758,17 +763,37 @@ public class ApplyFragment extends DialogFragment {
                 .subscribeWith(new BaseSubscriber<BaseData<String>>(getActivity(), null) {
                     @Override
                     public void onNext(BaseData<String> objectBaseData) {
-                        Log.e("zlz", new Gson().toJson(objectBaseData));
+                        Log.e("fumin", new Gson().toJson(objectBaseData));
+                       toast(bean.getTitle());
                         if (objectBaseData.isSuccess()) {
                             //申请成功之后保存信息
                             SharedPrefManager.setIdNum(etIdNum.getText().toString());
                             SharedPrefManager.setRealName(etFrName.getText().toString());
                             SharedPrefManager.setPhone(etPhone.getText().toString());
+                            toast(bean.getTitle());
                             String url = bean.getCityLink();
+                            if (Config.FUMIN_TITLE.equals(bean.getTitle())) {
+                               FumingBean fuminBean = new Gson().fromJson(objectBaseData.getData(), FumingBean.class);
+                               if (fuminBean.getStatus().equals("200")){
+                                String token=fuminBean.getBusOutBody().getToken();
+                                   try {
+                                   String urlencode=URLEncoder.encode(Config.URL+"/view/fuminSuccess.html","utf-8");
+                                    url= Config.FUMIN_BANK+"?token="+token+"&cburl="+urlencode;
+                                       Log.d("url", "onNext: "+url);
+                                   } catch (UnsupportedEncodingException e) {
+                                       e.printStackTrace();
+                                   }
+
+                               }else {
+                                   toast(fuminBean.getMessage());
+                               }
+                            }
+
                             if (Config.NORMALURL.equals(url)) {
                                 url = Config.NORMALURL + "?token=" + SharedPrefManager.getUser().getToken() +
                                         "&orderNo=" + objectBaseData.getData();
                             }
+
                             WebViewActivity.open(new WebViewActivity.Builder()
                                     .setContext(getContext())
                                     .setAutoTitle(false)

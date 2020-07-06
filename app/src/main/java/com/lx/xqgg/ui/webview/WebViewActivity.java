@@ -751,19 +751,15 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
         @JavascriptInterface
         public void handleArrow() {
-       // finish();
-            handler.post(new Runnable() {
+       finish();
+    /*        handler.post(new Runnable() {
                 public void run() {
                     //appView.loadUrl("javascript:wave()");
                       toast("返回");
                       WebViewActivity.this.finish();
                 }
-            });
+            });*/
         }
-/*@JavascriptInterface
-public  void open(){
-            toast("登录");
-}*/
         @JavascriptInterface
         public void sharePic(String file) {
             UMImage image = new UMImage(WebViewActivity.this,file );
