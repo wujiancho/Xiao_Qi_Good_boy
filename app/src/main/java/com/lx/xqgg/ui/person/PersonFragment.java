@@ -71,6 +71,7 @@ public class PersonFragment extends BaseFragment {
     private List<MatterBean> list2;
     private HomeBaseAdapter homeBaseAdapter3;
     private List<MatterBean> list3;
+    private  String token;
     //vip code
     private static final int VIP_RESLUT_CODE = 10086;
 
@@ -93,6 +94,7 @@ public class PersonFragment extends BaseFragment {
                 if(list1.get(position).getName().equals("服务商信息")){
                     HashMap<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                    token=SharedPrefManager.getUser().getToken();
                     RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
                     addSubscribe(ApiManage.getInstance().getMainApi().getUserServiceInfo(body)
                             .subscribeOn(Schedulers.io())
@@ -101,7 +103,6 @@ public class PersonFragment extends BaseFragment {
                                 @Override
                                 public void onNext(BaseData<UserServiceBean> objectBaseData) {
                                     Log.e("zlz", new Gson().toJson(objectBaseData));
-
                                     Intent intent;
                                     if (objectBaseData.isSuccess()) {
                                         switch (objectBaseData.getCode()) {
@@ -164,7 +165,6 @@ public class PersonFragment extends BaseFragment {
                     try {
                         Intent intent = new Intent(list1.get(position).getAction());
                         if(list1.get(position).getAction()=="ShareFaceActivity"){
-                            toast("推荐");
                             if (name!=null){
                                 intent.putExtra("name",name);
                             }
@@ -218,9 +218,17 @@ public class PersonFragment extends BaseFragment {
                     builder1.show();
                     return;
                 }
+                if (list2.get(position).getName().equals("CRM")) {
+                 WebViewActivity.open(new WebViewActivity.Builder()
+                            .setContext(mContext)
+                            .setAutoTitle(false)
+                            .setIsFwb(false)
+                            .setUrl(Config.CRMURL+"?token="+token+"&identity=app&statusHeight=44"));
+                    return;
+                }
                 try {
                     Intent intent = new Intent(list2.get(position).getAction());
-                    startActivity(intent);
+                            startActivity(intent);
                 } catch (Exception e) {
                     toast("功能暂未开放");
                 }
@@ -284,8 +292,6 @@ public class PersonFragment extends BaseFragment {
         tvPhone.setText(SharedPrefManager.getUser().getUsername() + "");
         name= SharedPrefManager.getUser().getUsername();
         phone=SharedPrefManager.getUser().getMobile();
-        Log.e("zlz", "name"+name);
-        Log.e("zlz", "phone"+phone);
         initUserInfo();
     }
 
@@ -296,7 +302,7 @@ public class PersonFragment extends BaseFragment {
                 .subscribeWith(new BaseSubscriber<BaseData<UserInfoBean>>(mContext, null) {
                     @Override
                     public void onNext(BaseData<UserInfoBean> userInfoBeanBaseData) {
-                        Log.e("zlz", new Gson().toJson(userInfoBeanBaseData));
+                        Log.e("userinfo", new Gson().toJson(userInfoBeanBaseData));
                         if (userInfoBeanBaseData.isSuccess()) {
                             SharedPrefManager.setUserInfo(userInfoBeanBaseData.getData());
                             refreshUI();
@@ -359,6 +365,10 @@ public class PersonFragment extends BaseFragment {
         list2.add(new MatterBean("电话咨询", "", R.drawable.ic_p_dhzx));
         list2.add(new MatterBean("帮助中心", "HelperActivity", R.drawable.ic_p_bzxx));
         list2.add(new MatterBean("匹配结果", "MatchSavedActivity", R.drawable.ic_p_ppjg));
+        if (SharedPrefManager.getUserInfo().getCrmuser()==1){
+            list2.add(new MatterBean("CRM", "", R.drawable.crm));
+        }
+       list2.add(new MatterBean("CRM", "", R.drawable.crm));
         homeBaseAdapter2.notifyDataSetChanged();
 
         list3.add(new MatterBean("智能匹配", "MatchFirstActivity", R.drawable.ic_znpp));

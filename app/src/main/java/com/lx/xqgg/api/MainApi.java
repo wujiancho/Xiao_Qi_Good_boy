@@ -40,6 +40,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface MainApi {
     /**
@@ -57,7 +58,6 @@ public interface MainApi {
      */
     @POST("user/mobilelogin")
     Flowable<LoginBean> login(@Body RequestBody body);
-
     /**
      * 获取服务商信息
      *
@@ -450,4 +450,12 @@ public interface MainApi {
      */
     @GET("index/getAdvert")
     Flowable<BaseData<List<AdvertBean>>> getAdvert(@Query("token") String token);
+
+    /**
+     * 获取广告
+     * @param
+     * @return
+     */
+    @GET("crm/view/login.html")
+    Flowable<BaseData<String>>getCrmlogin();
 }

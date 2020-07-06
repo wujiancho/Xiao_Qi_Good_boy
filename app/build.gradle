@@ -55,7 +55,7 @@ android {
                 JPUSH_APPKEY : "47bd4ff33860f2837481bbe6", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
 
-                qqappid: "1110290771"
+                qqappid      : "1110290771"
         ]
 
     }

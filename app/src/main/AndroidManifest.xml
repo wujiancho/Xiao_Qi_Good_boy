@@ -9,29 +9,26 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!-- 使用音视频录制的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 使用音视频录制的权限 -->
     <uses-permission android:name="android.permission.RECORD_VIDEO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 二维码需要的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 二维码需要的权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.lx.xqgg.base.BaseApplication"
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/xq_logo"
         android:label="@string/app_name"
@@ -42,42 +39,36 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
+
         <activity
-            android:name="com.lx.xqgg.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.lx.xqgg.FaceMainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:name=".ui.crm.CRMActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="com.lx.xqgg.TranslucentActivity"
+            android:name=".FaceMainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".TranslucentActivity"
             android:theme="@style/TranslucentTheme" />
-
         <activity
             android:name=".ui.match.MatchSavedDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.LinkCompanyListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
-            android:name="com.lx.xqgg.SplashActivity"
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,350 +77,308 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.lx.xqgg.ui.login.LoginActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.qcc.QccMainSearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="QccMainSearchActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.qcc.QccCompanyResultMainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.city.CityPickerActivity"
+            android:name=".ui.city.CityPickerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.StockHolderActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.KeyPersonActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.message.MessageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.order.TjActivity"
+            android:name=".ui.order.TjActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.GaoEnrollActivity"
+            android:name=".face_ui.home.GaoEnrollActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.wxapi.WXPayEntryActivity"
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.product.ProductDetailActivity"
+            android:name=".ui.product.ProductDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.order.CreditNowActivity"
+            android:name=".ui.order.CreditNowActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.share.ShareInDoorActivity"
+            android:name=".ui.share.ShareInDoorActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.hot.HotMsgListActivity"
+            android:name=".ui.hot.HotMsgListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.counter.CounterActivity"
+            android:name=".ui.counter.CounterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="CounterActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.counter.CounterDetailActivity"
+            android:name=".ui.counter.CounterDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.setting.FeedBackActivity"
+            android:name=".ui.setting.FeedBackActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.order.DealActivity"
+            android:name=".ui.order.DealActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.setting.SettingActivity"
+            android:name=".ui.setting.SettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.webview.WebViewActivity"
+            android:name=".ui.webview.WebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
-            android:name="com.lx.xqgg.ui.product.ProductActivity"
+            android:name=".ui.product.ProductActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.FaceProductDetailActivity"
+            android:name=".face_ui.home.FaceProductDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.TopListActivity"
+            android:name=".face_ui.home.TopListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.BusinessInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.ChangeRecordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.CorporateTrainActivity"
+            android:name=".face_ui.home.CorporateTrainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="CorporateTrainActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.qcc.BcxrActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.GqczActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.DcdyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.BeginnerGiftActivity"
+            android:name=".face_ui.home.BeginnerGiftActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.ExceptionsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.ShiXinActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.GaoActivity"
+            android:name=".face_ui.home.GaoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.BannerListActivity"
+            android:name=".face_ui.home.BannerListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.qcc.XinZhenActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.face_ui.home.FaceHotListActivity"
+            android:name=".face_ui.home.FaceHotListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.match.MatchSavedActivity"
+            android:name=".ui.match.MatchSavedActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="MatchSavedActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.xq_data.DataMainActivity"
+            android:name=".ui.xq_data.DataMainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="DataMainActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.match.MatchFirstActivity"
+            android:name=".ui.match.MatchFirstActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="MatchFirstActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.match.MatchSecondActivity"
+            android:name=".ui.match.MatchSecondActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
-            android:name="com.lx.xqgg.ui.match.MatchResultActivity"
+            android:name=".ui.match.MatchResultActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.person.HelperActivity"
+            android:name=".ui.person.HelperActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="HelperActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.explain.ExplainActivity"
+            android:name=".ui.explain.ExplainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.company_auth.CompanyAuthActivity"
+            android:name=".ui.company_auth.CompanyAuthActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="CompanyAuthActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.person.ServiceInfoActivity"
+            android:name=".ui.person.ServiceInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="ServiceInfoActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.search.SearchActivity"
+            android:name=".ui.search.SearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.order.TjFullScreenActivity"
+            android:name=".ui.order.TjFullScreenActivity"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:theme="@style/FullScreen" />
-
         <activity
-            android:name="com.lx.xqgg.ui.my_client.ClientDetailActivity"
+            android:name=".ui.my_client.ClientDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.vip.VipActivity"
+            android:name=".ui.vip.VipActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.share.ShareFaceActivity"
+            android:name=".ui.share.ShareFaceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="ShareFaceActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity
-            android:name="com.lx.xqgg.ui.xq_data.DataAnalyseActivity"
+            android:name=".ui.xq_data.DataAnalyseActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="DataAnalyseActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.company_auth.CompanyAuthSuccActivity"
+            android:name=".ui.company_auth.CompanyAuthSuccActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.lx.xqgg.ui.my_client.MyClientActivity"
+            android:name=".ui.my_client.MyClientActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="MyClientActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lx.xqgg.ui.order.ChooseProductActivity"
+            android:name=".ui.order.ChooseProductActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="ChooseProductActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.lx.xqgg.ui.video.VideoActivity">
+        <activity android:name=".ui.video.VideoActivity">
             <intent-filter>
                 <action android:name="VideoActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -446,15 +395,14 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="sb2r84tfhXqUlrdArroGZcKe7OsrnRQY"></meta-data>
+            android:value="sb2r84tfhXqUlrdArroGZcKe7OsrnRQY" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
-
+            android:process=":remote" />
         <service
-            android:name="com.lx.xqgg.jpush.XService"
+            android:name=".jpush.XService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -464,11 +412,12 @@
         </service>
 
         <receiver
-            android:name="com.lx.xqgg.jpush.JpushReceiver"
+            android:name=".jpush.JpushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+
                 <category android:name="com.lx.xqgg" />
             </intent-filter>
         </receiver>
@@ -481,12 +430,12 @@
             android:value="Channel ID" />
 
         <receiver
-            android:name="com.lx.xqgg.jpush.MyReceiver"
+            android:name=".jpush.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION" /><!--字符串值 取得 Registration ID -->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--收到了自定义消息 Push-->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- 字符串值 取得 Registration ID -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- 收到了自定义消息 Push -->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
@@ -495,7 +444,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

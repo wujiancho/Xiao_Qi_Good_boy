@@ -24,6 +24,7 @@ public class UserInfoBean {
     private String mobile;
     private String nickname;
     private String username;
+    private  int crmuser ;
 
     public String getAvatar() {
         return avatar;
@@ -103,5 +104,13 @@ public class UserInfoBean {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getCrmuser() {
+        return crmuser;
+    }
+
+    public void setCrmuser(int crmuser) {
+        this.crmuser = crmuser;
     }
 }

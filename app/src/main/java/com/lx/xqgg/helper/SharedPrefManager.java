@@ -65,6 +65,7 @@ public class SharedPrefManager {
      */
     public static void setUserInfo(UserInfoBean user) {
         ACCOUNT.edit().putString("user_info_detail", new Gson().toJson(user)).commit();
+
     }
 
     public static UserInfoBean getUserInfo() {

@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.ui.company_auth.ChooseDialogFragment;
+import com.lx.xqgg.ui.share.ShareFaceActivity;
 import com.lx.xqgg.widget.SlowlyProgressBar;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebChromeClientExtension;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
@@ -89,7 +92,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     View vFinish;
     @BindView(R.id.tv_share)
     TextView tvShare;
-
+     private  String file;
     private SlowlyProgressBar bar;
     private ChooseDialogFragment chooseDialogFragment;
     private MaterialDialog materialDialog;
@@ -116,11 +119,12 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     private boolean isFwb = false;
 
     private boolean needShare = false;
-
+     private Handler handler=new Handler();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_webview;
     }
+
 
     @Override
     protected void initView() {
@@ -140,8 +144,11 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         } else {
             tvShare.setVisibility(View.GONE);
         }
-        tvTitle.setText(mTitle);
-
+        if (mTitle != null) {
+            tvTitle.setText(mTitle);
+        } else {
+            toobar.setVisibility(View.GONE);
+        }
         initwebview();
     }
 
@@ -166,8 +173,14 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         } else {
             settings.setLoadsImagesAutomatically(false);
         }
-
-        if (mTitle.equals("税务局")) {
+        if (mTitle != null) {
+            if (mTitle.equals("税务局")) {
+                settings.setUseWideViewPort(true);
+                settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+                settings.setLoadWithOverviewMode(true);
+            }
+        } else {
+            toobar.setVisibility(View.GONE);
             settings.setUseWideViewPort(true);
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
             settings.setLoadWithOverviewMode(true);
@@ -199,11 +212,36 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                     @Override
                     public void onReceiveValue(String value) {
                         //此处为 js 返回的结果
+
                     }
                 });
-                Log.e("zlz", "javascript:creditC(" + "\"" + Constans.PROVINCE + "\",\"" + Constans.CITY + "\")");
-            }
 
+           /*    webview.evaluateJavascript("javascript:handleArrow()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        //此处为 js 返回的结果
+                      // finish();
+                       WebViewActivity.this.finish();
+                    }
+                });*/
+
+               // webview.loadUrl("javascript:handleArrow()");
+
+           /*     webview.evaluateJavascript("javascript:sharePic(" + "\"" + Constans.PROVINCE + "\",\"" + Constans.CITY + "\")", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        //此处为 js 返回的结果
+
+                    }
+                });*/
+             /*    webview.evaluateJavascript("javascript:subForm()", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        //此处为 js 返回的结果
+                       toast("登录");
+                    }
+                });*/
+            }
 
             @SuppressLint("MissingPermission")
             @Override
@@ -541,13 +579,16 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             }
 
         });
-        webview.addJavascriptInterface(new JavaScriptClass(), "android");
+
+        webview.addJavascriptInterface(new JavaScriptClass(this), "android");
+
         if (isFwb) {
             vFinish.setVisibility(View.GONE);
             webview.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
         } else {
             webview.loadUrl(mUrl);
         }
+
 
         webview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -601,11 +642,10 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                                         File destFile = new File(appDir, fileName);
                                         //把gilde下载得到图片复制到定义好的目录中去
                                         copy(file, destFile);
-
+                                        file= new File(destFile.getPath());
                                         // 最后通知图库更新
                                         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                                                 Uri.fromFile(new File(destFile.getPath()))));
-
                                         Looper.prepare();
                                         toast("保存成功");
                                         Looper.loop();
@@ -665,7 +705,11 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     }
 
     class JavaScriptClass {
+        private Context context;
 
+        public JavaScriptClass(Context context) {
+            this.context = context;
+        }
         @JavascriptInterface
         public void share(String url, String title) {
             Log.e("zlz", url);
@@ -704,7 +748,56 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                         }
                     }).open();
         }
+
+        @JavascriptInterface
+        public void handleArrow() {
+       // finish();
+            handler.post(new Runnable() {
+                public void run() {
+                    //appView.loadUrl("javascript:wave()");
+                      toast("返回");
+                      WebViewActivity.this.finish();
+                }
+            });
+        }
+/*@JavascriptInterface
+public  void open(){
+            toast("登录");
+}*/
+        @JavascriptInterface
+        public void sharePic(String file) {
+            UMImage image = new UMImage(WebViewActivity.this,file );
+            new ShareAction(mContext)
+                    .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setShareboardclickCallback(new ShareBoardlistener() {
+                        @Override
+                        public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                            if (share_media == SHARE_MEDIA.QQ) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                        .withMedia(image)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                        .withMedia(image)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.QZONE) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                        .withMedia(image)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                        .withMedia(image)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            }
+                        }
+                    }).open();
+        }
     }
+
 
     private void share() {
         UMImage image = new UMImage(this, webview.getTitle().contains("帮助信息") ? R.drawable.logo : R.drawable.img_gch);//分享图标
@@ -749,6 +842,8 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 }).open();
     }
 
+
+
     UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA platform) {
@@ -758,6 +853,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         @Override
         public void onResult(SHARE_MEDIA platform) {
             toast("分享成功");
+            finish();
         }
 
         @Override

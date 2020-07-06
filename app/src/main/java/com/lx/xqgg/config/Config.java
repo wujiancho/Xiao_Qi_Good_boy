@@ -21,6 +21,7 @@ public class Config {
    public static final String URL = "http://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
 //
     public static final String IMGURL = "http://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
+    public static final String URLS = "https://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
 
         //正式
    // public static final String URL = "http://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
@@ -37,5 +38,6 @@ public class Config {
     public static final String RFWURL = "http://zxgk.court.gov.cn/zhzxgk/";
 
     public static final String NORMALURL = URL+"view/invloancuts.html";
+        public static final String CRMURL = URL+"crm/view/serviceHome.html";
 
 }

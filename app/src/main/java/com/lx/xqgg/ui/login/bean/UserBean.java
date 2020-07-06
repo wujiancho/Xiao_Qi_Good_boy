@@ -76,6 +76,16 @@ public class UserBean {
     private String verification;
     private String isenter;
 
+    public int getCrmUser() {
+        return crmUser;
+    }
+
+    public void setCrmUser(int crmUser) {
+        this.crmUser = crmUser;
+    }
+
+    private int crmUser;
+
     public int getAppid() {
         return appid;
     }

@@ -284,7 +284,6 @@ canvas.drawBitmap(secondBitmap, new Matrix(), null);
                 }
                 //分享图片
                 UMImage image = new UMImage(ShareFaceActivity.this,file );
-
                 new ShareAction(mContext)
                         .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setShareboardclickCallback(new ShareBoardlistener() {
@@ -327,6 +326,7 @@ canvas.drawBitmap(secondBitmap, new Matrix(), null);
         @Override
         public void onResult(SHARE_MEDIA platform) {
             toast("分享成功");
+            finish();
         }
 
         @Override
