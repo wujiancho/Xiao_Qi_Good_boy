@@ -78,11 +78,8 @@ public class DealActivity extends BaseActivity {
     EditText etJjReason;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
-
-
     private DealBean dealBean;
     private OrderBean.RecordsBean orderBean;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_deal;
@@ -93,8 +90,6 @@ public class DealActivity extends BaseActivity {
         tvTitle.setText("立即处理");
         dealBean = new DealBean();
         orderBean = (OrderBean.RecordsBean) getIntent().getSerializableExtra("data");
-
-
         etYsx.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable edt) {
                 String temp = edt.toString();

@@ -23,14 +23,17 @@ import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.CreditNowActivity;
 import com.lx.xqgg.ui.order.DealActivity;
+import com.lx.xqgg.ui.order.FeiDanOrderFragment;
 import com.lx.xqgg.ui.order.bean.DealBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
 import com.lx.xqgg.ui.vip.bean.NotifyBean;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,8 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseViewHolder> {
+    private DealBean dealBean;
+    private OrderBean.RecordsBean orderBean;
     public OrderAdapter(@Nullable List<OrderBean.RecordsBean> data) {
         super(R.layout.item_order_spz, data);
     }
@@ -67,13 +72,50 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.layout_ysx, false);
                 helper.setVisible(R.id.layout_zs, false);
                 helper.setVisible(R.id.layout_ljcl, false);
-                helper.setOnClickListener(R.id.btn_deal, new View.OnClickListener() {
+                helper.setOnClickListener(R.id.allitem, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        toast("抱歉当前服务只能做废单处理");
-                        Intent intent = new Intent(mContext, DealActivity.class);
-                        intent.putExtra("data", item);
-                        mContext.startActivity(intent);
+                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
+                                .title("提示")
+                                .content("系统即将删除该笔订单，请确认")
+                                .cancelable(false)
+                                .positiveText(R.string.yes)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        orderBean=  new  OrderBean.RecordsBean();
+                                        HashMap<String, Object> paramsMap = new HashMap<>();
+                                        paramsMap.put("id", item.getId());
+                                        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
+                                        ApiManage.getInstance().getMainApi().disCardOrder(body)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
+                                                    @Override
+                                                    public void onNext(BaseData baseData) {
+                                                        Log.e("zlz", new Gson().toJson(baseData));
+                                                        if (baseData.isSuccess()) {
+                                                            toast("提交成功");
+                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
+                                                        } else {
+                                                            toast(baseData.getMessage());
+                                                        }
+                                                    }
+                                                });
+
+                                    }
+                                })
+                                .negativeText(R.string.no)
+                                .negativeColorRes(R.color.txt_normal)
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .build();
+                        permissionDialog.show();
                     }
                 });
                 break;
@@ -81,37 +123,34 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
             case "precredit":
                 if ("0".equals(item.getAppointment())) {
                     helper.setVisible(R.id.btn_yy_bl, true);
-                    helper.setOnClickListener(R.id.btn_yy_bl, new View.OnClickListener() {
+                    helper.setOnClickListener(R.id.allitem, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            toast("抱歉当前服务只能做废单处理");
                             MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
                                     .title("提示")
-                                    .content("确认该订单已谈妥，提交至银行处")
+                                    .content("系统即将删除该笔订单，请确认")
                                     .cancelable(false)
                                     .positiveText(R.string.yes)
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            DealBean dealBean=new DealBean();
-                                            dealBean.setId(item.getId()+"");
-                                            dealBean.setAppointment("1");
-
-                                            Gson gson = new Gson();
-                                            String obj = gson.toJson(dealBean);
-                                            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), obj);
-                                            ApiManage.getInstance().getMainApi().updateOrder(body)
+                                            orderBean=  new  OrderBean.RecordsBean();
+                                            HashMap<String, Object> paramsMap = new HashMap<>();
+                                            paramsMap.put("id", item.getId());
+                                            paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                                            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
+                                            ApiManage.getInstance().getMainApi().disCardOrder(body)
                                                     .subscribeOn(Schedulers.io())
                                                     .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribeWith(new BaseSubscriber<BaseData<Object>>(mContext, null) {
+                                                    .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
                                                         @Override
-                                                        public void onNext(BaseData<Object> objectBaseData) {
-                                                            if (objectBaseData.isSuccess()) {
+                                                        public void onNext(BaseData baseData) {
+                                                            Log.e("zlz", new Gson().toJson(baseData));
+                                                            if (baseData.isSuccess()) {
                                                                 toast("提交成功");
                                                                 EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
-                                                                dialog.dismiss();
                                                             } else {
-                                                                toast(objectBaseData.getMessage());
+                                                                toast(baseData.getMessage());
                                                             }
                                                         }
                                                     });
@@ -182,6 +221,53 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
 //                helper.setText(R.id.tv_sx_status, "终审中");
                 helper.setVisible(R.id.tv_result, false);
                 helper.setVisible(R.id.layout_ljcl, false);
+                helper.setOnClickListener(R.id.allitem, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
+                                .title("提示")
+                                .content("系统即将删除该笔订单，请确认")
+                                .cancelable(false)
+                                .positiveText(R.string.yes)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        orderBean=  new  OrderBean.RecordsBean();
+                                        HashMap<String, Object> paramsMap = new HashMap<>();
+                                        paramsMap.put("id", item.getId());
+                                        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
+                                        ApiManage.getInstance().getMainApi().disCardOrder(body)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
+                                                    @Override
+                                                    public void onNext(BaseData baseData) {
+                                                        Log.e("zlz", new Gson().toJson(baseData));
+                                                        if (baseData.isSuccess()) {
+                                                            toast("提交成功");
+                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
+                                                        } else {
+                                                            toast(baseData.getMessage());
+                                                        }
+                                                    }
+                                                });
+
+                                    }
+                                })
+                                .negativeText(R.string.no)
+                                .negativeColorRes(R.color.txt_normal)
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .build();
+                        permissionDialog.show();
+                    }
+                });
+
                 break;
             //终审
             case "nopass":
@@ -202,11 +288,54 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.tv_result, true);
                 helper.setVisible(R.id.layout_ljcl, false);
                 helper.setText(R.id.tv_result, item.getRej_reason() + "");
-
-                helper.setOnClickListener(R.id.tv_result, new View.OnClickListener() {
+                helper.setOnClickListener(R.id.allitem, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        toast("抱歉当前服务只能做废单处理");
+                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
+                                .title("提示")
+                                .content("系统即将删除该笔订单，请确认")
+                                .cancelable(false)
+                                .positiveText(R.string.yes)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        orderBean=  new  OrderBean.RecordsBean();
+                                        HashMap<String, Object> paramsMap = new HashMap<>();
+                                        paramsMap.put("id", item.getId());
+                                        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
+                                        ApiManage.getInstance().getMainApi().disCardOrder(body)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
+                                                    @Override
+                                                    public void onNext(BaseData baseData) {
+                                                        Log.e("zlz", new Gson().toJson(baseData));
+                                                        if (baseData.isSuccess()) {
+                                                            toast("提交成功");
+                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
+                                                        } else {
+                                                            toast(baseData.getMessage());
+                                                        }
+                                                    }
+                                                });
+
+                                    }
+                                })
+                                .negativeText(R.string.no)
+                                .negativeColorRes(R.color.txt_normal)
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .build();
+                        permissionDialog.show();
+                    }
+                });    helper.setOnClickListener(R.id.tv_result, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         AlertDialog.Builder builder1=new AlertDialog.Builder(mContext);
                         builder1.setMessage(item.getRej_reason() + "");
                         builder1.show();
@@ -255,13 +384,52 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
 //                helper.setVisible(R.id.tv_result, true);
                 helper.setVisible(R.id.layout_ljcl, true);
 //                helper.setText(R.id.tv_result,item.get)
-                helper.setOnClickListener(R.id.tv_ljyx, new View.OnClickListener() {
+                helper.setOnClickListener(R.id.allitem, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        toast("抱歉当前服务只能做废单处理");
-                        Intent intent = new Intent(mContext, CreditNowActivity.class);
-                        intent.putExtra("data", item);
-                        mContext.startActivity(intent);
+                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
+                                .title("提示")
+                                .content("确认该订单已谈妥，提交至银行处")
+                                .cancelable(false)
+                                .positiveText(R.string.yes)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        DealBean dealBean=new DealBean();
+                                        dealBean.setId(item.getId()+"");
+                                        dealBean.setAppointment("1");
+
+                                        Gson gson = new Gson();
+                                        String obj = gson.toJson(dealBean);
+                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), obj);
+                                        ApiManage.getInstance().getMainApi().updateOrder(body)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribeWith(new BaseSubscriber<BaseData<Object>>(mContext, null) {
+                                                    @Override
+                                                    public void onNext(BaseData<Object> objectBaseData) {
+                                                        if (objectBaseData.isSuccess()) {
+                                                            toast("提交成功");
+                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
+                                                            dialog.dismiss();
+                                                        } else {
+                                                            toast(objectBaseData.getMessage());
+                                                        }
+                                                    }
+                                                });
+
+                                    }
+                                })
+                                .negativeText(R.string.no)
+                                .negativeColorRes(R.color.txt_normal)
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .build();
+                        permissionDialog.show();
                     }
                 });
                 break;
