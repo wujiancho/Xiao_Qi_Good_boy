@@ -148,7 +148,7 @@ public class TjActivity extends BaseActivity {
                             }
                         } else {
                             layoutHor.setVisibility(View.GONE);
-//                            toast("获取服务商用户失败");
+                    //     toast("获取服务商用户失败");
                         }
 
                         for (OrderUserBean orderUserBean : orderUserBeanList) {

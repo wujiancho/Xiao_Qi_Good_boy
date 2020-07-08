@@ -59,7 +59,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
         switch (item.getStatus()) {
             //审核中
             case "created":
-                helper.setText(R.id.tv_money_num, "￥" + (String.format("%.2f", (double) item.getApply_money() / 10000) + "万"));
+                helper.setText(R.id.tv_money_num, (String.format("%.2f", (double) item.getApply_money() / 10000)));
                 helper.setVisible(R.id.tv_status, true);
                 helper.setText(R.id.tv_status, "审核中");
                 helper.setVisible(R.id.btn_deal, true);
@@ -70,6 +70,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setOnClickListener(R.id.btn_deal, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        toast("抱歉当前服务只能做废单处理");
                         Intent intent = new Intent(mContext, DealActivity.class);
                         intent.putExtra("data", item);
                         mContext.startActivity(intent);
@@ -83,6 +84,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                     helper.setOnClickListener(R.id.btn_yy_bl, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            toast("抱歉当前服务只能做废单处理");
                             MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
                                     .title("提示")
                                     .content("确认该订单已谈妥，提交至银行处")
@@ -136,9 +138,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.tv_status, true);
                 helper.setText(R.id.tv_status, "预授信");
                 if (item.getPre_credit_money() != null) {
-                    helper.setText(R.id.tv_money_num, "￥" + (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000) + "万"));
+                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000) + " 业务积分"));
                 } else {
-                    helper.setText(R.id.tv_money_num, "￥" + "0.00万");
+                    helper.setText(R.id.tv_money_num,  "0.00 业务积分");
                 }
                 helper.setVisible(R.id.btn_deal, false);
                 helper.setVisible(R.id.layout_zs, false);
@@ -168,9 +170,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.tv_status, true);
                 helper.setText(R.id.tv_status, "审核中");
                 if (item.getPre_credit_money() != null) {
-                    helper.setText(R.id.tv_money_num, "￥" + (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000) + "万"));
+                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000)));
                 } else {
-                    helper.setText(R.id.tv_money_num, "￥" + "0.00万");
+                    helper.setText(R.id.tv_money_num,  "0.00");
                 }
                 helper.setVisible(R.id.layout_zs, true);
                 helper.setVisible(R.id.v_sj, false);
@@ -187,9 +189,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.tv_status, true);
                 helper.setText(R.id.tv_status, "终审");
                 if (item.getCredit_money() != null) {
-                    helper.setText(R.id.tv_money_num, "￥" + (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + "万"));
+                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + " 业务积分"));
                 } else {
-                    helper.setText(R.id.tv_money_num, "￥" + "0.00万");
+                    helper.setText(R.id.tv_money_num,  "0.00 业务积分");
                 }
                 helper.setVisible(R.id.layout_zs, true);
                 helper.setVisible(R.id.btn_deal, false);
@@ -204,6 +206,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setOnClickListener(R.id.tv_result, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        toast("抱歉当前服务只能做废单处理");
                         AlertDialog.Builder builder1=new AlertDialog.Builder(mContext);
                         builder1.setMessage(item.getRej_reason() + "");
                         builder1.show();
@@ -216,9 +219,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.tv_status, true);
                 helper.setText(R.id.tv_status, "用信");
                 if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num, "￥" + (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "万"));
+                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
                 } else {
-                    helper.setText(R.id.tv_money_num, "￥" + "0.00万");
+                    helper.setText(R.id.tv_money_num,  "0.00 业务积分");
                 }
                 helper.setVisible(R.id.layout_zs, true);
                 helper.setVisible(R.id.v_sj, false);
@@ -230,7 +233,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setVisible(R.id.tv_result, true);
                 helper.setVisible(R.id.layout_ljcl, false);
                 if ("1".equals(item.getCreditAudit())) {
-                    helper.setText(R.id.tv_result, (String.format("%.2f", (Double.valueOf(item.getCredit_money()) / 10000)) + "万"));
+                    helper.setText(R.id.tv_result, (String.format("%.2f", (Double.valueOf(item.getCredit_money()) / 10000)) + " 业务积分"));
                 } else {
                     helper.setText(R.id.tv_result, "用信金额审核中");
                 }
@@ -241,9 +244,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setText(R.id.tv_status, "终审");
 //                helper.setVisible(R.id.tv_status,false);
                 if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num, "￥" + (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "万"));
+                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + " 业务积分"));
                 } else {
-                    helper.setText(R.id.tv_money_num, "￥" + "0.00万");
+                    helper.setText(R.id.tv_money_num, "0.00 业务积分");
                 }
                 helper.setVisible(R.id.layout_zs, false);
                 helper.setVisible(R.id.btn_deal, false);
@@ -255,6 +258,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 helper.setOnClickListener(R.id.tv_ljyx, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        toast("抱歉当前服务只能做废单处理");
                         Intent intent = new Intent(mContext, CreditNowActivity.class);
                         intent.putExtra("data", item);
                         mContext.startActivity(intent);

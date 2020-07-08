@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Picture;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,8 +40,11 @@ import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.ui.company_auth.ChooseDialogFragment;
+import com.lx.xqgg.ui.product.ApplyFragment;
+import com.lx.xqgg.ui.product.bean.ProductBean;
 import com.lx.xqgg.ui.share.ShareFaceActivity;
 import com.lx.xqgg.widget.SlowlyProgressBar;
+import com.qiyukf.unicorn.mediaselect.internal.utils.UIUtils;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebChromeClientExtension;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
@@ -87,12 +93,11 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     @BindView(R.id.toobar)
     ConstraintLayout toobar;
     @BindView(R.id.webview)
-    WebView webview;
+    public WebView webview;
     @BindView(R.id.v_finish)
     View vFinish;
     @BindView(R.id.tv_share)
     TextView tvShare;
-     private  String file;
     private SlowlyProgressBar bar;
     private ChooseDialogFragment chooseDialogFragment;
     private MaterialDialog materialDialog;
@@ -119,7 +124,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     private boolean isFwb = false;
 
     private boolean needShare = false;
-     private Handler handler=new Handler();
+    private  File file;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_webview;
@@ -190,6 +195,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         webview.getSettings().setGeolocationEnabled(true);
         webview.getSettings().setGeolocationDatabasePath(dir);
         webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
@@ -207,40 +213,12 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                         tvTitle.setText(mTitle);
                     }
                 }
-
                 webview.evaluateJavascript("javascript:creditC(" + "\"" + Constans.PROVINCE + "\",\"" + Constans.CITY + "\")", new ValueCallback<String>() {
                     @Override
                     public void onReceiveValue(String value) {
                         //此处为 js 返回的结果
-
                     }
                 });
-
-           /*    webview.evaluateJavascript("javascript:handleArrow()", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String value) {
-                        //此处为 js 返回的结果
-                      // finish();
-                       WebViewActivity.this.finish();
-                    }
-                });*/
-
-               // webview.loadUrl("javascript:handleArrow()");
-
-           /*     webview.evaluateJavascript("javascript:sharePic(" + "\"" + Constans.PROVINCE + "\",\"" + Constans.CITY + "\")", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String value) {
-                        //此处为 js 返回的结果
-
-                    }
-                });*/
-             /*    webview.evaluateJavascript("javascript:subForm()", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String value) {
-                        //此处为 js 返回的结果
-                       toast("登录");
-                    }
-                });*/
             }
 
             @SuppressLint("MissingPermission")
@@ -580,7 +558,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
         });
 
-        webview.addJavascriptInterface(new JavaScriptClass(this), "android");
+        webview.addJavascriptInterface(new JavaScriptClass(), "android");
 
         if (isFwb) {
             vFinish.setVisibility(View.GONE);
@@ -593,14 +571,14 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         webview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                WebView.HitTestResult result = webview.getHitTestResult();
+               WebView.HitTestResult result = webview.getHitTestResult();
                 if (result != null) {
                     int type = result.getType();
                     if (type == WebView.HitTestResult.IMAGE_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
                         String longClickUrl = result.getExtra();
                         showSaveDialog(longClickUrl);
                     }
-                }
+        }
                 return false;
             }
         });
@@ -705,11 +683,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     }
 
     class JavaScriptClass {
-        private Context context;
-
-        public JavaScriptClass(Context context) {
-            this.context = context;
-        }
         @JavascriptInterface
         public void share(String url, String title) {
             Log.e("zlz", url);
@@ -718,7 +691,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             web1.setTitle(mTitle);//标题
             web1.setThumb(image1);  //缩略图
             web1.setDescription(title + "");
-
             new ShareAction(mContext)
                     .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                     .setShareboardclickCallback(new ShareBoardlistener() {
@@ -751,48 +723,84 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
         @JavascriptInterface
         public void handleArrow() {
-       finish();
-    /*        handler.post(new Runnable() {
-                public void run() {
-                    //appView.loadUrl("javascript:wave()");
-                      toast("返回");
-                      WebViewActivity.this.finish();
-                }
-            });*/
+          finish();
+        }
+
+        @JavascriptInterface
+        public void sharePic() {
+
         }
         @JavascriptInterface
-        public void sharePic(String file) {
-            UMImage image = new UMImage(WebViewActivity.this,file );
-            new ShareAction(mContext)
-                    .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                    .setShareboardclickCallback(new ShareBoardlistener() {
-                        @Override
-                        public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                            if (share_media == SHARE_MEDIA.QQ) {
-                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
-                                        .withMedia(image)
-                                        .setCallback(umShareListener)
-                                        .share();
-                            } else if (share_media == SHARE_MEDIA.WEIXIN) {
-                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
-                                        .withMedia(image)
-                                        .setCallback(umShareListener)
-                                        .share();
-                            } else if (share_media == SHARE_MEDIA.QZONE) {
-                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
-                                        .withMedia(image)
-                                        .setCallback(umShareListener)
-                                        .share();
-                            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                        .withMedia(image)
-                                        .setCallback(umShareListener)
-                                        .share();
+        public   void  sharemessage(){
+            bimpic();
+            if(file!=null){
+                UMImage image = new UMImage(WebViewActivity.this, file);
+                new ShareAction(mContext)
+                        .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .setShareboardclickCallback(new ShareBoardlistener() {
+                            @Override
+                            public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                                if (share_media == SHARE_MEDIA.QQ) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.QZONE) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                            .withMedia(image)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                }
                             }
-                        }
-                    }).open();
+                        }).open();
+            }
         }
     }
+    //把Webview生成图片
+    private void bimpic() {
+        webview.measure(View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        webview.layout(0, 0, webview.getMeasuredWidth(), webview.getMeasuredHeight());
+        webview.setDrawingCacheEnabled(true);
+        webview.buildDrawingCache();
+        Bitmap longImage = Bitmap.createBitmap(webview.getMeasuredWidth(),
+                webview.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(longImage);  // 画布的宽高和 WebView 保持一致
+        Paint paint = new Paint();
+        canvas.drawBitmap(longImage, 0, webview.getMeasuredHeight(), paint);
+        webview.draw(canvas);
+        //将截取的图片保存到本地
+        File appDir = new File(Environment.getExternalStorageDirectory(), "小麒乖乖的日报");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        file= new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            longImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            Log.e("zlz", file.getPath());
+
+            fos.flush();
+            fos.close();
+            // 最后通知图库更新
+            this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                    Uri.fromFile(new File(file.getPath()))));
+            } catch (Exception e) {
+                toast(e.getMessage());
+            }
+        }
 
 
     private void share() {

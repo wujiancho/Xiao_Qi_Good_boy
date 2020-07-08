@@ -184,7 +184,7 @@ public class ShareFaceActivity extends BaseActivity {
                                                 //获取到下载得到的图片，进行本地保存
                                                 File pictureFolder = Environment.getExternalStorageDirectory();
                                                 //第二个参数为你想要保存的目录名称
-                                                File appDir = new File(pictureFolder, "小麒乖乖");
+                                                File appDir = new File(pictureFolder, "BIsa");
                                                 if (!appDir.exists()) {
                                                     appDir.mkdirs();
                                                 }
@@ -223,7 +223,7 @@ public class ShareFaceActivity extends BaseActivity {
     }
    //缓存到本地组合的图片
     public void saveImage2(Bitmap bmp) {
-        File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee2");
+        File appDir = new File(Environment.getExternalStorageDirectory(), "小麒乖乖");
         if (!appDir.exists()) {
             appDir.mkdir();
         }

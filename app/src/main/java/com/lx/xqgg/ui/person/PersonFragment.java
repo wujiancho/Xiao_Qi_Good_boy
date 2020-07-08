@@ -71,9 +71,9 @@ public class PersonFragment extends BaseFragment {
     private List<MatterBean> list2;
     private HomeBaseAdapter homeBaseAdapter3;
     private List<MatterBean> list3;
-    private  String token;
     //vip code
     private static final int VIP_RESLUT_CODE = 10086;
+    private boolean crmUser;
 
     @Override
     protected int getLayoutId() {
@@ -94,7 +94,6 @@ public class PersonFragment extends BaseFragment {
                 if(list1.get(position).getName().equals("服务商信息")){
                     HashMap<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                    token=SharedPrefManager.getUser().getToken();
                     RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
                     addSubscribe(ApiManage.getInstance().getMainApi().getUserServiceInfo(body)
                             .subscribeOn(Schedulers.io())
@@ -219,11 +218,15 @@ public class PersonFragment extends BaseFragment {
                     return;
                 }
                 if (list2.get(position).getName().equals("CRM")) {
+                  String  token=SharedPrefManager.getUser().getToken();
+                    Log.d("fan", "onItemClick: "+token);
                  WebViewActivity.open(new WebViewActivity.Builder()
                             .setContext(mContext)
                             .setAutoTitle(false)
                             .setIsFwb(false)
                             .setUrl(Config.CRMURL+"?token="+token+"&identity=app&statusHeight=44"));
+                            //setUrl("http://192.168.1.144:8081/xiaoqiguaiguai-mobile/crm/view/serviceHome.html?token=40dc5a22334c44fb93fa40cdaa7ef499&identity=app&statusHeight=44"));
+
                     return;
                 }
                 try {
@@ -268,8 +271,8 @@ public class PersonFragment extends BaseFragment {
                             .subscribeWith(new BaseSubscriber<BaseData<String>>(mContext, null) {
                                 @Override
                                 public void onNext(BaseData<String> stringBaseData) {
+                                    Log.e("zlz",stringBaseData.getData());
                                     if (stringBaseData.isSuccess()) {
-                                        Log.e("zlz",stringBaseData.getData());
                                         WebViewActivity.open(new WebViewActivity.Builder()
                                                 .setContext(mContext)
                                                 .setAutoTitle(false)
@@ -290,6 +293,8 @@ public class PersonFragment extends BaseFragment {
             }
         });
         tvPhone.setText(SharedPrefManager.getUser().getUsername() + "");
+
+
         name= SharedPrefManager.getUser().getUsername();
         phone=SharedPrefManager.getUser().getMobile();
         initUserInfo();
@@ -365,7 +370,7 @@ public class PersonFragment extends BaseFragment {
         list2.add(new MatterBean("电话咨询", "", R.drawable.ic_p_dhzx));
         list2.add(new MatterBean("帮助中心", "HelperActivity", R.drawable.ic_p_bzxx));
         list2.add(new MatterBean("匹配结果", "MatchSavedActivity", R.drawable.ic_p_ppjg));
-        if (SharedPrefManager.getUserInfo().getCrmuser()==1){
+        if (SharedPrefManager.getUserInfo()!=null&&SharedPrefManager.getUserInfo().getCrmUser()==true){
             list2.add(new MatterBean("CRM", "", R.drawable.crm));
         }
         //list2.add(new MatterBean("CRM", "", R.drawable.crm));

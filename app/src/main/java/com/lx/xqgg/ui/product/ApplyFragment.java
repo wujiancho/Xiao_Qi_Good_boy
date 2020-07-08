@@ -57,9 +57,6 @@ import com.lx.xqgg.ui.product.bean.QccBean;
 import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.CountDownTimerUtils;
 import com.lx.xqgg.util.FastClickUtil;
-
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -115,7 +112,6 @@ public class ApplyFragment extends DialogFragment {
     LinearLayout layoutMsg;
     private Unbinder mUnBinder;
     private ProductBean.RecordsBean bean;
-
     private boolean needMsg = true;
 
     protected CompositeDisposable mCompositeDisposable;
@@ -136,7 +132,6 @@ public class ApplyFragment extends DialogFragment {
     public ApplyFragment(ProductBean.RecordsBean recordsBean) {
         this.bean = recordsBean;
     }
-
 
     @Nullable
     @Override
@@ -764,13 +759,11 @@ public class ApplyFragment extends DialogFragment {
                     @Override
                     public void onNext(BaseData<String> objectBaseData) {
                         Log.e("fumin", new Gson().toJson(objectBaseData));
-                       toast(bean.getTitle());
                         if (objectBaseData.isSuccess()) {
                             //申请成功之后保存信息
                             SharedPrefManager.setIdNum(etIdNum.getText().toString());
                             SharedPrefManager.setRealName(etFrName.getText().toString());
                             SharedPrefManager.setPhone(etPhone.getText().toString());
-                            toast(bean.getTitle());
                             String url = bean.getCityLink();
                             if (Config.FUMIN_TITLE.equals(bean.getTitle())) {
                                FumingBean fuminBean = new Gson().fromJson(objectBaseData.getData(), FumingBean.class);
@@ -799,6 +792,7 @@ public class ApplyFragment extends DialogFragment {
                                     .setAutoTitle(false)
                                     .setIsFwb(false)
                                     .setTitle(bean.getTitle())
+                                   // .setUrl("http://192.168.1.144:8081/xiaoqiguaiguai-mobile//view/fuminSuccess.html"));
                                     .setUrl(url));
 
 //                            Uri uri = Uri.parse(url);

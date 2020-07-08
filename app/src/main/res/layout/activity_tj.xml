@@ -10,13 +10,43 @@
         android:layout_marginRight="12dp"
         android:layout_width="match_parent"
         android:layout_height="40dp">
-
         <RadioGroup
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:id="@+id/radio_group"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="40dp" >
+            <RadioButton
+                android:id="@+id/rb_allmy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/rb_select"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="全部"
+                android:textColor="@drawable/txt_selector" />
+            <RadioButton
+                android:id="@+id/rb_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/rb_select"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:paddingTop="4dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="4dp"
+                android:text="用户名称"
+                android:textColor="@drawable/txt_selector" />
+        </RadioGroup>
     </HorizontalScrollView>
 
     <RadioGroup
@@ -73,11 +103,6 @@
             android:paddingBottom="4dp"
             android:text="上月"
             android:textColor="@drawable/txt_selector" />
-
-
-
-
-
         <RadioButton
             android:id="@+id/rb_customize"
             android:layout_width="0dp"

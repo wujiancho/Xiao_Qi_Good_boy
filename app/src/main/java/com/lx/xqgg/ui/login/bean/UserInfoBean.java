@@ -1,6 +1,8 @@
 package com.lx.xqgg.ui.login.bean;
 
-public class UserInfoBean {
+import java.io.Serializable;
+
+public class UserInfoBean implements Serializable {
     /**
      * avatar :
      * email :
@@ -24,7 +26,24 @@ public class UserInfoBean {
     private String mobile;
     private String nickname;
     private String username;
-    private  int crmuser ;
+    private boolean crmUser;
+    private boolean legal;
+
+    public boolean getCrmUser() {
+        return crmUser;
+    }
+
+    public void setCrmUser(boolean crmUser) {
+        this.crmUser = crmUser;
+    }
+
+    public boolean isLegal() {
+        return legal;
+    }
+
+    public void setLegal(boolean legal) {
+        this.legal = legal;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -106,11 +125,5 @@ public class UserInfoBean {
         this.username = username;
     }
 
-    public int getCrmuser() {
-        return crmuser;
-    }
 
-    public void setCrmuser(int crmuser) {
-        this.crmuser = crmuser;
-    }
 }
