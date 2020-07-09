@@ -35,6 +35,7 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -121,8 +122,8 @@ public class ShareFaceActivity extends BaseActivity {
                                         .apply(new RequestOptions().placeholder(R.drawable.ic_default).diskCacheStrategy(DiskCacheStrategy.NONE))
                                         .into(imageView);
                                 //接受的姓名和推荐的手机号
-                                name= getIntent().getStringExtra("name");
-                                phone=getIntent().getStringExtra("phone");
+                                name=SharedPrefManager.getUserInfo().getUsername();
+                                phone=SharedPrefManager.getUserInfo().getMobile();
                                 //设置名字的隐藏
                                 if(name!=null){
                                     if (name.length()==2){
@@ -278,41 +279,43 @@ canvas.drawBitmap(secondBitmap, new Matrix(), null);
                 finish();
                 break;
             case R.id.tv_share:
-                if (file==null) {
-                    toast("获取配置信息失败！请稍后尝试");
-                    return;
-                }
                 //分享图片
-                UMImage image = new UMImage(ShareFaceActivity.this,file );
-                new ShareAction(mContext)
-                        .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .setShareboardclickCallback(new ShareBoardlistener() {
-                            @Override
-                            public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                                if (share_media == SHARE_MEDIA.QQ) {
-                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
-                                            .withMedia(image)
-                                            .setCallback(umShareListener)
-                                            .share();
-                                } else if (share_media == SHARE_MEDIA.WEIXIN) {
-                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
-                                            .withMedia(image)
-                                            .setCallback(umShareListener)
-                                            .share();
-                                } else if (share_media == SHARE_MEDIA.QZONE) {
-                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
-                                            .withMedia(image)
-                                            .setCallback(umShareListener)
-                                            .share();
-                                } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                            .withMedia(image)
-                                            .setCallback(umShareListener)
-                                            .share();
+                //设置组合的图片
+                bmp=mergeBitmap(bitmap,bitwangluo);
+                saveImage2(bmp);
+                if (file!=null) {
+                    UMImage image = new UMImage(ShareFaceActivity.this,file );
+                    image.setThumb(new UMImage(this, file ));
+                    new ShareAction(mContext)
+                            .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .setShareboardclickCallback(new ShareBoardlistener() {
+                                @Override
+                                public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                                    if (share_media == SHARE_MEDIA.QQ) {
+                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                                .withMedia(image)
+                                                .setCallback(umShareListener)
+                                                .share();
+                                    } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                                .withMedia(image)
+                                                .setCallback(umShareListener)
+                                                .share();
+                                    } else if (share_media == SHARE_MEDIA.QZONE) {
+                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                                .withMedia(image)
+                                                .setCallback(umShareListener)
+                                                .share();
+                                    } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                                .withMedia(image)
+                                                .setCallback(umShareListener)
+                                                .share();
+                                    }
                                 }
-                            }
-                        }).open();
-                break;
+                            }).open();
+                    break;
+                }
         }
 
     }

@@ -735,6 +735,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             bimpic();
             if(file!=null){
                 UMImage image = new UMImage(WebViewActivity.this, file);
+                image.setThumb(new UMImage(WebViewActivity.this, file ));
                 new ShareAction(mContext)
                         .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setShareboardclickCallback(new ShareBoardlistener() {
