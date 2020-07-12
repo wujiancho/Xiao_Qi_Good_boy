@@ -9,6 +9,7 @@ import okhttp3.RequestBody;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,12 +54,13 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     public static final int UNKNOW_APP_SOURCE_CODE = 10088;
 
     private String type;
-
+    private   boolean code;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
+
 
 
     @Override
@@ -91,9 +93,13 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
 
     @Override
     protected void initData() {
-        checkUpdate(true);
+        if (code==true){
+            checkUpdate(code);
+        }
+       else {
+            getAdvert();
+        }
        getUserServiceInfo();
-        getAdvert();
     }
 
     @Override
@@ -153,7 +159,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_INSTALL) {
             if (resultCode != RESULT_OK) {
-                checkUpdate(true);
+                checkUpdate(code);
             }
         }
         if (requestCode == UNKNOW_APP_SOURCE_CODE) {

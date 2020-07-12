@@ -776,7 +776,8 @@ public class ApplyFragment extends DialogFragment {
                                    } catch (UnsupportedEncodingException e) {
                                        e.printStackTrace();
                                    }
-
+                               }  else if (fuminBean.getStatus().equals("400")) {
+                                   toast(fuminBean.getMessage());
                                }else {
                                    toast(fuminBean.getMessage());
                                }

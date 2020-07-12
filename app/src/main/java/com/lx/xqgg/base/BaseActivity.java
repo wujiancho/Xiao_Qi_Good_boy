@@ -51,6 +51,7 @@ public abstract class BaseActivity extends SupportActivity {
         setContentView(getView());
         ButterKnife.bind(this);
         AppActivityTaskManager.getInstance().addActivity(this);
+
         mContext = this;
         gson = new Gson();
         setTitle("");
@@ -106,7 +107,10 @@ public abstract class BaseActivity extends SupportActivity {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
-
+    @Override
+    public boolean moveTaskToBack(boolean nonRoot) {
+        return super.moveTaskToBack(true);
+    }
     /**
      * 订阅事件
      *

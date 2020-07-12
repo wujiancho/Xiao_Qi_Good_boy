@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.person;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import com.lx.xqgg.ui.home.adapter.HomeBaseAdapter;
 import com.lx.xqgg.ui.home.bean.MatterBean;
 import com.lx.xqgg.ui.home.bean.UserServiceBean;
 import com.lx.xqgg.ui.login.bean.UserInfoBean;
+import com.lx.xqgg.ui.login.bean.crmLoginBean;
 import com.lx.xqgg.ui.setting.SettingActivity;
 import com.lx.xqgg.ui.vip.VipActivity;
 import com.lx.xqgg.ui.vip.bean.PayListBean;
@@ -82,13 +84,13 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
         list1 = new ArrayList<>();
         homeBaseAdapter1 = new HomeBaseAdapter(R.layout.item_person, list1);
         rvWdxx.setLayoutManager(new GridLayoutManager(mContext, 4));
         rvWdxx.setAdapter(homeBaseAdapter1);
 
         homeBaseAdapter1.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if(list1.get(position).getName().equals("服务商信息")){
@@ -186,6 +188,7 @@ public class PersonFragment extends BaseFragment {
         rvWdfw.setLayoutManager(new GridLayoutManager(mContext, 4));
         rvWdfw.setAdapter(homeBaseAdapter2);
         homeBaseAdapter2.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @SuppressLint("CheckResult")
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (list2.get(position).getName().equals("在线客服")) {
@@ -218,15 +221,35 @@ public class PersonFragment extends BaseFragment {
                     return;
                 }
                 if (list2.get(position).getName().equals("CRM")) {
-                  String  token=SharedPrefManager.getUser().getToken();
-                    Log.d("fan", "onItemClick: "+token);
-                 WebViewActivity.open(new WebViewActivity.Builder()
-                            .setContext(mContext)
-                            .setAutoTitle(false)
-                            .setIsFwb(false)
-                            .setUrl(Config.CRMURL+"?token="+token+"&identity=app&statusHeight=44"));
-                            //setUrl("http://192.168.1.144:8081/xiaoqiguaiguai-mobile/crm/view/serviceHome.html?token=40dc5a22334c44fb93fa40cdaa7ef499&identity=app&statusHeight=44"));
+                    HashMap<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("mobile", SharedPrefManager.getUserInfo().getMobile());
+                    paramsMap.put("identity", "app");
+                    RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+                    ApiManage.getInstance().getMainApi().crmlogin(Config.URL+"crm/login",body)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeWith(new BaseSubscriber<BaseData<crmLoginBean>>(mContext,null) {
+                                @Override
+                                public void onNext(BaseData<crmLoginBean> crmLoginbean) {
+                                    if (crmLoginbean.isSuccess()) {
+                                            WebViewActivity.open(new WebViewActivity.Builder()
+                                                    .setContext(mContext)
+                                                    .setAutoTitle(false)
+                                                    .setIsFwb(false)
+                                                    .setUrl(Config.CRMURLS + "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=44"));
+                                                     //.setUrl(Config.CRMURLS + "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=44"));
 
+                                    }
+                                    else {
+                                        toast(crmLoginbean.getMessage());
+                                    }
+                                }
+                                @Override
+                                public void onError(Throwable t) {
+                                    super.onError(t);
+                                    toast(t.toString());
+                                }
+                            });
                     return;
                 }
                 try {
@@ -272,7 +295,7 @@ public class PersonFragment extends BaseFragment {
                                 @Override
                                 public void onNext(BaseData<String> stringBaseData) {
                                     Log.e("zlz",stringBaseData.getData());
-                                    if (stringBaseData.isSuccess()) {
+                                        if (stringBaseData.isSuccess()) {
                                         WebViewActivity.open(new WebViewActivity.Builder()
                                                 .setContext(mContext)
                                                 .setAutoTitle(false)
@@ -293,8 +316,6 @@ public class PersonFragment extends BaseFragment {
             }
         });
         tvPhone.setText(SharedPrefManager.getUser().getUsername() + "");
-
-
         name= SharedPrefManager.getUser().getUsername();
         phone=SharedPrefManager.getUser().getMobile();
         initUserInfo();
@@ -305,6 +326,9 @@ public class PersonFragment extends BaseFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<UserInfoBean>>(mContext, null) {
+
+
+
                     @Override
                     public void onNext(BaseData<UserInfoBean> userInfoBeanBaseData) {
                         Log.e("userinfo", new Gson().toJson(userInfoBeanBaseData));
@@ -370,7 +394,8 @@ public class PersonFragment extends BaseFragment {
         list2.add(new MatterBean("电话咨询", "", R.drawable.ic_p_dhzx));
         list2.add(new MatterBean("帮助中心", "HelperActivity", R.drawable.ic_p_bzxx));
         list2.add(new MatterBean("匹配结果", "MatchSavedActivity", R.drawable.ic_p_ppjg));
-        if (SharedPrefManager.getUserInfo()!=null&&SharedPrefManager.getUserInfo().getCrmUser()==true){
+        crmUser =new Boolean(new Gson().toJson(SharedPrefManager.getUserInfo().isCrmUser()));
+        if (crmUser){
             list2.add(new MatterBean("CRM", "", R.drawable.crm));
         }
         //list2.add(new MatterBean("CRM", "", R.drawable.crm));

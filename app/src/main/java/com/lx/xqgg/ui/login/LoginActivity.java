@@ -145,7 +145,7 @@ public class LoginActivity extends BaseActivity {
                 addSubscribe(ApiManage.getInstance().getMainApi().login(body)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new BaseSubscriber<LoginBean>(mContext, null) {
+                                .subscribeWith(new BaseSubscriber<LoginBean>(mContext, null) {
                             @Override
                             public void onNext(LoginBean loginBean) {
                                 if (loginBean.isSuccess()) {

@@ -1,6 +1,7 @@
 package com.lx.xqgg.api;
 
 import com.lx.xqgg.base.BaseData;
+import com.lx.xqgg.config.Config;
 import com.lx.xqgg.face_ui.home.bean.FaceProductBean;
 import com.lx.xqgg.ui.city.bean.CityBean;
 import com.lx.xqgg.ui.company_auth.bean.ImgBean;
@@ -13,9 +14,9 @@ import com.lx.xqgg.ui.home.bean.UserServiceBean;
 import com.lx.xqgg.ui.login.bean.LoginBean;
 import com.lx.xqgg.ui.login.bean.MsgBean;
 import com.lx.xqgg.ui.login.bean.UserInfoBean;
+import com.lx.xqgg.ui.login.bean.crmLoginBean;
 import com.lx.xqgg.ui.match.bean.MatchResultBean;
 import com.lx.xqgg.ui.match.bean.MatchSaveFirstBean;
-import com.lx.xqgg.ui.match.bean.MatchSavedBean;
 import com.lx.xqgg.ui.message.bean.MessageBean;
 import com.lx.xqgg.ui.my_client.bean.ServiceCustomerBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
@@ -36,6 +37,7 @@ import io.reactivex.Flowable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
@@ -58,6 +60,14 @@ public interface MainApi {
      */
     @POST("user/mobilelogin")
     Flowable<LoginBean> login(@Body RequestBody body);
+    /**
+     * crm登录
+     *
+     * @return
+     */
+    @Headers("Content-Type:application/json")
+    @POST()
+    Flowable<BaseData<crmLoginBean>> crmlogin(@Url String url, @Body RequestBody body);
     /**
      * 获取服务商信息
      *
@@ -377,6 +387,7 @@ public interface MainApi {
      */
     @GET("index/getTaxbureau")
     Flowable<BaseData<String>> getTaxUrl(@Query("province") String province);
+
 
     /**
      * 检查更新

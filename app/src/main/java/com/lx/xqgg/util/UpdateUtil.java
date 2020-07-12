@@ -67,7 +67,7 @@ public class UpdateUtil {
                 .icon(ContextCompat.getDrawable(activity, R.drawable.logo))
                 .limitIconToDefaultSize()
                 .customView(view, true)
-               .content("最新版本：" + versionBean.getVersionname() + "\n" + "更新内容：" + versionBean.getContent())
+                //.content("最新版本：" + versionBean.getVersionname() + "\n" + "更新内容：" + versionBean.getContent())
                 .positiveText("更新")
                 .negativeText("取消")
                 .cancelable(false)

@@ -858,7 +858,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         @Override
         public void onResult(SHARE_MEDIA platform) {
             toast("分享成功");
-            finish();
         }
 
         @Override

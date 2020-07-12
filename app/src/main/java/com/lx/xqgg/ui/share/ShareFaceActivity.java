@@ -6,8 +6,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
+import android.os.PersistableBundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +53,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -84,17 +87,33 @@ public class ShareFaceActivity extends BaseActivity {
     private String phone;
     private String imgUrl = "";
     private  Bitmap bitwangluo;
-    private Bitmap bitmap;
-    Bitmap bmp;
+    private  Bitmap bitmap;
+     private  Bitmap  bmp;
     File file;
+    File file2;
+    private Regmg regmg;
+    private Bitmap bitmap1;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_face_share;
     }
-
     @Override
     protected void initView() {
         tvTitle.setText("推荐有礼");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+
     }
 
     @Override
@@ -107,13 +126,11 @@ public class ShareFaceActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
-
-                    private Regmg regmg;
-
                     @Override
                     public void onNext(BaseData<List<PayListBean>> listBaseData) {
                         Log.e("zlz", new Gson().toJson(listBaseData));
                         Log.e("zlz", Config.IMGURL + listBaseData.getData().get(0).getValue());
+
                         if (listBaseData.isSuccess()) {
                             if (listBaseData.getData() != null) {
                                 imgUrl = Config.IMGURL + listBaseData.getData().get(0).getValue();
@@ -121,51 +138,7 @@ public class ShareFaceActivity extends BaseActivity {
                                         .load(Config.IMGURL + listBaseData.getData().get(0).getValue())
                                         .apply(new RequestOptions().placeholder(R.drawable.ic_default).diskCacheStrategy(DiskCacheStrategy.NONE))
                                         .into(imageView);
-                                //接受的姓名和推荐的手机号
-                                name=SharedPrefManager.getUserInfo().getUsername();
-                                phone=SharedPrefManager.getUserInfo().getMobile();
-                                //设置名字的隐藏
-                                if(name!=null){
-                                    if (name.length()==2){
-                                        String name1=name.substring(0,1);
-                                        String nameer =name1+"*";
-                                        erwermaurl=nameer;
-                                }
-                                   else if (name.length()==3){
-                                        String name1=name.substring(0,1);
-                                        String name3=name.substring(1,2);
-                                        String nameer2 =name1+"*"+name3;
-                                        erwermaurl=nameer2;
-                                }
-                                }
-                                // //设置手机号的隐藏
-                                if (phone!=null){
-                                    String phonel=String.valueOf(phone);
-                                    String phoen1=  phonel.substring(0,3);
-                                    String phoen2 =phonel.substring(phonel.length()-4,phonel.length());
-                                    erwermaphone=phoen1+"****"+phoen2;
-                                }
-                                //接受的数据生成jsonbean数据
-                                ArrayList<Regmg> gson= new ArrayList<>();
-                                regmg = new Regmg();
-                                regmg.setName(name);
-                                regmg.setName1(erwermaurl);
-                                regmg.setMobile(phone);
-                                regmg.setMobile1(erwermaphone);
-                                gson.add(regmg);
-                                String url=new Gson().toJson(gson);
-                                String json =url.substring(1,url.length()-1);
-                                Log.e("zlz",json);
-                                //加密json
-                                String jiajson= Base64.encode(json.getBytes());
-                                //生成注册的接口
-                                String jiekong=Config.URL+"view/register.html?bean="+jiajson;
-                                //生成二维码
-                                bitmap= CodeUtils.createImage(jiekong, 600, 600, null);
-                                //saveImage(bitmap);
-                                Log.e("zlz",jiekong);
-                                //设置二维码图片
-                                erweima.setImageBitmap(bitmap);
+                                   tup();
                                 //缓存数据布局图到本地
                                 Observable.create(new ObservableOnSubscribe<File>() {
                                     @Override
@@ -191,7 +164,7 @@ public class ShareFaceActivity extends BaseActivity {
                                                 }
                                                 String fileName = System.currentTimeMillis() + ".jpg";
                                                 File destFile = new File(appDir, fileName);
-                                               //把gilde下载得到图片复制到定义好的目录中去
+                                                //把gilde下载得到图片复制到定义好的目录中去
                                                 copy(file, destFile);
                                                 // 最后通知图库更新
                                                 sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
@@ -203,10 +176,6 @@ public class ShareFaceActivity extends BaseActivity {
                                             }
 
                                         });
-
-
-
-
                                 erweima.setOnLongClickListener(new View.OnLongClickListener() {
                                     @Override
                                     public boolean onLongClick(View v) {
@@ -222,7 +191,84 @@ public class ShareFaceActivity extends BaseActivity {
                     }
                 }));
     }
-   //缓存到本地组合的图片
+    public  void tup(){
+        //接受的姓名和推荐的手机号
+        name=SharedPrefManager.getUserInfo().getUsername();
+        phone=SharedPrefManager.getUserInfo().getMobile();
+        //设置名字的隐藏
+        if(name!=null){
+            if (name.length()==2){
+                String name1=name.substring(0,1);
+                String nameer =name1+"*";
+                erwermaurl=nameer;
+            }
+            else if (name.length()==3){
+                String name1=name.substring(0,1);
+                String name3=name.substring(1,2);
+                String nameer2 =name1+"*"+name3;
+                erwermaurl=nameer2;
+            }
+        }
+        // //设置手机号的隐藏
+        if (phone!=null){
+            String phonel=String.valueOf(phone);
+            String phoen1=  phonel.substring(0,3);
+            String phoen2 =phonel.substring(phonel.length()-4,phonel.length());
+            erwermaphone=phoen1+"****"+phoen2;
+        }
+        //接受的数据生成jsonbean数据
+        ArrayList<Regmg> gson= new ArrayList<>();
+        regmg = new Regmg();
+        regmg.setName(name);
+        regmg.setName1(erwermaurl);
+        regmg.setMobile(phone);
+        regmg.setMobile1(erwermaphone);
+        gson.add(regmg);
+        String url=new Gson().toJson(gson);
+        String json =url.substring(1,url.length()-1);
+        Log.e("zlz",json);
+        //加密json
+        String jiajson= Base64.encode(json.getBytes());
+        //生成注册的接口
+        String jiekong=Config.URL+"view/register.html?bean="+jiajson;
+        //生成二维码
+        bitmap= CodeUtils.createImage(jiekong, 600, 600, null);
+        saveImage(bitmap);
+        bitmap1 = BitmapFactory.decodeFile(file2.getPath());
+        if (file2!=null){
+            //设置二维码图片
+            erweima.setImageBitmap(bitmap1);
+        }
+        Log.e("zlz",jiekong);
+      /*  if (bmp!=null){
+            bmp = mergeBitmap(bitmap, bitwangluo);
+            saveImage2(bmp);
+        }*/
+    }
+   //缓存到本地的图片
+   public void saveImage(Bitmap bmp2) {
+       File appDir = new File(Environment.getExternalStorageDirectory(), "Bac");
+       if (!appDir.exists()) {
+           appDir.mkdir();
+       }
+       String fileName = System.currentTimeMillis() + ".jpg";
+       file2= new File(appDir, fileName);
+       try {
+           FileOutputStream fos = new FileOutputStream(file2);
+           bmp2.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+           Log.e("zlz", file2.getPath());
+           fos.flush();
+           fos.close();
+           // 最后通知图库更新
+           this.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                   Uri.fromFile(new File(file2.getPath()))));
+
+       } catch (FileNotFoundException e) {
+           e.printStackTrace();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
     public void saveImage2(Bitmap bmp) {
         File appDir = new File(Environment.getExternalStorageDirectory(), "小麒乖乖");
         if (!appDir.exists()) {
@@ -259,7 +305,6 @@ public class ShareFaceActivity extends BaseActivity {
         if (bd==bitmap){
             return bd;
         }
-        bitmap.recycle();
         return bd;
     }
     //合拼图片
@@ -281,42 +326,41 @@ canvas.drawBitmap(secondBitmap, new Matrix(), null);
             case R.id.tv_share:
                 //分享图片
                 //设置组合的图片
-                bmp=mergeBitmap(bitmap,bitwangluo);
-                saveImage2(bmp);
-                if (file!=null) {
-                    UMImage image = new UMImage(ShareFaceActivity.this,file );
-                    image.setThumb(new UMImage(this, file ));
-                    new ShareAction(mContext)
-                            .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                            .setShareboardclickCallback(new ShareBoardlistener() {
-                                @Override
-                                public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                                    if (share_media == SHARE_MEDIA.QQ) {
-                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
-                                                .withMedia(image)
-                                                .setCallback(umShareListener)
-                                                .share();
-                                    } else if (share_media == SHARE_MEDIA.WEIXIN) {
-                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
-                                                .withMedia(image)
-                                                .setCallback(umShareListener)
-                                                .share();
-                                    } else if (share_media == SHARE_MEDIA.QZONE) {
-                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
-                                                .withMedia(image)
-                                                .setCallback(umShareListener)
-                                                .share();
-                                    } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                                        new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                                .withMedia(image)
-                                                .setCallback(umShareListener)
-                                                .share();
+                    bmp = mergeBitmap(bitmap, bitwangluo);
+                    //saveImage2(bmp);
+                        UMImage image = new UMImage(ShareFaceActivity.this, bmp);
+                        image.setThumb(new UMImage(this, bmp));
+                        new ShareAction(mContext)
+                                .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setShareboardclickCallback(new ShareBoardlistener() {
+                                    @Override
+                                    public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                                        if (share_media == SHARE_MEDIA.QQ) {
+                                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                                    .withMedia(image)
+                                                    .setCallback(umShareListener)
+                                                    .share();
+                                        } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                                    .withMedia(image)
+                                                    .setCallback(umShareListener)
+                                                    .share();
+                                        } else if (share_media == SHARE_MEDIA.QZONE) {
+                                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                                    .withMedia(image)
+                                                    .setCallback(umShareListener)
+                                                    .share();
+                                        } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                                    .withMedia(image)
+                                                    .setCallback(umShareListener)
+                                                    .share();
+                                        }
                                     }
-                                }
-                            }).open();
+
+                                }).open();
                     break;
                 }
-        }
 
     }
 
@@ -324,22 +368,25 @@ canvas.drawBitmap(secondBitmap, new Matrix(), null);
         @Override
         public void onStart(SHARE_MEDIA platform) {
             //分享开始的回调
+
         }
 
         @Override
         public void onResult(SHARE_MEDIA platform) {
             toast("分享成功");
-            finish();
+            //tv_share.setVisibility(View.GONE);
         }
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
             toast("分享失败" + t.toString());
+            //tv_share.setVisibility(View.GONE);
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
             toast("分享取消");
+            //tv_share.setVisibility(View.GONE);
         }
     };
 

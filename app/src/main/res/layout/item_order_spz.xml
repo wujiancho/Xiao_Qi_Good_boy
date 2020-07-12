@@ -7,7 +7,6 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="4dp"
     app:cardElevation="0dp"
-    android:id="@+id/allitem"
     >
 
     <LinearLayout
@@ -207,25 +206,27 @@
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
-                        android:gravity="right"
                         android:id="@+id/tv_sx_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
                         android:background="@drawable/common_btn_yzm"
-                        android:paddingLeft="8dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="8dp"
-                        android:paddingBottom="2dp"
+                        android:padding="4dp"
+                        android:text="废单"
                         android:textColor="@color/white"
-                        tools:text="通过" />
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.7"
 
-                    <View
-                        android:id="@+id/v_sj"
-                        android:layout_width="12dp"
-                        android:layout_height="6dp"
-                        android:layout_marginTop="-1dp"
-                        android:background="@drawable/ic_red_sj" />
+
+                        />
+
+
                 </LinearLayout>
 
 
@@ -233,7 +234,6 @@
                     android:id="@+id/tv_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/red_soild"
                     android:paddingLeft="8dp"
                     android:paddingTop="2dp"
                     android:lines="1"
@@ -282,7 +282,7 @@
                 android:layout_marginRight="8dp"
                 android:background="@drawable/common_btn_yzm"
                 android:padding="4dp"
-                android:text="立即处理"
+                android:text="废单"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:visibility="gone"
@@ -298,7 +298,7 @@
                 android:layout_marginRight="8dp"
                 android:background="@drawable/common_btn_yzm"
                 android:padding="4dp"
-                android:text="预约办理"
+                android:text="废单"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:visibility="gone"

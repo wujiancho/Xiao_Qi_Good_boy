@@ -3,127 +3,130 @@ package com.lx.xqgg.ui.login.bean;
 import java.io.Serializable;
 
 public class UserInfoBean implements Serializable {
-    /**
-     * avatar :
-     * email :
-     * endtime : 2020-10-22 16:57:23
-     * id : 1771
-     * isVip : 0
-     * isenter : 1
-     * level : 0
-     * mobile : 18913541567
-     * nickname : 18913541567
-     * username : 18913541567
-     */
 
-    private String avatar;
-    private String email;
-    private String endtime;
-    private int id;
-    private int isVip;
-    private String isenter;
-    private int level;
-    private String mobile;
-    private String nickname;
-    private String username;
-    private boolean crmUser;
-    private boolean legal;
 
-    public boolean getCrmUser() {
-        return crmUser;
-    }
+        /**
+         * avatar : ''
+         * crmUser : true
+         * email :
+         * endtime : 2020-12-31 00:00:00
+         * id : 192
+         * isVip : 1
+         * isenter : 1
+         * legal : false
+         * level : 0
+         * mobile : 17312615026
+         * nickname : 陈玲
+         * username : 陈玲
+         */
 
-    public void setCrmUser(boolean crmUser) {
-        this.crmUser = crmUser;
-    }
+        private String avatar;
+        private boolean crmUser;
+        private String email;
+        private String endtime;
+        private int id;
+        private int isVip;
+        private String isenter;
+        private boolean legal;
+        private int level;
+        private String mobile;
+        private String nickname;
+        private String username;
 
-    public boolean isLegal() {
-        return legal;
-    }
+        public String getAvatar() {
+            return avatar;
+        }
 
-    public void setLegal(boolean legal) {
-        this.legal = legal;
-    }
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
 
-    public String getAvatar() {
-        return avatar;
-    }
+        public boolean isCrmUser() {
+            return crmUser;
+        }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+        public void setCrmUser(boolean crmUser) {
+            this.crmUser = crmUser;
+        }
 
-    public String getEmail() {
-        return email;
-    }
+        public String getEmail() {
+            return email;
+        }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
-    public String getEndtime() {
-        return endtime;
-    }
+        public String getEndtime() {
+            return endtime;
+        }
 
-    public void setEndtime(String endtime) {
-        this.endtime = endtime;
-    }
+        public void setEndtime(String endtime) {
+            this.endtime = endtime;
+        }
 
-    public int getId() {
-        return id;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public int getIsVip() {
-        return isVip;
-    }
+        public int getIsVip() {
+            return isVip;
+        }
 
-    public void setIsVip(int isVip) {
-        this.isVip = isVip;
-    }
+        public void setIsVip(int isVip) {
+            this.isVip = isVip;
+        }
 
-    public String getIsenter() {
-        return isenter;
-    }
+        public String getIsenter() {
+            return isenter;
+        }
 
-    public void setIsenter(String isenter) {
-        this.isenter = isenter;
-    }
+        public void setIsenter(String isenter) {
+            this.isenter = isenter;
+        }
 
-    public int getLevel() {
-        return level;
-    }
+        public boolean isLegal() {
+            return legal;
+        }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
+        public void setLegal(boolean legal) {
+            this.legal = legal;
+        }
 
-    public String getMobile() {
-        return mobile;
-    }
+        public int getLevel() {
+            return level;
+        }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+        public void setLevel(int level) {
+            this.level = level;
+        }
 
-    public String getNickname() {
-        return nickname;
-    }
+        public String getMobile() {
+            return mobile;
+        }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
 
-    public String getUsername() {
-        return username;
-    }
+        public String getNickname() {
+            return nickname;
+        }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
 
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
 }

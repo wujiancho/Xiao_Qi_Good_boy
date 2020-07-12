@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.home;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class PicFragment extends DialogFragment {
     private ImageView imageView;
     private ImageView guan;
     private AdvertBean advertBean;
+    private String url;
 
     public PicFragment(AdvertBean advertBean) {
         this.advertBean = advertBean;
@@ -36,6 +38,7 @@ public class PicFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
         View view = inflater.inflate(R.layout.fragment_pic, null);
         imageView = view.findViewById(R.id.imageView);
         guan = view.findViewById(R.id.guan);
@@ -44,23 +47,26 @@ public class PicFragment extends DialogFragment {
                 .load(Config.IMGURL + advertBean.getImage())
                 .into(imageView);
         Log.d("guangao", "onCreateView: "+Config.IMGURL + advertBean.getImage());
-      guan.setOnClickListener(new View.OnClickListener() {
+        Log.d("guangao2", "onCreateView: "+advertBean.getUrl());
+        url = advertBean.getUrl();
+        guan.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               dismiss();
           }
       });
-      imageView.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              WebViewActivity.open(new WebViewActivity.Builder()
-                      .setContext(getContext())
-                      .setAutoTitle(false)
-                      .setIsFwb(false)
-                      .setUrl(advertBean.getUrl()));
-              return;
-          }
-      });
+        if (url!=null && !"".equals(url.trim())) {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        WebViewActivity.open(new WebViewActivity.Builder()
+                            .setContext(getContext())
+                            .setAutoTitle(false)
+                            .setIsFwb(false)
+                            .setUrl(url));
+                }
+            });
+    }
         return view;
     }
 }
