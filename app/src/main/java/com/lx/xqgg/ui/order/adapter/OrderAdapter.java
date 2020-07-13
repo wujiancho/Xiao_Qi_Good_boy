@@ -21,6 +21,7 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.bean.DealBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
+import com.lx.xqgg.ui.order.bean.OrderpassFragment;
 import com.lx.xqgg.ui.vip.bean.NotifyBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,6 +39,8 @@ import okhttp3.RequestBody;
 public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseViewHolder> {
     private DealBean dealBean;
     private OrderBean.RecordsBean orderBean;
+    private OrderpassFragment orderpassFragment;
+
     public OrderAdapter(@Nullable List<OrderBean.RecordsBean> data) {
         super(R.layout.item_order_spz, data);
     }
@@ -240,67 +243,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                 });
 
                 break;
-            //终审
-            case "nopass":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审");
-                if (item.getCredit_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + " 业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00 业务积分");
-                }
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-                helper.setVisible(R.id.tv_sx_status, true);
-                helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-                helper.setOnClickListener(R.id.tv_sx_status, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
-                                .title("提示")
-                                .content("系统即将删除该笔订单，请确认")
-                                .cancelable(false)
-                                .positiveText(R.string.yes)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        orderBean=  new  OrderBean.RecordsBean();
-                                        HashMap<String, Object> paramsMap = new HashMap<>();
-                                        paramsMap.put("id", item.getId());
-                                        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
-                                        ApiManage.getInstance().getMainApi().disCardOrder(body)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
-                                                    @Override
-                                                    public void onNext(BaseData baseData) {
-                                                        Log.e("zlz", new Gson().toJson(baseData));
-                                                        if (baseData.isSuccess()) {
-                                                            toast("提交成功");
-                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
-                                                        } else {
-                                                            toast(baseData.getMessage());
-                                                        }
-                                                    }
-                                                });
 
-                                    }
-                                })
-                                .negativeText(R.string.no)
-                                .negativeColorRes(R.color.txt_normal)
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .build();
-                        permissionDialog.show();
-                    }
-                });
-                break;
             //用信
             case "usecredit":
                 helper.setVisible(R.id.btn_yy_bl, false);
@@ -325,72 +268,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
                     helper.setText(R.id.tv_result, "用信金额审核中");
                 }
                 break;
-            //终审通过
-            case "pass":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审");
-//                helper.setVisible(R.id.tv_status,false);
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + " 业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num, "0.00 业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//                helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, true);
-//                helper.setText(R.id.tv_result,item.get)
-                helper.setOnClickListener(R.id.layout_ljcl, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
-                                .title("提示")
-                                .content("确认该订单已谈妥，提交至银行处")
-                                .cancelable(false)
-                                .positiveText(R.string.yes)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        DealBean dealBean=new DealBean();
-                                        dealBean.setId(item.getId()+"");
-                                        dealBean.setAppointment("1");
 
-                                        Gson gson = new Gson();
-                                        String obj = gson.toJson(dealBean);
-                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), obj);
-                                        ApiManage.getInstance().getMainApi().updateOrder(body)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribeWith(new BaseSubscriber<BaseData<Object>>(mContext, null) {
-                                                    @Override
-                                                    public void onNext(BaseData<Object> objectBaseData) {
-                                                        if (objectBaseData.isSuccess()) {
-                                                            toast("提交成功");
-                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
-                                                            dialog.dismiss();
-                                                        } else {
-                                                            toast(objectBaseData.getMessage());
-                                                        }
-                                                    }
-                                                });
-
-                                    }
-                                })
-                                .negativeText(R.string.no)
-                                .negativeColorRes(R.color.txt_normal)
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .build();
-                        permissionDialog.show();
-                    }
-                });
-                break;
         }
     }
 

@@ -54,8 +54,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     public static final int UNKNOW_APP_SOURCE_CODE = 10088;
 
     private String type;
-    private   boolean code;
-
+    private  Boolean code=true;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -93,13 +92,12 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
 
     @Override
     protected void initData() {
-        if (code==true){
-            checkUpdate(code);
-        }
-       else {
-            getAdvert();
-        }
+        checkUpdate(true);
        getUserServiceInfo();
+      /* if(){
+
+       }*/
+        getAdvert();
     }
 
     @Override
@@ -159,7 +157,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTION_INSTALL) {
             if (resultCode != RESULT_OK) {
-                checkUpdate(code);
+                checkUpdate(true);
             }
         }
         if (requestCode == UNKNOW_APP_SOURCE_CODE) {

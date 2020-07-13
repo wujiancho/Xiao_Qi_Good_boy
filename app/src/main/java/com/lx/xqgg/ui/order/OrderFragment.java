@@ -32,6 +32,7 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.adapter.TjAdapter;
 import com.lx.xqgg.ui.order.bean.OrderUserBean;
+import com.lx.xqgg.ui.order.bean.OrderpassFragment;
 import com.lx.xqgg.ui.order.bean.TjBean;
 import com.lx.xqgg.ui.vip.bean.NotifyBean;
 import com.lx.xqgg.util.DensityUtils;
@@ -107,7 +108,7 @@ public class OrderFragment extends BaseFragment {
 
     private String[] tabsTitle = {"全部", "审批中", "预授信", "终审", "用信"};
     private String[] statusStrings = {"", "created", "precredit", "pass", "usecredit"};
-    private List<OrderTypeFragment> fragments = new ArrayList<>();
+    private List<BaseFragment> fragments = new ArrayList<>();
     private MyAdapter myAdapter;
     private Calendar calendar;
     private List<OrderUserBean> orderUserBeanList = new ArrayList<>();
@@ -129,7 +130,10 @@ public class OrderFragment extends BaseFragment {
     protected void initView() {
         EventBus.getDefault().register(this);
         for (int i = 0; i < tabsTitle.length; i++) {
-            fragments.add(OrderTypeFragment.newInstance("", statusStrings[i], "", "", userId));
+                fragments.add(OrderTypeFragment.newInstance("", statusStrings[i], "", "", userId));
+               /* if (i==2){
+                    fragments.add(OrderpassFragment.newInstance("", statusStrings[2], "", "", userId));
+                }*/
         }
         viewPager.setOffscreenPageLimit(tabsTitle.length);
         myAdapter = new MyAdapter(getChildFragmentManager());
@@ -316,6 +320,16 @@ public class OrderFragment extends BaseFragment {
     public class MyAdapter extends FragmentStatePagerAdapter {
         public MyAdapter(FragmentManager fm) {
             super(fm);
+       /*     for (int i=0;i<tabsTitle.length;i++){
+                if (statusStrings[i].equals("pass")){
+                    OrderpassFragment fragment1 = new OrderpassFragment();
+                    fragment1.update(search_words, statusStrings[2], createTimeStart, createTimeEnd, userId);
+                }else {
+                    OrderTypeFragment fragment = new OrderTypeFragment();
+                    fragment.update(search_words, statusStrings[i], createTimeStart, createTimeEnd, userId);
+
+                }
+            }*/
         }
 
         @Override
@@ -325,7 +339,8 @@ public class OrderFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+                return fragments.get(position);
+
         }
 
         @Nullable
@@ -339,13 +354,25 @@ public class OrderFragment extends BaseFragment {
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             OrderTypeFragment fragment = (OrderTypeFragment) super.instantiateItem(container, position);
             fragment.update(search_words, statusStrings[position], createTimeStart, createTimeEnd, userId);
+            if (statusStrings[position].equals("pass")){
+                OrderpassFragment fragment1 = new OrderpassFragment();
+                fragment1.update(search_words, statusStrings[2], createTimeStart, createTimeEnd, userId);
+                return fragment1;
+            }
             return fragment;
+          /*  if (statusStrings[position].equals("pass")){
+                OrderpassFragment fragment1 = (OrderpassFragment) super.instantiateItem(container, 3);
+                fragment1.update(search_words, statusStrings[2], createTimeStart, createTimeEnd, userId);
+                return fragment1;
+            }*/
+
         }
 
         @Override
         public int getItemPosition(@NonNull Object object) {
             return POSITION_NONE;
         }
+
     }
 
     @OnClick({R.id.rb_last_month, R.id.rb_this_month, R.id.rb_all, R.id.rb_customize, R.id.tv_start_time, R.id.tv_end_time, R.id.btn_confirm_time, R.id.btn_tj, R.id.btn_fullscreen})
@@ -384,7 +411,6 @@ public class OrderFragment extends BaseFragment {
                 Log.e("zlz", createTimeStart);
                 Log.e("zlz", createTimeEnd);
                 myAdapter.notifyDataSetChanged();
-
                 break;
             case R.id.rb_all:
                 layoutSelectTime.setVisibility(View.GONE);

@@ -3,6 +3,8 @@ package com.lx.xqgg.ui.order;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
@@ -27,18 +29,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
 //订单分类
 public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rv_product)
     RecyclerView rvProduct;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
-
     private String search_words;
     private String status;
     private String createTimeStart;
     private String createTimeEnd;
-    private int userid=-1;
+    private int userid = -1;
     private int page = 1;
 
     private List<OrderBean.RecordsBean> list;
@@ -57,7 +59,7 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
             status = getArguments().getString("status");
             createTimeStart = getArguments().getString("createTimeStart");
             createTimeEnd = getArguments().getString("createTimeEnd");
-            userid=getArguments().getInt("userId");
+            userid = getArguments().getInt("userId");
         }
         getOrderList();
     }
@@ -84,7 +86,7 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
         paramsMap.put("userId", userid == -1 ? null : userid);
         paramsMap.put("page", page);
         paramsMap.put("pageSize", 10);
-        Log.e("test",userid+"");
+        Log.e("test", userid + "");
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getMyLoanOrder(body)
                 .subscribeOn(Schedulers.io())
