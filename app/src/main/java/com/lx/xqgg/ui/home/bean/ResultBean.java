@@ -16,13 +16,41 @@ public class ResultBean implements MultiItemEntity {
      */
 
     private String company;
+    private String company1;
     private int id;
     private String image;
     private String name;
+    private String name1;
     private String phone;
+    private String phone1;
     private int quota;
     private String rate;
     private String type;
+
+    public String getCompany1() {
+        return company1;
+    }
+
+    public void setCompany1(String company1) {
+        this.company1 = company1;
+    }
+
+    public String getName1() {
+        return name1;
+    }
+
+    public void setName1(String name1) {
+        this.name1 = name1;
+    }
+
+    public String getPhone1() {
+        return phone1;
+    }
+
+    public void setPhone1(String phone1) {
+        this.phone1 = phone1;
+    }
+
     private String isTop;
 
     public String getCompany() {

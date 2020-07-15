@@ -95,6 +95,9 @@ public class MyClientFragment extends BaseFragment implements SwipeRefreshLayout
                                 intent1.putExtra("customerName", bean.getLink_man() + "");
                                 intent1.putExtra("commpanyName", bean.getCompany() + "");
                                 intent1.putExtra("phone", bean.getLink_phone() + "");
+                                intent1.putExtra("customerName1", bean.getLink_man1() + "");
+                                intent1.putExtra("commpanyName1", bean.getCompany1() + "");
+                                intent1.putExtra("phone1", bean.getLink_phone1() + "");
                                 startActivity(intent1);
                             }
                         });

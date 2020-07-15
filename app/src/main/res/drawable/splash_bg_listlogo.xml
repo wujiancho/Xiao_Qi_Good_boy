@@ -7,9 +7,9 @@
         </shape>
     </item>
     <item>
-            <bitmap
-                android:gravity="center"
-                android:src="@drawable/bg_logo"
-                />
+       <bitmap
+           android:src="@drawable/splachd"
+           android:gravity="center"
+           ></bitmap>
     </item>
 </layer-list>

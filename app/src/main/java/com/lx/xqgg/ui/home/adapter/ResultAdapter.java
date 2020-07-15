@@ -29,8 +29,8 @@ public class ResultAdapter extends BaseMultiItemQuickAdapter<ResultBean, BaseVie
     protected void convert(BaseViewHolder helper, ResultBean item) {
         switch (item.getItemType()) {
             case 0:
-                helper.setText(R.id.tv_company_name, item.getCompany());
-                helper.setText(R.id.tv_phone,  item.getName() + " "+item.getPhone());
+                helper.setText(R.id.tv_company_name, item.getCompany1());
+                helper.setText(R.id.tv_phone,  item.getName1() + " "+item.getPhone1());
                 Glide.with(mContext)
                         .load(item.getIsTop().equals("0") ? R.drawable.ic_not_top : R.drawable.ic_is_top)
                         .into((ImageView) helper.getView(R.id.iv_top));

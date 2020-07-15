@@ -13,12 +13,11 @@
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_bg_list</item>
+        <item name="android:windowBackground">@drawable/splash_bg_listlogo</item>
         <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:layout_width">150dp</item>
-        <item name="android:layout_height">100dp</item>
+
     </style>
 
     <style name="FullScreen" parent="AppTheme">

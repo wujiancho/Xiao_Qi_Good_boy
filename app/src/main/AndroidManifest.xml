@@ -69,7 +69,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

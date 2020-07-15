@@ -72,9 +72,12 @@ public class SearchActivity extends BaseActivity {
                 switch (resultBean.getItemType()) {
                     case 0:
                         Intent intent1 = new Intent(mContext, ClientDetailActivity.class);
+                        intent1.putExtra("customerName1", resultBean.getName1() + "");
+                        intent1.putExtra("commpanyName1", resultBean.getCompany1() + "");
+                        intent1.putExtra("phone1", resultBean.getPhone1() + "");
                         intent1.putExtra("customerName", resultBean.getName() + "");
-                        intent1.putExtra("commpanyName", resultBean.getCompany() + "");
                         intent1.putExtra("phone", resultBean.getPhone() + "");
+                        intent1.putExtra("commpanyName", resultBean.getCompany() + "");
                         startActivity(intent1);
                         break;
                     case 1:

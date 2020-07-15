@@ -3,12 +3,12 @@ package com.lx.xqgg.ui.order;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
-import com.lx.xqgg.base.BaseFragment;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.adapter.OrderAdapter;
@@ -23,29 +23,39 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 //订单分类
-public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rv_product)
     RecyclerView rvProduct;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.allitem)
+    RadioButton allitem;
+    @BindView(R.id.shengok)
+    RadioButton shengok;
+    @BindView(R.id.shengno)
+    RadioButton shengno;
+
     private String search_words;
     private String status;
     private String createTimeStart;
     private String createTimeEnd;
     private int userid = -1;
     private int page = 1;
-
     private List<OrderBean.RecordsBean> list;
+    private List<OrderBean.RecordsBean> list2;
+    private List<OrderBean.RecordsBean> list3;
     private OrderAdapter orderAdapter;
+    private OrderBean.RecordsBean recordsBean;
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_product_type;
+        return R.layout.fragment_product_type_pass;
     }
 
     @Override
@@ -68,7 +78,6 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void initData() {
-
     }
 
     private void getOrderList() {
@@ -92,12 +101,13 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                     @Override
                     public void onNext(OrderBean orderBean) {
                         Log.e("zlz", new Gson().toJson(orderBean));
+                        recordsBean=new  OrderBean.RecordsBean();
                         list = new ArrayList<>();
                         orderAdapter = new OrderAdapter(list);
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);
                         orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
-                        orderAdapter.setOnLoadMoreListener(OrderTypeFragment.this::onLoadMoreRequested);
+                        orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
                         orderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -105,7 +115,7 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                             }
                         });
                         orderAdapter.bindToRecyclerView(rvProduct);
-                        refreshLayout.setOnRefreshListener(OrderTypeFragment.this::onRefresh);
+                        refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
                         if (orderBean.isIsSuccess()) {
                             if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
                                 list.clear();
@@ -134,15 +144,15 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);
                         orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
-                        orderAdapter.setOnLoadMoreListener(OrderTypeFragment.this::onLoadMoreRequested);
+                        orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
                         orderAdapter.bindToRecyclerView(rvProduct);
-                        refreshLayout.setOnRefreshListener(OrderTypeFragment.this::onRefresh);
+                        refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
                     }
                 }));
     }
 
-    public static OrderTypeFragment newInstance(String search_words, String status, String createTimeStart, String createTimeEnd, int userid) {
-        OrderTypeFragment orderTypeFragment = new OrderTypeFragment();
+    public static OrderTypepassFragment newInstance(String search_words, String status, String createTimeStart, String createTimeEnd, int userid) {
+        OrderTypepassFragment orderTypeFragment = new OrderTypepassFragment();
         Bundle bundle = new Bundle();
         bundle.putString("search_words", search_words);
         bundle.putString("status", status);
@@ -195,7 +205,7 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);
                         orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
-                        orderAdapter.setOnLoadMoreListener(OrderTypeFragment.this::onLoadMoreRequested);
+                        orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
                         orderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -203,7 +213,7 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                             }
                         });
                         orderAdapter.bindToRecyclerView(rvProduct);
-                        refreshLayout.setOnRefreshListener(OrderTypeFragment.this::onRefresh);
+                        refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
                         if (orderBean.isIsSuccess()) {
                             if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
                                 list.clear();
@@ -233,9 +243,9 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);
                         orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
-                        orderAdapter.setOnLoadMoreListener(OrderTypeFragment.this::onLoadMoreRequested);
+                        orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
                         orderAdapter.bindToRecyclerView(rvProduct);
-                        refreshLayout.setOnRefreshListener(OrderTypeFragment.this::onRefresh);
+                        refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
                         refreshLayout.setRefreshing(false);
                     }
                 }));
@@ -283,5 +293,23 @@ public class OrderTypeFragment extends BaseFragment implements SwipeRefreshLayou
                         orderAdapter.loadMoreFail();
                     }
                 }));
+    }
+
+    @OnClick({R.id.allitem, R.id.shengok, R.id.shengno})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.allitem:
+                orderAdapter.stause="p1";
+                orderAdapter.notifyDataSetChanged();
+                    break;
+            case R.id.shengok:
+                orderAdapter.stause="p2";
+            orderAdapter.notifyDataSetChanged();
+               break;
+            case R.id.shengno:
+                orderAdapter.stause="p3";
+                orderAdapter.notifyDataSetChanged();
+                break;
+        }
     }
 }

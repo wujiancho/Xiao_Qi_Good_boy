@@ -145,6 +145,15 @@ public class OrderBean implements Serializable {
         private String creditAudit;
         private String pre_credit_money;
         private String appointment;
+        private  int stu;
+
+        public int getStu() {
+            return stu;
+        }
+
+        public void setStu(int stu) {
+            this.stu = stu;
+        }
 
         public String getAppointment() {
             return appointment;

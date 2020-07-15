@@ -53,8 +53,11 @@ public class ClientDetailActivity extends BaseActivity implements SwipeRefreshLa
     private OrderAdapter orderAdapter;
     private int page = 1;
     private String customerName;
+    private String customerName1;
     private String commpanyName;
+    private String commpanyName1;
     private String phone;
+    private String phone1;
 
     @Override
     protected int getLayoutId() {
@@ -79,10 +82,13 @@ public class ClientDetailActivity extends BaseActivity implements SwipeRefreshLa
         orderAdapter.bindToRecyclerView(recyclerView);
         refreshLayout.setOnRefreshListener(this);
         customerName = getIntent().getStringExtra("customerName");
+        customerName1 = getIntent().getStringExtra("customerName1");
         commpanyName = getIntent().getStringExtra("commpanyName");
+        commpanyName1 = getIntent().getStringExtra("commpanyName1");
         phone = getIntent().getStringExtra("phone");
-        tvName.setText(commpanyName);
-        tvPhone.setText(customerName + " " + phone);
+        phone1= getIntent().getStringExtra("phone1");
+        tvName.setText(commpanyName1);
+        tvPhone.setText(customerName1 + " " + phone1);
     }
 
     @Override

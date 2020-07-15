@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,7 +31,6 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.adapter.TjAdapter;
 import com.lx.xqgg.ui.order.bean.OrderUserBean;
-import com.lx.xqgg.ui.order.bean.OrderpassFragment;
 import com.lx.xqgg.ui.order.bean.TjBean;
 import com.lx.xqgg.ui.vip.bean.NotifyBean;
 import com.lx.xqgg.util.DensityUtils;
@@ -102,13 +100,12 @@ public class OrderFragment extends BaseFragment {
     HorizontalScrollView horizontalScrollView;
 
     private String search_words;
-    private String status;
     private String createTimeStart = "";
     private String createTimeEnd = "";
 
     private String[] tabsTitle = {"全部", "审批中", "预授信", "终审", "用信"};
-    private String[] statusStrings = {"", "created", "precredit", "pass", "usecredit"};
-    private List<BaseFragment> fragments = new ArrayList<>();
+    private String[] statusStrings = {"", "created", "precredit", "passAll", "usecredit"};
+    private List<OrderTypeFragment> fragments = new ArrayList<>();
     private MyAdapter myAdapter;
     private Calendar calendar;
     private List<OrderUserBean> orderUserBeanList = new ArrayList<>();
@@ -130,10 +127,11 @@ public class OrderFragment extends BaseFragment {
     protected void initView() {
         EventBus.getDefault().register(this);
         for (int i = 0; i < tabsTitle.length; i++) {
-                fragments.add(OrderTypeFragment.newInstance("", statusStrings[i], "", "", userId));
-               /* if (i==2){
-                    fragments.add(OrderpassFragment.newInstance("", statusStrings[2], "", "", userId));
-                }*/
+              if (i==3){
+                    fragments.add(OrderTypepassFragment.newInstance("", statusStrings[i], "", "", userId));
+                }else {
+                  fragments.add(OrderTypeFragment.newInstance("", statusStrings[i], "", "", userId));
+              }
         }
         viewPager.setOffscreenPageLimit(tabsTitle.length);
         myAdapter = new MyAdapter(getChildFragmentManager());
@@ -320,16 +318,6 @@ public class OrderFragment extends BaseFragment {
     public class MyAdapter extends FragmentStatePagerAdapter {
         public MyAdapter(FragmentManager fm) {
             super(fm);
-       /*     for (int i=0;i<tabsTitle.length;i++){
-                if (statusStrings[i].equals("pass")){
-                    OrderpassFragment fragment1 = new OrderpassFragment();
-                    fragment1.update(search_words, statusStrings[2], createTimeStart, createTimeEnd, userId);
-                }else {
-                    OrderTypeFragment fragment = new OrderTypeFragment();
-                    fragment.update(search_words, statusStrings[i], createTimeStart, createTimeEnd, userId);
-
-                }
-            }*/
         }
 
         @Override
@@ -349,23 +337,12 @@ public class OrderFragment extends BaseFragment {
             return tabsTitle[position];
         }
 
-        @NonNull
+       @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            OrderTypeFragment fragment = (OrderTypeFragment) super.instantiateItem(container, position);
-            fragment.update(search_words, statusStrings[position], createTimeStart, createTimeEnd, userId);
-            if (statusStrings[position].equals("pass")){
-                OrderpassFragment fragment1 = new OrderpassFragment();
-                fragment1.update(search_words, statusStrings[2], createTimeStart, createTimeEnd, userId);
-                return fragment1;
-            }
-            return fragment;
-          /*  if (statusStrings[position].equals("pass")){
-                OrderpassFragment fragment1 = (OrderpassFragment) super.instantiateItem(container, 3);
-                fragment1.update(search_words, statusStrings[2], createTimeStart, createTimeEnd, userId);
-                return fragment1;
-            }*/
-
+           OrderTypeFragment fragment = (OrderTypeFragment) super.instantiateItem(container, position);
+           fragment.update(search_words, statusStrings[position], createTimeStart, createTimeEnd, userId);
+           return fragment;
         }
 
         @Override

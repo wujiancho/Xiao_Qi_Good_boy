@@ -32,9 +32,9 @@ public class ClientAdapter extends BaseQuickAdapter<ServiceCustomerBean.RecordsB
             helper.setGone(R.id.tv_company_name,false);
         }else {
             helper.setGone(R.id.tv_company_name,true);
-            helper.setText(R.id.tv_company_name, item.getCompany());
+            helper.setText(R.id.tv_company_name, item.getCompany1());
         }
-        helper.setText(R.id.tv_phone, item.getLink_man() + " " + item.getLink_phone());
+        helper.setText(R.id.tv_phone, item.getLink_man1() + " " + item.getLink_phone1());
         if (null != item.getId()) {
             helper.setVisible(R.id.iv_top, true);
             Glide.with(mContext)

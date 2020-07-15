@@ -116,7 +116,34 @@ public class ServiceCustomerBean {
         private Object id;
         private Object isTop;
         private String link_man;
+        private String link_man1;
         private String link_phone;
+        private String company1;
+        private String link_phone1;
+
+        public String getLink_man1() {
+            return link_man1;
+        }
+
+        public void setLink_man1(String link_man1) {
+            this.link_man1 = link_man1;
+        }
+
+        public String getCompany1() {
+            return company1;
+        }
+
+        public void setCompany1(String company1) {
+            this.company1 = company1;
+        }
+
+        public String getLink_phone1() {
+            return link_phone1;
+        }
+
+        public void setLink_phone1(String link_phone1) {
+            this.link_phone1 = link_phone1;
+        }
 
         public String getCompany() {
             return company;

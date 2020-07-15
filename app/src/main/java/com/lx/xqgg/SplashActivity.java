@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -44,6 +45,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       setContentView( R.layout.spalsh);
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();
@@ -76,6 +78,7 @@ public class SplashActivity extends AppCompatActivity {
                 })
                 .build();
         doCheckPermission();
+
     }
 
     @Override
@@ -108,7 +111,6 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
-
                             if (SharedPrefManager.isLogin()) {
                                 //登录过刷新用户信息
                                 ApiManage.getInstance().getMainApi().getUserInfo(SharedPrefManager.getUser().getToken())
