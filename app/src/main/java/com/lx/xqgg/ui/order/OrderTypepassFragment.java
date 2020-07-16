@@ -49,10 +49,9 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
     private int userid = -1;
     private int page = 1;
     private List<OrderBean.RecordsBean> list;
-    private List<OrderBean.RecordsBean> list2;
-    private List<OrderBean.RecordsBean> list3;
+    private List<OrderBean.RecordsBean> passlist=new ArrayList<>();
+    private List<OrderBean.RecordsBean> nopasslist=new ArrayList<>();
     private OrderAdapter orderAdapter;
-    private OrderBean.RecordsBean recordsBean;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_product_type_pass;
@@ -100,8 +99,7 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                 .subscribeWith(new BaseSubscriber<OrderBean>(mContext, null) {
                     @Override
                     public void onNext(OrderBean orderBean) {
-                        Log.e("zlz", new Gson().toJson(orderBean));
-                        recordsBean=new  OrderBean.RecordsBean();
+                        Log.e("zlz2", new Gson().toJson(orderBean));
                         list = new ArrayList<>();
                         orderAdapter = new OrderAdapter(list);
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
@@ -120,6 +118,7 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                             if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
                                 list.clear();
                                 list.addAll(orderBean.getRecords());
+                                Order();
                                 if (list.size() < 10) {
                                     if (list.size() < 3) {
                                         orderAdapter.disableLoadMoreIfNotFullPage();
@@ -299,17 +298,31 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.allitem:
-                orderAdapter.stause="p1";
+                orderAdapter.setNewData(list);
                 orderAdapter.notifyDataSetChanged();
                     break;
             case R.id.shengok:
-                orderAdapter.stause="p2";
-            orderAdapter.notifyDataSetChanged();
+                orderAdapter.setNewData(passlist);
+                orderAdapter.notifyDataSetChanged();
                break;
             case R.id.shengno:
-                orderAdapter.stause="p3";
+                orderAdapter.setNewData(nopasslist);
                 orderAdapter.notifyDataSetChanged();
                 break;
+        }
+    }
+//设置筛选订单适配器
+    private void Order(){
+        passlist.clear();
+        nopasslist.clear();
+        for (int i = 0; i < list.size(); i++) {
+            OrderBean.RecordsBean  recordsBean = list.get(i);
+            String status1=recordsBean.getStatus();
+            if ("pass".equals(status1)){
+                passlist.add(recordsBean);
+            }else  if("nopass".equals(status1)){
+                nopasslist.add(recordsBean);
+            }
         }
     }
 }

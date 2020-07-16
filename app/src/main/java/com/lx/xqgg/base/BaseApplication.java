@@ -8,6 +8,8 @@ import android.util.Log;
 import com.lx.xqgg.loader.GlideImageLoader;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 //import com.qiyukf.unicorn.api.StatusBarNotificationConfig;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.qiyukf.unicorn.api.Unicorn;
 import com.qiyukf.unicorn.api.YSFOptions;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -42,7 +44,7 @@ public class BaseApplication extends Application {
         JPushInterface.init(this);
         x.Ext.init(this);
         Tiny.getInstance().init(this);
-
+        Logger.addLogAdapter(new AndroidLogAdapter());
         //初始化二维码工具类
         ZXingLibrary.initDisplayOpinion(this);
         UMConfigure.setLogEnabled(true);

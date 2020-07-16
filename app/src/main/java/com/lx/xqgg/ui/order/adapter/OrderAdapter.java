@@ -36,7 +36,6 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
     public OrderAdapter(@Nullable List<OrderBean.RecordsBean> data) {
         super(R.layout.item_order_spz, data);
     }
-    public  String stause="";
     @Override
     protected void convert(BaseViewHolder helper, OrderBean.RecordsBean item) {
         helper.setText(R.id.tv_name, item.getTitle() + "");
@@ -50,335 +49,35 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
         switch (item.getStatus()) {
             //审核中
             case "created":
-                helper.setText(R.id.tv_money_num, (String.format("%.2f", (double) item.getApply_money() / 10000)));
-                helper.setVisible(R.id.tv_status, true);
-                helper.setText(R.id.tv_status, "审核中");
-                helper.setVisible(R.id.btn_deal, true);
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setVisible(R.id.layout_ysx, false);
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.layout_ljcl, false);
-                helper.setOnClickListener(R.id.btn_deal, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
-                                .title("提示")
-                                .content("系统即将删除该笔订单，请确认")
-                                .cancelable(false)
-                                .positiveText(R.string.yes)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        HashMap<String, Object> paramsMap = new HashMap<>();
-                                        paramsMap.put("id", item.getId());
-                                        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
-                                        ApiManage.getInstance().getMainApi().disCardOrder(body)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
-                                                    @Override
-                                                    public void onNext(BaseData baseData) {
-                                                        Log.e("zlz", new Gson().toJson(baseData));
-                                                        if (baseData.isSuccess()) {
-                                                            toast("提交成功");
-                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
-                                                        } else {
-                                                            toast(baseData.getMessage());
-                                                        }
-                                                    }
-                                                });
-
-                                    }
-                                })
-                                .negativeText(R.string.no)
-                                .negativeColorRes(R.color.txt_normal)
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .build();
-                        permissionDialog.show();
-                    }
-                });
+             onCreatedBind(helper, item);
                 break;
             //预授信
             case "precredit":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setVisible(R.id.tv_status, true);
-                helper.setText(R.id.tv_status, "预授信");
-                if (item.getPre_credit_money() != null) {
-                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000) + " 业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00 业务积分");
-                }
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.layout_ljcl, false);
-                helper.setVisible(R.id.layout_ysx, false);
+               onPrecreditBind(helper, item);
                 break;
             //审核中
             case "verify":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setVisible(R.id.tv_status, true);
-                helper.setText(R.id.tv_status, "审核中");
-                if (item.getPre_credit_money() != null) {
-                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000)));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00");
-                }
-                helper.setVisible(R.id.layout_zs, true);
-
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-                helper.setVisible(R.id.tv_sx_status, false);
-//                helper.setText(R.id.tv_sx_status, "终审中");
-                helper.setVisible(R.id.tv_result, false);
-                helper.setVisible(R.id.layout_ljcl, false);
-                helper.setOnClickListener(R.id.layout_zs, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
-                                .title("提示")
-                                .content("系统即将删除该笔订单，请确认")
-                                .cancelable(false)
-                                .positiveText(R.string.yes)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        HashMap<String, Object> paramsMap = new HashMap<>();
-                                        paramsMap.put("id", item.getId());
-                                        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                                        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
-                                        ApiManage.getInstance().getMainApi().disCardOrder(body)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
-                                                    @Override
-                                                    public void onNext(BaseData baseData) {
-                                                        Log.e("zlz", new Gson().toJson(baseData));
-                                                        if (baseData.isSuccess()) {
-                                                            toast("提交成功");
-                                                            EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
-                                                        } else {
-                                                            toast(baseData.getMessage());
-                                                        }
-                                                    }
-                                                });
-
-                                    }
-                                })
-                                .negativeText(R.string.no)
-                                .negativeColorRes(R.color.txt_normal)
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .build();
-                        permissionDialog.show();
-                    }
-                });
-
+              onVerifyBind(helper, item);
                 break;
-
             //用信
             case "usecredit":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setVisible(R.id.tv_status, true);
-                helper.setText(R.id.tv_status, "用信");
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00 业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, true);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-
-                helper.setVisible(R.id.tv_sx_status, false);
-//                helper.setText(R.id.tv_sx_status, "用信");
-                helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-                if ("1".equals(item.getCreditAudit())) {
-                    helper.setText(R.id.tv_result, (String.format("%.2f", (Double.valueOf(item.getCredit_money()) / 10000)) + " 业务积分"));
-                } else {
-                    helper.setVisible(R.id.tv_result, false);
-                }
+               onUsecreditBind(helper, item);
                 break;
+                //终审全部
             case "passAll":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                if ("pass".equals(item.getStatus())){
-                    helper.setText(R.id.tv_status, "终审通过");
-                }
-                else if("nopass".equals(item.getStatus())){
-                    helper.setText(R.id.tv_status, "终审拒绝");
-                }
-//                helper.setVisible(R.id.tv_status,false);
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//               helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-//                helper.setText(R.id.tv_result,item.get)
-                break;
-
-            case "pass":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审通过");
-//                helper.setVisible(R.id.tv_status,false);
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//                helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-//                helper.setText(R.id.tv_result,item.get)
-                break;
-            case "nopass":
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审拒绝");
-                if (item.getCredit_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-
-                helper.setVisible(R.id.layout_ljcl, false);
-                break;
-        }
-
-        switch (stause){
-            //终审
-            case "p1":
-           /*    if ("passAll".equals(item.getStatus())){
-                   helper.setVisible(R.id.btn_yy_bl, false);
-                   if ("pass".equals(item.getStatus())){
-                       helper.setText(R.id.tv_status, "终审通过");
-                   }
-                   else if("nopass".equals(item.getStatus())){
-                       helper.setText(R.id.tv_status, "终审拒绝");
-                   }
-//                helper.setVisible(R.id.tv_status,false);
-                   if (item.getReal_money() != null) {
-                       helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                   } else {
-                       helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                   }
-                   helper.setVisible(R.id.layout_zs, false);
-                   helper.setVisible(R.id.btn_deal, false);
-                   helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//               helper.setVisible(R.id.tv_result, true);
-                   helper.setVisible(R.id.layout_ljcl, false);
-//                helper.setText(R.id.tv_result,item.get)
-               }*/
-                helper.setVisible(R.id.btn_yy_bl, false);
-                if ("pass".equals(item.getStatus())){
-                    helper.setText(R.id.tv_status, "终审通过");
-                }
-                else if("nopass".equals(item.getStatus())){
-                    helper.setText(R.id.tv_status, "终审拒绝");
-                }
-//                helper.setVisible(R.id.tv_status,false);
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//               helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-//                helper.setText(R.id.tv_result,item.get)
+              onPassAllBind(helper, item);
                 break;
             //终审通过
-            case "p2":
-           /* if ("pass".equals(item.getStatus())){
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审通过");
-//                helper.setVisible(R.id.tv_status,false);
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//                helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-//                helper.setText(R.id.tv_result,item.get)
+            case "pass":
+          onPassBind(helper, item);
                 break;
-
-            }*/
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审通过");
-//                helper.setVisible(R.id.tv_status,false);
-                if (item.getReal_money() != null) {
-                    helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-//                helper.setText(R.id.tv_sx_status, "终审通过");
-//                helper.setVisible(R.id.tv_result, true);
-                helper.setVisible(R.id.layout_ljcl, false);
-//                helper.setText(R.id.tv_result,item.get)
-                break;
-            //终审拒绝
-            case "p3":
-           /*  if ("nopass".equals(item.getStatus())){
-                 helper.setVisible(R.id.btn_yy_bl, false);
-                 helper.setText(R.id.tv_status, "终审拒绝");
-                 if (item.getCredit_money() != null) {
-                     helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + "业务积分"));
-                 } else {
-                     helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                 }
-                 helper.setVisible(R.id.layout_zs, false);
-                 helper.setVisible(R.id.btn_deal, false);
-                 helper.setVisible(R.id.layout_ysx, false);
-
-                 helper.setVisible(R.id.layout_ljcl, false);
-                 break;
-             }*/
-                helper.setVisible(R.id.btn_yy_bl, false);
-                helper.setText(R.id.tv_status, "终审拒绝");
-                if (item.getCredit_money() != null) {
-                    helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + "业务积分"));
-                } else {
-                    helper.setText(R.id.tv_money_num,  "0.00业务积分");
-                }
-                helper.setVisible(R.id.layout_zs, false);
-                helper.setVisible(R.id.btn_deal, false);
-                helper.setVisible(R.id.layout_ysx, false);
-
-                helper.setVisible(R.id.layout_ljcl, false);
+                //终审拒绝
+            case "nopass":
+               onNopassBind(helper, item);
                 break;
         }
+
+
 
     }
 
@@ -386,5 +85,220 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
         Toast toast = Toast.makeText(mContext, str, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+    //审核中
+    private void onCreatedBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setText(R.id.tv_money_num, (String.format("%.2f", (double) item.getApply_money() / 10000)));
+        helper.setVisible(R.id.tv_status, true);
+        helper.setText(R.id.tv_status, "审核中");
+        helper.setVisible(R.id.btn_deal, true);
+        helper.setVisible(R.id.btn_yy_bl, false);
+        helper.setVisible(R.id.layout_ysx, false);
+        helper.setVisible(R.id.layout_zs, false);
+        helper.setVisible(R.id.layout_ljcl, false);
+        helper.setOnClickListener(R.id.btn_deal, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
+                        .title("提示")
+                        .content("系统即将删除该笔订单，请确认")
+                        .cancelable(false)
+                        .positiveText(R.string.yes)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                HashMap<String, Object> paramsMap = new HashMap<>();
+                                paramsMap.put("id", item.getId());
+                                paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                                RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
+                                ApiManage.getInstance().getMainApi().disCardOrder(body)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
+                                            @Override
+                                            public void onNext(BaseData baseData) {
+                                                Log.e("zlz", new Gson().toJson(baseData));
+                                                if (baseData.isSuccess()) {
+                                                    toast("提交成功");
+                                                    EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
+                                                } else {
+                                                    toast(baseData.getMessage());
+                                                }
+                                            }
+                                        });
+
+                            }
+                        })
+                        .negativeText(R.string.no)
+                        .negativeColorRes(R.color.txt_normal)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .build();
+                permissionDialog.show();
+            }
+        });
+    }
+    //预授信
+    private void onPrecreditBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setVisible(R.id.btn_yy_bl, false);
+        helper.setVisible(R.id.tv_status, true);
+        helper.setText(R.id.tv_status, "预授信");
+        if (item.getPre_credit_money() != null) {
+            helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000) + " 业务积分"));
+        } else {
+            helper.setText(R.id.tv_money_num,  "0.00 业务积分");
+        }
+        helper.setVisible(R.id.btn_deal, false);
+        helper.setVisible(R.id.layout_zs, false);
+        helper.setVisible(R.id.layout_ljcl, false);
+        helper.setVisible(R.id.layout_ysx, false);
+    }
+    //审核中
+    private void onVerifyBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setVisible(R.id.btn_yy_bl, false);
+        helper.setVisible(R.id.tv_status, true);
+        helper.setText(R.id.tv_status, "审核中");
+        if (item.getPre_credit_money() != null) {
+            helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000)));
+        } else {
+            helper.setText(R.id.tv_money_num,  "0.00");
+        }
+        helper.setVisible(R.id.layout_zs, true);
+
+        helper.setVisible(R.id.btn_deal, false);
+        helper.setVisible(R.id.layout_ysx, false);
+        helper.setVisible(R.id.tv_sx_status, false);
+//                helper.setText(R.id.tv_sx_status, "终审中");
+        helper.setVisible(R.id.tv_result, false);
+        helper.setVisible(R.id.layout_ljcl, false);
+        helper.setOnClickListener(R.id.layout_zs, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDialog permissionDialog=new MaterialDialog.Builder(mContext)
+                        .title("提示")
+                        .content("系统即将删除该笔订单，请确认")
+                        .cancelable(false)
+                        .positiveText(R.string.yes)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                HashMap<String, Object> paramsMap = new HashMap<>();
+                                paramsMap.put("id", item.getId());
+                                paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                                RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new Gson().toJson(paramsMap));
+                                ApiManage.getInstance().getMainApi().disCardOrder(body)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribeWith(new BaseSubscriber<BaseData>(mContext, null) {
+                                            @Override
+                                            public void onNext(BaseData baseData) {
+                                                Log.e("zlz", new Gson().toJson(baseData));
+                                                if (baseData.isSuccess()) {
+                                                    toast("提交成功");
+                                                    EventBus.getDefault().post(new NotifyBean(0, "提交成功"));
+                                                } else {
+                                                    toast(baseData.getMessage());
+                                                }
+                                            }
+                                        });
+
+                            }
+                        })
+                        .negativeText(R.string.no)
+                        .negativeColorRes(R.color.txt_normal)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .build();
+                permissionDialog.show();
+            }
+        });
+    }
+    //用信
+    private void onUsecreditBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setVisible(R.id.btn_yy_bl, false);
+        helper.setVisible(R.id.tv_status, true);
+        helper.setText(R.id.tv_status, "用信");
+        if (item.getReal_money() != null) {
+            helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
+        } else {
+            helper.setText(R.id.tv_money_num,  "0.00 业务积分");
+        }
+        helper.setVisible(R.id.layout_zs, true);
+        helper.setVisible(R.id.btn_deal, false);
+        helper.setVisible(R.id.layout_ysx, false);
+
+        helper.setVisible(R.id.tv_sx_status, false);
+//                helper.setText(R.id.tv_sx_status, "用信");
+        helper.setVisible(R.id.tv_result, true);
+        helper.setVisible(R.id.layout_ljcl, false);
+        if ("1".equals(item.getCreditAudit())) {
+            helper.setText(R.id.tv_result, (String.format("%.2f", (Double.valueOf(item.getCredit_money()) / 10000)) + " 业务积分"));
+        } else {
+            helper.setVisible(R.id.tv_result, false);
+        }
+    }
+    //终审全部
+    private void onPassAllBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setVisible(R.id.btn_yy_bl, false);
+        if ("pass".equals(item.getStatus())){
+            helper.setText(R.id.tv_status, "终审通过");
+        }
+        else if("nopass".equals(item.getStatus())){
+            helper.setText(R.id.tv_status, "终审拒绝");
+        }
+//                helper.setVisible(R.id.tv_status,false);
+        if (item.getReal_money() != null) {
+            helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
+        } else {
+            helper.setText(R.id.tv_money_num,  "0.00业务积分");
+        }
+        helper.setVisible(R.id.layout_zs, false);
+        helper.setVisible(R.id.btn_deal, false);
+        helper.setVisible(R.id.layout_ysx, false);
+//                helper.setText(R.id.tv_sx_status, "终审通过");
+//               helper.setVisible(R.id.tv_result, true);
+        helper.setVisible(R.id.layout_ljcl, false);
+//                helper.setText(R.id.tv_result,item.get)
+    }
+    //终审通过
+    private void onPassBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setVisible(R.id.btn_yy_bl, false);
+        helper.setText(R.id.tv_status, "终审通过");
+//                helper.setVisible(R.id.tv_status,false);
+        if (item.getReal_money() != null) {
+            helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
+        } else {
+            helper.setText(R.id.tv_money_num,  "0.00业务积分");
+        }
+        helper.setVisible(R.id.layout_zs, false);
+        helper.setVisible(R.id.btn_deal, false);
+        helper.setVisible(R.id.layout_ysx, false);
+//                helper.setText(R.id.tv_sx_status, "终审通过");
+//                helper.setVisible(R.id.tv_result, true);
+        helper.setVisible(R.id.layout_ljcl, false);
+//                helper.setText(R.id.tv_result,item.get)
+    }
+    //终审拒绝
+    private void onNopassBind(BaseViewHolder helper, OrderBean.RecordsBean item){
+        helper.setVisible(R.id.btn_yy_bl, false);
+        helper.setText(R.id.tv_status, "终审拒绝");
+        if (item.getCredit_money() != null) {
+            helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getCredit_money()) / 10000) + "业务积分"));
+        } else {
+            helper.setText(R.id.tv_money_num,  "0.00业务积分");
+        }
+        helper.setVisible(R.id.layout_zs, false);
+        helper.setVisible(R.id.btn_deal, false);
+        helper.setVisible(R.id.layout_ysx, false);
+
+        helper.setVisible(R.id.layout_ljcl, false);
     }
 }

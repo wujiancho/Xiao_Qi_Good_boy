@@ -1,8 +1,11 @@
 package com.lx.xqgg.api;
 
+import android.text.TextUtils;
+
 import com.lx.xqgg.base.BaseApplication;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.util.AppNetWorkUtil;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +25,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -44,7 +48,16 @@ public class ApiManage {
 
     private OkHttpClient getClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//
+        HttpLoggingInterceptor httpLoggingInterceptor=new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                if(!TextUtils.isEmpty(message)){
+                    Logger.json(message);
+                }else {
+                    Logger.json(message);
+                }
+            }
+        });
         try {
             // Create a trust manager that does not validate certificate chains
             final TrustManager[] trustAllCerts = new TrustManager[]{
@@ -128,6 +141,8 @@ public class ApiManage {
         builder.writeTimeout(10, TimeUnit.SECONDS);
         //错误重连
         builder.retryOnConnectionFailure(true);
+        builder.addInterceptor(httpLoggingInterceptor);
+        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         return builder.build();
     }
 

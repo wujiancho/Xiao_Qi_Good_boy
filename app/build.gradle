@@ -154,6 +154,7 @@ dependencies {
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
     //zing
     implementation 'cn.yipianfengye.android:zxing-library:2.1'
-
+//logger
+    implementation 'com.orhanobut:logger:2.2.0'
 
 }
