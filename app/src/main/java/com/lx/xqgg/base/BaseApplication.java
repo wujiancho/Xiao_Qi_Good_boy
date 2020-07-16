@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.lx.xqgg.BuildConfig;
 import com.lx.xqgg.loader.GlideImageLoader;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 //import com.qiyukf.unicorn.api.StatusBarNotificationConfig;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import androidx.annotation.Nullable;
 import cn.jpush.android.api.JPushInterface;
 
 public class BaseApplication extends Application {
@@ -44,7 +46,14 @@ public class BaseApplication extends Application {
         JPushInterface.init(this);
         x.Ext.init(this);
         Tiny.getInstance().init(this);
-        Logger.addLogAdapter(new AndroidLogAdapter());
+        Logger.addLogAdapter(new AndroidLogAdapter(){
+            @Override
+            public boolean isLoggable(int priority, @Nullable String tag) {
+                //也可以根据priority的VERBOSE、DEBUG、INFO、WARN、ERROR等不同级别
+                //进行过滤，只在发布版本中保留ERROR的打印等
+                return BuildConfig.DEBUG;   //只在DEBUG模式下打印log
+            }
+        });
         //初始化二维码工具类
         ZXingLibrary.initDisplayOpinion(this);
         UMConfigure.setLogEnabled(true);

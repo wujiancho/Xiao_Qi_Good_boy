@@ -54,7 +54,7 @@ public class ApiManage {
                 if(!TextUtils.isEmpty(message)){
                     Logger.json(message);
                 }else {
-                    Logger.json(message);
+                    Logger.d(message);
                 }
             }
         });
@@ -141,8 +141,8 @@ public class ApiManage {
         builder.writeTimeout(10, TimeUnit.SECONDS);
         //错误重连
         builder.retryOnConnectionFailure(true);
-        builder.addInterceptor(httpLoggingInterceptor);
-        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+       // builder.addInterceptor(httpLoggingInterceptor);
+        builder.addInterceptor(httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY));
         return builder.build();
     }
 
