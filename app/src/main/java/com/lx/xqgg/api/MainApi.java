@@ -179,6 +179,14 @@ public interface MainApi {
      * @param keyWord
      * @return
      */
+    @GET("common/getQiChacha")
+    Flowable<BaseData<String>> getQiCc(@Query("keyWord") String keyWord);
+    /**
+     * 企查查接口详情
+     *
+     * @param keyWord
+     * @return
+     */
     @GET("common/getQiChachaInfo")
     Flowable<BaseData<String>> getQiCcInfo(@Query("keyWord") String keyWord);
 

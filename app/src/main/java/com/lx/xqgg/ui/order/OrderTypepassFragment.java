@@ -50,7 +50,7 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
     private int userid = -1;
     private int page = 1;
     private  boolean resch=false;
-    private List<OrderBean.RecordsBean> list =new ArrayList<>();
+    private List<OrderBean.RecordsBean> list ;
     private List<OrderBean.RecordsBean> passlist=new ArrayList<>();
     private List<OrderBean.RecordsBean> nopasslist=new ArrayList<>();
     private OrderAdapter orderAdapter;
@@ -105,6 +105,7 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                     @Override
                     public void onNext(OrderBean orderBean) {
                         Log.e("zlz2", new Gson().toJson(orderBean));
+                        list=new ArrayList<>();
                         orderAdapter = new OrderAdapter(list);
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);

@@ -13,6 +13,24 @@ public class AdvertBean {
     private String image;
     private int times;
     private String url;
+    private String name;
+    private int busId;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getBusId() {
+        return busId;
+    }
+
+    public void setBusId(int busId) {
+        this.busId = busId;
+    }
 
     public int getId() {
         return id;

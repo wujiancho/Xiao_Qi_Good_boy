@@ -111,4 +111,8 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_Fuzzyquery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
