@@ -17,11 +17,15 @@ import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
+import com.lx.xqgg.config.Config;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.home.adapter.ResultAdapter;
 import com.lx.xqgg.ui.home.bean.ResultBean;
 import com.lx.xqgg.ui.my_client.ClientDetailActivity;
+import com.lx.xqgg.ui.person.bean.ProductDetailBean;
 import com.lx.xqgg.ui.product.ProductDetailActivity;
+import com.lx.xqgg.ui.webview.WebViewActivity;
+import com.lx.xqgg.util.Base64;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +54,7 @@ public class SearchActivity extends BaseActivity {
 
     private List<ResultBean> list = new ArrayList<>();
     private ResultAdapter resultAdapter;
-
+    private ProductDetailBean productDetailBean;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_search;
@@ -58,7 +62,6 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
         etSearchContent.setFocusable(true);
         etSearchContent.requestFocus();
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
@@ -81,14 +84,61 @@ public class SearchActivity extends BaseActivity {
                         startActivity(intent1);
                         break;
                     case 1:
-                        Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                        //接受的数据生成jsonbean数据
+                        String userphone= SharedPrefManager.getUser().getMobile();
+                        int userid= resultBean.getId();
+                        String cityname= Constans.CITY;
+
+                        ArrayList<ProductDetailBean> gson2= new ArrayList<>();
+                        productDetailBean = new ProductDetailBean();
+                        productDetailBean.setUserPhone(userphone);
+                        productDetailBean.setType("h5");
+                        productDetailBean.setId(userid+"");
+                        productDetailBean.setStatusHeight("30.000");
+                        productDetailBean.setCityName("");
+                        gson2.add(productDetailBean);
+                        String url2=new Gson().toJson(gson2);
+                        String json2 =url2.substring(1,url2.length()-1);
+                        //加密json
+                        Log.e("zlz",json2);
+                        String jiajson2= Base64.encode(json2.getBytes());
+                        //生成产品详细页的接口
+                        String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
+                        Constans.productDetails=jiekong2;
+
+                        ArrayList<ProductDetailBean> gson= new ArrayList<>();
+                        productDetailBean = new ProductDetailBean();
+                        productDetailBean.setUserPhone(userphone);
+                        productDetailBean.setType("app");
+                        productDetailBean.setId(userid+"");
+                        productDetailBean.setStatusHeight("30.000");
+                        productDetailBean.setCityName(cityname);
+                        gson.add(productDetailBean);
+                        String url=new Gson().toJson(gson);
+                        String json =url.substring(1,url.length()-1);
+                        Log.e("zlz",json);
+                        //加密json
+                        String jiajson= Base64.encode(json.getBytes());
+                        //生成产品详细页的接口
+                        String jiekong=Config.URL+"view/productDetails.html?bean="+jiajson;
+                        Log.e("zlz",jiekong);
+                        if(!"".equals(jiekong2)){
+                            WebViewActivity.open(new WebViewActivity.Builder()
+                                    .setContext(mContext)
+                                    .setAutoTitle(false)
+                                    .setIsFwb(false)
+                                    .setUrl(jiekong));
+                        }
+
+
+
+                     /*  Intent intent = new Intent(mContext, ProductDetailActivity.class);
                         intent.putExtra("data", list.get(position).getId());
-                        startActivity(intent);
+                        startActivity(intent);*/
                         break;
                 }
             }
         });
-
         etSearchContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,7 +156,6 @@ public class SearchActivity extends BaseActivity {
             }
         });
     }
-
     @Override
     protected void initData() {
 //        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);

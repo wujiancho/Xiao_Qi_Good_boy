@@ -170,7 +170,6 @@ public class CityPickerActivity extends BaseActivity implements CitiesAdapter.on
     public void select(String province, String city) {
         Constans.CITY = city;
         Constans.PROVINCE = province;
-
         List<CityHistoryBean> list = new ArrayList<>();
         list = SharedPrefManager.getCityHistory();
 

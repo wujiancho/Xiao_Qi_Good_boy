@@ -397,7 +397,7 @@ public class PersonFragment extends BaseFragment {
         list2.add(new MatterBean("帮助中心", "HelperActivity", R.drawable.ic_p_bzxx));
         list2.add(new MatterBean("匹配结果", "MatchSavedActivity", R.drawable.ic_p_ppjg));
         crmUser =new Boolean(new Gson().toJson(SharedPrefManager.getUserInfo().isCrmUser()));
-        if (crmUser){
+        if ("true".equals(crmUser)){
             list2.add(new MatterBean("CRM", "", R.drawable.crm));
         }
         //list2.add(new MatterBean("CRM", "", R.drawable.crm));

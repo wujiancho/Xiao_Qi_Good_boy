@@ -3,7 +3,7 @@ package com.lx.xqgg.base;
 import com.lx.xqgg.ui.product.bean.QccBean;
 
 public class Constans {
-    public static String CITY;
+    public static String CITY;//城市
     public static int CITY_ID = 861;
     //接口需要的appid
     public static int APPID = 1;
@@ -20,4 +20,5 @@ public class Constans {
     public static String GPSPROVINCE;
 
     public static QccBean qccBean;
+    public static String productDetails;
 }

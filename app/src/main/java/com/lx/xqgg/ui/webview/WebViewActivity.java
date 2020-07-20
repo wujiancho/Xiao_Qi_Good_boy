@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Picture;
@@ -65,12 +66,17 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
+import com.umeng.socialize.utils.UmengText;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -125,6 +131,8 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
     private boolean needShare = false;
     private  File file;
+    private  File filelogo;
+    private String decodeFile;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_webview;
@@ -133,6 +141,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
     @Override
     protected void initView() {
+        //设置布局ProgressBar加载长度+接受bundle对象
         bar = new SlowlyProgressBar((ProgressBar) findViewById(R.id.bar));
         chooseDialogFragment = new ChooseDialogFragment();
         chooseDialogFragment.setOnChooseClickListener(this);
@@ -161,7 +170,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     protected void initData() {
 
     }
-
+     //设置WebView的一些允许的权限
     private void initwebview() {
         WebSettings settings = webview.getSettings();
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -620,10 +629,10 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                                         File destFile = new File(appDir, fileName);
                                         //把gilde下载得到图片复制到定义好的目录中去
                                         copy(file, destFile);
-                                        file= new File(destFile.getPath());
                                         // 最后通知图库更新
                                         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                                                 Uri.fromFile(new File(destFile.getPath()))));
+                                        file= new File(destFile.getPath());
                                         Looper.prepare();
                                         toast("保存成功");
                                         Looper.loop();
@@ -681,9 +690,10 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 break;
         }
     }
-
+//H5调用Android
     class JavaScriptClass {
         @JavascriptInterface
+        //分享标题链接
         public void share(String url, String title) {
             Log.e("zlz", url);
             UMImage image1 = new UMImage(mContext, R.drawable.logo);//分享图标
@@ -720,16 +730,53 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                         }
                     }).open();
         }
-
+        //H5返回键销毁当前页面
         @JavascriptInterface
         public void handleArrow() {
           finish();
         }
-
+        //详细页H5页面分享
         @JavascriptInterface
-        public void sharePic() {
-
+        public void sharePic(String proTitle,String proLogo ,String proDesc ) {
+            returnBitMap(proLogo);
+            if (!"".equals(filelogo)) {
+                UMWeb webpic = new UMWeb(Constans.productDetails);
+                webpic.setThumb(new UMImage(WebViewActivity.this, filelogo));
+                webpic.setTitle(proTitle);
+             //  web.setThumb(new UMImage(WebViewActivity.this, proLogo));
+                webpic.setDescription(proDesc);
+                new ShareAction(mContext)
+                        .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .setShareboardclickCallback(new ShareBoardlistener() {
+                            @Override
+                            public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                                if (share_media == SHARE_MEDIA.QQ) {
+                                    webpic.setThumb(new UMImage(WebViewActivity.this, decodeFile));
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                            .withMedia(webpic)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                            .withMedia(webpic)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.QZONE) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                            .withMedia(webpic)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                    new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                            .withMedia(webpic)
+                                            .setCallback(umShareListener)
+                                            .share();
+                                }
+                            }
+                        }).open();
+            }
         }
+        //H5CRM我的日报分享
         @JavascriptInterface
         public   void  sharemessage(){
             bimpic();
@@ -767,7 +814,8 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             }
         }
     }
-    //把Webview生成图片
+
+    //H5CRM我的日报分享----把Webview生成图片
     private void bimpic() {
         webview.measure(View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
@@ -802,8 +850,48 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 toast(e.getMessage());
             }
         }
+    //H5获取银行logo图片保存到本地
+    public void returnBitMap(final String url){
+        Observable.create(new ObservableOnSubscribe<File>() {
+            @Override
+            public void subscribe(ObservableEmitter<File> e) throws Exception {
+                //通过gilde下载得到file文件,这里需要注意android.permission.INTERNET权限
+                e.onNext(Glide.with(mContext)
+                        .load(url)
+                        .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get());
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Consumer<File>() {
+                    @Override
+                    public void accept(File file) throws Exception {
+                        //获取到下载得到的图片，进行本地保存
+                        File pictureFolder = Environment.getExternalStorageDirectory();
+                        //第二个参数为你想要保存的目录名称
+                        File appDir = new File(pictureFolder, "bandlogo");
+                        if (!appDir.exists()) {
+                            appDir.mkdirs();
+                        }
+                        String fileName = System.currentTimeMillis() + ".jpg";
+                        File destFile = new File(appDir, fileName);
+                        //把gilde下载得到图片复制到定义好的目录中去
+                        copy(file, destFile);
+                        filelogo=new File(destFile.getPath());
+                        // 最后通知图库更新
+                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(new File(destFile.getPath()))));
+                        decodeFile = destFile.getPath();
+                        Log.e("zlz", destFile.getPath());
+                        Looper.prepare();
+                        Looper.loop();
+                    }
 
+                });
 
+    }
+     //H5分享--帮助中心
     private void share() {
         UMImage image = new UMImage(this, webview.getTitle().contains("帮助信息") ? R.drawable.logo : R.drawable.img_gch);//分享图标
         final UMWeb web = new UMWeb(webview.getUrl()); //切记切记 这里分享的链接必须是http开头
@@ -848,7 +936,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     }
 
 
-
+    //分享后回调的方法
     UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA platform) {
@@ -870,7 +958,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             toast("分享取消");
         }
     };
-
+    //设置系统返回键监听H5返回键
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -884,7 +972,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         return super.onKeyDown(keyCode, event);
     }
 
-
+    //设置监听H5返回键
     private void goback() {
         if (webview != null && webview.canGoBack()) {
             Log.e("zlz", "goback");
@@ -894,14 +982,14 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             finish();
         }
     }
-
+    //设置图片类型
     @Override
     public void clickPhoto() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");//相片类型
         startActivityForResult(intent, REQUEST_CODE_PHOTO);
     }
-
+    //设置相机属性
     @Override
     public void clickCamera() {
         try {
@@ -920,7 +1008,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             toast("请在设置中打开权限！");
         }
     }
-
+    //设置Android4.0点击监听
     @Override
     public void clickNull() {
         if (mUploadMessage != null) {
@@ -931,7 +1019,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             mUploadCallbackAboveL = null;
         }
     }
-
+    //设置返回当前Activity设置的数据返回
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -989,7 +1077,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             }
         }
     }
-
+//设置传值的Builde对象
     public static class Builder {
 
         private String title;
@@ -1033,7 +1121,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             return this;
         }
     }
-
+     //设置WebView的构建者模式的参数类型
     public static void open(Builder builder) {
         Intent intent = new Intent(builder.context, WebViewActivity.class);
         intent.putExtra("title", builder.title);
@@ -1043,7 +1131,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         intent.putExtra("needShare", builder.needShare);
         builder.context.startActivity(intent);
     }
-
+    //设置销毁回收
     @Override
     protected void onDestroy() {
         super.onDestroy();

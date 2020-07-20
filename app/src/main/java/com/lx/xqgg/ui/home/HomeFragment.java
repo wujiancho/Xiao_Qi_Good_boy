@@ -43,6 +43,7 @@ import com.lx.xqgg.ui.home.bean.HotMsgBean;
 import com.lx.xqgg.ui.home.bean.MatterBean;
 import com.lx.xqgg.ui.hot.HotMsgListActivity;
 import com.lx.xqgg.ui.message.MessageActivity;
+import com.lx.xqgg.ui.person.bean.ProductDetailBean;
 import com.lx.xqgg.ui.product.ProductActivity;
 import com.lx.xqgg.ui.product.ProductDetailActivity;
 import com.lx.xqgg.ui.product.bean.CateBean;
@@ -50,6 +51,7 @@ import com.lx.xqgg.ui.product.bean.ProductBean;
 import com.lx.xqgg.ui.search.SearchActivity;
 import com.lx.xqgg.ui.vip.bean.PayListBean;
 import com.lx.xqgg.ui.webview.WebViewActivity;
+import com.lx.xqgg.util.Base64;
 import com.stx.xhb.xbanner.XBanner;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.statistics.common.DeviceConfig;
@@ -148,11 +150,65 @@ public class HomeFragment extends BaseFragment {
         rvTjcp.setAdapter(tjcpAdapter);
         rvTjcp.setNestedScrollingEnabled(false);
         tjcpAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+            private ProductDetailBean productDetailBean;
+
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                /*Intent intent = new Intent(mContext, ProductDetailActivity.class);
                 intent.putExtra("data", listTjcp.get(position).getId());
-                startActivity(intent);
+                startActivity(intent);*/
+                //接受的数据生成jsonbean数据
+                String userphone= SharedPrefManager.getUserInfo().getMobile();
+                int userid= listTjcp.get(position).getId();
+                String cityname= Constans.CITY;
+
+                //生成产品详细页的接口
+                ArrayList<ProductDetailBean> gson2= new ArrayList<>();
+                productDetailBean = new ProductDetailBean();
+                productDetailBean.setUserPhone(userphone);
+                productDetailBean.setType("h5");
+                productDetailBean.setId(userid+"");
+                productDetailBean.setStatusHeight("30.000");
+                productDetailBean.setCityName("");
+                gson2.add(productDetailBean);
+                String url2=new Gson().toJson(gson2);
+                String json2 =url2.substring(1,url2.length()-1);
+                //加密json
+                Log.e("zlz",json2);
+                String jiajson2= Base64.encode(json2.getBytes());
+                //生成产品详细页的接口
+                String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
+                Constans.productDetails=jiekong2;
+
+                ArrayList<ProductDetailBean> gson= new ArrayList<>();
+                productDetailBean = new ProductDetailBean();
+                productDetailBean.setUserPhone(userphone);
+                productDetailBean.setCityName(cityname);
+                productDetailBean.setType("app");
+                productDetailBean.setId(userid+"");
+                productDetailBean.setStatusHeight("30.000");
+                gson.add(productDetailBean);
+                String url=new Gson().toJson(gson);
+                String json =url.substring(1,url.length()-1);
+                Log.e("zlz",json);
+                //加密json
+                String jiajson= Base64.encode(json.getBytes());
+
+                String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
+                Log.e("zlz",jiekong);
+
+                if(!"".equals(jiekong2)){
+                    WebViewActivity.open(new WebViewActivity.Builder()
+                            .setContext(mContext)
+                            .setAutoTitle(false)
+                            .setIsFwb(false)
+                            .setUrl(jiekong));
+                }
+
+            }
+
+               // toast("跳转产品详细页H5");
 //                WebViewActivity.open(new WebViewActivity.Builder()
 //                        .setContext(mContext)
 //                        .setAutoTitle(false)
@@ -163,7 +219,6 @@ public class HomeFragment extends BaseFragment {
 //                Log.e("zlz",SharedPrefManager.getUser().getToken());
 //                Log.e("zlz",Constans.CITY);
 //                Log.e("zlz","測試過hi");
-            }
         });
 
         listXlgj = new ArrayList<>();
@@ -493,6 +548,7 @@ public class HomeFragment extends BaseFragment {
                 .subscribeWith(new BaseSubscriber<BaseData<List<BannerBean>>>(mContext, null) {
                     @Override
                     public void onNext(BaseData<List<BannerBean>> listBaseData) {
+                        Log.e("xbnner", new Gson().toJson(listBaseData));
                         if (listBaseData.isSuccess()) {
                             bannerBeanList = listBaseData.getData();
                             xBanner.setBannerData(R.layout.item_banner, bannerBeanList);

@@ -16,14 +16,21 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.google.gson.Gson;
 import com.lx.xqgg.R;
+import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.match.bean.MatchRequestBean;
 import com.lx.xqgg.ui.match.bean.MatchResultBean;
 import com.lx.xqgg.ui.match.bean.MatchSavedBean;
+import com.lx.xqgg.ui.person.bean.ProductDetailBean;
 import com.lx.xqgg.ui.product.ProductDetailActivity;
 import com.lx.xqgg.ui.product.bean.ProductBean;
+import com.lx.xqgg.ui.webview.WebViewActivity;
+import com.lx.xqgg.util.Base64;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -140,6 +147,9 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                     }
                     helper.setText(R.id.tv_status,status);
                     helper.setOnClickListener(R.id.layout, new View.OnClickListener() {
+
+                        private ProductDetailBean productDetailBean;
+
                         @Override
                         public void onClick(View v) {
                             if("offline".equals(twoBean.getStatus())){
@@ -148,9 +158,61 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                                 toast.show();
                                 return;
                             }
-                            Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                            /*Intent intent = new Intent(mContext, ProductDetailActivity.class);
                             intent.putExtra("data", twoBean.getId());
-                            mContext.startActivity(intent);
+                            mContext.startActivity(intent);*/
+                            /*Toast toast=Toast.makeText(mContext, "跳转产品详细页H5", Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();*/
+                            //接受的数据生成jsonbean数据
+                            String userphone= SharedPrefManager.getUserInfo().getMobile();
+                            int userid= twoBean.getId();
+                            String cityname= Constans.CITY;
+
+                            ArrayList<ProductDetailBean> gson2= new ArrayList<>();
+                            productDetailBean = new ProductDetailBean();
+                            productDetailBean.setUserPhone(userphone);
+                            productDetailBean.setType("h5");
+                            productDetailBean.setId(userid+"");
+                            productDetailBean.setStatusHeight("30.000");
+                            productDetailBean.setCityName("");
+                            gson2.add(productDetailBean);
+                            String url2=new Gson().toJson(gson2);
+                            String json2 =url2.substring(1,url2.length()-1);
+                            Log.e("zlz",json2);
+
+                            //加密json
+                            String jiajson2= Base64.encode(json2.getBytes());
+                            //生成产品详细页的接口
+                            String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
+                            Constans.productDetails=jiekong2;
+
+                            ArrayList<ProductDetailBean> gson= new ArrayList<>();
+                            productDetailBean = new ProductDetailBean();
+                            productDetailBean.setUserPhone(userphone);
+                            productDetailBean.setCityName(cityname);
+                            productDetailBean.setType("app");
+                            productDetailBean.setId(userid+"");
+                            productDetailBean.setStatusHeight("30.000");
+                            gson.add(productDetailBean);
+                            String url=new Gson().toJson(gson);
+                            String json =url.substring(1,url.length()-1);
+                            Log.e("zlz",json);
+                            //加密json
+                            String jiajson= Base64.encode(json.getBytes());
+                            //生成产品详细页的接口
+
+                            String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
+                            Log.e("zlz",jiekong);
+
+                            if(!"".equals(jiekong2)){
+                                WebViewActivity.open(new WebViewActivity.Builder()
+                                        .setContext(mContext)
+                                        .setAutoTitle(false)
+                                        .setIsFwb(false)
+                                        .setUrl(jiekong));
+                            }
+
                         }
                     });
                 }
