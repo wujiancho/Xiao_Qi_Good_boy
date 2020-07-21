@@ -137,7 +137,7 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                 startActivity(intent);*/
                               //  toast("跳转产品详细页H5");
                                 //接受的数据生成jsonbean数据
-                                String userphone= SharedPrefManager.getUserInfo().getMobile();
+                                String userphone= SharedPrefManager.getUser().getMobile();
                                 int userid= productBean.getRecords().get(position).getId();
                                 String cityname= Constans.CITY;
 

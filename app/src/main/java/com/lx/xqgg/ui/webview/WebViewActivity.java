@@ -757,6 +757,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                                             .setCallback(umShareListener)
                                             .share();
                                 } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                    webpic.setThumb(new UMImage(WebViewActivity.this, filelogo));
                                     new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
                                             .withMedia(webpic)
                                             .setCallback(umShareListener)

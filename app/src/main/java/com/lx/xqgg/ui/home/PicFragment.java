@@ -62,8 +62,7 @@ public class PicFragment extends DialogFragment {
         //url = "https://www.wenjuan.com/s/UZBZJvIQy/"/*advertBean.getUrl()*/;
         url = advertBean.getUrl();
         name = advertBean.getName();
-        String userphone= SharedPrefManager.getUserInfo().getMobile();
-        String cityname= Constans.CITY;
+
         guan.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
@@ -84,6 +83,8 @@ public class PicFragment extends DialogFragment {
                     }
                     else  if ("product".equals(name)){
                         //接受的数据生成jsonbean数据
+                        String userphone= SharedPrefManager.getUser().getMobile();
+                        String cityname= Constans.CITY;
                         //生成产品详细页的接口
                         ArrayList<ProductDetailBean> gson2= new ArrayList<>();
                         productDetailBean = new ProductDetailBean();

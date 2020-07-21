@@ -159,7 +159,7 @@ public class HomeFragment extends BaseFragment {
                 intent.putExtra("data", listTjcp.get(position).getId());
                 startActivity(intent);*/
                 //接受的数据生成jsonbean数据
-                String userphone= SharedPrefManager.getUserInfo().getMobile();
+                String userphone= SharedPrefManager.getUser().getMobile();
                 int userid= listTjcp.get(position).getId();
                 String cityname= Constans.CITY;
 
