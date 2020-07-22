@@ -17,7 +17,6 @@ public class FuzzyqueryAdapter extends BaseQuickAdapter<FuzzyqueryQccBean.Result
     @Override
     protected void convert(BaseViewHolder helper, FuzzyqueryQccBean.ResultBean item) {
         helper.setText(R.id.corporate_name,item.getName());
-        helper.setText(R.id.corporate_status_time,item.getStartDate());
         helper.setText(R.id.boss_name,item.getOperName());
         helper.setText(R.id.corporate_status,item.getStatus());
         helper.addOnClickListener(helper.itemView.getId());

@@ -129,11 +129,9 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                             FuzzyqueryQccBean fuzzyqueryQccBean = new Gson().fromJson(stringBaseData.getData(), FuzzyqueryQccBean.class);
                             Log.e("qcc", new Gson().toJson(fuzzyqueryQccBean));
                             if ("202".equals(fuzzyqueryQccBean.getStatus())) {
-                                toast("未查询相关信息，请确认企业名称输入无误");
                                 return;
                             }
                             if ("传入参数有误，请检查".equals(fuzzyqueryQccBean.getMessage())) {
-                                toast("未查询相关信息，请确认企业名称输入无误");
                                 return;
                             }
                             arrayList = new ArrayList<>();

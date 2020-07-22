@@ -326,15 +326,14 @@ public class PersonFragment extends BaseFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<UserInfoBean>>(mContext, null) {
-
-
-
                     @Override
                     public void onNext(BaseData<UserInfoBean> userInfoBeanBaseData) {
                         Log.e("userinfo", new Gson().toJson(userInfoBeanBaseData));
                         if (userInfoBeanBaseData.isSuccess()) {
                             SharedPrefManager.setUserInfo(userInfoBeanBaseData.getData());
                             refreshUI();
+                            crmUser =new Boolean(new Gson().toJson(SharedPrefManager.getUserInfo().isCrmUser()));
+                            Log.d("crmUser", "onNext:=== "+crmUser);
                         }else {
                             toast(userInfoBeanBaseData.getMessage());
                         }
@@ -369,14 +368,12 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
-
         list1.add(new MatterBean("服务商信息", "ServiceInfoActivity", R.drawable.ic_p_fws));
         list1.add(new MatterBean("我的客户", "MyClientActivity", R.drawable.ic_p_wdkh));
         list1.add(new MatterBean("推荐有礼", "ShareFaceActivity", R.drawable.ic_p_tjyl));
         list1.add(new MatterBean("积分查询", "", R.drawable.ic_p_jfcx));
-        list1.add(new MatterBean("我的拓客", "", R.drawable.ic_p_jfcx));
-        list1.add(new MatterBean("我的佣金", "", R.drawable.ic_p_jfcx));
+        list1.add(new MatterBean("我的拓客", "", R.drawable.ic_p_jfcx));//MyTuokeActivity
+        list1.add(new MatterBean("我的佣金", "", R.drawable.ic_p_jfcx));//MycommissionActivity
         homeBaseAdapter1.notifyDataSetChanged();
 
 //
@@ -396,8 +393,6 @@ public class PersonFragment extends BaseFragment {
         list2.add(new MatterBean("电话咨询", "", R.drawable.ic_p_dhzx));
         list2.add(new MatterBean("帮助中心", "HelperActivity", R.drawable.ic_p_bzxx));
         list2.add(new MatterBean("匹配结果", "MatchSavedActivity", R.drawable.ic_p_ppjg));
-        crmUser =new Boolean(new Gson().toJson(SharedPrefManager.getUserInfo().isCrmUser()));
-
         if ("true".equals(crmUser)){
             list2.add(new MatterBean("CRM", "", R.drawable.crm));
         }
