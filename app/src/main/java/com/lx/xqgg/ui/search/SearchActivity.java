@@ -18,6 +18,7 @@ import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.event.ProductDetailEvent;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.home.adapter.ResultAdapter;
 import com.lx.xqgg.ui.home.bean.ResultBean;
@@ -26,6 +27,8 @@ import com.lx.xqgg.ui.person.bean.ProductDetailBean;
 import com.lx.xqgg.ui.product.ProductDetailActivity;
 import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.Base64;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,6 +90,18 @@ public class SearchActivity extends BaseActivity {
                         //接受的数据生成jsonbean数据
                         String userphone= SharedPrefManager.getUser().getMobile();
                         int userid= resultBean.getId();
+                        String image = resultBean.getImage();
+                        String  title = resultBean.getName();
+                        int quota = resultBean.getQuota();
+                        String rate = resultBean.getRate();
+                        String count="额度:"+(quota/10000)+",日费率:" + rate;
+                        ProductDetailEvent event=new ProductDetailEvent();
+                        event.setImage(image);
+                        event.setTitle(title);
+                        event.setCount(count);
+                        EventBus.getDefault().postSticky(event);
+
+
                         String cityname= Constans.CITY;
 
                         ArrayList<ProductDetailBean> gson2= new ArrayList<>();
@@ -127,6 +142,8 @@ public class SearchActivity extends BaseActivity {
                                     .setContext(mContext)
                                     .setAutoTitle(false)
                                     .setIsFwb(false)
+                                    .setTitle("产品详情")
+                                    .setNeedShare(true)
                                     .setUrl(jiekong));
                         }
 

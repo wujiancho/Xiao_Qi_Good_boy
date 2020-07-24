@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -49,11 +50,14 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
     View vClearMsg;
     @BindView(R.id.recycler_Fuzzyquery)
     RecyclerView recyclerFuzzyquery;
+    @BindView(R.id.historical_records)
+    LinearLayout historicalRecords;
 
     private List<String> list = new ArrayList<>();
     private FuzzyqueryAdapter fuzzyqueryAdapter;
     private HistoryAdapter historyAdapter;
     private List<FuzzyqueryQccBean.ResultBean> arrayList;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_qcc_main_search;
@@ -67,15 +71,15 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                 //这里注意要作判断处理，ActionDown、ActionUp都会回调到这里，不作处理的话就会调用两次
                 if (KeyEvent.KEYCODE_ENTER == keyCode && KeyEvent.ACTION_DOWN == event.getAction()) {
                     //处理事件
-                  //  search(etCpmpanyName.getText().toString().trim());
+                   // search(etCpmpanyName.getText().toString().trim());
                     Fuzzyquerysearch(etCpmpanyName.getText().toString().trim());
                     return true;
                 }
                 return false;
             }
         });
-         etCpmpanyName.setFocusable(true);
-         etCpmpanyName.requestFocus();
+        etCpmpanyName.setFocusable(true);
+        etCpmpanyName.requestFocus();
         etCpmpanyName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,17 +88,18 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() <= 0){
+                if (s.length() <= 0) {
+                    arrayList.clear();
                     return;
                 }
                 Fuzzyquerysearch(etCpmpanyName.getText().toString().trim());
             }
         });
+       // etCpmpanyName.getText()arrayList.clear();
         list = SharedPrefManager.getSearchHistory();
         historyAdapter = new HistoryAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
@@ -106,6 +111,7 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                 search(list.get(position));
             }
         });
+
     }
 
     @Override
@@ -163,24 +169,33 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                         if (s.isSuccess()) {
                             QccBean qccBean = new Gson().fromJson(s.getData(), QccBean.class);
                             Log.e("qcc", new Gson().toJson(qccBean));
-                            list = SharedPrefManager.getSearchHistory();
-                            if (list == null) {
-                                list = new ArrayList<>();
-                                list.add(words);
-                            } else {
-                                for (int i = 0; i < list.size(); i++) {
-                                    if (list.get(i).equals(words)) {
-                                        list.remove(list.get(i));
-                                    }
-                                }
-                                list.add(0, words);
+                            if ("查询失败".equals(qccBean.getMessage())) {
+                                toast("抱歉未找到相关公司，请检查");
+                                return;
                             }
-                            SharedPrefManager.setSearchHistory(list);
+                                list = SharedPrefManager.getSearchHistory();
+                                if (list == null) {
+                                    list = new ArrayList<>();
+                                    list.add(words);
+                                } else {
+                                    for (int i = 0; i < list.size(); i++) {
+                                        if (list.get(i).equals(words)) {
+                                            list.remove(list.get(i));
+                                        }
+                                    }
+                                    list.add(0, words);
+                                }
+                                SharedPrefManager.setSearchHistory(list);
+
 //                            Constans.qccBean=qccBean;
-                            Intent intent = new Intent(mContext, QccCompanyResultMainActivity.class);
-                            intent.putExtra("data", qccBean);
+                                Intent intent = new Intent(mContext, QccCompanyResultMainActivity.class);
+                                intent.putExtra("data", qccBean);
 //                            intent.putExtra("name",words);
-                            startActivity(intent);
+                                startActivity(intent);
+                            historicalRecords.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                                arrayList.clear();
+
                         } else {
                             toast(s.getData());
                         }
@@ -204,10 +219,13 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                 list = null;
                 historyAdapter.setNewData(list);
                 historyAdapter.notifyDataSetChanged();
+                historicalRecords.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
+
                 break;
             case R.id.tv_search:
-                // search(etCpmpanyName.getText().toString().trim());
-                Fuzzyquerysearch(etCpmpanyName.getText().toString().trim());
+                search(etCpmpanyName.getText().toString().trim());
+                //Fuzzyquerysearch(etCpmpanyName.getText().toString().trim());
                 break;
             case R.id.v_clear_msg:
                 etCpmpanyName.setText("");
@@ -223,5 +241,6 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
         historyAdapter.setNewData(list);
         historyAdapter.notifyDataSetChanged();
     }
+
 
 }

@@ -31,6 +31,7 @@ import com.lx.xqgg.base.BaseFragment;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.event.ProductDetailEvent;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.city.CityPickerActivity;
 import com.lx.xqgg.ui.city.bean.CityBean;
@@ -55,6 +56,8 @@ import com.lx.xqgg.util.Base64;
 import com.stx.xhb.xbanner.XBanner;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.statistics.common.DeviceConfig;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -150,7 +153,6 @@ public class HomeFragment extends BaseFragment {
         rvTjcp.setAdapter(tjcpAdapter);
         rvTjcp.setNestedScrollingEnabled(false);
         tjcpAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-
             private ProductDetailBean productDetailBean;
 
             @Override
@@ -161,6 +163,16 @@ public class HomeFragment extends BaseFragment {
                 //接受的数据生成jsonbean数据
                 String userphone= SharedPrefManager.getUser().getMobile();
                 int userid= listTjcp.get(position).getId();
+                String image = listTjcp.get(position).getImage();
+                String  title = listTjcp.get(position).getTitle();
+                int quota = listTjcp.get(position).getQuota();
+                String rate = listTjcp.get(position).getRate();
+                String count="额度:"+(quota/10000)+",日费率:" + rate;
+                ProductDetailEvent event=new ProductDetailEvent();
+                event.setImage(image);
+                event.setTitle(title);
+                event.setCount(count);
+                EventBus.getDefault().postSticky(event);
                 String cityname= Constans.CITY;
 
                 //生成产品详细页的接口
@@ -203,6 +215,8 @@ public class HomeFragment extends BaseFragment {
                             .setContext(mContext)
                             .setAutoTitle(false)
                             .setIsFwb(false)
+                            .setTitle("产品详情")
+                            .setNeedShare(true)
                             .setUrl(jiekong));
                 }
 

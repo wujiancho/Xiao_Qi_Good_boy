@@ -90,6 +90,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/historical_records"
+        android:visibility="gone"
         android:padding="16dp">
 
         <TextView
@@ -106,11 +108,12 @@
             android:drawablePadding="4dp"
             android:text="清空" />
     </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_Fuzzyquery"
         android:layout_width="match_parent"

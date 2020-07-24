@@ -15,6 +15,7 @@ import com.lx.xqgg.base.BaseFragment;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.event.ProductDetailEvent;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.home.UserServiceFragment;
 import com.lx.xqgg.ui.home.bean.UserServiceBean;
@@ -23,6 +24,8 @@ import com.lx.xqgg.ui.product.adapter.ProductAdapter;
 import com.lx.xqgg.ui.product.bean.ProductBean;
 import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.Base64;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,6 +142,16 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                 //接受的数据生成jsonbean数据
                                 String userphone= SharedPrefManager.getUser().getMobile();
                                 int userid= productBean.getRecords().get(position).getId();
+                                String image = productBean.getRecords().get(position).getImage();
+                                String  title = productBean.getRecords().get(position).getTitle();
+                                int quota = productBean.getRecords().get(position).getQuota();
+                                String rate = productBean.getRecords().get(position).getRate();
+                                String count="额度:"+(quota/10000)+",日费率:" + rate;
+                                ProductDetailEvent event=new ProductDetailEvent();
+                                event.setImage(image);
+                                event.setTitle(title);
+                                event.setCount(count);
+                                EventBus.getDefault().postSticky(event);
                                 String cityname= Constans.CITY;
 
                                 //生成产品详细页的接口
@@ -180,6 +193,8 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                             .setContext(mContext)
                                             .setAutoTitle(false)
                                             .setIsFwb(false)
+                                            .setTitle("产品详情")
+                                            .setNeedShare(true)
                                             .setUrl(jiekong));
                                 }
 

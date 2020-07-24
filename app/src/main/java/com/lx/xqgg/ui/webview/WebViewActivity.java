@@ -40,6 +40,8 @@ import com.lx.xqgg.MainActivity;
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.Constans;
+import com.lx.xqgg.config.Config;
+import com.lx.xqgg.event.ProductDetailEvent;
 import com.lx.xqgg.ui.company_auth.ChooseDialogFragment;
 import com.lx.xqgg.ui.product.ApplyFragment;
 import com.lx.xqgg.ui.product.bean.ProductBean;
@@ -67,6 +69,10 @@ import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 import com.umeng.socialize.utils.UmengText;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -133,6 +139,10 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     private  File file;
     private  File filelogo;
     private String decodeFile;
+    private String image;
+    private String title;
+    private String count;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_webview;
@@ -141,6 +151,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
         //设置布局ProgressBar加载长度+接受bundle对象
         bar = new SlowlyProgressBar((ProgressBar) findViewById(R.id.bar));
         chooseDialogFragment = new ChooseDialogFragment();
@@ -686,7 +697,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 finish();
                 break;
             case R.id.tv_share:
-                share();
+                share2(Config.URL+image,title,count);
                 break;
         }
     }
@@ -936,6 +947,56 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 }).open();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+            public  void shape(ProductDetailEvent event){
+        image = event.getImage();
+        title = event.getTitle();
+        count = event.getCount();
+    }
+    public void share2(String image,String title ,String count ) {
+        returnBitMap(image);
+        if (!"".equals(filelogo)) {
+            UMWeb webpic = new UMWeb(Constans.productDetails);
+            webpic.setThumb(new UMImage(WebViewActivity.this, filelogo));
+            webpic.setTitle(title);
+            //  web.setThumb(new UMImage(WebViewActivity.this, proLogo));
+            webpic.setDescription(count);
+            new ShareAction(mContext)
+                    .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setShareboardclickCallback(new ShareBoardlistener() {
+                        @Override
+                        public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                            if (share_media == SHARE_MEDIA.QQ) {
+                                webpic.setThumb(new UMImage(WebViewActivity.this, decodeFile));
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                        .withMedia(webpic)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                webpic.setThumb(new UMImage(WebViewActivity.this, filelogo));
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                        .withMedia(webpic)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.QZONE) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                        .withMedia(webpic)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                        .withMedia(webpic)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            }
+                        }
+                    }).open();
+        }
+    }
+
+
+
+
 
     //分享后回调的方法
     UMShareListener umShareListener = new UMShareListener() {
@@ -1135,6 +1196,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     //设置销毁回收
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
         webview.destroy();
     }

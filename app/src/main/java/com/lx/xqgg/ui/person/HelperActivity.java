@@ -75,7 +75,7 @@ public class HelperActivity extends BaseActivity implements SwipeRefreshLayout.O
                         .setAutoTitle(false)
                         .setIsFwb(false)
                         .setTitle(list.get(position).getTitle())
-                        .setNeedShare(true)
+                        //.setNeedShare(true)
                         .setUrl(Config.URL+"view/helpInfo.html?id="+list.get(position).getId()));
             }
         });

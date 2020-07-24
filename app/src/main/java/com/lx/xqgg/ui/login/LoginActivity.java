@@ -176,13 +176,15 @@ public class LoginActivity extends BaseActivity {
                                                         }
                                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                                         finish();
+                                                        /*startActivity(new Intent(LoginActivity.this, FaceMainActivity.class));
+                                                        finish();*/
                                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                                     }
 
                                                     @Override
                                                     public void onError(Throwable t) {
                                                         super.onError(t);
-                                                        toast(t.toString());
+                                                        toast("服务器错误"+t.toString());
                                                         startActivity(new Intent(LoginActivity.this, FaceMainActivity.class));
                                                         finish();
                                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

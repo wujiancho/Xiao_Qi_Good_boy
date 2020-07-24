@@ -85,6 +85,7 @@ public class PicFragment extends DialogFragment {
                         //接受的数据生成jsonbean数据
                         String userphone= SharedPrefManager.getUser().getMobile();
                         String cityname= Constans.CITY;
+
                         //生成产品详细页的接口
                         ArrayList<ProductDetailBean> gson2= new ArrayList<>();
                         productDetailBean = new ProductDetailBean();
@@ -124,6 +125,8 @@ public class PicFragment extends DialogFragment {
                                     .setContext(getActivity())
                                     .setAutoTitle(false)
                                     .setIsFwb(false)
+                                     .setTitle("产品详情")
+                                   // .setNeedShare(true)
                                     .setUrl(jiekong));
                         }
                     }

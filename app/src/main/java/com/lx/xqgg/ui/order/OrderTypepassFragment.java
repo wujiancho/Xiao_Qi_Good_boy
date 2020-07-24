@@ -209,6 +209,7 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                     @Override
                     public void onNext(OrderBean orderBean) {
                         Log.e("zlz", new Gson().toJson(orderBean));
+                        list=new ArrayList<>();
                         orderAdapter = new OrderAdapter(list);
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);
@@ -226,8 +227,7 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                             if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
                                 list.clear();
                                 list.addAll(orderBean.getRecords());
-                                orderAdapter.setNewData(list);
-                                orderAdapter.notifyDataSetChanged();
+
                                 if (list.size() < 10) {
                                     if (list.size() < 3) {
                                         orderAdapter.disableLoadMoreIfNotFullPage();
@@ -236,7 +236,9 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                                         orderAdapter.loadMoreEnd();
                                     }
                                 }
+                                Order();
                                 orderAdapter.notifyDataSetChanged();
+
                             }
                         } else {
                             toast(orderBean.getMessage());
@@ -288,7 +290,6 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
 //                            list.addAll();
                                 orderAdapter.setNewData(list);
                                 orderAdapter.notifyDataSetChanged();
-                                orderAdapter.notifyDataSetChanged();
                                 orderAdapter.loadMoreComplete();
                             }
                         } else {
@@ -312,14 +313,17 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
             case R.id.allitem:
                 orderAdapter.setNewData(list);
                 orderAdapter.notifyDataSetChanged();
+                resch=false;
                 break;
             case R.id.shengok:
                 orderAdapter.setNewData(passlist);
                 orderAdapter.notifyDataSetChanged();
+                resch=true;
                 break;
             case R.id.shengno:
                 orderAdapter.setNewData(nopasslist);
                 orderAdapter.notifyDataSetChanged();
+                resch=true;
                 break;
         }
     }
@@ -349,12 +353,11 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                 case R.id.shengok:
                     orderAdapter.setNewData(passlist);
                     orderAdapter.notifyDataSetChanged();
-                    resch=true;
+
                     break;
                 case R.id.shengno:
                     orderAdapter.setNewData(nopasslist);
                     orderAdapter.notifyDataSetChanged();
-                    resch=true;
                     break;
             }
         }
