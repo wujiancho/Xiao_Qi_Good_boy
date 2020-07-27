@@ -173,6 +173,10 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                                 toast("抱歉未找到相关公司，请检查");
                                 return;
                             }
+                            if ("查询无结果".equals(qccBean.getMessage())) {
+                                toast("抱歉未找到相关公司，请检查");
+                                return;
+                            }
                                 list = SharedPrefManager.getSearchHistory();
                                 if (list == null) {
                                     list = new ArrayList<>();
@@ -194,7 +198,7 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                                 startActivity(intent);
                             historicalRecords.setVisibility(View.VISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
-                                arrayList.clear();
+                                //arrayList.clear();
 
                         } else {
                             toast(s.getData());

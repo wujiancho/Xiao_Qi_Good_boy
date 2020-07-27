@@ -401,10 +401,7 @@ public class ApplyFragment extends DialogFragment {
                             if (qccBean == null) {
                                 return;
                             }
-                            if (qccBean.getMessage().equals("查询无结果")) {
-                                toast("请输入正确的公司");
-                                return;
-                            }
+
                             Log.e("zlz", new Gson().toJson(qccBean));
                             try {
                                 tvHyType.setText(TextUtils.isEmpty(qccBean.getResult().getIndustry().getIndustry()) ? "" : qccBean.getResult().getIndustry().getIndustry());

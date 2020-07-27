@@ -165,18 +165,9 @@ public class PersonFragment extends BaseFragment {
                 }else {
                     try {
                         Intent intent = new Intent(list1.get(position).getAction());
-                        if(list1.get(position).getAction()=="ShareFaceActivity"){
-                            if (name!=null){
-                                intent.putExtra("name",name);
-                            }
-                            if (phone!=null){
-                                intent.putExtra("phone",phone);
-                            }
-                            startActivity(intent);
-                        }else {
-                            startActivity(intent);
-                        }
-                    } catch (Exception e) {
+                        startActivity(intent);
+                    }
+                    catch (Exception e) {
                         toast("功能暂未开放");
                     }
                 }
@@ -371,9 +362,9 @@ public class PersonFragment extends BaseFragment {
         list1.add(new MatterBean("服务商信息", "ServiceInfoActivity", R.drawable.ic_p_fws));
         list1.add(new MatterBean("我的客户", "MyClientActivity", R.drawable.ic_p_wdkh));
         list1.add(new MatterBean("推荐有礼", "ShareFaceActivity", R.drawable.ic_p_tjyl));
-        list1.add(new MatterBean("积分查询", "", R.drawable.ic_p_jfcx));
-        list1.add(new MatterBean("我的拓客", "", R.drawable.ic_p_jfcx));//MyTuokeActivity
-        list1.add(new MatterBean("我的佣金", "", R.drawable.ic_p_jfcx));//MycommissionActivity
+        list1.add(new MatterBean("积分查询", "IntegralQueryActivity", R.drawable.ic_p_jfcx));//IntegralQueryActivity
+        list1.add(new MatterBean("我的拓客", "MyTuokeActivity", R.drawable.ic_p_jfcx));//MyTuokeActivity
+        list1.add(new MatterBean("我的佣金", "MycommissionActivity", R.drawable.ic_p_jfcx));//MycommissionActivity
         homeBaseAdapter1.notifyDataSetChanged();
 
 //

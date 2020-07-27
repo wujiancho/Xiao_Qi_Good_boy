@@ -39,8 +39,43 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ui.mycommission.MycommissionActivity"></activity>
-        <activity android:name=".ui.mytuoke.MyTuokeActivity" />
+        <activity android:name=".ui.integral_query.IntegralwithdrawalrulesActivity"></activity>
+        <activity android:name=".ui.integral_query.BankinformationconfirmationActivity" />
+        <activity android:name=".ui.integral_query.Integral_queryhistoryActivity" />
+        <activity
+            android:name=".ui.integral_query.IntegralWithdrawalActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.integral_query.IntegralQueryActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="IntegralQueryActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.mycommission.MycommissionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="MycommissionActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.mytuoke.MyTuokeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="MyTuokeActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

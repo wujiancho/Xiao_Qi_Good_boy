@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_1"
+    android:id="@+id/itembg"
+    >
+    <TextView
+        android:paddingTop="@dimen/dp_10"
+        android:paddingLeft="8dp"
+        android:paddingRight="9dp"
+        android:paddingBottom="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2020.06.09您开拓的服务商苏州罗信网络科技有限公司完成一笔新的订单，获得500积分。"
+        android:textColor="#ff686868"
+        android:textSize="13sp"
+        android:id="@+id/messagecoument"
+        />
+</LinearLayout>
