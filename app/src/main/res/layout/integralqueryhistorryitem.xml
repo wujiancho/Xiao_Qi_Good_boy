@@ -5,7 +5,7 @@
     >
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_1"
             android:background="#DCDCDC"
             ></View>
      <LinearLayout
@@ -14,7 +14,7 @@
          android:orientation="horizontal"
          >
              <View
-                 android:layout_width="@dimen/dp_2"
+                 android:layout_width="@dimen/dp_1"
                  android:layout_height="match_parent"
                  android:background="#DCDCDC"
                  ></View>
@@ -30,7 +30,7 @@
             android:id="@+id/history_time"
             ></TextView>
         <View
-            android:layout_width="@dimen/dp_2"
+            android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
             android:background="#DCDCDC"
             ></View>
@@ -46,7 +46,7 @@
             android:id="@+id/history_integral"
             ></TextView>
         <View
-            android:layout_width="@dimen/dp_2"
+            android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
             android:background="#DCDCDC"
             ></View>
@@ -62,14 +62,14 @@
             android:id="@+id/history_status"
             ></TextView>
         <View
-            android:layout_width="@dimen/dp_2"
+            android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
             android:background="#DCDCDC"
             ></View>
     </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_1"
             android:background="#DCDCDC"
             ></View>
 </LinearLayout>

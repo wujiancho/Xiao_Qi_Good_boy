@@ -39,7 +39,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ui.integral_query.IntegralwithdrawalrulesActivity"></activity>
+        <activity android:name=".ui.lacollege.LACollegeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="LACollegeActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.integral_query.IntegralwithdrawalrulesActivity" />
         <activity android:name=".ui.integral_query.BankinformationconfirmationActivity" />
         <activity android:name=".ui.integral_query.Integral_queryhistoryActivity" />
         <activity

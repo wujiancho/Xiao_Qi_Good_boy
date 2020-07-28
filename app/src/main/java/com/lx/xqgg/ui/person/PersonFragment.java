@@ -398,6 +398,7 @@ public class PersonFragment extends BaseFragment {
         list3.add(new MatterBean("企业培训", "CorporateTrainActivity", R.drawable.ic_p_qypx));
         list3.add(new MatterBean("人法网", "", R.drawable.ic_p_rfw));
         list3.add(new MatterBean("税务局", "", R.drawable.ic_p_swj));
+        list3.add(new MatterBean("助贷学院", "LACollegeActivity", R.drawable.ic_p_zdxy));
 //        list3.add(new MatterBean("名片全能王", "", R.drawable.ic_p_mpqnw));
 //        list3.add(new MatterBean("扫描全能王", "", R.drawable.ic_p_qnsmw));
         homeBaseAdapter3.notifyDataSetChanged();

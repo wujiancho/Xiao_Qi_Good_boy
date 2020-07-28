@@ -47,7 +47,7 @@
        >
        <View
            android:layout_width="match_parent"
-           android:layout_height="@dimen/dp_0_5"
+           android:layout_height="@dimen/dp_1"
            android:background="#DCDCDC"
            ></View>
        <LinearLayout
@@ -55,6 +55,11 @@
            android:layout_height="wrap_content"
            android:orientation="horizontal"
            >
+           <View
+               android:layout_width="@dimen/dp_1"
+               android:layout_height="match_parent"
+               android:background="#DCDCDC"
+               ></View>
            <TextView
                android:layout_width="match_parent"
                android:layout_height="@dimen/dp_42"
@@ -66,7 +71,7 @@
                android:layout_weight="1"
                ></TextView>
            <View
-               android:layout_width="@dimen/dp_2"
+               android:layout_width="@dimen/dp_1"
                android:layout_height="match_parent"
                android:background="#DCDCDC"
                ></View>
@@ -81,7 +86,7 @@
                android:gravity="center"
                ></TextView>
            <View
-               android:layout_width="@dimen/dp_2"
+               android:layout_width="@dimen/dp_1"
                android:layout_height="match_parent"
                android:background="#DCDCDC"
                ></View>
@@ -96,7 +101,7 @@
                android:gravity="center"
                ></TextView>
            <View
-               android:layout_width="@dimen/dp_2"
+               android:layout_width="@dimen/dp_1"
                android:layout_height="match_parent"
                android:background="#DCDCDC"
                ></View>

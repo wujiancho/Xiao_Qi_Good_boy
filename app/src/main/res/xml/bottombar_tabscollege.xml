@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        icon="@drawable/ic_homecollege_tab"
+        id="@+id/tabcollege_home"
+        title="首页" />
+    <tab
+        icon="@drawable/ic_classificationcollege_tab"
+        id="@+id/tabcollege_classification"
+        title="分类" />
+
+    <tab
+        icon="@drawable/ic_personcollege_tab"
+        id="@+id/tabcollege_person"
+        title="我的" />
+</tabs>

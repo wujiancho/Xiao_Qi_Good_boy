@@ -15,10 +15,12 @@ import butterknife.OnClick;
 public class MycommissionActivity extends BaseActivity {
 
 
-    @BindView(R.id.v_close)
-    View vClose;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
+    @BindView(R.id.toobar_back)
+    View toobarBack;
+    @BindView(R.id.toobar_title)
+    TextView toobarTitle;
+    @BindView(R.id.toobar_vip)
+    TextView toobarVip;
     @BindView(R.id.toobar)
     ConstraintLayout toobar;
 
@@ -29,7 +31,7 @@ public class MycommissionActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-     tvTitle.setText("我的佣金");
+        toobarTitle.setText("我的佣金");
     }
 
     @Override
@@ -37,9 +39,7 @@ public class MycommissionActivity extends BaseActivity {
 
     }
 
-
-
-    @OnClick(R.id.v_close)
+    @OnClick(R.id.toobar_back)
     public void onViewClicked() {
         finish();
     }

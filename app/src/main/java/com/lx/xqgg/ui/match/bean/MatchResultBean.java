@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
 
-public class MatchResultBean extends AbstractExpandableItem<MatchResultBean.ProductBean> implements MultiItemEntity {
+    public class MatchResultBean extends AbstractExpandableItem<MatchResultBean.ProductBean> implements MultiItemEntity {
 
     /**
      * cateId : 51
