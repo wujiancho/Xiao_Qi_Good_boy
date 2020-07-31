@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import com.google.gson.Gson;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.base.BaseActivityflase;
 import com.lx.xqgg.base.BaseApplication;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;

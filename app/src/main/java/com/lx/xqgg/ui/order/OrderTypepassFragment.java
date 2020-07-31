@@ -123,8 +123,6 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                             if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
                                 list.clear();
                                 list.addAll(orderBean.getRecords());
-                                orderAdapter.setNewData(list);
-                                orderAdapter.notifyDataSetChanged();
                                 Order();
                                 if (list.size() < 10) {
                                     if (list.size() < 3) {
@@ -157,16 +155,16 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
     }
 
     public static OrderTypepassFragment newInstance(String search_words, String status, String createTimeStart, String createTimeEnd, int userid) {
-        OrderTypepassFragment orderTypeFragment = new OrderTypepassFragment();
+        OrderTypepassFragment orderpassTypeFragment = new OrderTypepassFragment();
         Bundle bundle = new Bundle();
         bundle.putString("search_words", search_words);
         bundle.putString("status", status);
         bundle.putString("createTimeStart", createTimeStart);
         bundle.putString("createTimeEnd", createTimeEnd);
         bundle.putInt("userId", userid);
-        orderTypeFragment.setArguments(bundle);
+        orderpassTypeFragment.setArguments(bundle);
         Log.e("zlz", "instance" + status);
-        return orderTypeFragment;
+        return orderpassTypeFragment;
     }
 
     public void update(String search_words, String status, String createTimeStart, String createTimeEnd, int userid) {

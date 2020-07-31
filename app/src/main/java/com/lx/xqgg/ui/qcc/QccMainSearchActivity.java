@@ -198,7 +198,7 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                                 startActivity(intent);
                             historicalRecords.setVisibility(View.VISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
-                                //arrayList.clear();
+                                arrayList.clear();
 
                         } else {
                             toast(s.getData());

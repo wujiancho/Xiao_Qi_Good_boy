@@ -187,7 +187,7 @@ public class SplashActivity extends AppCompatActivity {
                                             @Override
                                             public void onError(Throwable t) {
                                                 super.onError(t);
-                                                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), t.toString()+"请检查网络或者服务器网络异常", Toast.LENGTH_LONG).show();
                                                 finish();
                                             }
                                         });

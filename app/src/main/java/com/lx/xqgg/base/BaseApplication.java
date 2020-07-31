@@ -46,6 +46,8 @@ public class BaseApplication extends Application {
         JPushInterface.init(this);
         x.Ext.init(this);
         Tiny.getInstance().init(this);
+        // 对Snake进行初始化
+      //  Snake.init(this);
         Logger.addLogAdapter(new AndroidLogAdapter(){
             @Override
             public boolean isLoggable(int priority, @Nullable String tag) {
@@ -86,6 +88,7 @@ public class BaseApplication extends Application {
             QbSdk.initX5Environment(getApplicationContext(), cb);
         }
         Unicorn.init(this, "946df56a8b1b01f0c7628b8bcc353567", options(), new GlideImageLoader(this));
+
     }
 
 

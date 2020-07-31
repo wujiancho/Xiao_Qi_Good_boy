@@ -9,17 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
+
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * Created by Administrator on 2018/5/8.
  */
-
 public abstract class BaseFragment extends SupportFragment {
     protected View view;
 

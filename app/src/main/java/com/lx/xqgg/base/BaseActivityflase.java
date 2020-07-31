@@ -21,15 +21,14 @@ import com.google.gson.Gson;
 import com.lx.xqgg.util.AppActivityTaskManager;
 import com.umeng.analytics.MobclickAgent;
 
-
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SupportActivity;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivityflase extends SupportActivity {
+
     protected View view;
     protected Gson gson;
 
@@ -41,7 +40,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     private Dialog progressDialog;
 
-    private LoadingDismissListener dismissListener;
+    private BaseActivity.LoadingDismissListener dismissListener;
 
     private Long startTime;
 
@@ -88,7 +87,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     public void showDialog(String msg) {
-        builder1 = new AlertDialog.Builder(BaseActivity.this);
+        builder1 = new AlertDialog.Builder(BaseActivityflase.this);
         builder1.setMessage(msg);
         builder1.setTitle("提示");
         builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -135,16 +134,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     @Override
-    public boolean swipeBackPriority() {
-        if (AppActivityTaskManager.getInstance().getActivitySize()==1){
-            return  false;
-        }
-           else {
-               return  true;
-        }
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         AppActivityTaskManager.getInstance().removeActivity(this);
@@ -163,7 +152,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
 
-    protected void addLoadingDismissEvent(LoadingDismissListener dismissListener) {
+    protected void addLoadingDismissEvent(BaseActivity.LoadingDismissListener dismissListener) {
         this.dismissListener = dismissListener;
     }
 

@@ -1,7 +1,6 @@
 package com.lx.xqgg.ui.home;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Outline;
 import android.text.TextUtils;
@@ -11,7 +10,6 @@ import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -19,7 +17,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -46,7 +43,6 @@ import com.lx.xqgg.ui.hot.HotMsgListActivity;
 import com.lx.xqgg.ui.message.MessageActivity;
 import com.lx.xqgg.ui.person.bean.ProductDetailBean;
 import com.lx.xqgg.ui.product.ProductActivity;
-import com.lx.xqgg.ui.product.ProductDetailActivity;
 import com.lx.xqgg.ui.product.bean.CateBean;
 import com.lx.xqgg.ui.product.bean.ProductBean;
 import com.lx.xqgg.ui.search.SearchActivity;
@@ -55,7 +51,6 @@ import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.Base64;
 import com.stx.xhb.xbanner.XBanner;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.statistics.common.DeviceConfig;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -93,6 +88,10 @@ public class HomeFragment extends BaseFragment {
     LinearLayout layoutCity;
     @BindView(R.id.v_msg)
     View vMsg;
+    @BindView(R.id.et_search)
+    TextView etSearch;
+    @BindView(R.id.v_hot)
+    View vHot;
 
     //轮播图list
     private List<BannerBean> bannerBeanList;
@@ -161,56 +160,56 @@ public class HomeFragment extends BaseFragment {
                 intent.putExtra("data", listTjcp.get(position).getId());
                 startActivity(intent);*/
                 //接受的数据生成jsonbean数据
-                String userphone= SharedPrefManager.getUser().getMobile();
-                int userid= listTjcp.get(position).getId();
+                String userphone = SharedPrefManager.getUser().getMobile();
+                int userid = listTjcp.get(position).getId();
                 String image = listTjcp.get(position).getImage();
-                String  title = listTjcp.get(position).getTitle();
+                String title = listTjcp.get(position).getTitle();
                 int quota = listTjcp.get(position).getQuota();
                 String rate = listTjcp.get(position).getRate();
-                String count="额度:"+(quota/10000)+",日费率:" + rate;
-                ProductDetailEvent event=new ProductDetailEvent();
+                String count = "额度:" + (quota / 10000) + ",日费率:" + rate;
+                ProductDetailEvent event = new ProductDetailEvent();
                 event.setImage(image);
                 event.setTitle(title);
                 event.setCount(count);
                 EventBus.getDefault().postSticky(event);
-                String cityname= Constans.CITY;
+                String cityname = Constans.CITY;
 
                 //生成产品详细页的接口
-                ArrayList<ProductDetailBean> gson2= new ArrayList<>();
+                ArrayList<ProductDetailBean> gson2 = new ArrayList<>();
                 productDetailBean = new ProductDetailBean();
                 productDetailBean.setUserPhone(userphone);
                 productDetailBean.setType("h5");
-                productDetailBean.setId(userid+"");
+                productDetailBean.setId(userid + "");
                 productDetailBean.setStatusHeight("30.000");
                 productDetailBean.setCityName("");
                 gson2.add(productDetailBean);
-                String url2=new Gson().toJson(gson2);
-                String json2 =url2.substring(1,url2.length()-1);
+                String url2 = new Gson().toJson(gson2);
+                String json2 = url2.substring(1, url2.length() - 1);
                 //加密json
-                Log.e("zlz",json2);
-                String jiajson2= Base64.encode(json2.getBytes());
+                Log.e("zlz", json2);
+                String jiajson2 = Base64.encode(json2.getBytes());
                 //生成产品详细页的接口
-                String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
-                Constans.productDetails=jiekong2;
+                String jiekong2 = Config.URL + "view/productDetails.html?bean=" + jiajson2;
+                Constans.productDetails = jiekong2;
 
-                ArrayList<ProductDetailBean> gson= new ArrayList<>();
+                ArrayList<ProductDetailBean> gson = new ArrayList<>();
                 productDetailBean = new ProductDetailBean();
                 productDetailBean.setUserPhone(userphone);
                 productDetailBean.setCityName(cityname);
                 productDetailBean.setType("app");
-                productDetailBean.setId(userid+"");
+                productDetailBean.setId(userid + "");
                 productDetailBean.setStatusHeight("30.000");
                 gson.add(productDetailBean);
-                String url=new Gson().toJson(gson);
-                String json =url.substring(1,url.length()-1);
-                Log.e("zlz",json);
+                String url = new Gson().toJson(gson);
+                String json = url.substring(1, url.length() - 1);
+                Log.e("zlz", json);
                 //加密json
-                String jiajson= Base64.encode(json.getBytes());
+                String jiajson = Base64.encode(json.getBytes());
 
-                String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
-                Log.e("zlz",jiekong);
+                String jiekong = Config.URL + "view/productDetails.html?bean=" + jiajson;
+                Log.e("zlz", jiekong);
 
-                if(!"".equals(jiekong2)){
+                if (!"".equals(jiekong2)) {
                     WebViewActivity.open(new WebViewActivity.Builder()
                             .setContext(mContext)
                             .setAutoTitle(false)
@@ -222,7 +221,7 @@ public class HomeFragment extends BaseFragment {
 
             }
 
-               // toast("跳转产品详细页H5");
+            // toast("跳转产品详细页H5");
 //                WebViewActivity.open(new WebViewActivity.Builder()
 //                        .setContext(mContext)
 //                        .setAutoTitle(false)
@@ -387,7 +386,7 @@ public class HomeFragment extends BaseFragment {
                 }));
     }
 
-    @OnClick({R.id.layout_city, R.id.et_search, R.id.view_flipper, R.id.v_msg, R.id.v_hot})
+    @OnClick({R.id.layout_city, R.id.et_search, R.id.view_flipper, R.id.v_msg,R.id.v_hot})
     public void click(View v) {
         switch (v.getId()) {
             case R.id.layout_city:
@@ -402,7 +401,7 @@ public class HomeFragment extends BaseFragment {
             case R.id.v_msg:
                 startActivity(new Intent(getContext(), MessageActivity.class));
                 break;
-            case R.id.v_hot:
+            case  R.id.v_hot:
                 startActivity(new Intent(getContext(), HotMsgListActivity.class));
                 break;
         }
@@ -629,29 +628,29 @@ public class HomeFragment extends BaseFragment {
             Constans.GPSCITY = location.getCity();
             Constans.GPSPROVINCE = location.getProvince();
 
-            List<CityHistoryBean> list=new ArrayList<>();
-            list=SharedPrefManager.getCityHistory();
+            List<CityHistoryBean> list = new ArrayList<>();
+            list = SharedPrefManager.getCityHistory();
 
-            if(location.getCity()==null||location.getProvince()==null){
+            if (location.getCity() == null || location.getProvince() == null) {
                 return;
             }
             if (list == null) {
                 list = new ArrayList<>();
-                list.add(new CityHistoryBean(location.getProvince(),location.getCity()));
+                list.add(new CityHistoryBean(location.getProvince(), location.getCity()));
             } else {
                 for (int i = 0; i < list.size(); i++) {
-                    if(list.get(i).getCity()!=null){
+                    if (list.get(i).getCity() != null) {
                         if (list.get(i).getCity().equals(location.getCity())) {
                             list.remove(list.get(i));
                             break;
                         }
                     }
                 }
-                list.add(0, new CityHistoryBean(location.getProvince(),location.getCity()));
+                list.add(0, new CityHistoryBean(location.getProvince(), location.getCity()));
             }
 
-            if(list.size()>3){
-                list.remove(list.get(list.size()-1));
+            if (list.size() > 3) {
+                list.remove(list.get(list.size() - 1));
             }
             SharedPrefManager.setCityHistory(list);
             initCity();

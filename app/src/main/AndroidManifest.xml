@@ -41,25 +41,27 @@
         tools:ignore="LockedOrientationActivity">
         <activity android:name=".ui.lacollege.LACollegeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="LACollegeActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.integral_query.IntegralwithdrawalrulesActivity" />
+        <activity android:name=".ui.integral_query.IntegralwithdrawalrulesActivity"
+            />
         <activity android:name=".ui.integral_query.BankinformationconfirmationActivity" />
         <activity android:name=".ui.integral_query.Integral_queryhistoryActivity" />
         <activity
             android:name=".ui.integral_query.IntegralWithdrawalActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.integral_query.IntegralQueryActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="IntegralQueryActivity" />
 
@@ -69,7 +71,8 @@
         <activity
             android:name=".ui.mycommission.MycommissionActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="MycommissionActivity" />
 
@@ -79,7 +82,8 @@
         <activity
             android:name=".ui.mytuoke.MyTuokeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="MyTuokeActivity" />
 
@@ -89,24 +93,29 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.crm.CRMActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".FaceMainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".TranslucentActivity"
-            android:theme="@style/TranslucentTheme" />
+            />
         <activity
             android:name=".ui.match.MatchSavedDetailActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.qcc.LinkCompanyListActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -122,11 +131,13 @@
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.qcc.QccMainSearchActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="QccMainSearchActivity" />
 
@@ -136,11 +147,14 @@
         <activity
             android:name=".ui.qcc.QccCompanyResultMainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.city.CityPickerActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+
+            />
         <activity
             android:name=".ui.qcc.StockHolderActivity"
             android:launchMode="singleTop"
