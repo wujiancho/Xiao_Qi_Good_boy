@@ -493,7 +493,10 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 if (mAutoTitle) {
                     if (title1 != null && !title1.equals("")) {
                         tvTitle.setText(title1);
-                    } else {
+                    }else  if (s.contains("404")){
+                       finish();
+                    }
+                    else {
                         tvTitle.setText(mTitle);
                     }
                 }

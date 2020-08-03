@@ -105,7 +105,6 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
                     @Override
                     public void onNext(OrderBean orderBean) {
                         Log.e("zlz2", new Gson().toJson(orderBean));
-                        list =new ArrayList<>();
                         orderAdapter = new OrderAdapter(list);
                         rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                         rvProduct.setAdapter(orderAdapter);
@@ -189,75 +188,75 @@ public class OrderTypepassFragment extends OrderTypeFragment implements SwipeRef
             refreshLayout.setRefreshing(false);
             return;
         }
-        page = 1;
-        HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("search_words", search_words);
-        paramsMap.put("status", status);
-        paramsMap.put("createTimeStart", createTimeStart);
-        paramsMap.put("createTimeEnd", createTimeEnd);
-        paramsMap.put("userId", userid == -1 ? null : userid);
-        paramsMap.put("page", page);
-        paramsMap.put("pageSize", 10);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
-        addSubscribe(ApiManage.getInstance().getMainApi().getMyLoanOrder(body)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<OrderBean>(mContext, null) {
-                    @Override
-                    public void onNext(OrderBean orderBean) {
-                        Log.e("zlz", new Gson().toJson(orderBean));
-                        list=new ArrayList<>();
-                        orderAdapter = new OrderAdapter(list);
-                        rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                        rvProduct.setAdapter(orderAdapter);
-                        orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
-                        orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
-                        orderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+           else {
+           page = 1;
+           HashMap<String, Object> paramsMap = new HashMap<>();
+           paramsMap.put("token", SharedPrefManager.getUser().getToken());
+           paramsMap.put("search_words", search_words);
+           paramsMap.put("status", status);
+           paramsMap.put("createTimeStart", createTimeStart);
+           paramsMap.put("createTimeEnd", createTimeEnd);
+           paramsMap.put("userId", userid == -1 ? null : userid);
+           paramsMap.put("page", page);
+           paramsMap.put("pageSize", 10);
+           RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+           addSubscribe(ApiManage.getInstance().getMainApi().getMyLoanOrder(body)
+                   .subscribeOn(Schedulers.io())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .subscribeWith(new BaseSubscriber<OrderBean>(mContext, null) {
+                       @Override
+                       public void onNext(OrderBean orderBean) {
+                           Log.e("zlz", new Gson().toJson(orderBean));
+                           orderAdapter = new OrderAdapter(list);
+                           rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+                           rvProduct.setAdapter(orderAdapter);
+                           orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
+                           orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
+                           orderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                               @Override
+                               public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                            }
-                        });
-                        orderAdapter.bindToRecyclerView(rvProduct);
-                        refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
-                        if (orderBean.isIsSuccess()) {
-                            if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
-                                list.clear();
-                                list.addAll(orderBean.getRecords());
-
-                                if (list.size() < 10) {
-                                    if (list.size() < 3) {
-                                        orderAdapter.disableLoadMoreIfNotFullPage();
-                                    } else {
+                               }
+                           });
+                           orderAdapter.bindToRecyclerView(rvProduct);
+                           refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
+                           if (orderBean.isIsSuccess()) {
+                               if (orderBean.getRecords() != null && orderBean.getRecords().size() > 0) {
+                                   list.clear();
+                                   list.addAll(orderBean.getRecords());
+                                   Order();
+                                   if (list.size() < 10) {
+                                       if (list.size() < 3) {
+                                           orderAdapter.disableLoadMoreIfNotFullPage();
+                                       } else {
 //                                    orderAdapter.disableLoadMoreIfNotFullPage();
-                                        orderAdapter.loadMoreEnd();
-                                    }
-                                }
-                                Order();
-                                orderAdapter.notifyDataSetChanged();
+                                           orderAdapter.loadMoreEnd();
+                                       }
+                                   }
+                                   orderAdapter.notifyDataSetChanged();
 
-                            }
-                        } else {
-                            toast(orderBean.getMessage());
-                        }
-                        refreshLayout.setRefreshing(false);
-                    }
+                               }
+                           } else {
+                               toast(orderBean.getMessage());
+                           }
+                           refreshLayout.setRefreshing(false);
+                       }
 
-                    @Override
-                    public void onError(Throwable t) {
-                        super.onError(t);
-                        toast(t.toString());
-                        orderAdapter = new OrderAdapter(list);
-                        rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                        rvProduct.setAdapter(orderAdapter);
-                        orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
-                        orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
-                        orderAdapter.bindToRecyclerView(rvProduct);
-                        refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
-                        refreshLayout.setRefreshing(false);
-                    }
-                }));
+                       @Override
+                       public void onError(Throwable t) {
+                           super.onError(t);
+                           toast(t.toString());
+                           orderAdapter = new OrderAdapter(list);
+                           rvProduct.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+                           rvProduct.setAdapter(orderAdapter);
+                           orderAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
+                           orderAdapter.setOnLoadMoreListener(OrderTypepassFragment.this::onLoadMoreRequested);
+                           orderAdapter.bindToRecyclerView(rvProduct);
+                           refreshLayout.setOnRefreshListener(OrderTypepassFragment.this::onRefresh);
+                           refreshLayout.setRefreshing(false);
+                       }
+                   }));
+       }
     }
 
     @Override

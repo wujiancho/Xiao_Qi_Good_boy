@@ -133,7 +133,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
             mCompositeDisposable.clear();
         }
     }
-
+//栈内存在一个页面不可以侧滑返回
     @Override
     public boolean swipeBackPriority() {
         if (AppActivityTaskManager.getInstance().getActivitySize()==1){
@@ -143,14 +143,14 @@ public abstract class BaseActivity extends SwipeBackActivity {
                return  true;
         }
     }
-
+   //销毁页面要出栈和取消订阅
     @Override
     protected void onDestroy() {
         super.onDestroy();
         AppActivityTaskManager.getInstance().removeActivity(this);
         unSubscribe();
     }
-
+   //回退栈
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
