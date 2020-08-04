@@ -102,10 +102,10 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         try {
-            type = getIntent().getStringExtra("type");
+            type = intent.getStringExtra("type");
             Log.e("zlz", type + "");
             if ("order".equals(type)) {
                 new Handler().postDelayed(new Runnable() {
@@ -120,6 +120,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
             Log.e("zlz", e.toString());
         }
     }
+
+
 
     @Override
     public void onTabSelected(int tabId) {
