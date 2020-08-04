@@ -125,6 +125,7 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
         EventBus.getDefault().register(this);
         for (int i = 0; i < tabsTitle.length; i++) {
               if (i==3){

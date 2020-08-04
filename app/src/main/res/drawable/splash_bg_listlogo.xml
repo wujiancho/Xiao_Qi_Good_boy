@@ -9,7 +9,7 @@
     <item>
        <bitmap
            android:src="@drawable/splachd"
-           android:gravity="center"
+           android:gravity="fill"
            ></bitmap>
     </item>
 </layer-list>

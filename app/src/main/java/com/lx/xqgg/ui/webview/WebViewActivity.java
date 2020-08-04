@@ -493,8 +493,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 if (mAutoTitle) {
                     if (title1 != null && !title1.equals("")) {
                         tvTitle.setText(title1);
-                    }else  if (s.contains("404")){
-                       finish();
                     }
                     else {
                         tvTitle.setText(mTitle);
@@ -1039,10 +1037,16 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
     //设置监听H5返回键
     private void goback() {
-        if (webview != null && webview.canGoBack()) {
+     /*   if (webview != null && webview.canGoBack()&&"http://app.xhsqy.com/xiaoqiguaiguai-mobile/view/h5FuminSuccess.html?bean&caFlag=11111111&token=805100qxoi2q7865rxtohk1596508690028shouldhttp://app.xhsqy.com/xiaoqiguaiguai-mobile/view/h5FuminSuccess.html?bean&caFlag=11111111&token=805100qxoi2q7865rxtohk1596508690028".equals(webview.getUrl())){
+             webview.loadUrl("http://app.xhsqy.com/xiaoqiguaiguai-mobile/view/productDetails.html?bean=eyJjaXR5TmFtZSI6IuiLj+W3nuW4giIsImlkIjoiNzA3Iiwic3RhdHVzSGVpZ2h0IjoiMzAuMDAwIiwidHlwZSI6ImFwcCIsInVzZXJQaG9uZSI6IjE4MzYwMTg2NDkwIn0=");
+              return;
+        }*/
+     if (webview != null && webview.canGoBack()) {
             Log.e("zlz", "goback");
             webview.goBack();
-        } else {
+            return;
+       }
+       else {
             Log.e("zlz", "finish");
             finish();
         }

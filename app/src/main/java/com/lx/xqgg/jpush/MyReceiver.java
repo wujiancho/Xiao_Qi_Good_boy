@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.lx.xqgg.MainActivity;
+import com.lx.xqgg.ui.order.OrderFragment;
 import com.lx.xqgg.ui.vip.VipActivity;
 
 import java.util.List;
@@ -28,15 +29,14 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d("zlz", "接收到推送下来的通知");
             int notificationId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d("zlz", "接收到推送下来的通知的ID: " + notificationId);
-
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             if (isAppAlive(context, "com.lx.xqgg")) {
                 if ("order".equals(jpushBean.getUrl())) {
                     Intent intent1 = new Intent(context, MainActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                    intent.putExtra("type", "order");
+                    intent1.putExtra("type", "order");
                     context.startActivity(intent1);
-                } else {
+                 }else {
                     Intent intent1 = new Intent(context, VipActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                     context.startActivity(intent1);

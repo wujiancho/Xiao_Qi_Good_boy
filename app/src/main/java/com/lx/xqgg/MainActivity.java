@@ -33,6 +33,7 @@ import com.lx.xqgg.ui.person.PersonFragment;
 import com.lx.xqgg.ui.product.ProductFragment;
 import com.lx.xqgg.util.AppApplicationUtil;
 import com.lx.xqgg.util.AppExitUtil;
+import com.lx.xqgg.util.JPushUtil;
 import com.lx.xqgg.util.UpdateUtil;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -71,8 +72,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         personFragment = new PersonFragment();
         bottomBar.setOnTabSelectListener(this);
         loadMultipleRootFragment(R.id.contentContainer, 0, homeFragment, productFragment, orderFragment, personFragment);
-
-//        JPushUtil.initJPush(mContext, SharedPrefManager.getUser().getMobile(), null);
+      //  JPushUtil.initJPush(mContext, SharedPrefManager.getUser().getMobile(), null);
         try {
             type = getIntent().getStringExtra("type");
             Log.e("zlz", type + "");
@@ -88,8 +88,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         } catch (Exception e) {
             Log.e("zlz", e.toString());
         }
-
     }
+
 
     @Override
     protected void initData() {
@@ -99,6 +99,26 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
 
        }*/
         getAdvert();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            type = getIntent().getStringExtra("type");
+            Log.e("zlz", type + "");
+            if ("order".equals(type)) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        bottomBar.selectTabAtPosition(2);
+                        showHideFragment(orderFragment);
+                    }
+                }, 500);
+            }
+        } catch (Exception e) {
+            Log.e("zlz", e.toString());
+        }
     }
 
     @Override
