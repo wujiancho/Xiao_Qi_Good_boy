@@ -137,7 +137,7 @@ public class SearchActivity extends BaseActivity {
                         //生成产品详细页的接口
                         String jiekong=Config.URL+"view/productDetails.html?bean="+jiajson;
                         Log.e("zlz",jiekong);
-                        if(!"".equals(jiekong2)){
+                        if (!"".equals(jiekong2)) {
                             WebViewActivity.open(new WebViewActivity.Builder()
                                     .setContext(mContext)
                                     .setAutoTitle(false)
@@ -146,6 +146,7 @@ public class SearchActivity extends BaseActivity {
                                     .setNeedShare(true)
                                     .setUrl(jiekong));
                         }
+
 
 
 

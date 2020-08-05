@@ -188,16 +188,15 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                 String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
                                 Log.e("zlz",jiekong);
 
-                                if(!"".equals(jiekong2)){
-                                    WebViewActivity.open(new WebViewActivity.Builder()
-                                            .setContext(mContext)
-                                            .setAutoTitle(false)
-                                            .setIsFwb(false)
-                                            .setTitle("产品详情")
-                                            .setNeedShare(true)
-                                            .setUrl(jiekong));
+                                if (!"".equals(jiekong2)) {
+                                        WebViewActivity.open(new WebViewActivity.Builder()
+                                                .setContext(mContext)
+                                                .setAutoTitle(false)
+                                                .setIsFwb(false)
+                                                .setTitle("产品详情")
+                                                .setNeedShare(true)
+                                                .setUrl(jiekong));
                                 }
-
                             }
                         });
                         productAdapter.bindToRecyclerView(rvProduct);

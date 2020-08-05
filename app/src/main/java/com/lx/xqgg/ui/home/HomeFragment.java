@@ -219,6 +219,7 @@ public class HomeFragment extends BaseFragment {
                             .setUrl(jiekong));
                 }
 
+
             }
 
             // toast("跳转产品详细页H5");

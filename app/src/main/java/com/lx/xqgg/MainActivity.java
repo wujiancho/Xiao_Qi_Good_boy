@@ -82,6 +82,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
                     public void run() {
                         bottomBar.selectTabAtPosition(2);
                         showHideFragment(orderFragment);
+                        picFragment.dismiss();
+
                     }
                 }, 500);
             }
@@ -101,7 +103,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         getAdvert();
     }
 
-    @Override
+/*    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         try {
@@ -119,7 +121,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         } catch (Exception e) {
             Log.e("zlz", e.toString());
         }
-    }
+    }*/
 
 
 

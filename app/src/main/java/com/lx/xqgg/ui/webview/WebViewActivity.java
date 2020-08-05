@@ -3,6 +3,7 @@ package com.lx.xqgg.ui.webview;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.Instrumentation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -83,7 +85,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -113,7 +117,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     private SlowlyProgressBar bar;
     private ChooseDialogFragment chooseDialogFragment;
     private MaterialDialog materialDialog;
-
     private ValueCallback<Uri> mUploadMessage;          // Android 4.0回调信息
     private ValueCallback<Uri[]> mUploadCallbackAboveL;
 
@@ -192,6 +195,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
+        settings.setDomStorageEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         if (Build.VERSION.SDK_INT >= 19) {
             settings.setLoadsImagesAutomatically(true);
@@ -244,7 +248,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             @SuppressLint("MissingPermission")
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
-                Log.e("zlz", s + "should" + s);
+              
                 if (s.startsWith("alipays:") || s.startsWith("alipay")) {
                     try {
                         startActivity(new Intent("android.intent.action.VIEW", Uri.parse(s)));
@@ -275,7 +279,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                     startActivity(intent);
                     return true;
                 } else if (s.contains("tel:")) {
-                    Log.e("zlz", s);
+
                     String mobile = s.substring(s.lastIndexOf("/") + 1);
                     Log.e("mobile----------->", mobile);
                     Intent mIntent = new Intent(Intent.ACTION_DIAL);
@@ -606,7 +610,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     }
 
     private void showSaveDialog(final String url) {
-        Log.e("zlz", url);
+
         materialDialog = new MaterialDialog.Builder(this)
                 .title("提示")
                 .content("保存图片到相册")
@@ -707,7 +711,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         @JavascriptInterface
         //分享标题链接
         public void share(String url, String title) {
-            Log.e("zlz", url);
             UMImage image1 = new UMImage(mContext, R.drawable.logo);//分享图标
             final UMWeb web1 = new UMWeb(url); //切记切记 这里分享的链接必须是http开头
             web1.setTitle(mTitle);//标题
@@ -852,7 +855,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         try {
             FileOutputStream fos = new FileOutputStream(file);
             longImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            Log.e("zlz", file.getPath());
+
 
             fos.flush();
             fos.close();
@@ -896,7 +899,6 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                                 Uri.fromFile(new File(destFile.getPath()))));
                         decodeFile = destFile.getPath();
-                        Log.e("zlz", destFile.getPath());
                         Looper.prepare();
                         Looper.loop();
                     }
@@ -915,7 +917,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 //        }else {
 //            web.setDescription();
 //        }
-        Log.e("zlz", webview.getTitle() + "");
+
         web.setDescription(webview.getTitle().contains("帮助信息") ? "小麒乖乖注册，开启你的财富人生" : "小麒乖乖企业培训");
 
         new ShareAction(mContext)
@@ -1021,36 +1023,51 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             toast("分享取消");
         }
     };
+
     //设置系统返回键监听H5返回键
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (webview != null && webview.canGoBack()) {
-                webview.goBack();
-                return true;
-            } else {
+            String url = webview.getOriginalUrl();
+            Log.d("xxxx", "onKeyDown: " + url);
+            webview.loadUrl(mUrl);
+            if (url.contains("h5FuminSuccess.html")){
+                webview.loadUrl(mUrl);
+            }
+            else if(url.contains(mUrl)) {
                 return super.onKeyDown(keyCode, event);
+            }else {
+                if (webview != null && webview.canGoBack()) {
+                    webview.goBack();
+                    return true;
+                } else {
+                    return super.onKeyDown(keyCode, event);
+                }
             }
         }
-        return super.onKeyDown(keyCode, event);
+        return false;
     }
-
     //设置监听H5返回键
     private void goback() {
-     /*   if (webview != null && webview.canGoBack()&&"http://app.xhsqy.com/xiaoqiguaiguai-mobile/view/h5FuminSuccess.html?bean&caFlag=11111111&token=805100qxoi2q7865rxtohk1596508690028shouldhttp://app.xhsqy.com/xiaoqiguaiguai-mobile/view/h5FuminSuccess.html?bean&caFlag=11111111&token=805100qxoi2q7865rxtohk1596508690028".equals(webview.getUrl())){
-             webview.loadUrl("http://app.xhsqy.com/xiaoqiguaiguai-mobile/view/productDetails.html?bean=eyJjaXR5TmFtZSI6IuiLj+W3nuW4giIsImlkIjoiNzA3Iiwic3RhdHVzSGVpZ2h0IjoiMzAuMDAwIiwidHlwZSI6ImFwcCIsInVzZXJQaG9uZSI6IjE4MzYwMTg2NDkwIn0=");
-              return;
-        }*/
-     if (webview != null && webview.canGoBack()) {
-            Log.e("zlz", "goback");
-            webview.goBack();
-            return;
-       }
-       else {
-            Log.e("zlz", "finish");
-            finish();
+     String url=   webview.getUrl();
+        if (url.contains("h5FuminSuccess.html")){
+          webview.loadUrl(mUrl);
+        }else if(url.contains(mUrl)){
+          finish();
+        }else {
+            if (webview != null && webview.canGoBack()) {
+                Log.e("zlz", "goback");
+                webview.goBack();
+                return;
+            }
+            else {
+                Log.e("zlz", "finish");
+                finish();
+            }
         }
     }
+
     //设置图片类型
     @Override
     public void clickPhoto() {
@@ -1198,6 +1215,16 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         intent.putExtra("autotitle", builder.autoTitle);
         intent.putExtra("isFwb", builder.isFWB);
         intent.putExtra("needShare", builder.needShare);
+        builder.context.startActivity(intent);
+    }
+    public static void open(Builder builder,Boolean fumin) {
+        Intent intent = new Intent(builder.context, WebViewActivity.class);
+        intent.putExtra("title", builder.title);
+        intent.putExtra("url", builder.url);
+        intent.putExtra("autotitle", builder.autoTitle);
+        intent.putExtra("isFwb", builder.isFWB);
+        intent.putExtra("needShare", builder.needShare);
+        intent.putExtra("fumin",fumin);
         builder.context.startActivity(intent);
     }
     //设置销毁回收

@@ -120,14 +120,25 @@ public class PicFragment extends DialogFragment {
                         String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
                         Log.e("zlz",jiekong);
 
-                        if(!"".equals(jiekong2)){
-                            WebViewActivity.open(new WebViewActivity.Builder()
-                                    .setContext(getActivity())
-                                    .setAutoTitle(false)
-                                    .setIsFwb(false)
-                                     .setTitle("产品详情")
-                                   // .setNeedShare(true)
-                                    .setUrl(jiekong));
+                        if (!"".equals(jiekong2)) {
+                            if (userid==707){
+                                WebViewActivity.open(new WebViewActivity.Builder()
+                                        .setContext(getActivity())
+                                        .setAutoTitle(false)
+                                        .setIsFwb(false)
+                                        .setTitle("产品详情")
+                                        .setNeedShare(false)
+                                        .setUrl(jiekong),true);
+                            }else {
+                                WebViewActivity.open(new WebViewActivity.Builder()
+                                        .setContext(getActivity())
+                                        .setAutoTitle(false)
+                                        .setIsFwb(false)
+                                        .setTitle("产品详情")
+                                        .setNeedShare(false)
+                                        .setUrl(jiekong),false);
+                            }
+
                         }
                     }
                 }
