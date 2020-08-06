@@ -248,7 +248,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             @SuppressLint("MissingPermission")
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
-              
+
                 if (s.startsWith("alipays:") || s.startsWith("alipay")) {
                     try {
                         startActivity(new Intent("android.intent.action.VIEW", Uri.parse(s)));

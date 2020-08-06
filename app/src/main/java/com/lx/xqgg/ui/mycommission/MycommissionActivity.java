@@ -6,8 +6,9 @@ import android.widget.TextView;
 
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.stx.xhb.xbanner.XBanner;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,10 +20,10 @@ public class MycommissionActivity extends BaseActivity {
     View toobarBack;
     @BindView(R.id.toobar_title)
     TextView toobarTitle;
-    @BindView(R.id.toobar_vip)
-    TextView toobarVip;
-    @BindView(R.id.toobar)
-    ConstraintLayout toobar;
+    @BindView(R.id.xbanner_vip)
+    XBanner xbannerVip;
+    @BindView(R.id.vip_RecyclerView)
+    RecyclerView vipRecyclerView;
 
     @Override
     protected int getLayoutId() {
@@ -31,7 +32,7 @@ public class MycommissionActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        toobarTitle.setText("我的佣金");
+        toobarTitle.setText("业绩返佣服务包");
     }
 
     @Override
@@ -43,4 +44,7 @@ public class MycommissionActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+
+
 }

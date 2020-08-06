@@ -361,9 +361,9 @@ public class PersonFragment extends BaseFragment {
         list1.add(new MatterBean("服务商信息", "ServiceInfoActivity", R.drawable.ic_p_fws));
         list1.add(new MatterBean("我的客户", "MyClientActivity", R.drawable.ic_p_wdkh));
         list1.add(new MatterBean("推荐有礼", "ShareFaceActivity", R.drawable.ic_p_tjyl));
-        list1.add(new MatterBean("积分查询", "", R.drawable.ic_p_jfcx));//IntegralQueryActivity
+        //list1.add(new MatterBean("积分查询", "", R.drawable.ic_p_jfcx));//IntegralQueryActivity
         list1.add(new MatterBean("我的拓客", "", R.drawable.ic_p_jfcx));//MyTuokeActivity
-        list1.add(new MatterBean("业务返佣", "", R.drawable.ic_p_jfcx));//MycommissionActivity
+        list1.add(new MatterBean("业绩返佣", "MycommissionActivity", R.drawable.ic_p_jfcx));
         homeBaseAdapter1.notifyDataSetChanged();
 
 //
