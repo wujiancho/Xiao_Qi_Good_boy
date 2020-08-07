@@ -12,6 +12,7 @@ import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.product.bean.QccBean;
 import com.lx.xqgg.ui.qcc.LinkCompanyListActivity;
 import com.lx.xqgg.ui.qcc.bean.QccPersonBean;
@@ -24,6 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class StockHolderAdapter extends BaseQuickAdapter<QccBean.ResultBean.PartnersBean, BaseViewHolder> {
     private String company;
+    private String wan;
 
     public StockHolderAdapter(@Nullable List<QccBean.ResultBean.PartnersBean> data, String company) {
         super(R.layout.item_stock, data);
@@ -32,6 +34,7 @@ public class StockHolderAdapter extends BaseQuickAdapter<QccBean.ResultBean.Part
 
     @Override
     protected void convert(BaseViewHolder helper, QccBean.ResultBean.PartnersBean item) {
+        wan = SharedPrefManager.getImitationexamination().getPro_wan();
         helper.setText(R.id.tv_first, item.getStockName().substring(0, 1));
         helper.setText(R.id.textView7, item.getStockName() + "");
         if (item.getTagsList() != null && item.getTagsList().size() > 0) {
@@ -40,7 +43,7 @@ public class StockHolderAdapter extends BaseQuickAdapter<QccBean.ResultBean.Part
                 helper.setText(R.id.tv_tag2, item.getTagsList().get(1));
             }
         }
-        helper.setText(R.id.tv_rjcze, item.getShouldCapi() + "");
+        helper.setText(R.id.tv_rjcze, item.getShouldCapi() +" "+wan);
         if (item.getShoudDate() != null) {
             helper.setText(R.id.tv_rjcz_time, item.getShoudDate().replace("00:00:00", "").trim() + "");
         }

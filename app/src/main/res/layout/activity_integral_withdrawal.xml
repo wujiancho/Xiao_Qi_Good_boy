@@ -116,7 +116,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="积分提现金额"
+            android:text="积分提现"
             android:textColor="#ff686868"
             android:textSize="14sp"
             android:layout_marginTop="@dimen/dp_15"

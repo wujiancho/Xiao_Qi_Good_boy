@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -47,6 +48,7 @@ import java.util.Map;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -75,6 +77,8 @@ public class VipActivity extends BaseActivity {
     TextView tvVipTime;
     @BindView(R.id.checkbox)
     CheckBox checkBox;
+    @BindView(R.id.yfje)
+    TextView yfje;
 
     private String[] zfType = {"支付宝", "微信"};
     private String type = "";
@@ -85,6 +89,7 @@ public class VipActivity extends BaseActivity {
     private String payNum;
 
     private int payId = 0;
+    private String mon;
 
     @Override
     protected int getLayoutId() {
@@ -94,6 +99,8 @@ public class VipActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText("我的VIP会员");
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
+        yfje.setText("应付"+mon);
         EventBus.getDefault().register(this);
         getPayList();
         updateUserInfo();
@@ -350,6 +357,7 @@ public class VipActivity extends BaseActivity {
             showDialog("支付失败:errcode:" + message.getId());
         }
     }
+
 }
 
 

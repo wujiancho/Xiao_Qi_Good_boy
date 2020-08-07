@@ -85,6 +85,9 @@ public class ProductFragment extends BaseFragment implements MultiSelectPopupWin
     private String pay;
     private String fee;
     private String bal;
+    private String ben;
+    private String jin;
+    private String xi;
 
     @Override
     protected int getLayoutId() {
@@ -97,6 +100,9 @@ public class ProductFragment extends BaseFragment implements MultiSelectPopupWin
         pay = SharedPrefManager.getImitationexamination().getPro_pay();
         bal = SharedPrefManager.getImitationexamination().getPro_bal();
         fee = SharedPrefManager.getImitationexamination().getPro_fee();
+        ben = SharedPrefManager.getImitationexamination().getPro_ben();
+        jin = SharedPrefManager.getImitationexamination().getPro_jin();
+        xi = SharedPrefManager.getImitationexamination().getPro_xi();
         rbHkfs.setText(pay+"方式");
         rbFl.setText(fee);
         rbEd.setText(bal);
@@ -139,9 +145,9 @@ public class ProductFragment extends BaseFragment implements MultiSelectPopupWin
             }
         });
 
-        listType.add(new PayListBean(0, "先息后本", "ben"));
-        listType.add(new PayListBean(1, "等额本金", "jin"));
-        listType.add(new PayListBean(2, "等额本息", "xi"));
+        listType.add(new PayListBean(0, ben, "ben"));
+        listType.add(new PayListBean(1, jin, "jin"));
+        listType.add(new PayListBean(2, xi, "xi"));
     }
 
     @Override

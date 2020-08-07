@@ -34,7 +34,8 @@
             android:gravity="center"
             android:layout_width="88dp"
             android:layout_height="30dp"
-            android:text="审批中(件)"/>
+            android:id="@+id/spj"
+            android:text="sp中(件)"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -45,7 +46,8 @@
             android:gravity="center"
             android:layout_width="88dp"
             android:layout_height="30dp"
-            android:text="预授信(件)"/>
+            android:id="@+id/ysxj"
+            android:text=""/>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -67,7 +69,8 @@
             android:gravity="center"
             android:layout_width="88dp"
             android:layout_height="30dp"
-            android:text="用信(件)"/>
+            android:id="@+id/yxj"
+            android:text="yx(件)"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -89,7 +92,8 @@
             android:gravity="center"
             android:layout_width="88dp"
             android:layout_height="30dp"
-            android:text="用信率(%)"/>
+            android:id="@+id/yxl"
+            android:text="yx率(%)"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
@@ -111,7 +115,8 @@
             android:gravity="center"
             android:layout_width="88dp"
             android:layout_height="30dp"
-            android:text="用信额（分）"/>
+            android:id="@+id/yxe"
+            android:text="yx额（分）"/>
     </LinearLayout>
     <View
         android:layout_width="0.5dp"

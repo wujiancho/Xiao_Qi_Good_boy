@@ -81,6 +81,16 @@ public class MatchSecondActivity extends BaseActivity {
     TextView dai12;
     @BindView(R.id.dai6)
     TextView dai6;
+    @BindView(R.id.nsdj)
+    TextView nsdj;
+    @BindView(R.id.ns12)
+    TextView ns12;
+    @BindView(R.id.pe)
+    TextView pe;
+    @BindView(R.id.nspe)
+    TextView nspe;
+    @BindView(R.id.kae)
+    TextView kae;
 
     private MatchRequestBean matchRequestBean;
 
@@ -100,12 +110,17 @@ public class MatchSecondActivity extends BaseActivity {
 
     private String beanPosition = "";
     /**
-     * 纳税等级
+     * ns等级
      **/
     private String taxLevel = "";
 
     private String beanCompanyType = "";
     private String loa;
+    private String nas;
+    private String mon;
+    private String wan;
+    private String kai;
+    private String shui;
 
     @Override
     protected int getLayoutId() {
@@ -118,9 +133,18 @@ public class MatchSecondActivity extends BaseActivity {
         matchRequestBean = (MatchRequestBean) getIntent().getSerializableExtra("data");
         tvTitle.setText("智能匹配");
         loa = SharedPrefManager.getImitationexamination().getPro_loa();
+        nas = SharedPrefManager.getImitationexamination().getPro_nas();
+        wan = SharedPrefManager.getImitationexamination().getPro_wan();
+        kai = SharedPrefManager.getImitationexamination().getPro_kai();
+        shui = SharedPrefManager.getImitationexamination().getPro_shui();
         dai.setText("经营性" + loa + "笔数");
-        dai6.setText("近6个月"+loa+"查询");
-       dai12.setText("近12个月"+loa+"查询");
+        dai6.setText("近6个月" + loa + "查询");
+        dai12.setText("近12个月" + loa + "查询");
+        nsdj.setText(nas + "等级");
+        ns12.setText("近12月累计" + shui);
+        pe.setText(wan + "元");
+        nspe.setText(wan + "元");
+        kae.setText("近12月累计"+kai);
         checkCompany(matchRequestBean.getCompanyName());
         etZgbl.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable edt) {
@@ -378,15 +402,15 @@ public class MatchSecondActivity extends BaseActivity {
             return;
         }
         if (taxLevel == null) {
-            toast("请选择纳税等级");
+            toast("请选择" + nas + "等级");
             return;
         }
         if (TextUtils.isEmpty(et12Kp.getText().toString().trim())) {
-            toast("请填写近12月累计开票额");
+            toast("请填写近12月累计"+kai);
             return;
         }
         if (TextUtils.isEmpty(et12Ns.getText().toString().trim())) {
-            toast("请填写近12月累计纳税额");
+            toast("请填写近12月累计" + nas + "额");
             return;
         }
         if (TextUtils.isEmpty(etJyFdCount.getText().toString().trim())) {

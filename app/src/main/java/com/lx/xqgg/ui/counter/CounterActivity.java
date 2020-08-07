@@ -56,11 +56,18 @@ public class CounterActivity extends BaseActivity {
     TextView ljhk;
     @BindView(R.id.huankfs)
     TextView huankfs;
+    @BindView(R.id.qsqlx)
+    TextView qsqlx;
 
     private int type = 0;
     private String loa;
     private String rat;
     private String pay;
+    private String lxi;
+    private String mon;
+    private String wan;
+    private String jin;
+    private String pro_xi;
 
     @Override
     protected int getLayoutId() {
@@ -73,14 +80,22 @@ public class CounterActivity extends BaseActivity {
         loa = SharedPrefManager.getImitationexamination().getPro_loa();
         rat = SharedPrefManager.getImitationexamination().getPro_rat();
         pay = SharedPrefManager.getImitationexamination().getPro_pay();
-        daijin.setText(loa + "金额（万）");
+        lxi = SharedPrefManager.getImitationexamination().getPro_lxi();
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
+        wan = SharedPrefManager.getImitationexamination().getPro_wan();
+        jin = SharedPrefManager.getImitationexamination().getPro_jin();
+        pro_xi = SharedPrefManager.getImitationexamination().getPro_xi();
+        daijin.setText(loa + mon+"（"+wan+"）");
         dainian.setText(loa + "年限（年）");
         daili.setText(loa + rat + "（%）");
-        etDkje.setHint("请输入" + loa + "金额");
+        etDkje.setHint("请输入" + loa + mon);
         etDkll.setHint("请输入" + loa + rat);
         etDknx.setHint("请输入" + loa + "年限");
         ljhk.setText("累计" + pay + "(元)");
-        huankfs.setText(pay+"方式");
+        huankfs.setText(pay + "方式");
+        qsqlx.setText("支付"+lxi+"(元)");
+        rbDebj.setText(jin);
+        rbDebx.setText(pro_xi);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -123,7 +138,7 @@ public class CounterActivity extends BaseActivity {
                 break;
             case R.id.btn_count:
                 if (TextUtils.isEmpty(etDkje.getText().toString())) {
-                    toast("请输入" + loa + "金额");
+                    toast("请输入" + loa + mon);
                     return;
                 }
                 if (TextUtils.isEmpty(etDknx.getText().toString())) {
@@ -143,7 +158,7 @@ public class CounterActivity extends BaseActivity {
                     return;
                 }
                 if (etDkje.getText().toString().trim().endsWith(".")) {
-                    toast("请输入正确的" + loa + "金额");
+                    toast("请输入正确的" + loa + mon);
                     return;
                 }
 

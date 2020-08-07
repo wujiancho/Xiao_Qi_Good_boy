@@ -33,13 +33,19 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseViewHolder> {
+
+    private String cre;
+    private String yus;
+
     public OrderAdapter(@Nullable List<OrderBean.RecordsBean> data) {
         super(R.layout.item_order_spz, data);
     }
     @Override
     protected void convert(BaseViewHolder helper, OrderBean.RecordsBean item) {
+        cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        yus = SharedPrefManager.getImitationexamination().getPro_yus();
         helper.setText(R.id.tv_name, item.getTitle() + "");
-//        helper.setText(R.id.tv_money_num, (String.format("%.2f", (double) item.getApply_money() / 10000) + "万"));
+//        helper.setText(R.id.tv_money_num, (String.format("%.2f", (double) item.getApply_money() / 10000) + ""));
         helper.setText(R.id.tv_time, item.getCreatetime() + "");
         helper.setText(R.id.tv_order_num, "订单编号：" + item.getOrderNo());
         helper.setText(R.id.tv_company_name, "企业名称：" + item.getApply_company());
@@ -51,7 +57,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
             case "created":
              onCreatedBind(helper, item);
                 break;
-            //预授信
+            //ysq
             case "precredit":
                onPrecreditBind(helper, item);
                 break;
@@ -59,7 +65,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
             case "verify":
               onVerifyBind(helper, item);
                 break;
-            //用信
+            //yx
             case "usecredit":
                onUsecreditBind(helper, item);
                 break;
@@ -142,11 +148,11 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
             }
         });
     }
-    //预授信
+    //ysx
     private void onPrecreditBind(BaseViewHolder helper, OrderBean.RecordsBean item){
         helper.setVisible(R.id.btn_yy_bl, false);
         helper.setVisible(R.id.tv_status, true);
-        helper.setText(R.id.tv_status, "预授信");
+        helper.setText(R.id.tv_status, yus);
         if (item.getPre_credit_money() != null) {
             helper.setText(R.id.tv_money_num,  (String.format("%.2f", Double.parseDouble(item.getPre_credit_money()) / 10000) + " 业务积分"));
         } else {
@@ -221,11 +227,11 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
             }
         });
     }
-    //用信
+    //yx
     private void onUsecreditBind(BaseViewHolder helper, OrderBean.RecordsBean item){
         helper.setVisible(R.id.btn_yy_bl, false);
         helper.setVisible(R.id.tv_status, true);
-        helper.setText(R.id.tv_status, "用信");
+        helper.setText(R.id.tv_status, cre);
         if (item.getReal_money() != null) {
             helper.setText(R.id.tv_money_num, (String.format("%.2f", Double.parseDouble(item.getReal_money()) / 10000) + "业务积分"));
         } else {
@@ -236,7 +242,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderBean.RecordsBean, BaseVi
         helper.setVisible(R.id.layout_ysx, false);
 
         helper.setVisible(R.id.tv_sx_status, false);
-//                helper.setText(R.id.tv_sx_status, "用信");
+//                helper.setText(R.id.tv_sx_status, "");
         helper.setVisible(R.id.tv_result, true);
         helper.setVisible(R.id.layout_ljcl, false);
         if ("1".equals(item.getCreditAudit())) {

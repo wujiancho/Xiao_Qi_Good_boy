@@ -280,7 +280,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:text="纳税人识别号"
+                        android:text="ns人识别号"
+                        android:id="@+id/nsrsbh"
                         android:textSize="13sp" />
 
                     <TextView
@@ -308,7 +309,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:text="纳税人资质"
+                        android:id="@+id/nsrzz"
+                        android:text="ns人资质"
                         android:textSize="13sp" />
 
                     <TextView

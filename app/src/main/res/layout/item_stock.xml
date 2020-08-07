@@ -61,14 +61,14 @@
 
     <TextView
         android:id="@+id/tv_rjcze"
-        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/txt_normal"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/txt1"
         app:layout_constraintTop_toBottomOf="@+id/txt1"
-        tools:text="20万" />
+        tools:text="20" />
 
     <View
         android:id="@+id/v_center"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/txt2"
         app:layout_constraintTop_toBottomOf="@+id/txt2"
-        tools:text="20万" />
+        tools:text="20" />
 
     <TextView
         android:id="@+id/textView8"
@@ -119,7 +119,7 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
-        tools:text="20万" />
+        tools:text="20" />
 
     <View
         android:layout_marginLeft="36dp"

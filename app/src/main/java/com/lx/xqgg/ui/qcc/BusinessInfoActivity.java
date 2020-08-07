@@ -16,7 +16,7 @@ import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
-import com.lx.xqgg.base.Constans;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.product.bean.QccBean;
 import com.lx.xqgg.ui.qcc.bean.QccPersonBean;
 
@@ -79,8 +79,13 @@ public class BusinessInfoActivity extends BaseActivity {
     TextView tvRegisterArea;
     @BindView(R.id.tv_jyfw)
     TextView tvJyfw;
+    @BindView(R.id.nsrsbh)
+    TextView nsrsbh;
+    @BindView(R.id.nsrzz)
+    TextView nsrzz;
 
     private QccBean qccBean;
+    private String nas;
 
     @Override
     protected int getLayoutId() {
@@ -92,6 +97,9 @@ public class BusinessInfoActivity extends BaseActivity {
     protected void initView() {
         qccBean = (QccBean) getIntent().getSerializableExtra("data");
         tvTitle.setText("工商信息");
+        nas = SharedPrefManager.getImitationexamination().getPro_nas();
+        nsrsbh.setText(nas + "人识别号");
+        nsrzz.setText(nas+"人资质");
         Glide.with(mContext)
                 .load(qccBean.getResult().getImageUrl())
                 .apply(new RequestOptions().placeholder(R.drawable.ic_default))
@@ -104,7 +112,7 @@ public class BusinessInfoActivity extends BaseActivity {
         tvSocialCode.setText(qccBean.getResult().getCreditCode() + "");
         tvGszchCode.setText(qccBean.getResult().getNo() + "");
         tvZzjgdmCode.setText(qccBean.getResult().getOrgNo() + "");
-        //纳税人编号
+        //ns人编号
         tvNsrCode.setText(qccBean.getResult().getCreditCode() + "");
         tvCompanyType.setText(qccBean.getResult().getEconKind() + "");
         tvHy.setText(qccBean.getResult().getIndustry().getIndustry() + "");
@@ -127,7 +135,7 @@ public class BusinessInfoActivity extends BaseActivity {
                         if (stringBaseData.isSuccess()) {
                             QccPersonBean qccPersonBean = new Gson().fromJson(stringBaseData.getData(), QccPersonBean.class);
                             Log.e("zlz", new Gson().toJson(qccPersonBean));
-                            if(qccPersonBean.getPaging()!=null) {
+                            if (qccPersonBean.getPaging() != null) {
                                 tvCompanyNum.setText("他有" + qccPersonBean.getPaging().getTotalRecords() + "家公司");
 
                                 tvCompanyNum.setOnClickListener(new View.OnClickListener() {
@@ -155,4 +163,6 @@ public class BusinessInfoActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+
 }

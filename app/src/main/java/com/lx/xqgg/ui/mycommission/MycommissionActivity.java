@@ -1,6 +1,5 @@
 package com.lx.xqgg.ui.mycommission;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +14,6 @@ import java.util.List;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MycommissionActivity extends BaseActivity {
@@ -42,15 +40,15 @@ public class MycommissionActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-      final   List<XbannerdataBean> xbannerdata = new ArrayList<>();
+        final List<XbannerdataBean> xbannerdata = new ArrayList<>();
         xbannerdata.add(new XbannerdataBean("黄金服务包","购买黄金服务包享受更高返佣、额外4项权益"));
         xbannerdata.add(new XbannerdataBean("铂金服务包","购买黄金服务包享受更高返佣、额外8项权益"));
-        xbannerdata.add(new XbannerdataBean("钻石服务包","购买黄金服务包享受更高返佣、额外12项权益" ));
+        xbannerdata.add(new XbannerdataBean("钻石服务包","购买黄金服务包享受更高返佣、额外12项权益"));
        // xbannerVip.setBannerData(R.layout.xbanner_item,xbannerdata);
         xbannerVip.loadImage(new XBanner.XBannerAdapter() {
             @Override
             public void loadBanner(XBanner banner, Object model, View view, int position) {
-
+               // view.findViewById();
             }
         });
        xbannerVip.setOnItemClickListener(new XBanner.OnItemClickListener() {

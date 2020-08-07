@@ -13,6 +13,7 @@ import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.product.bean.QccBean;
 import com.lx.xqgg.ui.qcc.adapter.GdItemAdapter;
 import com.lx.xqgg.ui.qcc.adapter.GgItemAdapter;
@@ -106,6 +107,7 @@ public class QccCompanyResultMainActivity extends BaseActivity {
     private QccBean qccBean;
     private GdItemAdapter gdItemAdapter;
     private GgItemAdapter ggItemAdapter;
+    private String ren;
 
     @Override
     protected int getLayoutId() {
@@ -116,9 +118,10 @@ public class QccCompanyResultMainActivity extends BaseActivity {
     protected void initView() {
         qccBean = (QccBean) getIntent().getSerializableExtra("data");
         tvTitle.setText(qccBean.getResult().getName());
+        ren = SharedPrefManager.getImitationexamination().getPro_ren();
         if(qccBean!=null) {
             tvFddbr.setText(qccBean.getResult().getOperName() + "");
-            tvZczb.setText(qccBean.getResult().getRegistCapi().replace("元人民币", ""));
+            tvZczb.setText(qccBean.getResult().getRegistCapi().replace("元"+ren, ""));
             tvClsj.setText(qccBean.getResult().getStartDate().replace("00:00:00", "").trim());
 
             gdItemAdapter = new GdItemAdapter(qccBean.getResult().getPartners(), qccBean.getResult().getName());

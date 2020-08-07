@@ -589,7 +589,7 @@ public class ProductBean implements Serializable{
         public static class ClassifyListBean {
             /**
              * id : 51
-             * name : 税贷
+             * name : sd
              */
 
             private String id;

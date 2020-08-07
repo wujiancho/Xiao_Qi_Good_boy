@@ -74,6 +74,8 @@ public class PersonFragment extends BaseFragment {
     private List<MatterBean> list3;
     //vip code
     private static final int VIP_RESLUT_CODE = 10086;
+    private String dai;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_person;
@@ -81,6 +83,7 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        dai = SharedPrefManager.getImitationexamination().getPro_dai();
         list1 = new ArrayList<>();
         homeBaseAdapter1 = new HomeBaseAdapter(R.layout.item_person, list1);
         rvWdxx.setLayoutManager(new GridLayoutManager(mContext, 4));
@@ -396,7 +399,7 @@ public class PersonFragment extends BaseFragment {
         list3.add(new MatterBean("企业培训", "CorporateTrainActivity", R.drawable.ic_p_qypx));
         list3.add(new MatterBean("人法网", "", R.drawable.ic_p_rfw));
         list3.add(new MatterBean("税务局", "", R.drawable.ic_p_swj));
-        list3.add(new MatterBean("助贷学院", "LACollegeActivity", R.drawable.ic_p_zdxy));
+        list3.add(new MatterBean("助"+dai+"学院", "LACollegeActivity", R.drawable.ic_p_zdxy));
 
         homeBaseAdapter3.notifyDataSetChanged();
     }

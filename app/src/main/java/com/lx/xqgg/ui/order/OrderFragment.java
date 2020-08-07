@@ -64,6 +64,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
 //搜索加订单内容 订单主页
 public class OrderFragment extends BaseFragment {
     @BindView(R.id.et_search)
@@ -98,12 +99,24 @@ public class OrderFragment extends BaseFragment {
     RecyclerView rvContent;
     @BindView(R.id.layout_hor)
     HorizontalScrollView horizontalScrollView;
+    @BindView(R.id.yxj)
+    TextView yxj;
+    @BindView(R.id.yxl)
+    TextView yxl;
+    @BindView(R.id.yxe)
+    TextView yxe;
+    @BindView(R.id.spj)
+    TextView spj;
+    @BindView(R.id.btn_fullscreen)
+    Button btnFullscreen;
+    @BindView(R.id.ysxj)
+    TextView ysxj;
 
     private String search_words;
     private String createTimeStart = "";
     private String createTimeEnd = "";
 
-    private String[] tabsTitle = {"全部", "审批中", "预授信", "终审", "用信"};
+    private String[] tabsTitle;
     private String[] statusStrings = {"", "created", "precredit", "passAll", "usecredit"};
     private List<OrderTypeFragment> fragments = new ArrayList<>();
     private MyAdapter myAdapter;
@@ -117,6 +130,9 @@ public class OrderFragment extends BaseFragment {
 
     private int userId = -1;
     private SimpleDateFormat simpleDateFormat;
+    private String cre;
+    private String pro;
+    private String yus;
 
     @Override
     protected int getLayoutId() {
@@ -125,14 +141,22 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        pro = SharedPrefManager.getImitationexamination().getPro_pro();
+        yus = SharedPrefManager.getImitationexamination().getPro_yus();
+        tabsTitle = new String[]{"全部", pro + "中", yus, "终审", cre};
+        yxj.setText(cre + "(件)");
+        yxl.setText(cre + "率(%)");
+        yxe.setText(cre + "额（分）");
+        spj.setText(pro + "中(件");
+        ysxj.setText(yus+"(件)");
         EventBus.getDefault().register(this);
         for (int i = 0; i < tabsTitle.length; i++) {
-              if (i==3){
-                    fragments.add(OrderTypepassFragment.newInstance("", statusStrings[i], "", "", userId));
-                }else {
-                  fragments.add(OrderTypeFragment.newInstance("", statusStrings[i], "", "", userId));
-              }
+            if (i == 3) {
+                fragments.add(OrderTypepassFragment.newInstance("", statusStrings[i], "", "", userId));
+            } else {
+                fragments.add(OrderTypeFragment.newInstance("", statusStrings[i], "", "", userId));
+            }
         }
         viewPager.setOffscreenPageLimit(tabsTitle.length);
         myAdapter = new MyAdapter(getChildFragmentManager());
@@ -328,7 +352,7 @@ public class OrderFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-                return fragments.get(position);
+            return fragments.get(position);
 
         }
 
@@ -338,12 +362,12 @@ public class OrderFragment extends BaseFragment {
             return tabsTitle[position];
         }
 
-       @NonNull
+        @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-           OrderTypeFragment fragment = (OrderTypeFragment) super.instantiateItem(container, position);
-           fragment.update(search_words, statusStrings[position], createTimeStart, createTimeEnd, userId);
-           return fragment;
+            OrderTypeFragment fragment = (OrderTypeFragment) super.instantiateItem(container, position);
+            fragment.update(search_words, statusStrings[position], createTimeStart, createTimeEnd, userId);
+            return fragment;
         }
 
         @Override

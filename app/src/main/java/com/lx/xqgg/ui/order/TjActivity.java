@@ -105,6 +105,7 @@ public class TjActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText("业务统计");
+
         calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"));
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         tjAllAdapter = new TjAdapter(R.layout.item_tj_all, listAll);

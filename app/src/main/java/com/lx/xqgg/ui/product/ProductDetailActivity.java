@@ -87,6 +87,10 @@ public class ProductDetailActivity extends BaseActivity {
 
     private List<ProductBean.RecordsBean.ClassifyListBean> characterList = new ArrayList<>();
     private CharacterAdapter characterAdapter;
+    private String ben;
+    private String jin;
+    private String xi;
+    private String mon;
 
     @Override
     protected int getLayoutId() {
@@ -97,6 +101,10 @@ public class ProductDetailActivity extends BaseActivity {
     protected void initView() {
         id = getIntent().getIntExtra("data", -1);
         tvTitle.setText("产品详情");
+        ben = SharedPrefManager.getImitationexamination().getPro_ben();
+        jin = SharedPrefManager.getImitationexamination().getPro_jin();
+        xi = SharedPrefManager.getImitationexamination().getPro_xi();
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
         recyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
         characterAdapter = new CharacterAdapter(characterList);
         recyclerView.setAdapter(characterAdapter);
@@ -126,25 +134,25 @@ public class ProductDetailActivity extends BaseActivity {
                                     jkfs2 = jkfs[1];
                                     switch (jkfs1) {
                                         case "ben":
-                                            jkfs1 = "先息后本";
+                                            jkfs1 = ben;
                                             break;
                                         case "jin":
-                                            jkfs1 = "等额本金";
+                                            jkfs1 = jin;
                                             break;
                                         case "xi":
-                                            jkfs1 = "等额本息";
+                                            jkfs1 = xi;
                                             break;
                                     }
                                     tvJkfs.setText(jkfs1);
                                     switch (jkfs2) {
                                         case "ben":
-                                            jkfs2 = "先息后本";
+                                            jkfs2 = ben;
                                             break;
                                         case "jin":
-                                            jkfs2 = "等额本金";
+                                            jkfs2 = jin;
                                             break;
                                         case "xi":
-                                            jkfs2 = "等额本息";
+                                            jkfs2 = xi;
                                             break;
                                     }
                                     tvHkfs.setText(jkfs2);
@@ -152,13 +160,13 @@ public class ProductDetailActivity extends BaseActivity {
                                     jkfs1 = jkfs[0];
                                     switch (jkfs1) {
                                         case "ben":
-                                            jkfs1 = "先息后本";
+                                            jkfs1 = ben;
                                             break;
                                         case "jin":
-                                            jkfs1 = "等额本金";
+                                            jkfs1 = jin;
                                             break;
                                         case "xi":
-                                            jkfs1 = "等额本息";
+                                            jkfs1 = xi;
                                             break;
                                     }
                                     tvJkfs.setText(jkfs1);
@@ -177,7 +185,7 @@ public class ProductDetailActivity extends BaseActivity {
                                         .apply(new RequestOptions().placeholder(R.drawable.ic_default))
                                         .into(ivLogo);
                                 tvApplyNum.setText(bean.getApply_num() + "人已申请");
-                                tvKded.setText(bean.getQuota() / 10000 + "万");
+                                tvKded.setText(bean.getQuota() / 10000 + mon);
                                 tvRlv.setText(bean.getRate() + "");
                                 tvMonth.setText(bean.getLimitMonth() + "");
                                 Glide.with(mContext)

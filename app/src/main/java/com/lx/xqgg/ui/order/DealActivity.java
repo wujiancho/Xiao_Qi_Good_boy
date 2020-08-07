@@ -80,6 +80,9 @@ public class DealActivity extends BaseActivity {
     Button btnConfirm;
     private DealBean dealBean;
     private OrderBean.RecordsBean orderBean;
+    private String mon;
+    private String yus;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_deal;
@@ -88,6 +91,8 @@ public class DealActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText("立即处理");
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
+        yus = SharedPrefManager.getImitationexamination().getPro_yus();
         dealBean = new DealBean();
         orderBean = (OrderBean.RecordsBean) getIntent().getSerializableExtra("data");
         etYsx.addTextChangedListener(new TextWatcher() {
@@ -255,11 +260,11 @@ public class DealActivity extends BaseActivity {
         } else {
             if (checkBox1.isChecked()) {
                 if (TextUtils.isEmpty(etYsx.getText().toString())) {
-                    toast("请输入预授信金额");
+                    toast("请输入"+yus+mon);
                     return;
                 }
                 if ((Double.parseDouble(etYsx.getText().toString()) * 10000) > orderBean.getApply_money()) {
-                    toast("预授信金额不能大于申请金额！");
+                    toast(yus+mon+"不能大于申请"+mon+"！");
                     return;
                 }
                 dealBean.setPre_credit_money((Double.parseDouble(etYsx.getText().toString()) * 10000) + "");
@@ -267,11 +272,11 @@ public class DealActivity extends BaseActivity {
             }
             if (checkBox2.isChecked()) {
                 if (TextUtils.isEmpty(etZstg.getText().toString())) {
-                    toast("请输入授信金额");
+                    toast("请输入授信"+mon);
                     return;
                 }
                 if ((Double.parseDouble(etZstg.getText().toString()) * 10000) > orderBean.getApply_money()) {
-                    toast("授信金额不能大于申请金额！");
+                    toast("授信"+mon+"不能大于申请"+mon+"！");
                     return;
                 }
                 dealBean.setReal_money((Double.parseDouble(etZstg.getText().toString()) * 10000) + "");

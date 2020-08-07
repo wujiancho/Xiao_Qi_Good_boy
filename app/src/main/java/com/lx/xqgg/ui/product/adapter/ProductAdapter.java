@@ -20,6 +20,9 @@ public class ProductAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, Ba
     private OnApplyClickListener onApplyClickListener;
     private String bal;
     private String fee;
+    private String dai;
+    private String mon;
+    private String wan;
 
     public ProductAdapter(@Nullable List<ProductBean.RecordsBean> data) {
         super(R.layout.item_product, data);
@@ -34,15 +37,17 @@ public class ProductAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, Ba
         String[] titles=item.getTitle().split("-");
         bal = SharedPrefManager.getImitationexamination().getPro_bal();
         fee = SharedPrefManager.getImitationexamination().getPro_fee();
+        dai = SharedPrefManager.getImitationexamination().getPro_dai();
+        wan = SharedPrefManager.getImitationexamination().getPro_wan();
         helper.setText(R.id.tv_bank_name, titles[0].trim()+ "");
         if(titles.length>1) {
             helper.setText(R.id.textView2, titles[1].trim() + "");
         }else {
             helper.setText(R.id.textView2, "");
         }
-        helper.setText(R.id.tv_ed, item.getQuota()/10000 + "万");
+        helper.setText(R.id.tv_ed, item.getQuota()/10000 + wan);
         helper.setText(R.id.tv_rlv, item.getRate() + "");
-        helper.setText(R.id.tv_kded, "可贷"+bal);
+        helper.setText(R.id.tv_kded, "可"+dai+bal);
         helper.setText(R.id.textView3, "参考日"+fee);
         Glide.with(mContext)
                 .load(Config.IMGURL + item.getImage())

@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="@dimen/dp_149"
+     android:background="#FFC107"
     >
-
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="黄金服务包"
+        android:textColor="#ff70460a"
+        android:textSize="19sp"
+        android:id="@+id/vip_name"
+        android:layout_marginTop="@dimen/dp_23"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_alignParentLeft="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="购买黄金服务包享受更高返佣、额外13项权益"
+        android:textColor="#ff593605"
+        android:textSize="9sp"
+        android:id="@+id/vip_jurisdiction"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/dp_24"
+         android:layout_marginTop="@dimen/dp_67"
+        />
+    <Button
+        android:layout_width="@dimen/dp_73"
+        android:layout_height="@dimen/dp_25"
+        android:text="未购买"
+        android:textColor="#ff593605"
+        android:textSize="13sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_21"
+        android:id="@+id/no_purchase"
+        android:background="@drawable/no_purchasebg"
+        />
+    <Button
+        android:layout_width="@dimen/dp_96"
+        android:layout_height="@dimen/dp_29"
+        android:text="立即购买"
+        android:textColor="#ff593605"
+        android:textSize="15sp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dp_100"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_18"
+        android:gravity="center"
+        android:id="@+id/purchase"
+        android:background="@drawable/purchasebg"
+        />
+</RelativeLayout>

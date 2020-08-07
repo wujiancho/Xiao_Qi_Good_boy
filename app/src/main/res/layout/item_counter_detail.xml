@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            tools:text="月供" />
+            tools:text="" />
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            tools:text="月供本金" />
+            tools:text="" />
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            tools:text="月供利息" />
+            tools:text="" />
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"

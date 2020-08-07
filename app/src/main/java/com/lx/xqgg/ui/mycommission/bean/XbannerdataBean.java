@@ -1,9 +1,9 @@
 package com.lx.xqgg.ui.mycommission.bean;
+import com.stx.xhb.xbanner.entity.SimpleBannerInfo;
 
 import java.io.Serializable;
-import com.stx.xhb.xbanner.entity.BaseBannerInfo;
 
-public class XbannerdataBean implements Serializable {
+public  class XbannerdataBean implements Serializable {
     private  String vipname;
     private  String  jurisdiction;
 
@@ -27,4 +27,7 @@ public class XbannerdataBean implements Serializable {
     public void setJurisdiction(String jurisdiction) {
         this.jurisdiction = jurisdiction;
     }
+
+
+
 }

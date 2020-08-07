@@ -233,7 +233,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="纳税等级" />
+                    android:id="@+id/nsdj"
+                    android:text="ns等级" />
 
                 <TextView
                     android:textSize="15sp"
@@ -261,7 +262,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="近12月累计开票额" />
+                    android:id="@+id/kae"
+                    android:text="" />
 
                 <EditText
                     android:textSize="15sp"
@@ -281,8 +283,9 @@
                     android:textSize="15sp"
                     android:textColor="@color/txt_normal"
                     android:layout_width="32dp"
+                    android:id="@+id/pe"
                     android:layout_height="wrap_content"
-                    android:text="万元" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -301,7 +304,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="近12月累计纳税额" />
+                    android:id="@+id/ns12"
+                    android:text="近12月累计ns额" />
 
                 <EditText
                     android:textSize="15sp"
@@ -322,7 +326,8 @@
                     android:textColor="@color/txt_normal"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:text="万元" />
+                    android:id="@+id/nspe"
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -405,7 +410,7 @@
                     android:textColor="@color/txt_normal"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:text="万元" />
+                    android:text="元" />
             </LinearLayout>
 
             <View

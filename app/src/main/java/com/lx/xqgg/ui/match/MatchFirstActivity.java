@@ -77,11 +77,20 @@ public class MatchFirstActivity extends BaseActivity {
     TextView textView5;
     @BindView(R.id.btn_next)
     Button btnNext;
+    @BindView(R.id.yqje)
+    TextView yqje;
+    @BindView(R.id.grzxdqyyq)
+    TextView grzxdqyyq;
+    @BindView(R.id.sfyyjm24gybd)
+    TextView sfyyjm24gybd;
 
     private MatchRequestBean matchRequestBean;
 
     public static MatchFirstActivity instance;
     private String hou;
+    private String mon;
+    private String yuq;
+    private String bao;
 
     @Override
     protected int getLayoutId() {
@@ -93,7 +102,13 @@ public class MatchFirstActivity extends BaseActivity {
         instance = this;
         tvTitle.setText("智能匹配");
         hou = SharedPrefManager.getImitationexamination().getPro_hou();
-        famg.setText("是否有"+hou);
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
+        yuq = SharedPrefManager.getImitationexamination().getPro_yuq();
+        bao = SharedPrefManager.getImitationexamination().getPro_bao();
+        famg.setText("是否有" + hou);
+        yqje.setText("【逾期" + mon);
+        grzxdqyyq.setText(yuq);
+       sfyyjm24gybd.setText(bao);
         matchRequestBean = new MatchRequestBean();
         //配偶知情默认否
         matchRequestBean.setSpouseInformed("0");
@@ -224,8 +239,8 @@ public class MatchFirstActivity extends BaseActivity {
         }
 //        if (switchYq.isChecked()) {
 //            if (TextUtils.isEmpty(etYqje.getText().toString())) {
-////                toast("请输入逾期金额");
-//                showDialog("请输入逾期金额");
+////                toast("请输入逾期");
+//                showDialog("请输入逾期");
 //                return;
 //            }
 //        }
@@ -269,6 +284,5 @@ public class MatchFirstActivity extends BaseActivity {
         startActivity(intent);
 
     }
-
 
 }

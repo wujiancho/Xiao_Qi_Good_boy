@@ -41,6 +41,15 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
     private boolean isShow=false;
     private String rat;
     private String pay;
+    private String bal;
+    private String fee;
+    private String cre;
+    private String dai;
+    private String ben;
+    private String jin;
+    private String xi;
+    private String mon;
+    private String yus;
 
     public MatchResultAdapter(@Nullable List<MultiItemEntity> data,boolean isShow) {
 //        super(R.layout.item_match_result, data);
@@ -60,7 +69,7 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
 //        }else {
 //            helper.setText(R.id.textView2, "");
 //        }
-//        helper.setText(R.id.tv_ed, item.getQuota()/10000 + "万");
+//        helper.setText(R.id.tv_ed, item.getQuota()/10000 + "");
 //        helper.setText(R.id.tv_rlv, item.getRate() + "");
 //        Glide.with(mContext)
 //                .load(Config.IMGURL + item.getImage())
@@ -68,16 +77,28 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
 //                .into((ImageView) helper.getView(R.id.image_view));
         rat = SharedPrefManager.getImitationexamination().getPro_rat();
         pay = SharedPrefManager.getImitationexamination().getPro_pay();
+        bal = SharedPrefManager.getImitationexamination().getPro_bal();
+        fee = SharedPrefManager.getImitationexamination().getPro_fee();
+        cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        dai = SharedPrefManager.getImitationexamination().getPro_dai();
+        ben = SharedPrefManager.getImitationexamination().getPro_ben();
+        jin = SharedPrefManager.getImitationexamination().getPro_jin();
+        xi = SharedPrefManager.getImitationexamination().getPro_xi();
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
+        yus = SharedPrefManager.getImitationexamination().getPro_yus();
         switch (item.getItemType()) {
             case 0:
                 final MatchResultBean oneBean = (MatchResultBean) item;
                 helper.setText(R.id.tv_type, oneBean.getCateName());
                 helper.setText(R.id.liyu, rat);
                 helper.setText(R.id.huakk, pay);
+
                 break;
             case 1:
                 final MatchResultBean.ProductBean twoBean = (MatchResultBean.ProductBean) item;
-
+                helper.setText(R.id.tv_kded, "可"+dai+bal);
+                helper.setText(R.id.textView3, "参考日"+fee);
+                helper.setText(R.id.tv_status, cre);
                 TextView textView=helper.getView(R.id.tv_num);
                 Log.e("zlz",textView.getTextSize()+"");
                 float size=textView.getTextSize();
@@ -110,16 +131,16 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                         helper.setText(R.id.textView2, "");
                     }
                 }
-                helper.setText(R.id.tv_ed, twoBean.getQuota()/10000 + "万");
+                helper.setText(R.id.tv_ed, twoBean.getQuota()/10000 + mon);
                 helper.setText(R.id.tv_rlv, twoBean.getRate() + "");
                 Glide.with(mContext)
                         .load(Config.IMGURL + twoBean.getImage())
                         .apply(new RequestOptions().placeholder(R.drawable.ic_default))
                         .into((ImageView) helper.getView(R.id.image_view));
                 if(twoBean.getGuarantee()!=null) {
-                    String[] hk = twoBean.getGuarantee().replace("xi", "等额本息")
-                            .replace("ben", "先息后本")
-                            .replace("jin", "等额本金")
+                    String[] hk = twoBean.getGuarantee().replace("xi", xi)
+                            .replace("ben", ben)
+                            .replace("jin", jin)
                             .split(",");
                     ArrayAdapter arrayAdapter = new ArrayAdapter<String>(mContext, R.layout.item_text, R.id.tv_info, hk);
                     ListView listView = helper.getView(R.id.list_view);
@@ -135,7 +156,7 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                                 status="审核中";
                                 break;
                             case "precredit":
-                                status="预授信";
+                                status=yus;
                                 break;
                             case "verify":
                                 status="审核中";
@@ -144,7 +165,7 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                                 status="终审拒绝";
                                 break;
                             case "usecredit":
-                                status="用信";
+                                status=cre;
                                 break;
                             case "pass":
                                 status="终审";

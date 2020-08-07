@@ -183,7 +183,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="是否有已缴满24个月保单"
+                        android:text=""
+                        android:id="@+id/sfyyjm24gybd"
                         android:textColor="@color/txt_normal"
                         android:textSize="15sp" />
 
@@ -231,7 +232,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="个人征信当前有逾期"
+                        android:id="@+id/grzxdqyyq"
+                        android:text=""
                         android:textColor="@color/txt_normal"
                         android:textSize="15sp" />
 
@@ -264,7 +266,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="【逾期金额" />
+                            android:id="@+id/yqje"
+                            android:text="【逾期" />
 
                         <EditText
                             android:id="@+id/et_yqje"

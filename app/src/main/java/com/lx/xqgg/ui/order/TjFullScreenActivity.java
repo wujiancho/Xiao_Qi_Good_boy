@@ -1,9 +1,12 @@
 package com.lx.xqgg.ui.order;
 
+import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.adapter.TjAdapter;
 import com.lx.xqgg.ui.order.bean.TjBean;
 
@@ -13,7 +16,9 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 //统计全屏页面
 public class TjFullScreenActivity extends BaseActivity {
     @BindView(R.id.v_close)
@@ -22,11 +27,14 @@ public class TjFullScreenActivity extends BaseActivity {
     RecyclerView rvHeader;
     @BindView(R.id.rv_content)
     RecyclerView rvContent;
+    @BindView(R.id.yxj)
+    TextView yxj;
 
     private TjAdapter tjAllAdapter;
     private List<TjBean> listAll = new ArrayList<>();
     private TjAdapter tjDetailAdapter;
     private List<TjBean> listDetail = new ArrayList<>();
+    private String cre;
 
     @Override
     protected int getLayoutId() {
@@ -37,6 +45,8 @@ public class TjFullScreenActivity extends BaseActivity {
     protected void initView() {
         listAll = (List<TjBean>) getIntent().getSerializableExtra("list1");
         listDetail = (List<TjBean>) getIntent().getSerializableExtra("list2");
+        cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        yxj.setText(cre+"(件)");
     }
 
     @Override
@@ -55,4 +65,6 @@ public class TjFullScreenActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+
 }

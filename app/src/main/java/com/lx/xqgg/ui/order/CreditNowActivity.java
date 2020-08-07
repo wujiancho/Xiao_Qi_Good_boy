@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.order;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.order.bean.DealBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
 import com.lx.xqgg.ui.vip.bean.NotifyBean;
@@ -23,11 +25,13 @@ import org.greenrobot.eventbus.EventBus;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
 public class CreditNowActivity extends BaseActivity {
     @BindView(R.id.v_close)
     View vClose;
@@ -41,9 +45,16 @@ public class CreditNowActivity extends BaseActivity {
     LinearLayout layoutZstg;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
+    @BindView(R.id.yxje)
+    TextView yxje;
+    @BindView(R.id.srpe)
+    TextView srpe;
 
     private DealBean dealBean;
     private OrderBean.RecordsBean orderBean;
+    private String cre;
+    private String mon;
+    private String wan;
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +63,13 @@ public class CreditNowActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvTitle.setText("立即用信");
+        cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        mon = SharedPrefManager.getImitationexamination().getPro_mon();
+        wan = SharedPrefManager.getImitationexamination().getPro_wan();
+        tvTitle.setText("立即" + cre);
+        yxje.setText(cre + mon);
+        etZstg.setHint("请输入" + mon);
+        srpe.setText(wan+"元");
         orderBean = (OrderBean.RecordsBean) getIntent().getSerializableExtra("data");
         dealBean = new DealBean();
         dealBean.setId(orderBean.getId() + "");
@@ -92,11 +109,11 @@ public class CreditNowActivity extends BaseActivity {
                 break;
             case R.id.btn_confirm:
                 if (TextUtils.isEmpty(etZstg.getText().toString().trim())) {
-                    toast("请输入用信金额");
+                    toast("请输入" + cre + mon);
                     return;
                 }
                 if (Double.parseDouble(etZstg.getText().toString()) * 10000 > Double.parseDouble(orderBean.getReal_money())) {
-                    toast("用信金额不能大于终审金额！");
+                    toast(cre + mon + "不能大于终审" + mon + "！");
                     return;
                 }
                 dealBean.setStatus("usecredit");
@@ -122,4 +139,7 @@ public class CreditNowActivity extends BaseActivity {
                 break;
         }
     }
+
+
+
 }

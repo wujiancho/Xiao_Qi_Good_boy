@@ -24,6 +24,7 @@ public class TjcpAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, BaseV
     protected void convert(BaseViewHolder helper, ProductBean.RecordsBean item) {
         String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
         String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
+        String  wan= SharedPrefManager.getImitationexamination().getPro_wan();
         helper.setText(R.id.tv_name, item.getTitle() + "");
         helper.setText(R.id.ed, ed);
         Glide.with(mContext)
@@ -31,6 +32,7 @@ public class TjcpAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, BaseV
                 .apply(new RequestOptions().placeholder(R.drawable.ic_default))
                 .into((ImageView) helper.getView(R.id.iv_icon));
         helper.setText(R.id.tv_num, item.getQuota()/10000 + "");
+        helper.setText(R.id.cppe, wan+"元");
 
         helper.setText(R.id.tv_rlv, "日"+fee + item.getRate() + "");
     }

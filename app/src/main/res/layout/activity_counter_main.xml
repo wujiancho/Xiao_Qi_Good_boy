@@ -54,7 +54,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="支付利息(元)"
+                android:text="支付lx(元)"
+                android:id="@+id/qsqlx"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -78,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="积分金额（万）"
+            android:text="积分（）"
             android:textColor="@color/txt_normal"
             android:id="@+id/daijin"
             android:textSize="15sp" />
@@ -89,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:background="@null"
-            android:hint="请输入积分金额"
+            android:hint="请输入积分"
             android:inputType="numberDecimal"
             android:maxLines="1"
             android:textColor="@color/txt_normal"
@@ -202,7 +203,7 @@
                 android:paddingTop="4dp"
                 android:paddingRight="8dp"
                 android:paddingBottom="4dp"
-                android:text="等额本金"
+                android:text="debj"
                 android:textColor="@drawable/txt_selector" />
 
             <RadioButton
@@ -217,7 +218,7 @@
                 android:paddingTop="4dp"
                 android:paddingRight="8dp"
                 android:paddingBottom="4dp"
-                android:text="等额本息"
+                android:text="debx"
                 android:textColor="@drawable/txt_selector" />
         </RadioGroup>
     </LinearLayout>

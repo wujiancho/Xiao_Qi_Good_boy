@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.lacollege.adapter.MylacollegeAadapter;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,6 +28,7 @@ public class LACollegeActivity extends BaseActivity {
     @BindView(R.id.laCollege_vp)
     ViewPager laCollegeVp;
     private MylacollegeAadapter mylacollegeAadapter;
+    private String dai;
 
 
 /*    @BindView(R.id.loanassistance_College)
@@ -41,7 +43,8 @@ public class LACollegeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvTitle.setText("助贷学院");
+        dai = SharedPrefManager.getImitationexamination().getPro_dai();
+        tvTitle.setText("助"+dai+"学院");
     }
 
     @Override

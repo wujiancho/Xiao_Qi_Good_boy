@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.counter;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CounterDetailActivity extends BaseActivity {
@@ -28,9 +30,15 @@ public class CounterDetailActivity extends BaseActivity {
     ConstraintLayout toobar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.yglx)
+    TextView yglx;
+    @BindView(R.id.ygbjj)
+    TextView ygbjj;
+    @BindView(R.id.yg)
+    TextView yg;
 
     /**
-     * 积分总金额
+     * 积分总je
      **/
     private double money;
     /**
@@ -42,7 +50,7 @@ public class CounterDetailActivity extends BaseActivity {
      **/
     private double rate;
     /**
-     * 类型 1 等额本金  2 等额本息
+     * 类型 1 debj  2 debx
      **/
     private int type;
 
@@ -53,6 +61,7 @@ public class CounterDetailActivity extends BaseActivity {
 
     private List<CountBean> list = new ArrayList<>();
     private CounterAdapter counterAdapter;
+    private String lxi;
 
     @Override
     protected int getLayoutId() {
@@ -61,8 +70,10 @@ public class CounterDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-       String loa = SharedPrefManager.getImitationexamination().getPro_loa();
-        tvTitle.setText("个人"+loa+"明细");
+        String loa = SharedPrefManager.getImitationexamination().getPro_loa();
+        String mou = SharedPrefManager.getImitationexamination().getPro_mou();
+        String bji = SharedPrefManager.getImitationexamination().getPro_bji();
+        tvTitle.setText("个人" + loa + "明细");
         money = getIntent().getDoubleExtra("money", 0);
         month = getIntent().getIntExtra("year", 0) * 12;
         rate = getIntent().getDoubleExtra("rate", 0);
@@ -71,12 +82,16 @@ public class CounterDetailActivity extends BaseActivity {
         counterAdapter = new CounterAdapter(list);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(counterAdapter);
+        lxi = SharedPrefManager.getImitationexamination().getPro_lxi();
+        yglx.setText(mou + lxi);
+        ygbjj.setText(mou + bji);
+        yg.setText(mou);
     }
 
     @Override
     protected void initData() {
         /**
-         * 等额本金
+         * debj
          */
         if (type == 1) {
             hkNum = (month + 1) * money * (Double.valueOf(rate) / 2400.00) + money;
@@ -87,7 +102,7 @@ public class CounterDetailActivity extends BaseActivity {
 
             double firstLx = money * (Double.valueOf(rate) / 1200.00);
             double firstYg = ygbj + firstLx;
-            /**利息减少**/
+            /**ll减少**/
             double lxjs = ygbj * (Double.valueOf(rate) / 1200.00);
 
             CountBean allBean = new CountBean("全部", hkNum, money, hkLx, 0.00);
@@ -129,4 +144,7 @@ public class CounterDetailActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+
+
 }
