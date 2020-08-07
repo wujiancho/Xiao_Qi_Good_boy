@@ -82,6 +82,9 @@ public class ProductFragment extends BaseFragment implements MultiSelectPopupWin
 
     private List<PayListBean> listCharacter = new ArrayList<>();
     private List<PayListBean> listType = new ArrayList<>();
+    private String pay;
+    private String fee;
+    private String bal;
 
     @Override
     protected int getLayoutId() {
@@ -91,6 +94,12 @@ public class ProductFragment extends BaseFragment implements MultiSelectPopupWin
     @Override
     protected void initView() {
         tvCity.setText(Constans.CITY);
+        pay = SharedPrefManager.getImitationexamination().getPro_pay();
+        bal = SharedPrefManager.getImitationexamination().getPro_bal();
+        fee = SharedPrefManager.getImitationexamination().getPro_fee();
+        rbHkfs.setText(pay+"方式");
+        rbFl.setText(fee);
+        rbEd.setText(bal);
 //        etSearch.setOnKeyListener(new View.OnKeyListener() {
 //            @Override
 //            public boolean onKey(View v, int keyCode, KeyEvent event) {

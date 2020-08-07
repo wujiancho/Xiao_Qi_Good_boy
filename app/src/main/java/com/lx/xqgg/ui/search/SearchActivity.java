@@ -94,7 +94,9 @@ public class SearchActivity extends BaseActivity {
                         String  title = resultBean.getName();
                         int quota = resultBean.getQuota();
                         String rate = resultBean.getRate();
-                        String count="额度:"+(quota/10000)+",日费率:" + rate;
+                        String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
+                        String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
+                        String count=ed+":"+(quota/10000)+",日"+fee+":" + rate;
                         ProductDetailEvent event=new ProductDetailEvent();
                         event.setImage(image);
                         event.setTitle(title);

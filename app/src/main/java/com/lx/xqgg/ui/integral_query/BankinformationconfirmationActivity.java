@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.helper.SharedPrefManager;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
@@ -44,7 +45,8 @@ public class BankinformationconfirmationActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvTitle.setText("银行信息确认");
+        String ban=  SharedPrefManager.getImitationexamination().getPro_ban();
+        tvTitle.setText(ban+"信息确认");
     }
 
     @Override

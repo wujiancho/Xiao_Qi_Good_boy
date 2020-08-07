@@ -8,7 +8,7 @@ public class ProductBean implements Serializable{
     /**
      * isSuccess : true
      * page : {"page":1,"size":10,"total":120,"totalPage":12}
-     * records : [{"apply_num":1,"cityLink":null,"classifyId":"","classifyList":[{"id":"15","name":"企业税贷企业税贷"},{"id":"21","name":"企业税贷=="}],"classifyName":",企业税贷企业税贷,,企业税贷==,","condition":null,"content":null,"createtime":"2020-02-27 14:21:23","featureList":null,"guarantee":"","id":656,"image":"","loantype":"1,2","mortgageOrpolicy":null,"quota":1000000,"rate":"1.2\u2031","title":"测试银行","video":""}]
+     * records : [{"apply_num":1,"cityLink":null,"classifyId":"","classifyList":[{"id":"15","name":""},{"id":"21","name":"=="}],"classifyName":",,","condition":null,"content":null,"createtime":"2020-02-27 14:21:23","featureList":null,"guarantee":"","id":656,"image":"","loantype":"1,2","mortgageOrpolicy":null,"quota":1000000,"rate":"1.2\u2031","title":"","video":""}]
      * total : 120
      */
 
@@ -110,8 +110,8 @@ public class ProductBean implements Serializable{
          * apply_num : 0
          * cityLink : https://dbank.zrcbank.com:8443/samples/#/YQGetLimit?tellerId=00000018&perrandom=Pxj9b4dmY9LQnlRch230t2Z9rxMzy1
          * classifyId : ,51,
-         * classifyList : [{"id":"51","name":"税贷"}]
-         * classifyName : ,税贷,
+         * classifyList : [{"id":"51","name":""}]
+         * classifyName : ,,
          * condition : {"ageEnd":60,"ageStart":18,"changeMonth":6,"companyType":"有限公司","delFlag":null,"foundTime":24,"id":683,"loanBalance":-1,"loanTimes":5,"mortgage":"-1","mortgageOrpolicy":null,"overdue":"0","overdueTimes":10,"position":"","productId":682,"shareHolding":20,"sixMonthLoanSearchTImes":-1,"sixMonthOverdueTimes":-1,"spouseInformed":"-1","taxLevel":"C","taxOwed":"0","twoMonthLoanSearchTimes":-1,"twoYearOverdueFourTimes":-1,"twoYearPolicy":"-1","yearInvoice":-1,"yearOverdueTimesThreesTimes":-1,"yeatTax":5000}
          * content :
          * createtime : 2020-03-20 14:36:56
@@ -125,7 +125,7 @@ public class ProductBean implements Serializable{
          * mortgageOrpolicy : null
          * quota : 1000000
          * rate : 0.26‰ - 0.36‰
-         * title : 张家港农商银行 - 优企贷
+         * title :
          * video :
          */
 

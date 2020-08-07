@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.product.bean.ProductBean;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import androidx.annotation.Nullable;
 
 public class ProductAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, BaseViewHolder> {
     private OnApplyClickListener onApplyClickListener;
+    private String bal;
+    private String fee;
 
     public ProductAdapter(@Nullable List<ProductBean.RecordsBean> data) {
         super(R.layout.item_product, data);
@@ -29,7 +32,8 @@ public class ProductAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, Ba
     @Override
     protected void convert(BaseViewHolder helper, ProductBean.RecordsBean item) {
         String[] titles=item.getTitle().split("-");
-
+        bal = SharedPrefManager.getImitationexamination().getPro_bal();
+        fee = SharedPrefManager.getImitationexamination().getPro_fee();
         helper.setText(R.id.tv_bank_name, titles[0].trim()+ "");
         if(titles.length>1) {
             helper.setText(R.id.textView2, titles[1].trim() + "");
@@ -38,6 +42,8 @@ public class ProductAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, Ba
         }
         helper.setText(R.id.tv_ed, item.getQuota()/10000 + "万");
         helper.setText(R.id.tv_rlv, item.getRate() + "");
+        helper.setText(R.id.tv_kded, "可贷"+bal);
+        helper.setText(R.id.textView3, "参考日"+fee);
         Glide.with(mContext)
                 .load(Config.IMGURL + item.getImage())
                 .apply(new RequestOptions().placeholder(R.drawable.ic_default))

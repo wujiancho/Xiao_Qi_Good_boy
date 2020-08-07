@@ -8,7 +8,7 @@ public class ResultBean implements MultiItemEntity {
      * company :
      * id : 573
      * image : /uploads/20191112/1f8f438396437c98951173ce59be1537.png
-     * name : 张家港农商银行 - 优企贷
+     * name :
      * phone :
      * quota : 2000000
      * rate : 0.26‰ - 0.36‰

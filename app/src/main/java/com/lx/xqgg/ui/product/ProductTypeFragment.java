@@ -146,7 +146,9 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                 String  title = productBean.getRecords().get(position).getTitle();
                                 int quota = productBean.getRecords().get(position).getQuota();
                                 String rate = productBean.getRecords().get(position).getRate();
-                                String count="额度:"+(quota/10000)+",日费率:" + rate;
+                                String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
+                                String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
+                                String count=ed+":"+(quota/10000)+",日"+fee+":" + rate;
                                 ProductDetailEvent event=new ProductDetailEvent();
                                 event.setImage(image);
                                 event.setTitle(title);

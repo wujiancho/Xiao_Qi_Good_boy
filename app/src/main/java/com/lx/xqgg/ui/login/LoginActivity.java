@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.login;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import com.lx.xqgg.FaceMainActivity;
 import com.lx.xqgg.MainActivity;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
+import com.lx.xqgg.api.ImitationexaminationBean;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
@@ -30,6 +32,7 @@ import com.lx.xqgg.util.AppApplicationUtil;
 import com.lx.xqgg.util.CountDownTimerUtils;
 import com.lx.xqgg.util.FastClickUtil;
 import com.lx.xqgg.util.JPushUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.HashMap;
 
@@ -37,6 +40,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -75,6 +79,7 @@ public class LoginActivity extends BaseActivity {
         vClose.setVisibility(View.INVISIBLE);
         tvTitle.setText("登录");
         tvVersion.setText("V" + AppApplicationUtil.getVersionName(mContext));
+        doCheckPermission2();
     }
 
     @Override
@@ -213,7 +218,25 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
-
+    private void doCheckPermission2(){
+                                ApiManage.getInstance().getMainApi().getImitationexamination()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribeWith(new  BaseSubscriber<BaseData<ImitationexaminationBean>>(getApplicationContext(), null){
+                                            @Override
+                                            public void onNext(BaseData<ImitationexaminationBean> imitationexaminationBeanBaseData) {
+                                                Log.e("zlz11", new Gson().toJson(imitationexaminationBeanBaseData));
+                                                if (imitationexaminationBeanBaseData.isSuccess()) {
+                                                    new Handler().postDelayed(new Runnable(){
+                                                        @Override
+                                                        public void run() {
+                                                            SharedPrefManager.setImitationexamination(imitationexaminationBeanBaseData.getData());
+                                                        }
+                                                    }, 1000);
+                                                }
+                                            }
+                                        });
+                            }
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -96,10 +96,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     @Override
     protected void initData() {
         checkUpdate(true);
-       getUserServiceInfo();
-      /* if(){
-
-       }*/
+        getUserServiceInfo();
         getAdvert();
     }
 

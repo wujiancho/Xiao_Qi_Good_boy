@@ -13,7 +13,7 @@ public class MatchSavedBean extends AbstractExpandableItem<MatchSavedBean.Produc
      * id : 680
      * link_man : test
      * link_phone : null
-     * product : [{"id":659,"image":"4","quota":1000000,"rate":"1.2\u2031","title":"测试银行"}]
+     * product : [{"id":659,"image":"4","quota":1000000,"rate":"1.2\u2031","title":"测试商店"}]
      * productId : 659
      */
 
@@ -97,7 +97,7 @@ public class MatchSavedBean extends AbstractExpandableItem<MatchSavedBean.Produc
          * image : 4
          * quota : 1000000
          * rate : 1.2‱
-         * title : 测试银行
+         * title : 测试商店
          */
 
         private int id;

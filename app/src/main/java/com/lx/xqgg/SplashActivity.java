@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.lx.xqgg.api.ApiManage;
+import com.lx.xqgg.api.ImitationexaminationBean;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
@@ -78,7 +79,6 @@ public class SplashActivity extends AppCompatActivity {
                 })
                 .build();
         doCheckPermission();
-
     }
 
     @Override
@@ -92,6 +92,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 
     @SuppressLint("CheckResult")
     private void doCheckPermission() {
@@ -115,8 +116,8 @@ public class SplashActivity extends AppCompatActivity {
                                 //登录过刷新用户信息
                                 ApiManage.getInstance().getMainApi().getUserInfo(SharedPrefManager.getUser().getToken())
                                         .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribeWith(new BaseSubscriber<BaseData<UserInfoBean>>(getApplicationContext(), null) {
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribeWith(new BaseSubscriber<BaseData<UserInfoBean>>(getApplicationContext(), null) {
                                             @Override
                                             public void onNext(BaseData<UserInfoBean> userInfoBeanBaseData) {
                                                 Log.e("zlz", new Gson().toJson(userInfoBeanBaseData));

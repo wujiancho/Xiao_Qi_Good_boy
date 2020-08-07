@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.counter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,9 +14,11 @@ import android.widget.TextView;
 
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.helper.SharedPrefManager;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CounterActivity extends BaseActivity {
@@ -43,8 +46,21 @@ public class CounterActivity extends BaseActivity {
     Button btnCount;
     @BindView(R.id.radio_group)
     RadioGroup radioGroup;
+    @BindView(R.id.daijin)
+    TextView daijin;
+    @BindView(R.id.dainian)
+    TextView dainian;
+    @BindView(R.id.daili)
+    TextView daili;
+    @BindView(R.id.ljhk)
+    TextView ljhk;
+    @BindView(R.id.huankfs)
+    TextView huankfs;
 
     private int type = 0;
+    private String loa;
+    private String rat;
+    private String pay;
 
     @Override
     protected int getLayoutId() {
@@ -53,7 +69,18 @@ public class CounterActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvTitle.setText("贷款计算器");
+        tvTitle.setText("计算器");
+        loa = SharedPrefManager.getImitationexamination().getPro_loa();
+        rat = SharedPrefManager.getImitationexamination().getPro_rat();
+        pay = SharedPrefManager.getImitationexamination().getPro_pay();
+        daijin.setText(loa + "金额（万）");
+        dainian.setText(loa + "年限（年）");
+        daili.setText(loa + rat + "（%）");
+        etDkje.setHint("请输入" + loa + "金额");
+        etDkll.setHint("请输入" + loa + rat);
+        etDknx.setHint("请输入" + loa + "年限");
+        ljhk.setText("累计" + pay + "(元)");
+        huankfs.setText(pay+"方式");
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -96,27 +123,27 @@ public class CounterActivity extends BaseActivity {
                 break;
             case R.id.btn_count:
                 if (TextUtils.isEmpty(etDkje.getText().toString())) {
-                    toast("请输入贷款金额");
+                    toast("请输入" + loa + "金额");
                     return;
                 }
                 if (TextUtils.isEmpty(etDknx.getText().toString())) {
-                    toast("请输入贷款年限");
+                    toast("请输入" + loa + "年限");
                     return;
                 }
                 if (TextUtils.isEmpty(etDkll.getText().toString())) {
-                    toast("请输入贷款利率");
+                    toast("请输入" + loa + rat);
                     return;
                 }
                 if (Double.parseDouble(etDkll.getText().toString()) > 100.00) {
-                    toast("请输入正确的贷款利率");
+                    toast("请输入正确的" + loa + rat);
                     return;
                 }
                 if (type == 0) {
-                    toast("请选择还款方式");
+                    toast("请选择" + pay + "方式");
                     return;
                 }
                 if (etDkje.getText().toString().trim().endsWith(".")) {
-                    toast("请输入正确的贷款金额");
+                    toast("请输入正确的" + loa + "金额");
                     return;
                 }
 
@@ -149,4 +176,6 @@ public class CounterActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }

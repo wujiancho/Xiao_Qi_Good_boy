@@ -57,7 +57,7 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="平安银行 税金贷 利息"
+            android:hint="请输入产品名称或客户姓名"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:maxLines="1"
@@ -104,7 +104,7 @@
                 android:drawableRight="@drawable/jt_selector"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="额度"
+                android:text="积分"
                 android:textColor="@drawable/txt_product_selector" />
 
             <RadioButton
@@ -116,7 +116,7 @@
                 android:drawableRight="@drawable/jt_selector"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="费率"
+                android:text="fl"
                 android:textColor="@drawable/txt_product_selector" />
 
         </RadioGroup>
@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:text="还款方式"
+                android:text="方式"
                 android:textColor="@drawable/txt_product_selector" />
 
             <RadioButton

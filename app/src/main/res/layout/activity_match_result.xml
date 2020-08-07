@@ -60,10 +60,12 @@
             android:layout_height="48dp"
             android:layout_weight="1"/>
     </LinearLayout>
+
     <TextView
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="匹配结果仅供参考，实际申请以银行反馈为准。"/>
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/yingh"
+        android:text="匹配结果仅供参考，实际申请以商店反馈为准。" />
 </LinearLayout>

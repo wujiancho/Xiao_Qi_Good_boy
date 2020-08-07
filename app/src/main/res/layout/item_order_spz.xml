@@ -26,7 +26,7 @@
                 android:layout_margin="8dp"
                 android:textColor="@color/txt_normal"
                 android:textSize="13sp"
-                tools:text="苏宁银行-微商贷" />
+                tools:text="苏宁商店-打折" />
 
             <TextView
                 android:id="@+id/tv_money_num"

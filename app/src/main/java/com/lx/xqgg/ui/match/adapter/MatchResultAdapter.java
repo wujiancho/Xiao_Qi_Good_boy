@@ -39,6 +39,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
     private MatchRequestBean matchRequestBean;
     private boolean isShow=false;
+    private String rat;
+    private String pay;
 
     public MatchResultAdapter(@Nullable List<MultiItemEntity> data,boolean isShow) {
 //        super(R.layout.item_match_result, data);
@@ -64,10 +66,14 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
 //                .load(Config.IMGURL + item.getImage())
 //                .apply(new RequestOptions().placeholder(R.drawable.ic_default))
 //                .into((ImageView) helper.getView(R.id.image_view));
+        rat = SharedPrefManager.getImitationexamination().getPro_rat();
+        pay = SharedPrefManager.getImitationexamination().getPro_pay();
         switch (item.getItemType()) {
             case 0:
                 final MatchResultBean oneBean = (MatchResultBean) item;
                 helper.setText(R.id.tv_type, oneBean.getCateName());
+                helper.setText(R.id.liyu, rat);
+                helper.setText(R.id.huakk, pay);
                 break;
             case 1:
                 final MatchResultBean.ProductBean twoBean = (MatchResultBean.ProductBean) item;

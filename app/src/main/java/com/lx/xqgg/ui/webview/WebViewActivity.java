@@ -866,7 +866,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 toast(e.getMessage());
             }
         }
-    //H5获取银行logo图片保存到本地
+    //H5获取商店logo图片保存到本地
     public void returnBitMap(final String url){
         Observable.create(new ObservableOnSubscribe<File>() {
             @Override

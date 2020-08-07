@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.counter.adapter.CounterAdapter;
 import com.lx.xqgg.ui.counter.bean.CountBean;
 
@@ -29,19 +30,19 @@ public class CounterDetailActivity extends BaseActivity {
     RecyclerView recyclerView;
 
     /**
-     * 贷款总金额
+     * 积分总金额
      **/
     private double money;
     /**
-     * 贷款月
+     * 积分月
      **/
     private int month;
     /**
-     * 利率
+     * ll
      **/
     private double rate;
     /**
-     * 还款类型 1 等额本金  2 等额本息
+     * 类型 1 等额本金  2 等额本息
      **/
     private int type;
 
@@ -60,7 +61,8 @@ public class CounterDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvTitle.setText("个人贷款明细");
+       String loa = SharedPrefManager.getImitationexamination().getPro_loa();
+        tvTitle.setText("个人"+loa+"明细");
         money = getIntent().getDoubleExtra("money", 0);
         month = getIntent().getIntExtra("year", 0) * 12;
         rate = getIntent().getDoubleExtra("rate", 0);

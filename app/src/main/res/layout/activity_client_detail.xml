@@ -23,7 +23,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="苏宁银行-微商贷" />
+            tools:text="苏宁商店-打折" />
 
         <TextView
             android:id="@+id/tv_phone"

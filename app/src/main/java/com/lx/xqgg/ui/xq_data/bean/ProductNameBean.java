@@ -4,7 +4,7 @@ public class ProductNameBean {
 
     /**
      * id : 682
-     * name : 张农银行 - 优企贷
+     * name :
      */
 
     private String id;

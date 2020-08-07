@@ -1,10 +1,10 @@
 package com.lx.xqgg.ui.match;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,9 +19,7 @@ import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.match.adapter.MatchSaveFirstAdapter;
-import com.lx.xqgg.ui.match.adapter.MatchSavedAdapter;
 import com.lx.xqgg.ui.match.bean.MatchSaveFirstBean;
-import com.lx.xqgg.ui.match.bean.MatchSavedBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +29,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -48,6 +47,8 @@ public class MatchSavedActivity extends BaseActivity {
     EditText etSearch;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.yinh)
+    TextView yinh;
 
 
     //    private MatchSavedAdapter matchSavedAdapter;
@@ -63,6 +64,8 @@ public class MatchSavedActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText("匹配结果");
+        String ban=  SharedPrefManager.getImitationexamination().getPro_ban();
+        yinh.setText("匹配结果仅供参考，实际申请以"+ban+"反馈为准。");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         matchSaveFirstAdapter = new MatchSaveFirstAdapter(list);
         recyclerView.setAdapter(matchSaveFirstAdapter);
@@ -71,7 +74,7 @@ public class MatchSavedActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(mContext, MatchSavedDetailActivity.class);
                 intent.putExtra("ids", list.get(position).getId());
-                intent.putExtra("company",list.get(position).getCompany());
+                intent.putExtra("company", list.get(position).getCompany());
                 startActivity(intent);
             }
         });
@@ -163,4 +166,5 @@ public class MatchSavedActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
 }

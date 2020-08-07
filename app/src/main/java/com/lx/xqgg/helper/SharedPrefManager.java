@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lx.xqgg.api.ImitationexaminationBean;
 import com.lx.xqgg.base.BaseApplication;
 import com.lx.xqgg.ui.city.bean.CityBean;
 import com.lx.xqgg.ui.city.bean.CityHistoryBean;
@@ -56,6 +57,20 @@ public class SharedPrefManager {
     public static UserBean getUser() {
         UserBean userBean = new Gson().fromJson(ACCOUNT.getString("user_info", ""), UserBean.class);
         return userBean;
+    }
+
+    /**
+     * 仿检查接口返回的信息
+     *
+     * @param
+     */
+    public static void setImitationexamination(ImitationexaminationBean imitationexamination) {
+        ACCOUNT.edit().putString("imitation_examination", new Gson().toJson(imitationexamination)).commit();
+    }
+
+    public static ImitationexaminationBean getImitationexamination() {
+        ImitationexaminationBean imitationexaminationBean = new Gson().fromJson(ACCOUNT.getString("imitation_examination", ""), ImitationexaminationBean.class);
+        return imitationexaminationBean;
     }
 
     /**

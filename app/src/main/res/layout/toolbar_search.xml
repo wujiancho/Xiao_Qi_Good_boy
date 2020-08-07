@@ -48,7 +48,7 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="平安银行 税金贷 利息"
+            android:hint="请输入产品名称或客户名称"
             android:inputType="text"
             android:maxLines="1"
             android:textColor="@color/txt_normal"

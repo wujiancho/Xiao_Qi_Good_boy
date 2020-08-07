@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="8dp"
-                        tools:text="产品名称：苏宁银行 - 微商贷" />
+                        tools:text="产品名称：苏宁易购 - 打折" />
 
                     <TextView
                         android:id="@+id/tv_kh_name"

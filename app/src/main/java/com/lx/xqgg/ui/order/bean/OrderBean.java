@@ -8,7 +8,7 @@ public class OrderBean implements Serializable {
     /**
      * isSuccess : true
      * page : {"page":1,"size":22,"total":22,"totalPage":1}
-     * records : [{"apply_company":"苏州工业园区源荣科创机电有限公司","apply_money":3000000,"city_id":null,"createtime":null,"credit_money":null,"id":12807,"link_man":"方鹏","link_mobile":"15106134491","meetAddress":null,"meetTime":null,"orderNo":null,"product_id":481,"status":"created","title":"微众银行 - 微业贷","user_id":94,"user_name":"13862182099"}]
+     * records : [{"apply_company":"苏州工业园区源荣科创机电有限公司","apply_money":3000000,"city_id":null,"createtime":null,"credit_money":null,"id":12807,"link_man":"方鹏","link_mobile":"15106134491","meetAddress":null,"meetTime":null,"orderNo":null,"product_id":481,"status":"created","title":"","user_id":94,"user_name":"13862182099"}]
      * total : 22
      */
 
@@ -119,7 +119,7 @@ public class OrderBean implements Serializable {
          * orderNo : null
          * product_id : 481
          * status : created
-         * title : 微众银行 - 微业贷
+         * title :
          * user_id : 94
          * user_name : 13862182099
          */

@@ -341,7 +341,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="经营性贷款笔数" />
+                    android:id="@+id/dai"
+                    android:text="经营性积分笔数" />
 
                 <EditText
                     android:id="@+id/et_jy_fd_count"
@@ -383,7 +384,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="经营性贷款余额" />
+                    android:text="经营性积分余额" />
 
                 <EditText
                     android:id="@+id/et_jy_fd_number"
@@ -423,7 +424,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="近2个月贷款查询" />
+                    android:id="@+id/dai12"
+                    android:text="近2个月查询" />
 
                 <EditText
                     android:textColor="@color/txt_normal"
@@ -463,7 +465,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="近6个月贷款查询" />
+                    android:id="@+id/dai6"
+                    android:text="近6个月查询" />
 
                 <EditText
                     android:id="@+id/et_6_count"

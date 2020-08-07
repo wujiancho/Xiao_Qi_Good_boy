@@ -37,7 +37,7 @@
             android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@+id/image_view"
             app:layout_constraintTop_toTopOf="@+id/image_view"
-            tools:text="平安银行" />
+            tools:text="平安商店" />
 
         <TextView
             android:gravity="center"
@@ -49,7 +49,7 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_bank_name"
             app:layout_constraintStart_toStartOf="@+id/tv_bank_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_bank_name"
-            tools:text="税金贷" />
+            tools:text="打折" />
 
         <View
             android:id="@+id/view"
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="可贷额度"
+            android:text="可贷积分"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintStart_toEndOf="@+id/view" />
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:text="参考日费率"
+            android:text="参考日打折"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_kded"
             app:layout_constraintStart_toEndOf="@+id/tv_kded" />

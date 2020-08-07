@@ -120,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工商银行相城支行"
+                android:text="工商店"
                 android:textColor="#ff000000"
                 android:textSize="15sp"
                 android:id="@+id/bandname"

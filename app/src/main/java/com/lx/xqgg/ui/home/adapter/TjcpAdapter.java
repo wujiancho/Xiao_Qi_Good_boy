@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.product.bean.ProductBean;
 
 import java.util.List;
@@ -21,12 +22,16 @@ public class TjcpAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, ProductBean.RecordsBean item) {
+        String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
+        String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
         helper.setText(R.id.tv_name, item.getTitle() + "");
+        helper.setText(R.id.ed, ed);
         Glide.with(mContext)
                 .load(Config.IMGURL + item.getImage())
                 .apply(new RequestOptions().placeholder(R.drawable.ic_default))
                 .into((ImageView) helper.getView(R.id.iv_icon));
         helper.setText(R.id.tv_num, item.getQuota()/10000 + "");
-        helper.setText(R.id.tv_rlv, "日费率" + item.getRate() + "");
+
+        helper.setText(R.id.tv_rlv, "日"+fee + item.getRate() + "");
     }
 }

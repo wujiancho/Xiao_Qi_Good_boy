@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.match;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,9 +21,7 @@ import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.match.adapter.MatchResultAdapter;
 import com.lx.xqgg.ui.match.bean.MatchRequestBean;
 import com.lx.xqgg.ui.match.bean.MatchResultBean;
-import com.lx.xqgg.ui.match.bean.MatchSavedBean;
 import com.lx.xqgg.ui.match.bean.SaveRequestBean;
-import com.lx.xqgg.ui.product.bean.ProductBean;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -61,12 +61,14 @@ public class MatchResultActivity extends BaseActivity {
     TextView tvFrName;
     @BindView(R.id.tv_time)
     TextView tvTime;
+    @BindView(R.id.yingh)
+    TextView yingh;
 
     private MatchRequestBean matchRequestBean;
 
     private MatchResultAdapter matchResultAdapter;
 
-    private List<MatchResultBean> listProducts=new ArrayList<>();
+    private List<MatchResultBean> listProducts = new ArrayList<>();
     private List<MultiItemEntity> list1 = new ArrayList<>();
 
     private MaterialDialog confirmDialog;
@@ -81,19 +83,19 @@ public class MatchResultActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText("匹配结果");
-
-
+        String ban=  SharedPrefManager.getImitationexamination().getPro_ban();
+        yingh.setText("匹配结果仅供参考，实际申请以"+ban+"反馈为准。");
         matchRequestBean = (MatchRequestBean) getIntent().getSerializableExtra("data");
         matchRequestBean.setToken(SharedPrefManager.getUser().getToken());
 
-        tvCompany.setText(matchRequestBean.getCompanyName()+"");
-        tvFrName.setText(matchRequestBean.getCustomerName()+"");
+        tvCompany.setText(matchRequestBean.getCompanyName() + "");
+        tvFrName.setText(matchRequestBean.getCustomerName() + "");
 
         Date date = new Date();
 
         String time = date.toLocaleString();
 
-        Log.i("md", "时间time为： "+time);
+        Log.i("md", "时间time为： " + time);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
@@ -103,7 +105,7 @@ public class MatchResultActivity extends BaseActivity {
         tvTime.setText(sim);
 
 
-        matchResultAdapter = new MatchResultAdapter(list1,false);
+        matchResultAdapter = new MatchResultAdapter(list1, false);
 
         rvResult.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         rvResult.setAdapter(matchResultAdapter);
@@ -132,7 +134,7 @@ public class MatchResultActivity extends BaseActivity {
 //                        if (MatchFirstActivity.instance != null) {
 //                            MatchFirstActivity.instance.finish();
 //                        }
-                        startActivity(new Intent(mContext,MatchSavedActivity.class));
+                        startActivity(new Intent(mContext, MatchSavedActivity.class));
                     }
                 })
                 .build();
@@ -183,7 +185,7 @@ public class MatchResultActivity extends BaseActivity {
 
                         } else {
                             if (productBean.getData() != null && productBean.getData().size() > 0) {
-                                listProducts=productBean.getData();
+                                listProducts = productBean.getData();
                                 list1.clear();
 
                                 for (MatchResultBean matchSavedBean : listProducts) {
@@ -222,7 +224,7 @@ public class MatchResultActivity extends BaseActivity {
             case R.id.btn_test_again:
 //                againDialog.show();
 //                search();
-                startActivity(new Intent(mContext,MatchFirstActivity.class));
+                startActivity(new Intent(mContext, MatchFirstActivity.class));
                 finish();
                 if (MatchSecondActivity.instance != null) {
                     MatchSecondActivity.instance.finish();
@@ -243,15 +245,15 @@ public class MatchResultActivity extends BaseActivity {
         SaveRequestBean saveRequestBean = new SaveRequestBean();
         saveRequestBean.setToken(SharedPrefManager.getUser().getToken());
         String productId = "";
-        Set<Integer> set=new HashSet<>();
-        for(MatchResultBean matchResultBean:listProducts){
-            for(MatchResultBean.ProductBean bean:matchResultBean.getProduct()){
+        Set<Integer> set = new HashSet<>();
+        for (MatchResultBean matchResultBean : listProducts) {
+            for (MatchResultBean.ProductBean bean : matchResultBean.getProduct()) {
                 set.add(bean.getId());
             }
         }
 
-        for(Integer integer:set){
-            productId = productId + "," + (integer+"");
+        for (Integer integer : set) {
+            productId = productId + "," + (integer + "");
         }
 
 //        for (int i = 0; i < listProducts.size(); i++) {
@@ -277,4 +279,6 @@ public class MatchResultActivity extends BaseActivity {
                     }
                 }));
     }
+
+
 }

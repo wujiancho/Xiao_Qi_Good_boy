@@ -1,8 +1,10 @@
 package com.lx.xqgg.ui.match;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -12,10 +14,12 @@ import android.widget.TextView;
 
 import com.lx.xqgg.R;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.match.bean.MatchRequestBean;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MatchFirstActivity extends BaseActivity {
@@ -67,10 +71,17 @@ public class MatchFirstActivity extends BaseActivity {
     CheckBox checkBox63;
     @BindView(R.id.et_age)
     EditText etAge;
+    @BindView(R.id.famg)
+    TextView famg;
+    @BindView(R.id.textView5)
+    TextView textView5;
+    @BindView(R.id.btn_next)
+    Button btnNext;
 
     private MatchRequestBean matchRequestBean;
 
     public static MatchFirstActivity instance;
+    private String hou;
 
     @Override
     protected int getLayoutId() {
@@ -79,8 +90,10 @@ public class MatchFirstActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        instance=this;
+        instance = this;
         tvTitle.setText("智能匹配");
+        hou = SharedPrefManager.getImitationexamination().getPro_hou();
+        famg.setText("是否有"+hou);
         matchRequestBean = new MatchRequestBean();
         //配偶知情默认否
         matchRequestBean.setSpouseInformed("0");
@@ -201,7 +214,7 @@ public class MatchFirstActivity extends BaseActivity {
             toast("请输入年龄");
             return;
         }
-        if(Integer.parseInt(etAge.getText().toString())<18||Integer.parseInt(etAge.getText().toString())>75){
+        if (Integer.parseInt(etAge.getText().toString()) < 18 || Integer.parseInt(etAge.getText().toString()) > 75) {
             toast("申请人年龄必须在18~75岁之间");
             return;
         }
@@ -256,4 +269,6 @@ public class MatchFirstActivity extends BaseActivity {
         startActivity(intent);
 
     }
+
+
 }

@@ -23,8 +23,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="累计还款(元)"
+                android:text="累计(元)"
                 android:textColor="@color/white"
+                android:id="@+id/ljhk"
                 android:textSize="16sp" />
 
             <TextView
@@ -77,8 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="贷款金额（万）"
+            android:text="积分金额（万）"
             android:textColor="@color/txt_normal"
+            android:id="@+id/daijin"
             android:textSize="15sp" />
 
         <EditText
@@ -87,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:background="@null"
-            android:hint="请输入贷款金额"
+            android:hint="请输入积分金额"
             android:inputType="numberDecimal"
             android:maxLines="1"
             android:textColor="@color/txt_normal"
@@ -109,8 +111,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="贷款年限（年）"
+            android:text="积分年限（年）"
             android:textColor="@color/txt_normal"
+            android:id="@+id/dainian"
             android:textSize="15sp" />
 
         <EditText
@@ -119,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:background="@null"
-            android:hint="请输入贷款年限"
+            android:hint="请输入积分年限"
             android:inputType="number"
             android:maxLines="1"
             android:textColor="@color/txt_normal"
@@ -141,7 +144,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="贷款利率（%）"
+            android:text="积分（%）"
+            android:id="@+id/daili"
             android:textColor="@color/txt_normal"
             android:textSize="15sp" />
 
@@ -151,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:background="@null"
-            android:hint="请输入贷款利率"
+            android:hint="请输入积分"
             android:inputType="numberDecimal"
             android:maxLines="1"
             android:textColor="@color/txt_normal"
@@ -173,8 +177,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="还款方式"
+            android:text="方式"
             android:textColor="@color/txt_normal"
+            android:id="@+id/huankfs"
             android:textSize="15sp" />
 
         <RadioGroup

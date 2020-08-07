@@ -477,4 +477,12 @@ public interface MainApi {
      */
     @GET("crm/view/login.html")
     Flowable<BaseData<String>>getCrmlogin();
+
+    /**
+     * 仿检查
+     * @param
+     * @return
+     */
+    @GET("common/getProperties")
+    Flowable<BaseData<ImitationexaminationBean>>getImitationexamination();
 }

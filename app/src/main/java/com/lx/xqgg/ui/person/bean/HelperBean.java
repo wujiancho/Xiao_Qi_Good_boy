@@ -7,7 +7,7 @@ public class HelperBean {
     /**
      * isSuccess : true
      * page : {"page":1,"size":10,"total":50,"totalPage":5}
-     * records : [{"content":"<p style=\"text-align: center;\"><span style=\"font-size:18px\"><strong>图片双击可以放大缩小<\/strong><\/span><\/p><p style=\"text-align: center;\"><span style=\"font-size:18px\"><strong><img src=\"http://app.xhsqy.com/uploads/20191220/ad2f528a019170797c282bfbc95fe315.jpg\"/><\/strong><\/span><\/p>","createtime":"2019-12-20 16:49:42.0","id":144,"image":"","status":"normal","title":"富民银行 - 富税贷申请操作流程？","video":"","weigh":144}]
+     * records : [{"content":"<p style=\"text-align: center;\"><span style=\"font-size:18px\"><strong>图片双击可以放大缩小<\/strong><\/span><\/p><p style=\"text-align: center;\"><span style=\"font-size:18px\"><strong><img src=\"http://app.xhsqy.com/uploads/20191220/ad2f528a019170797c282bfbc95fe315.jpg\"/><\/strong><\/span><\/p>","createtime":"2019-12-20 16:49:42.0","id":144,"image":"","status":"normal","title":"","video":"","weigh":144}]
      * total : 50
      */
 
@@ -101,7 +101,7 @@ public class HelperBean {
          * id : 144
          * image :
          * status : normal
-         * title : 富民银行 - 富税贷申请操作流程？
+         * title :
          * video :
          * weigh : 144
          */

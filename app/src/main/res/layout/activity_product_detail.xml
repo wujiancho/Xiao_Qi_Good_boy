@@ -53,7 +53,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/iv_logo"
-                        tools:text="平安银行税金贷（线上）" />
+                        tools:text="平安商店打折（线上）" />
 
                     <TextView
                         android:id="@+id/tv_apply_num"
@@ -118,7 +118,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
-                                android:text="可贷额度"
+                                android:text="可贷积分"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -145,7 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
-                                android:text="参考日费率"
+                                android:text="参考日打折"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -172,7 +172,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
-                                android:text="贷款期（月）"
+                                android:text="日期（月）"
                                 android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>

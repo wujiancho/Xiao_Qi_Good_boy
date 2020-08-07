@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.match;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,6 +23,7 @@ import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.match.bean.MatchRequestBean;
 import com.lx.xqgg.ui.product.bean.QccBean;
 
@@ -33,6 +35,7 @@ import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -72,6 +75,12 @@ public class MatchSecondActivity extends BaseActivity {
     EditText et6Count;
     @BindView(R.id.tv_company_hy_selector)
     TextView getTvCompanyTypeSelect;
+    @BindView(R.id.dai)
+    TextView dai;
+    @BindView(R.id.dai12)
+    TextView dai12;
+    @BindView(R.id.dai6)
+    TextView dai6;
 
     private MatchRequestBean matchRequestBean;
 
@@ -96,6 +105,7 @@ public class MatchSecondActivity extends BaseActivity {
     private String taxLevel = "";
 
     private String beanCompanyType = "";
+    private String loa;
 
     @Override
     protected int getLayoutId() {
@@ -107,6 +117,10 @@ public class MatchSecondActivity extends BaseActivity {
         instance = this;
         matchRequestBean = (MatchRequestBean) getIntent().getSerializableExtra("data");
         tvTitle.setText("智能匹配");
+        loa = SharedPrefManager.getImitationexamination().getPro_loa();
+        dai.setText("经营性" + loa + "笔数");
+        dai6.setText("近6个月"+loa+"查询");
+       dai12.setText("近12个月"+loa+"查询");
         checkCompany(matchRequestBean.getCompanyName());
         etZgbl.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable edt) {
@@ -217,15 +231,15 @@ public class MatchSecondActivity extends BaseActivity {
                             }
 
                             try {
-                                boolean isgetMsg=false;
+                                boolean isgetMsg = false;
                                 List<QccBean.ResultBean.ChangeRecordsBean> list = qccBean.getResult().getChangeRecords();
                                 for (QccBean.ResultBean.ChangeRecordsBean bean : list) {
                                     if (bean.getProjectName().equals(matchRequestBean.getCustomerName())) {
-                                        isgetMsg=true;
+                                        isgetMsg = true;
                                         etFrbgMonth.setText(getMonthCha(bean.getChangeDate()) + "");
                                     }
                                 }
-                                if(!isgetMsg){
+                                if (!isgetMsg) {
                                     etFrbgMonth.setText(getMonthCha(qccBean.getResult().getStartDate()) + "");
                                 }
                             } catch (Exception e) {
@@ -363,7 +377,7 @@ public class MatchSecondActivity extends BaseActivity {
             toast("请填写公司成立月数");
             return;
         }
-        if (taxLevel==null) {
+        if (taxLevel == null) {
             toast("请选择纳税等级");
             return;
         }
@@ -376,19 +390,19 @@ public class MatchSecondActivity extends BaseActivity {
             return;
         }
         if (TextUtils.isEmpty(etJyFdCount.getText().toString().trim())) {
-            toast("请填写经营性贷款余额笔数");
+            toast("请填写经营性" + loa + "余额笔数");
             return;
         }
 //        if (TextUtils.isEmpty(etJyFdNumber.getText().toString().trim())) {
-//            toast("请填写经营性贷款余额");
+//            toast("请填写经营性余额");
 //            return;
 //        }
         if (TextUtils.isEmpty(et2Count.getText().toString().trim())) {
-            toast("请填写近2月贷款查询");
+            toast("请填写近2月" + loa + "查询");
             return;
         }
         if (TextUtils.isEmpty(et6Count.getText().toString().trim())) {
-            toast("请填写近6月贷款查询");
+            toast("请填写近6月" + loa + "查询");
             return;
         }
         matchRequestBean.setCityName(Constans.CITY);
@@ -438,6 +452,7 @@ public class MatchSecondActivity extends BaseActivity {
         resultMonth = Math.abs(month + result);
         return resultMonth;
     }
+
 
 
 }

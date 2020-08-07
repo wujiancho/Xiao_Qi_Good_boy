@@ -7,12 +7,7 @@ import java.util.List;
 
     public class MatchResultBean extends AbstractExpandableItem<MatchResultBean.ProductBean> implements MultiItemEntity {
 
-    /**
-     * cateId : 51
-     * cateImage : /common/image?fileId=f58e1caa4168421fa2bf638ec75b9d73.png
-     * cateName : 税贷
-     * product : [{"adviseWeigh":999,"apply_num":273,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-20 14:36:56","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"ben","id":682,"image":"/common/image?fileId=faf19afac5884b8c93fc9ce2966e6e97.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"-1","orderStatus":null,"quota":1000000,"rate":"(0.25-0.33)\u2030","status":"normal","title":"张农银行 - 优企贷","video":""},{"adviseWeigh":999,"apply_num":27,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-04-26 17:46:36","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"ben","id":733,"image":"/common/image?fileId=3100829109a84d0bba83864a1a2b0589.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"-1","orderStatus":null,"quota":1000000,"rate":"(0.19-0.33)\u2030","status":"normal","title":"渤海银行 - 渤业贷","video":""},{"adviseWeigh":998,"apply_num":1079,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-20 17:25:43","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"jin","id":685,"image":"/common/image?fileId=92e011fa92ff420dba997daaacf7f325.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"-1","orderStatus":"created","quota":2000000,"rate":"0.47\u2030","status":"normal","title":"苏宁银行 - 微商贷","video":""},{"adviseWeigh":996,"apply_num":246,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-20 15:47:21","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"jin","id":684,"image":"/common/image?fileId=eac1c05ec0ef41598049bef597353b0b.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"-1","orderStatus":"created","quota":3000000,"rate":"(0.3-0.5)\u2030","status":"normal","title":"微众银行 - 微税贷","video":""},{"adviseWeigh":993,"apply_num":252,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-20 14:57:20","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"xi","id":683,"image":"/common/image?fileId=fd0ae4856cd9493cb7cd7d396fef5e9b.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"-1","orderStatus":"nopass","quota":1000000,"rate":"(0.3-0.37)\u2030","status":"normal","title":"大数金融 - 掌柜贷","video":""},{"adviseWeigh":992,"apply_num":266,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-26 18:18:35","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"jin,xi","id":724,"image":"/common/image?fileId=15c9f2bfbb0745fbaebd38040a11a3e4.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"-1","orderStatus":"created","quota":500000,"rate":"(0.3-0.36)\u2030","status":"normal","title":"平安银行 - 税金贷","video":""},{"adviseWeigh":885,"apply_num":158,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-24 18:38:55","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"xi","id":707,"image":"/common/image?fileId=50753d34a2f047c0af5d9fc2cdf44b16.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":null,"orderStatus":null,"quota":500000,"rate":"(0.3- 0.4)\u2030","status":"normal","title":"富民银行 - 富税贷","video":""},{"adviseWeigh":0,"apply_num":1,"cityLink":null,"classifyId":",51,","classifyList":null,"classifyName":",税贷,","condition":null,"content":null,"createtime":"2020-03-24 18:40:35","featureId":null,"featureList":null,"featureName":null,"flowImage":null,"guarantee":"jin,xi","id":708,"image":"/common/image?fileId=e68fcb42dcb64633947f9978707f2f74.png","limitMonth":null,"loantype":"2","mortgageOrpolicy":"0","orderStatus":null,"quota":500000,"rate":"0.33\u2030","status":"normal","title":"民生银行  -  网乐贷","video":""}]
-     */
+
 
     private int cateId;
     private String cateImage;
@@ -68,7 +63,7 @@ import java.util.List;
          * cityLink : null
          * classifyId : ,51,
          * classifyList : null
-         * classifyName : ,税贷,
+         * classifyName :
          * condition : null
          * content : null
          * createtime : 2020-03-20 14:36:56
@@ -86,7 +81,7 @@ import java.util.List;
          * quota : 1000000
          * rate : (0.25-0.33)‰
          * status : normal
-         * title : 张农银行 - 优企贷
+         * title :
          * video :
          */
 
