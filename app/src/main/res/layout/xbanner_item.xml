@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_149"
+    android:layout_height="@dimen/dp_160"
      android:background="#FFC107"
     >
     <TextView
@@ -37,9 +37,21 @@
         android:id="@+id/no_purchase"
         android:background="@drawable/no_purchasebg"
         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="有效期2021-12-31"
+        android:textColor="#ff6f460a"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_21"
+        android:id="@+id/termof_validity"
+        android:layout_marginRight="@dimen/dp_9"
+        android:visibility="gone"
+        />
     <Button
-        android:layout_width="@dimen/dp_96"
-        android:layout_height="@dimen/dp_29"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_20"
         android:text="立即购买"
         android:textColor="#ff593605"
         android:textSize="15sp"

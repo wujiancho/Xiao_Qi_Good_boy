@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,511 +7,569 @@
     tools:context=".ui.mycommission.MycommissionActivity"
     android:orientation="vertical"
     >
-    <androidx.constraintlayout.widget.ConstraintLayout
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       >
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="@dimen/dp_180"
+           android:background="@drawable/integralquery_bg"
+           >
+           <View
+               android:id="@+id/toobar_back"
+               android:layout_width="18dp"
+               android:layout_height="18dp"
+               android:layout_marginLeft="8dp"
+               android:layout_marginBottom="12dp"
+               android:background="@drawable/ic_back"
+               android:clickable="true"
+               android:layout_marginTop="@dimen/dp_35"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent" />
+
+           <TextView
+               android:id="@+id/toobar_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:layout_gravity="center_horizontal"
+               android:layout_marginStart="8dp"
+               android:layout_marginEnd="8dp"
+               android:layout_marginBottom="122dp"
+               android:textColor="@color/white"
+               android:textSize="18sp"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.5"
+               app:layout_constraintStart_toStartOf="parent"
+               tools:text="12344" />
+           <de.hdodenhof.circleimageview.CircleImageView
+               android:src="@drawable/logo"
+               android:id="@+id/circleImageView"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:layout_marginLeft="16dp"
+               android:layout_marginTop="@dimen/dp_64"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.6" />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="张三"
+               android:textColor="#ffffffff"
+               android:textSize="15sp"
+               android:id="@+id/user_name"
+               android:layout_marginTop="@dimen/dp_65"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginLeft="@dimen/dp_97"
+               />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="苏州罗信网络科技有限公司"
+               android:textColor="#ffffffff"
+               android:textSize="12sp"
+               android:id="@+id/usercompany_name"
+               android:layout_marginTop="@dimen/dp_88"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginLeft="@dimen/dp_97"
+               />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="小麒乖乖已累计为您返佣30,000积分"
+               android:textColor="#ffffffff"
+               android:id="@+id/accumulated_points"
+               android:textSize="10sp"
+               android:layout_marginTop="@dimen/dp_108"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginLeft="@dimen/dp_97"
+               />
+       </androidx.constraintlayout.widget.ConstraintLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="@dimen/dp_80"
+           android:layout_marginLeft="@dimen/dp_10"
+           android:layout_marginTop="@dimen/dp_140"
+           android:layout_marginRight="@dimen/dp_10"
+           android:background="@drawable/bg_txfy"
+           android:orientation="horizontal"
+           app:layout_constraintTop_toTopOf="parent"
+           >
+           <LinearLayout
+               android:id="@+id/cash_withdrawal_rebatez"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:layout_gravity="center"
+               android:gravity="center"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/cash_withdrawal_rebate"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:text="40,000"
+                   android:textColor="#ff303030"
+                   android:textSize="15sp" />
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/dp_16"
+                   android:layout_weight="1"
+                   android:orientation="horizontal">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="可提现返佣"
+                       android:textColor="#ff303030"
+                       android:textSize="12sp"
+
+                       />
+                   <ImageView
+                       android:layout_width="5dp"
+                       android:layout_height="8dp"
+                       android:layout_gravity="center"
+                       android:layout_marginLeft="@dimen/dp_10"
+                       android:src="@drawable/gengduo"></ImageView>
+               </LinearLayout>
+           </LinearLayout>
+
+           <View
+               android:layout_width="0.5dp"
+               android:layout_height="@dimen/dp_55"
+               android:layout_gravity="center"
+               android:layout_marginLeft="@dimen/dp_10"
+               android:layout_marginRight="@dimen/dp_18"
+               android:background="#BBBBBB"></View>
+
+           <LinearLayout
+               android:id="@+id/this_monthcommissionz"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:layout_gravity="center"
+               android:gravity="center"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/this_monthcommission"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:text="10,000"
+                   android:textColor="#ff303030"
+                   android:textSize="15sp" />
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/dp_16"
+                   android:layout_weight="1"
+                   android:orientation="horizontal">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="本月返佣"
+                       android:textColor="#ff303030"
+                       android:textSize="12sp" />
+
+                   <ImageView
+                       android:layout_width="5dp"
+                       android:layout_height="8dp"
+                       android:layout_gravity="center"
+                       android:layout_marginLeft="@dimen/dp_10"
+                       android:src="@drawable/gengduo"></ImageView>
+               </LinearLayout>
+           </LinearLayout>
+
+           <View
+               android:layout_width="0.5dp"
+               android:layout_height="@dimen/dp_55"
+               android:layout_gravity="center"
+               android:layout_marginLeft="@dimen/dp_18"
+               android:layout_marginRight="@dimen/dp_10"
+               android:background="#BBBBBB"></View>
+
+           <LinearLayout
+               android:id="@+id/accumulated_rebatez"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="@dimen/dp_10"
+               android:layout_weight="1"
+               android:layout_gravity="center"
+               android:gravity="center"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/accumulated_rebate"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:text="50,000"
+                   android:textColor="#ff303030"
+                   android:textSize="15sp" />
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="@dimen/dp_16"
+                   android:layout_weight="1"
+                   android:orientation="horizontal">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:gravity="center"
+                       android:text="累计返佣"
+                       android:textColor="#ff303030"
+                       android:textSize="12sp" />
+
+                   <ImageView
+                       android:layout_width="5dp"
+                       android:layout_height="8dp"
+                       android:layout_gravity="center"
+                       android:layout_marginLeft="@dimen/dp_10"
+                       android:src="@drawable/gengduo"></ImageView>
+               </LinearLayout>
+           </LinearLayout>
+       </LinearLayout>
+   </RelativeLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_180"
-        android:background="@drawable/integralquery_bg"
-        >
-        <View
-            android:id="@+id/toobar_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/ic_back"
-            android:clickable="true"
-            android:layout_marginTop="@dimen/dp_35"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_grade"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="当前等级："
+                android:textColor="#ff593605"
+                android:textSize="9sp" />
+
+            <TextView
+                android:id="@+id/vip_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="准黄金"
+                android:textColor="#ff593605"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="享受黄金返佣权益"
+                android:textColor="#ffc70909"
+                android:textSize="9sp" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_h"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginRight="@dimen/dp_15"
+                android:indeterminateOnly="false"
+                android:max="800"
+                android:progress="309"
+                android:progressDrawable="@drawable/progress_bar_bg" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/toobar_title"
+            android:id="@+id/vip_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="122dp"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="12344" />
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:src="@drawable/logo"
-            android:id="@+id/circleImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="@dimen/dp_64"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="张三"
-            android:textColor="#ffffffff"
-            android:textSize="15sp"
-            android:id="@+id/user_name"
-            android:layout_marginTop="@dimen/dp_65"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/dp_97"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="苏州罗信网络科技有限公司"
-            android:textColor="#ffffffff"
-            android:textSize="12sp"
-            android:id="@+id/usercompany_name"
-            android:layout_marginTop="@dimen/dp_88"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/dp_97"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="小麒乖乖已累计为您返佣30,000积分"
-            android:textColor="#ffffffff"
-            android:id="@+id/accumulated_points"
-            android:textSize="10sp"
-            android:layout_marginTop="@dimen/dp_108"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="@dimen/dp_97"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:text="309/800 本月还放款491，可升级准铂金，享受更高返佣"
+            android:textColor="#ff593605"
+            android:textSize="9sp" />
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_140"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_20"
-        >
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@drawable/bg_txfy"
-                android:orientation="horizontal"
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="40,000"
-                        android:textColor="#ff303030"
-                        android:textSize="15sp"
-                        android:id="@+id/cash_withdrawal_rebate"
-                        android:gravity="center"
-                        />
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/sp_22"
-                        android:text="可提现返佣"
-                        android:textColor="#ffffffff"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:background="@drawable/tx_fy"
-                        android:layout_marginTop="@dimen/dp_13"
-                        />
-                </LinearLayout>
+            android:orientation="vertical">
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="@dimen/dp_55"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/dp_18"
-                    android:background="#BBBBBB"></View>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_marginBottom="@dimen/dp_21"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10,000"
-                        android:textColor="#ff303030"
-                        android:textSize="15sp"
-                        android:gravity="center"
-                        android:id="@+id/this_monthcommission"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="本月返佣"
-                        android:layout_weight="1"
-                        android:textColor="#ff303030"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/dp_16"
-                        />
-                </LinearLayout>
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="@dimen/dp_55"
-                    android:layout_gravity="center"
-                    android:background="#BBBBBB"
-                    android:layout_marginLeft="@dimen/dp_18"
-                    android:layout_marginRight="@dimen/dp_10"
-                    ></View>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_21"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="50,000"
-                        android:textColor="#ff303030"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:id="@+id/accumulated_rebate"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="累计返佣"
-                        android:textColor="#ff303030"
-                        android:gravity="center"
-                        android:textSize="12sp"
-                        android:layout_marginTop="@dimen/dp_16"
-                        />
-                </LinearLayout>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@drawable/bg_grade"
-                android:orientation="vertical"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="当前等级："
-                        android:textColor="#ff593605"
-                        android:textSize="9sp"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="准黄金"
-                        android:textColor="#ff593605"
-                        android:textSize="12sp"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:id="@+id/vip_name"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="享受黄金返佣权益"
-                        android:textColor="#ffc70909"
-                        android:textSize="9sp"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:layout_marginLeft="@dimen/dp_16"
-                        />
-                    <ProgressBar
-                        android:id="@+id/progress_bar_h"
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:layout_gravity="center"
-                        android:indeterminateOnly="false"
-                        android:max="800"
-                        android:progress="309"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:layout_marginLeft="@dimen/dp_16"
-                        android:progressDrawable="@drawable/progress_bar_bg"
-                        android:layout_marginRight="@dimen/dp_15"
-                        />
-                </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="309/800 本月还放款491，可升级准铂金，享受更高返佣"
-                    android:textColor="#ff593605"
-                    android:textSize="9sp"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:id="@+id/vip_count"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@drawable/bg_txfy"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <com.stx.xhb.xbanner.XBanner
                     android:id="@+id/xbanner_vip"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_21"
-                    app:pointsPosition="RIGHT"
-                    app:tipTextSize="12sp"
+                    android:layout_height="@dimen/dp_170"
+                    android:layout_marginTop="@dimen/dp_10"
                     app:isAutoPlay="false"
-                    app:pointsVisibility="false"
                     app:isClipChildrenMode="true"
-                    />
+                    app:isHandLoop="true"
+                    app:pointsPosition="RIGHT"
+                    app:pointsVisibility="false"
+                    app:tipTextSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
+                        android:id="@+id/jurisdiction_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="当前可以解锁4个权限"
-                        android:id="@+id/jurisdiction_count"
-                        android:textColor="#ff303030"
-                        android:textSize="14sp"
                         android:layout_marginLeft="@dimen/dp_13"
-                        ></TextView>
+                        android:text="当前黄金服务包可以解锁4个权限"
+                        android:textColor="#ff303030"
+                        android:textSize="12sp"></TextView>
+
                     <TextView
+                        android:id="@+id/vip_RecyclerViewstatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="展开V"
-                        android:id="@+id/vip_RecyclerViewstatus"
-                        android:gravity="center"
-                        android:textColor="#ff303030"
-                        android:textSize="11sp"
                         android:layout_marginLeft="@dimen/dp_40"
-                        ></TextView>
-
+                        android:layout_marginRight="@dimen/dp_35"
+                        android:gravity="right"
+                        android:text="展开"
+                        android:textColor="#ff303030"
+                        android:textSize="11sp"></TextView>
                 </LinearLayout>
-                <androidx.recyclerview.widget.RecyclerView
+
+                <TextView
+                    android:id="@+id/stuart_img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_27"
+                    android:gravity="right"
+                    android:text="v"
+                    android:textColor="#ff303030"
+                    android:textSize="11sp"></TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/vip_RecyclerView"
-                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/dp_13"
-                    android:layout_marginRight="@dimen/dp_13"
-                    ></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="@dimen/dp_13"></androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/myjurisdiction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@drawable/bg_txfy"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我体验权益"
-                    android:layout_marginTop="@dimen/dp_24"
                     android:layout_marginLeft="@dimen/dp_25"
-                    android:layout_marginBottom="@dimen/dp_27"
-                    android:textColor="#ff303030"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:textSize="15sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textColor="#ff303030"
-                    android:textSize="15sp"
                     android:layout_marginTop="@dimen/dp_24"
                     android:layout_marginBottom="@dimen/dp_27"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="@dimen/dp_15"
+                    android:text="我体验权益"
+                    android:textColor="#ff303030"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_27"
+                    android:src="@drawable/gengduo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_135"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:background="@drawable/bg_txfy"
-            >
-              <androidx.constraintlayout.widget.ConstraintLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  >
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="小麒乖乖服务包购买攻略"
-                      android:textColor="#ff303030"
-                      android:textSize="15sp"
-                      android:layout_marginTop="@dimen/dp_15"
-                      android:layout_marginLeft="@dimen/dp_15"
-                       app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintLeft_toLeftOf="parent"
-                      />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="详情"
-                      android:textColor="#ff686868"
-                      android:textSize="13sp"
-                      android:layout_marginTop="@dimen/dp_15"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintRight_toRightOf="parent"
-                      android:layout_marginRight="@dimen/dp_25"
-                      />
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text=">"
-                      android:textColor="#ff303030"
-                      android:textSize="15sp"
-                      android:layout_marginTop="@dimen/dp_15"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintRight_toRightOf="parent"
-                      android:layout_marginRight="@dimen/dp_15"
-                      />
-                  <TextView
-                      android:layout_width="216dp"
-                      android:layout_height="wrap_content"
-                      android:text="小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！"
-                      android:textColor="#ff686868"
-                      android:textSize="9sp"
-                      android:layout_marginTop="@dimen/dp_50"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintLeft_toLeftOf="parent"
-                      app:layout_constraintRight_toLeftOf="@+id/logo"
-                      android:layout_marginRight="@dimen/dp_20"
-                      />
-                  <ImageView
-                      android:layout_width="@dimen/dp_60"
-                      android:layout_height="@dimen/dp_60"
-                      android:layout_marginTop="@dimen/dp_50"
-                      app:layout_constraintTop_toTopOf="parent"
-                      app:layout_constraintRight_toRightOf="parent"
-                      android:layout_marginRight="@dimen/dp_15"
-                      android:src="@drawable/logo"
-                      android:id="@+id/logo"
-                      ></ImageView>
-              </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="@dimen/dp_135"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_10"
-                android:background="@drawable/bg_txfy"
-                android:layout_marginBottom="@dimen/dp_20"
-                >
+                android:background="@drawable/bg_txfy">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/xqgg_gl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="玩转小麒乖乖返佣"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:text="小麒乖乖服务包购买攻略"
                         android:textColor="#ff303030"
                         android:textSize="15sp"
-                        android:layout_marginTop="@dimen/dp_15"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        />
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_marginRight="@dimen/dp_25"
                         android:text="详情"
                         android:textColor="#ff686868"
                         android:textSize="13sp"
-                        android:layout_marginTop="@dimen/dp_15"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginRight="@dimen/dp_25"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=">"
-                        android:textColor="#ff303030"
-                        android:textSize="15sp"
-                        android:layout_marginTop="@dimen/dp_15"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="@dimen/dp_19"
+                        android:layout_marginRight="@dimen/dp_14"
+                        android:src="@drawable/gengduo"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginRight="@dimen/dp_15"
-                        />
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
                     <TextView
                         android:layout_width="216dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_50"
+                        android:layout_marginRight="@dimen/dp_20"
                         android:text="小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！"
                         android:textColor="#ff686868"
                         android:textSize="9sp"
-                        android:layout_marginTop="@dimen/dp_50"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@+id/logo2"
-                        android:layout_marginRight="@dimen/dp_20"
-                        />
+                        app:layout_constraintRight_toLeftOf="@+id/logo"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <ImageView
+                        android:id="@+id/logo"
                         android:layout_width="@dimen/dp_60"
                         android:layout_height="@dimen/dp_60"
                         android:layout_marginTop="@dimen/dp_50"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
                         android:layout_marginRight="@dimen/dp_15"
                         android:src="@drawable/logo"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:background="@drawable/bg_txfy">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/xqgg_fy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:text="玩转小麒乖乖返佣"
+                        android:textColor="#ff303030"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_marginRight="@dimen/dp_25"
+                        android:text="详情"
+                        android:textColor="#ff686868"
+                        android:textSize="13sp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="7dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="@dimen/dp_19"
+                        android:layout_marginRight="@dimen/dp_14"
+                        android:src="@drawable/gengduo"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+                    <TextView
+                        android:layout_width="216dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_50"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:text="小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！小麒乖乖今天会员购买赠送积分哦，欢迎广大老客户前来下单购买！"
+                        android:textColor="#ff686868"
+                        android:textSize="9sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/logo2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
                         android:id="@+id/logo2"
-                        ></ImageView>
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_marginTop="@dimen/dp_50"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:src="@drawable/logo"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></ImageView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</LinearLayout >

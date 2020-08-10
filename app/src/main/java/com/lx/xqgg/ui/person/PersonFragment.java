@@ -84,6 +84,7 @@ public class PersonFragment extends BaseFragment {
     @Override
     protected void initView() {
         dai = SharedPrefManager.getImitationexamination().getPro_dai();
+        Log.d("qqqq", "initView: "+dai);
         list1 = new ArrayList<>();
         homeBaseAdapter1 = new HomeBaseAdapter(R.layout.item_person, list1);
         rvWdxx.setLayoutManager(new GridLayoutManager(mContext, 4));
@@ -365,8 +366,8 @@ public class PersonFragment extends BaseFragment {
         list1.add(new MatterBean("我的客户", "MyClientActivity", R.drawable.ic_p_wdkh));
         list1.add(new MatterBean("推荐有礼", "ShareFaceActivity", R.drawable.ic_p_tjyl));
         //list1.add(new MatterBean("积分查询", "", R.drawable.ic_p_jfcx));//IntegralQueryActivity
-        list1.add(new MatterBean("我的拓客", "", R.drawable.ic_p_jfcx));//MyTuokeActivity
-        list1.add(new MatterBean("业绩返佣", "MycommissionActivity", R.drawable.ic_p_jfcx));
+        list1.add(new MatterBean("我的拓客", "", R.drawable.tuoke));//MyTuokeActivity
+        list1.add(new MatterBean("业绩返佣", "MycommissionActivity", R.drawable.yongjin));
         homeBaseAdapter1.notifyDataSetChanged();
 
 //
