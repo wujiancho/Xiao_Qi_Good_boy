@@ -138,10 +138,10 @@
 
                        />
                    <ImageView
-                       android:layout_width="5dp"
+                       android:layout_width="8dp"
                        android:layout_height="8dp"
                        android:layout_gravity="center"
-                       android:layout_marginLeft="@dimen/dp_10"
+                       android:layout_marginLeft="@dimen/dp_6"
                        android:src="@drawable/gengduo"></ImageView>
                </LinearLayout>
            </LinearLayout>
@@ -189,10 +189,10 @@
                        android:textSize="12sp" />
 
                    <ImageView
-                       android:layout_width="5dp"
+                       android:layout_width="8dp"
                        android:layout_height="8dp"
                        android:layout_gravity="center"
-                       android:layout_marginLeft="@dimen/dp_10"
+                       android:layout_marginLeft="@dimen/dp_6"
                        android:src="@drawable/gengduo"></ImageView>
                </LinearLayout>
            </LinearLayout>
@@ -241,10 +241,10 @@
                        android:textSize="12sp" />
 
                    <ImageView
-                       android:layout_width="5dp"
+                       android:layout_width="8dp"
                        android:layout_height="8dp"
                        android:layout_gravity="center"
-                       android:layout_marginLeft="@dimen/dp_10"
+                       android:layout_marginLeft="@dimen/dp_6"
                        android:src="@drawable/gengduo"></ImageView>
                </LinearLayout>
            </LinearLayout>

@@ -3,11 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="#DCDCDC"
-            ></View>
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -43,7 +38,7 @@
             android:background="#ffe5e5e5"
             android:layout_weight="1"
             android:gravity="center"
-            android:id="@+id/history_integral"
+            android:id="@+id/last_number"
             ></TextView>
         <View
             android:layout_width="@dimen/dp_1"
@@ -53,19 +48,35 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_42"
-            android:text="状态"
+            android:text="搜索"
             android:textColor="#ff000000"
             android:textSize="15sp"
             android:background="#ffe5e5e5"
             android:layout_weight="1"
             android:gravity="center"
-            android:id="@+id/history_status"
+            android:id="@+id/money"
             ></TextView>
         <View
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
             android:background="#DCDCDC"
             ></View>
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/dp_42"
+             android:text="状态"
+             android:textColor="#ff000000"
+             android:textSize="15sp"
+             android:background="#ffe5e5e5"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:id="@+id/history_status"
+             ></TextView>
+         <View
+             android:layout_width="@dimen/dp_1"
+             android:layout_height="match_parent"
+             android:background="#DCDCDC"
+             ></View>
     </LinearLayout>
         <View
             android:layout_width="match_parent"

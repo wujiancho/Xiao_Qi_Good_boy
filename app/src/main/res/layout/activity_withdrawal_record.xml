@@ -1,9 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mycommission.WithdrawalRecordActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_158"
+        android:background="@drawable/integralquery_bg">
+        <View
+            android:id="@+id/toobar_back"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="@dimen/dp_35"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/ic_back"
+            android:clickable="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/toobar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_35"
+            android:layout_marginBottom="122dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12344" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_600"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_89"
+    android:background="@drawable/bg_txfy"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您已累计提现积分30,000积分。"
+        android:textColor="#ffeb3349"
+        android:textSize="16sp"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="3.0"
+        android:shadowColor="#42000000"
+        android:layout_marginTop="@dimen/dp_23"
+        android:layout_marginLeft="@dimen/sp_22"
+        android:id="@+id/accumulative_withdrawal"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="#DCDCDC"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        >
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:background="#DCDCDC"
+            ></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_42"
+            android:text="时间"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:background="#ffe5e5e5"
+            android:gravity="center"
+            android:layout_weight="1"
+            ></TextView>
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:background="#DCDCDC"
+            ></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_42"
+            android:text="银行卡"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:background="#ffe5e5e5"
+            android:layout_weight="1"
+            android:gravity="center"
+            ></TextView>
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:background="#DCDCDC"
+            ></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_42"
+            android:text="金额"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:background="#ffe5e5e5"
+            android:layout_weight="1"
+            android:gravity="center"
+            ></TextView>
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:background="#DCDCDC"
+            ></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_42"
+            android:text="状态"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:background="#ffe5e5e5"
+            android:layout_weight="1"
+            android:gravity="center"
+            ></TextView>
+        <View
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="match_parent"
+            android:background="#DCDCDC"
+            ></View>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/withdrawal_recordRecyclerView"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        ></androidx.recyclerview.widget.RecyclerView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提现规则："
+        android:textColor="#ff686868"
+        android:textSize="13sp"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginLeft="@dimen/dp_18"
+        />
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="1.10积分=1元，最低不得低于5000分。"
+    android:textColor="#ff686868"
+    android:textSize="12sp"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginLeft="@dimen/dp_19"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2.服务商最少每个月可提积分一次。"
+        android:textColor="#ff686868"
+        android:textSize="12sp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginLeft="@dimen/dp_19"
+        />
+</LinearLayout>
+
+</RelativeLayout>

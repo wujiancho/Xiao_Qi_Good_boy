@@ -7,12 +7,27 @@
     android:orientation="vertical"
     tools:context=".ui.mycommission.CashWithdrawalConfirmationActivity">
 <include layout="@layout/tooblar_white"></include>
+
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginTop="1dp"
       android:background="#fff"
       >
+      <View
+          android:layout_width="0.5dp"
+          android:layout_height="@dimen/dp_75"
+          android:layout_marginTop="@dimen/dp_35"
+          android:layout_marginLeft="@dimen/dp_37"
+          android:background="@drawable/tx_qd_bg3"
+          ></View>
+      <View
+          android:layout_width="0.5dp"
+          android:layout_height="@dimen/dp_75"
+          android:layout_marginTop="@dimen/dp_105"
+          android:layout_marginLeft="@dimen/dp_37"
+          android:background="@drawable/tx_qd_bg4"
+          ></View>
   <View
       android:layout_width="@dimen/dp_10"
       android:layout_height="@dimen/dp_10"
@@ -61,5 +76,64 @@
           android:layout_marginTop="@dimen/dp_180"
           android:layout_marginLeft="@dimen/dp_65"
           />
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginTop="@dimen/dp_240"
+          android:layout_marginLeft="@dimen/dp_24"
+          android:layout_marginRight="@dimen/dp_24"
+          android:background="@drawable/tx_qd_bg2"
+          ></View>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="提现金额"
+          android:textColor="#ff959595"
+          android:textSize="12sp"
+          android:layout_marginLeft="@dimen/dp_25"
+          android:layout_marginTop="@dimen/dp_255"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="¥100"
+          android:id="@+id/tx_money"
+          android:textColor="#ff303030"
+          android:textSize="15sp"
+          android:layout_marginRight="@dimen/dp_26"
+          android:layout_marginTop="@dimen/dp_256"
+          android:layout_alignParentRight="true"></TextView>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="到账银行卡"
+          android:textColor="#ff959595"
+          android:textSize="12sp"
+          android:layout_marginTop="@dimen/dp_288"
+          android:layout_marginLeft="@dimen/dp_25"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="工商银行 尾号2694"
+          android:textColor="#ff303030"
+          android:textSize="15sp"
+          android:layout_marginRight="@dimen/dp_26"
+          android:layout_marginTop="@dimen/dp_286"
+          android:layout_alignParentRight="true"
+          android:id="@+id/bandname_id"
+          />
+      <Button
+          android:layout_width="@dimen/dp_100"
+          android:layout_height="@dimen/dp_29"
+          android:id="@+id/btn_txfinish"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="433dp"
+          android:text="完成"
+          android:textColor="#ff22ac38"
+          android:textSize="15sp"
+          android:background="@drawable/tx_finishbg"
+          ></Button>
   </RelativeLayout>
 </LinearLayout>

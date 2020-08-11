@@ -1,7 +1,8 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -48,6 +49,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     @BindView(R.id.check_tx)
     CheckBox checkTx;
     int jifeng;
+    private boolean checked;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_cash_withdrawal_rebate;
@@ -80,6 +83,31 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
 
             }
         });
+        //判断一下用户是否绑定过银行卡
+        addbankName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intenaddbcd=new Intent(CashWithdrawalRebateActivity.this,AddbankCardActivity.class);
+                startActivity(intenaddbcd);
+
+            }
+        });
+
+        withSettlement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(CashWithdrawalRebateActivity.this);
+                builder1.setMessage("已申请提现，小麒乖乖处理中");
+                builder1.setTitle("温馨提示");
+                builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                     dialog.dismiss();
+                    }
+                });
+                builder1.show();
+            }
+        });
     }
 
     @OnClick({R.id.toobar_back,  R.id.but_alltx,  R.id.btt_txmoney, R.id.btt_txjl})
@@ -97,20 +125,26 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                  txMoney.setText("￥"+(jf/10));
                 break;
             case R.id.btt_txmoney:
-                //获取系统的 日期
-                 Calendar calendar= Calendar.getInstance();
-                //日
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                if (day>=25&&day<=29){
-                    if (jifeng>=1000){
-                        Intent intencwdcf=new Intent(CashWithdrawalRebateActivity.this,CashWithdrawalConfirmationActivity.class);
-                        startActivity(intencwdcf);
+                checked = checkTx.isChecked();
+                if (checked==true){
+                    //获取系统的 日期
+                    Calendar calendar= Calendar.getInstance();
+                    //日
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    if (day>=25&&day<=29){
+                        if (jifeng>=1000){
+                            Intent intencwdcf=new Intent(CashWithdrawalRebateActivity.this,CashWithdrawalConfirmationActivity.class);
+                            startActivity(intencwdcf);
+                        }else {
+                            toast("抱歉满1000积分才可以提现哦");
+                        }
                     }else {
-                        toast("抱歉满1000积分才可以提现哦");
+                        toast("提示：每月25日~29日可申请提现积分");
                     }
                 }else {
-                    toast("提示：每月25日~29日可申请提现积分");
+                    toast("请先勾选小麒乖乖返佣规则");
                 }
+
 
                 break;
                 //提现记录

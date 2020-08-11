@@ -2,6 +2,7 @@ package com.lx.xqgg.ui.mycommission;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.lx.xqgg.R;
@@ -22,6 +23,12 @@ public class CashWithdrawalConfirmationActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.toobar)
     ConstraintLayout toobar;
+    @BindView(R.id.tx_money)
+    TextView txMoney;
+    @BindView(R.id.bandname_id)
+    TextView bandnameId;
+    @BindView(R.id.btn_txfinish)
+    Button btnTxfinish;
 
     @Override
     protected int getLayoutId() {
@@ -30,18 +37,26 @@ public class CashWithdrawalConfirmationActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-      tvTitle.setText("提现确认");
+        tvTitle.setText("提现确认");
     }
 
     @Override
     protected void initData() {
-
+  /*   txMoney.setText("");
+     bandnameId.setText("");*/
     }
 
 
 
-    @OnClick(R.id.v_close)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.v_close, R.id.btn_txfinish})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.v_close:
+                finish();
+                break;
+            case R.id.btn_txfinish:
+                finish();
+                break;
+        }
     }
 }
