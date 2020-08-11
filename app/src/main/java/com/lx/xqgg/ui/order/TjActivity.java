@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lx.xqgg.R;
@@ -44,11 +44,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
 //统计页面
 public class TjActivity extends BaseActivity {
     @BindView(R.id.v_close)
@@ -83,6 +85,20 @@ public class TjActivity extends BaseActivity {
     Button btnConfirmTime;
     @BindView(R.id.layout_select_time)
     LinearLayout layoutSelectTime;
+    @BindView(R.id.rb_allmy)
+    RadioButton rbAllmy;
+    @BindView(R.id.rb_username)
+    RadioButton rbUsername;
+    @BindView(R.id.spj)
+    TextView spj;
+    @BindView(R.id.ysxj)
+    TextView ysxj;
+    @BindView(R.id.yxj)
+    TextView yxj;
+    @BindView(R.id.yxl)
+    TextView yxl;
+    @BindView(R.id.yxe)
+    TextView yxe;
 
     private String createTimeStart = "";
     private String createTimeEnd = "";
@@ -105,7 +121,14 @@ public class TjActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText("业务统计");
-
+        String cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        String pro = SharedPrefManager.getImitationexamination().getPro_pro();
+        String yus = SharedPrefManager.getImitationexamination().getPro_yus();
+        yxj.setText(cre+ "(件)");
+        yxl.setText(cre+ "率(%)");
+        yxe.setText(cre+ "额（分）");
+        spj.setText(pro+ "中(件");
+        ysxj.setText(yus+"(件)");
         calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8:00"));
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         tjAllAdapter = new TjAdapter(R.layout.item_tj_all, listAll);
@@ -149,7 +172,7 @@ public class TjActivity extends BaseActivity {
                             }
                         } else {
                             layoutHor.setVisibility(View.GONE);
-                    //     toast("获取服务商用户失败");
+                            //     toast("获取服务商用户失败");
                         }
 
                         for (OrderUserBean orderUserBean : orderUserBeanList) {
@@ -188,18 +211,18 @@ public class TjActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //刷新列表
-                if(codeBtn.getText().equals("全部")){
-                    userId=-1;
-                }else {
+                if (codeBtn.getText().equals("全部")) {
+                    userId = -1;
+                } else {
                     userId = codeBtn.getId();
                 }
-                Log.e("test",userId+"");
+                Log.e("test", userId + "");
                 upDateTj();
             }
         });
         //DensityUtilHelps.Dp2Px(this,40)
         LinearLayout.LayoutParams rlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        Log.e("zlz",userId+"");
+        Log.e("zlz", userId + "");
         codeBtn.setLayoutParams(rlp);
     }
 
@@ -441,4 +464,6 @@ public class TjActivity extends BaseActivity {
                     }
                 }));
     }
+
+
 }

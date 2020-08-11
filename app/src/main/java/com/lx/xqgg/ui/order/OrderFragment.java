@@ -130,9 +130,6 @@ public class OrderFragment extends BaseFragment {
 
     private int userId = -1;
     private SimpleDateFormat simpleDateFormat;
-    private String cre;
-    private String pro;
-    private String yus;
 
     @Override
     protected int getLayoutId() {
@@ -141,14 +138,14 @@ public class OrderFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        cre = SharedPrefManager.getImitationexamination().getPro_cre();
-        pro = SharedPrefManager.getImitationexamination().getPro_pro();
-        yus = SharedPrefManager.getImitationexamination().getPro_yus();
+        String cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        String pro = SharedPrefManager.getImitationexamination().getPro_pro();
+        String yus = SharedPrefManager.getImitationexamination().getPro_yus();
         tabsTitle = new String[]{"全部", pro + "中", yus, "终审", cre};
-        yxj.setText(cre + "(件)");
-        yxl.setText(cre + "率(%)");
-        yxe.setText(cre + "额（分）");
-        spj.setText(pro + "中(件");
+        yxj.setText(cre+ "(件)");
+        yxl.setText(cre+ "率(%)");
+        yxe.setText(cre+ "额（分）");
+        spj.setText(pro+ "中(件");
         ysxj.setText(yus+"(件)");
         EventBus.getDefault().register(this);
         for (int i = 0; i < tabsTitle.length; i++) {

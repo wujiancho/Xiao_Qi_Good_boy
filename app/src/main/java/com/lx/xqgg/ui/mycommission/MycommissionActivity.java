@@ -1,20 +1,32 @@
 package com.lx.xqgg.ui.mycommission;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.lx.xqgg.R;
+import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
+import com.lx.xqgg.base.BaseData;
+import com.lx.xqgg.base.BaseSubscriber;
+import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.adapter.VIpListAdapter;
-import com.lx.xqgg.ui.mycommission.bean.ViplistBean;
-import com.lx.xqgg.ui.mycommission.bean.XbannerdataBean;
+import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
+import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
+import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
 import com.stx.xhb.xbanner.XBanner;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +35,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class MycommissionActivity extends BaseActivity {
 
@@ -81,8 +94,8 @@ public class MycommissionActivity extends BaseActivity {
     @BindView(R.id.xqgg_fy)
     ConstraintLayout xqggFy;
     private VIpListAdapter vIpListAdapter;
-    private List<ViplistBean> viplist;
-
+    private List<ListofinterestsBean> viplist;
+    private List<SystemCommissionlevelBean> systemCommissionlevel ;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_mycommission;
@@ -95,20 +108,10 @@ public class MycommissionActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        final List<XbannerdataBean> xbannerdata = new ArrayList<>();
-        xbannerdata.add(new XbannerdataBean("黄金服务包", "购买黄金服务包享受更高返佣、额外4项权益"));
-        xbannerdata.add(new XbannerdataBean("铂金服务包", "购买铂金服务包享受更高返佣、额外8项权益"));
-        xbannerdata.add(new XbannerdataBean("钻石服务包", "购买钻石服务包享受更高返佣、额外12项权益"));
-        xbannerVip.setBannerData(R.layout.xbanner_item, xbannerdata);
-        xbannerVip.loadImage(new XBanner.XBannerAdapter() {
-            @Override
-            public void loadBanner(XBanner banner, Object model, View view, int position) {
-                TextView vipname = (TextView) view.findViewById(R.id.vip_name);
-                TextView tvContent = (TextView) view.findViewById(R.id.vip_jurisdiction);
-                vipname.setText(xbannerdata.get(position).getVipname());
-                tvContent.setText(xbannerdata.get(position).getJurisdiction());
-            }
-        });
+        //获取用户的可提返佣-本月返佣-累计返佣
+       jifeng();
+        //vip卡片
+        vipcard();
         //跳转购买服务包
         xbannerVip.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
@@ -124,16 +127,15 @@ public class MycommissionActivity extends BaseActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
-
             @Override
             public void onPageSelected(int position) {
              if (position==0){
-                 jurisdictionCount.setText("当前"+xbannerdata.get(0).getVipname()+"可以解锁4个权限");
+                // jurisdictionCount.setText("当前"+xbannerdata.get(0).getVipname()+"可以解锁4个权限");
              }if (position==1){
-                    jurisdictionCount.setText("当前"+xbannerdata.get(1).getVipname()+"可以解锁8个权限");
+                   // jurisdictionCount.setText("当前"+xbannerdata.get(1).getVipname()+"可以解锁8个权限");
                 }
              if (position==2){
-                 jurisdictionCount.setText("当前"+xbannerdata.get(2).getVipname()+"可以解锁12个权限");
+               //  jurisdictionCount.setText("当前"+xbannerdata.get(2).getVipname()+"可以解锁12个权限");
              }
             }
 
@@ -142,45 +144,9 @@ public class MycommissionActivity extends BaseActivity {
 
             }
         });
-        //设置权限列表数据
-        viplist = new ArrayList<>();
-        viplist.add(new ViplistBean(R.drawable.tuoke,"返佣权益"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专属客服"));
-        viplist.add(new ViplistBean(R.drawable.tuoke,"线上学院"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专家上门"));
 
-        viplist.add(new ViplistBean(R.drawable.tuoke,"返佣权益"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专属客服"));
-        viplist.add(new ViplistBean(R.drawable.tuoke,"线上学院"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专家上门"));
-
-        viplist.add(new ViplistBean(R.drawable.tuoke,"返佣权益"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专属客服"));
-        viplist.add(new ViplistBean(R.drawable.tuoke,"线上学院"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专家上门"));
-
-        viplist.add(new ViplistBean(R.drawable.tuoke,"返佣权益"));
-        viplist.add(new ViplistBean(R.drawable.yongjin,"专属客服"));
-        viplist.add(new ViplistBean(R.drawable.tuoke,"线上学院"));
-        //设置vip权限服务列表
-        vIpListAdapter = new VIpListAdapter(viplist);
-        vipRecyclerView.setAdapter(vIpListAdapter);
-        vipRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        vIpListAdapter.statusvip(4);
-        vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
-                    vIpListAdapter.statusvip(viplist.size());
-                    vIpListAdapter.notifyDataSetChanged();
-                    vipRecyclerViewstatus.setText("收起");
-                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
-                    vIpListAdapter.statusvip(4);
-                    vIpListAdapter.notifyDataSetChanged();
-                    vipRecyclerViewstatus.setText("展开");
-                }
-            }
-        });
+         //获取权益列表
+        Listofinterests();
 
         //设置进度条经验 根据用户动态改变的
         progressBarH.setProgress(100);
@@ -226,5 +192,106 @@ public class MycommissionActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    public  void jifeng(){
+        String token=  SharedPrefManager.getUser().getToken();
+        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<ReturningservantBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<ReturningservantBean> returningservantBeanBaseData) {
+                        Log.e("mydata", new Gson().toJson(returningservantBeanBaseData));
+                        if (returningservantBeanBaseData.isSuccess()){
+                            ReturningservantBean data=  returningservantBeanBaseData.getData();
+                            int allRebate=data.getAllCharge();
+                            int cashRebate=data.getCashCharge();
+                            int thismothRebate=data.getCurrentMonthCharge();
+                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                            String allRebatez = df.format(allRebate);
+                            String cashRebatez = df.format(cashRebate);
+                            String thismothRebatez = df.format(thismothRebate);
+                            cashWithdrawalRebate.setText(allRebatez);//可提返佣
+                            thisMonthcommission.setText(cashRebatez);//本月返佣
+                            accumulatedRebate.setText(thismothRebatez);//累计返佣
+                        }
+                    }
+                }));
+    }
+    private  void Listofinterests(){
+        ApiManage.getInstance().getMainApi().getListofinterests()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<ListofinterestsBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<ListofinterestsBean>> listBaseData) {
+                        viplist=new ArrayList<>();
+                        viplist.addAll(listBaseData.getData());
+                        //设置vip权限服务列表
+                        vIpListAdapter = new VIpListAdapter(viplist);
+                        vipRecyclerView.setAdapter(vIpListAdapter);
+                        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+                        vIpListAdapter.statusvip(4);
+                        vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
+                                    vIpListAdapter.statusvip(viplist.size());
+                                    vIpListAdapter.notifyDataSetChanged();
+                                    vipRecyclerViewstatus.setText("收起");
+                                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
+                                    vIpListAdapter.statusvip(4);
+                                    vIpListAdapter.notifyDataSetChanged();
+                                    vipRecyclerViewstatus.setText("展开");
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        Log.e("zlz", t.toString());
+                    }
+                });
+
+    }
+    private  void vipcard(){
+        systemCommissionlevel=new ArrayList<>();
+        String token=  SharedPrefManager.getUser().getToken();
+        addSubscribe(ApiManage.getInstance().getMainApi().getSystemCommissionlevel(token)
+         .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        .subscribeWith(new BaseSubscriber<BaseData<List<SystemCommissionlevelBean>>>(mContext, null) {
+            @Override
+            public void onNext(BaseData<List<SystemCommissionlevelBean>> listBaseData) {
+                if (listBaseData.isSuccess()){
+                    systemCommissionlevel.addAll(listBaseData.getData());
+                    xbannerVip.setBannerData(R.layout.xbanner_item, systemCommissionlevel);
+                    xbannerVip.loadImage(new XBanner.XBannerAdapter() {
+                     @Override
+                     public void loadBanner(XBanner banner, Object model, View view, int position) {
+                    TextView vipname = (TextView) view.findViewById(R.id.vip_name);
+                    TextView tvContent = (TextView) view.findViewById(R.id.vip_jurisdiction);
+                    ImageView picture = (ImageView) view.findViewById(R.id.bgpicture);
+                    vipname.setText(systemCommissionlevel.get(position).getName()+"服务包");
+                    tvContent.setText("享受"+systemCommissionlevel.get(position).getName()+"级别返佣、额外13项权益");
+                                Glide.with(mContext)
+                                        .load(Config.IMGURL + systemCommissionlevel.get(position).getPicture())
+                                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                        .into(picture);
+                            }
+                        });
+                    }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                toast(t.getMessage());
+                super.onError(t);
+            }
+        }));
+
     }
 }

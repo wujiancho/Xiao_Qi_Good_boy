@@ -49,16 +49,18 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getView());
-        ButterKnife.bind(this);
-        AppActivityTaskManager.getInstance().addActivity(this);
+      
+            super.onCreate(savedInstanceState);
 
-        mContext = this;
-        gson = new Gson();
-        setTitle("");
-        initView();
-        initData();
+            setContentView(getView());
+            ButterKnife.bind(this);
+            AppActivityTaskManager.getInstance().addActivity(this);
+
+            mContext = this;
+            gson = new Gson();
+            setTitle("");
+            initView();
+            initData();
     }
 
     @Override

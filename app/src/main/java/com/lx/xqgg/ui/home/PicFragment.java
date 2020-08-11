@@ -51,9 +51,11 @@ public class PicFragment extends DialogFragment {
         imageView = view.findViewById(R.id.imageView);
         guan = view.findViewById(R.id.guan);
 
+
         Glide.with(getActivity())
                 .load(Config.IMGURL + advertBean.getImage())
                 .into(imageView);
+
         Log.d("guangao", "onCreateView: "+Config.IMGURL + advertBean.getImage());
         Log.d("guangao2", "onCreateView: "+advertBean.getUrl());
         userid = advertBean.getBusId();

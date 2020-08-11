@@ -19,6 +19,18 @@ import com.lx.xqgg.ui.match.bean.MatchResultBean;
 import com.lx.xqgg.ui.match.bean.MatchSaveFirstBean;
 import com.lx.xqgg.ui.message.bean.MessageBean;
 import com.lx.xqgg.ui.my_client.bean.ServiceCustomerBean;
+import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
+import com.lx.xqgg.ui.mycommission.bean.CommissionlevelBean;
+import com.lx.xqgg.ui.mycommission.bean.CommissionwithdrawalBean;
+import com.lx.xqgg.ui.mycommission.bean.DetailsofinterestBean;
+import com.lx.xqgg.ui.mycommission.bean.GradeofinterestBean;
+import com.lx.xqgg.ui.mycommission.bean.HistoryCommissionwithdrawalBean;
+import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
+import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
+import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
+import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
+import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
+import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
 import com.lx.xqgg.ui.order.bean.OrderUserBean;
 import com.lx.xqgg.ui.order.bean.TjBean;
@@ -485,4 +497,102 @@ public interface MainApi {
      */
     @GET("common/getProperties")
     Flowable<BaseData<ImitationexaminationBean>>getImitationexamination();
+
+    /**
+     * 可提返佣-本月返佣-累计返佣
+     * @param
+     * @return
+     */
+    @GET("share/getMyServiceCharge")
+    Flowable<BaseData<ReturningservantBean>>getReturningservant(@Query("token") String token);
+
+    /**
+     * 当月佣金明细
+     * @param
+     * @return
+     */
+    @GET("share/getMonthCharge")
+    Flowable<BaseData<ThisMothPointsdetailstBean>>getThisMothPointsdetailst(@Body RequestBody body);
+
+    /**
+     * 历史佣金
+     * @param
+     * @return
+     */
+    @GET("share/getHistoryServiceCharge")
+    Flowable<BaseData<HistoryPointsdetailstBean>>getHistoryPointsdetailst(@Body RequestBody body);
+
+    /**
+     * 新增佣金提现
+     * @param
+     * @return
+     */
+    @GET("share/insertServiceCashAdvance")
+    Flowable<CommissionwithdrawalBean>getCommissionwithdrawal(@Body RequestBody body);
+
+    /**
+     * 历史佣金提现记录
+     * @param
+     * @return
+     */
+    @GET("share/getHistoryServiceCashAdvance")
+    Flowable<BaseData<HistoryCommissionwithdrawalBean>>getHistoryCommissionwithdrawal(@Body RequestBody body);
+
+    /**
+     * 佣金提现获取银行信息
+     * @param
+     * @return
+     */
+    @GET("share")
+    Flowable<BaseData<BandinformationBean>>getBandinformation(@Body RequestBody body);
+    /**
+     * 佣金当前等级和下一级等级
+     * @param
+     * @return
+     */
+    @GET("share/getChargeLevel")
+    Flowable<BaseData<CommissionlevelBean>>getCommissionlevel(@Body RequestBody body);
+
+    /**
+     * 系统佣金等级配置
+     * @param
+     * @return
+     */
+    @GET("share/getChargeConfig")
+    Flowable<BaseData<List<SystemCommissionlevelBean>>>getSystemCommissionlevel(@Query("token") String token);
+
+    /**
+     * 根据选择佣金等级计算服务商当月佣金
+     * @param
+     * @return
+     */
+    @GET("share/calculateChargeByConfigId")
+    Flowable<BaseData<SelectCommissionlevelBean>>getSelectCommissionlevel(@Body RequestBody body);
+
+
+    /**
+     * 权益列表
+     * @param
+     * @return
+     */
+    @GET("share/geRights")
+
+    Flowable<BaseData<List<ListofinterestsBean>>>getListofinterests();
+
+    /**
+     * 权益详情
+     * @param
+     * @return
+     */
+    @GET("share/getRightsConfigById")
+    Flowable<BaseData<DetailsofinterestBean>>getDetailsofinterest(@Query("id") String id);
+
+
+    /**
+     * 服务包等级对应权益
+     * @param
+     * @return
+     */
+    @GET("")
+    Flowable<BaseData<GradeofinterestBean>>getGradeofinterest(@Query("id") String id);
 }

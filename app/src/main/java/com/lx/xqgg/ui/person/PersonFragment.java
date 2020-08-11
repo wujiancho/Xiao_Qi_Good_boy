@@ -328,6 +328,11 @@ public class PersonFragment extends BaseFragment {
                                 list2.add(new MatterBean("CRM", "", R.drawable.crm));
                                 homeBaseAdapter2.notifyDataSetChanged();
                             }
+                         /*   boolean legal=new Boolean(new Gson().toJson(SharedPrefManager.getUserInfo().isLegal()));
+                            if (legal){
+                                list1.add(new MatterBean("业绩返佣", "MycommissionActivity", R.drawable.yongjin));
+                                homeBaseAdapter1.notifyDataSetChanged();
+                            }*/
                         }else {
                             toast(userInfoBeanBaseData.getMessage());
                         }

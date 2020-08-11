@@ -115,7 +115,6 @@
                    android:id="@+id/cash_withdrawal_rebate"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:gravity="center"
                    android:text="40,000"
                    android:textColor="#ff303030"
                    android:textSize="15sp" />
@@ -123,23 +122,22 @@
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/dp_16"
-                   android:layout_weight="1"
+                   android:layout_marginTop="@dimen/dp_14"
                    android:orientation="horizontal">
 
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:layout_weight="1"
-                       android:gravity="center"
+
                        android:text="可提现返佣"
                        android:textColor="#ff303030"
                        android:textSize="12sp"
 
                        />
+
                    <ImageView
-                       android:layout_width="8dp"
-                       android:layout_height="8dp"
+                       android:layout_width="@dimen/dp_10"
+                       android:layout_height="@dimen/dp_10"
                        android:layout_gravity="center"
                        android:layout_marginLeft="@dimen/dp_6"
                        android:src="@drawable/gengduo"></ImageView>
@@ -167,7 +165,6 @@
                    android:id="@+id/this_monthcommission"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:gravity="center"
                    android:text="10,000"
                    android:textColor="#ff303030"
                    android:textSize="15sp" />
@@ -175,22 +172,20 @@
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/dp_16"
-                   android:layout_weight="1"
+                   android:layout_marginTop="@dimen/dp_14"
                    android:orientation="horizontal">
 
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:layout_weight="1"
                        android:gravity="center"
                        android:text="本月返佣"
                        android:textColor="#ff303030"
                        android:textSize="12sp" />
 
                    <ImageView
-                       android:layout_width="8dp"
-                       android:layout_height="8dp"
+                       android:layout_width="10dp"
+                       android:layout_height="10dp"
                        android:layout_gravity="center"
                        android:layout_marginLeft="@dimen/dp_6"
                        android:src="@drawable/gengduo"></ImageView>
@@ -219,7 +214,6 @@
                    android:id="@+id/accumulated_rebate"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:gravity="center"
                    android:text="50,000"
                    android:textColor="#ff303030"
                    android:textSize="15sp" />
@@ -227,22 +221,20 @@
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/dp_16"
-                   android:layout_weight="1"
+                   android:layout_marginTop="@dimen/dp_14"
                    android:orientation="horizontal">
 
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:layout_weight="1"
                        android:gravity="center"
                        android:text="累计返佣"
                        android:textColor="#ff303030"
                        android:textSize="12sp" />
 
                    <ImageView
-                       android:layout_width="8dp"
-                       android:layout_height="8dp"
+                       android:layout_width="10dp"
+                       android:layout_height="10dp"
                        android:layout_gravity="center"
                        android:layout_marginLeft="@dimen/dp_6"
                        android:src="@drawable/gengduo"></ImageView>
@@ -393,6 +385,7 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="@dimen/dp_13"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/dp_20"
                     android:layout_marginRight="@dimen/dp_13"></androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 

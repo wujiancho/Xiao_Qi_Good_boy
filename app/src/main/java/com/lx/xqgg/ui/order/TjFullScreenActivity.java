@@ -65,6 +65,4 @@ public class TjFullScreenActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
-
-
 }

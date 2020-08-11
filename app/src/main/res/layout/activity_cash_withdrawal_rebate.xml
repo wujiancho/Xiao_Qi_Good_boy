@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="待结算积分"
+                    android:text="待结算积分?"
                     android:layout_marginTop="@dimen/dp_16"
                     android:id="@+id/yihuo"
                     android:textColor="#2F2F2F"
