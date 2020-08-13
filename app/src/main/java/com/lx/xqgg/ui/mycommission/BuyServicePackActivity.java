@@ -48,6 +48,7 @@ import java.util.List;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -124,6 +125,11 @@ public class BuyServicePackActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
+        Glide.with(mContext)
+                .load(Config.IMGURL + "/common/image?fileId=90c66810d9f849c8b880942f2cd3cd7a.png")
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                .into(vipselectbg);
+
     }
     //获取eventbus参数
     @Subscribe(threadMode = ThreadMode.BACKGROUND,sticky = true)
@@ -146,10 +152,10 @@ public class BuyServicePackActivity extends BaseActivity {
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)){
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
-            int thismothRebate = returningservantBean.getCurrentMonthCharge();
+            int allRebate = returningservantBean.getAllCharge();
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String thismothRebatez= df.format(thismothRebate);
-            accumulatedPoints.setText("小麒乖乖已累计为您返佣"+thismothRebatez+"积分");
+            String allRebatez= df.format(allRebate);
+            accumulatedPoints.setText("小麒乖乖已累计为您返佣"+allRebatez+"积分");
         }
 
         //获取用户信息

@@ -224,13 +224,13 @@ public class MycommissionActivity extends BaseActivity {
                             int cashRebate = data.getCashCharge();
                             int thismothRebate = data.getCurrentMonthCharge();
                             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-                            String allRebatez = df.format(allRebate);
-                            String cashRebatez = df.format(cashRebate);
-                            String thismothRebatez= df.format(thismothRebate);
-                            cashWithdrawalRebate.setText(allRebatez);//可提返佣
-                            thisMonthcommission.setText(cashRebatez);//本月返佣
-                            accumulatedRebate.setText(thismothRebatez);//累计返佣
-                            accumulatedPoints.setText("小麒乖乖已累计为您返佣"+thismothRebatez+"积分");
+                            String allRebatez = df.format(allRebate);//累计返佣
+                            String cashRebatez = df.format(cashRebate);//可提返佣
+                            String thismothRebatez= df.format(thismothRebate);//本月返佣
+                            cashWithdrawalRebate.setText(cashRebatez);
+                            thisMonthcommission.setText(thismothRebatez);
+                            accumulatedRebate.setText(allRebatez);
+                            accumulatedPoints.setText("小麒乖乖已累计为您返佣"+allRebatez+"积分");
                             SpUtil.getInstance().saveString("returningservantdata",new Gson().toJson(returningservantBeanBaseData.getData()));
                         }
                     }
@@ -249,9 +249,9 @@ public class MycommissionActivity extends BaseActivity {
                         vipName.setText(data.getCurrentLevel());
                         currentLevel = data.getCurrentLevel();
                         //设置进度条经验 根据用户动态改变的
-                        progressBarH.setProgress(data.getNextLevelMoney());
-                        progressBarH.setMax((int) data.getOrderMoney());
-                        if ("准铂金".equals(data.getCurrentLevel())) {
+                        progressBarH.setProgress((int) data.getOrderMoney());
+                        progressBarH.setMax(data.getNextLevelMoney());
+                        if ("青铜".equals(data.getCurrentLevel())) {
                             ClipDrawable drawable = new ClipDrawable(new ColorDrawable(Color.parseColor("#646464")), Gravity.LEFT, ClipDrawable.HORIZONTAL);
                           progressBarH.setProgressDrawable(drawable);
                         } else if ("准钻石".equals(data.getCurrentLevel())) {
@@ -264,10 +264,10 @@ public class MycommissionActivity extends BaseActivity {
                                 .into(vipbg);
                         if (data.getNextLevel() == null) {
                             vipNameQy.setText("已享受最高返佣权益");
-                            vipCount.setText("309/800 本月还放款491，已享受最高返佣权益");
+                            vipCount.setText(data.getOrderMoney()+"/99999，已享受最高返佣权益");
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
-                            vipCount.setText(data.getNextLevelMoney() + "/" + data.getOrderMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
+                            vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
                         }
                     }
                 }));

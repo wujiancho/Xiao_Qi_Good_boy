@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.event.ServiseridurlEvent;
@@ -25,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder> {
@@ -42,7 +39,7 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.vippackitem, null);
+        View v = LayoutInflater.from(context).inflate(R.layout.vippackitem, parent,false);
         return new MyHolder(v);
     }
 
@@ -131,7 +128,7 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
     public void setGetListener(GetListener getListener) {
         this.getListener = getListener;
     }
-    private  int mPosition=-1;
+    private  int mPosition;
 
     public int getmPosition() {
         return mPosition;

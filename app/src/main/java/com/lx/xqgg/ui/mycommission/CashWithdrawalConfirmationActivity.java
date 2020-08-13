@@ -29,6 +29,9 @@ public class CashWithdrawalConfirmationActivity extends BaseActivity {
     TextView bandnameId;
     @BindView(R.id.btn_txfinish)
     Button btnTxfinish;
+    private String bankName;
+    private String bankno;
+    private String money;
 
     @Override
     protected int getLayoutId() {
@@ -42,12 +45,17 @@ public class CashWithdrawalConfirmationActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-  /*   txMoney.setText("");
-     bandnameId.setText("");*/
+        bankName = getIntent().getStringExtra("bankName");
+        bankno = getIntent().getStringExtra("bankno");
+        money = getIntent().getStringExtra("money");
+        if (!"".equals(money)){
+            txMoney.setText("¥"+money);
+        }
+        if (!"".equals(bankno)||!"".equals(bankName)){
+           String Hou4bankNo= bankno.substring(bankno.length()-4,bankno.length());
+            bandnameId.setText(bankName+" 尾号"+Hou4bankNo);
+        }
     }
-
-
-
     @OnClick({R.id.v_close, R.id.btn_txfinish})
     public void onViewClicked(View view) {
         switch (view.getId()) {

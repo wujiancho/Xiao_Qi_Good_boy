@@ -68,7 +68,7 @@ public class ThisMonthReturnActivity extends BaseActivity {
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)){
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
-            int cashRebate = returningservantBean.getCashCharge();
+            int cashRebate = returningservantBean.getCurrentMonthCharge();
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
             String cashRebatez= df.format(cashRebate);
             thisMonthPoints.setText(cashRebatez);

@@ -528,7 +528,7 @@ public interface MainApi {
      * @param
      * @return
      */
-    @GET("share/insertServiceCashAdvance")
+    @POST("share/insertServiceCashAdvance")
     Flowable<CommissionwithdrawalBean>getCommissionwithdrawal(@Body RequestBody body);
 
     /**
@@ -544,8 +544,8 @@ public interface MainApi {
      * @param
      * @return
      */
-    @GET("share")
-    Flowable<BaseData<BandinformationBean>>getBandinformation(@Body RequestBody body);
+    @GET("share/getBankForServiceCashAdvance")
+    Flowable<BaseData<BandinformationBean>>getBandinformation(@Query("token") String token);
     /**
      * 佣金当前等级和下一级等级
      * @param

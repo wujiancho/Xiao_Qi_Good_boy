@@ -58,11 +58,11 @@ public class AccumulatedRebateActivity extends BaseActivity {
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)){
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
-            int thismothRebate = returningservantBean.getCurrentMonthCharge();
+            int allRebate = returningservantBean.getAllCharge();
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String thismothRebatez= df.format(thismothRebate);
+            String allRebatez= df.format(allRebate);
             //网络获取积分
-            accumulatedPoints.setText(thismothRebatez);
+            accumulatedPoints.setText(allRebatez);
         }
     }
 

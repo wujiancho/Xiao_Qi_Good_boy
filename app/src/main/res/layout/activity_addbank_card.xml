@@ -59,7 +59,7 @@
           android:layout_height="wrap_content"
           android:text="为了您的账户资金安全，银行卡绑定仅限公司对公开户银行账号。"
           android:textColor="#ff686868"
-          android:textSize="10sp"
+          android:textSize="9sp"
           />
   </LinearLayout>
     <LinearLayout
