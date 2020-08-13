@@ -49,7 +49,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-      
+
             super.onCreate(savedInstanceState);
 
             setContentView(getView());

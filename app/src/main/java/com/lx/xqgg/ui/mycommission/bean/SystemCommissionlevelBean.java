@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 public class SystemCommissionlevelBean implements Serializable {
 
+
     /**
+     * buy : false
      * delFlag : null
      * endMoney : 100
+     * endTime : null
      * ico : /common/image?fileId=2b911773d31f4fb4b47a39b8010353d2.png
      * id : 24
      * month : 3
@@ -16,8 +19,10 @@ public class SystemCommissionlevelBean implements Serializable {
      * startMoney : 1
      */
 
+    private boolean buy;
     private Object delFlag;
     private int endMoney;
+    private Object endTime;
     private String ico;
     private int id;
     private int month;
@@ -25,6 +30,22 @@ public class SystemCommissionlevelBean implements Serializable {
     private String picture;
     private int price;
     private int startMoney;
+    private boolean selectbuy;
+    public boolean isBuy() {
+        return buy;
+    }
+
+    public boolean isSelectbuy() {
+        return selectbuy;
+    }
+
+    public void setSelectbuy(boolean selectbuy) {
+        this.selectbuy = selectbuy;
+    }
+
+    public void setBuy(boolean buy) {
+        this.buy = buy;
+    }
 
     public Object getDelFlag() {
         return delFlag;
@@ -40,6 +61,14 @@ public class SystemCommissionlevelBean implements Serializable {
 
     public void setEndMoney(int endMoney) {
         this.endMoney = endMoney;
+    }
+
+    public Object getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Object endTime) {
+        this.endTime = endTime;
     }
 
     public String getIco() {

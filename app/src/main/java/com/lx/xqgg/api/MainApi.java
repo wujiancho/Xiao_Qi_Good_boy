@@ -20,6 +20,7 @@ import com.lx.xqgg.ui.match.bean.MatchSaveFirstBean;
 import com.lx.xqgg.ui.message.bean.MessageBean;
 import com.lx.xqgg.ui.my_client.bean.ServiceCustomerBean;
 import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
+import com.lx.xqgg.ui.mycommission.bean.BuynowBean;
 import com.lx.xqgg.ui.mycommission.bean.CommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.CommissionwithdrawalBean;
 import com.lx.xqgg.ui.mycommission.bean.DetailsofinterestBean;
@@ -512,7 +513,7 @@ public interface MainApi {
      * @return
      */
     @GET("share/getMonthCharge")
-    Flowable<BaseData<ThisMothPointsdetailstBean>>getThisMothPointsdetailst(@Body RequestBody body);
+    Flowable<BaseData<List<ThisMothPointsdetailstBean>>>getThisMothPointsdetailst(@Query("token") String token,@Query("month") String month);
 
     /**
      * 历史佣金
@@ -520,7 +521,7 @@ public interface MainApi {
      * @return
      */
     @GET("share/getHistoryServiceCharge")
-    Flowable<BaseData<HistoryPointsdetailstBean>>getHistoryPointsdetailst(@Body RequestBody body);
+    Flowable<HistoryPointsdetailstBean>getHistoryPointsdetailst(@Query("token") String token);
 
     /**
      * 新增佣金提现
@@ -551,7 +552,7 @@ public interface MainApi {
      * @return
      */
     @GET("share/getChargeLevel")
-    Flowable<BaseData<CommissionlevelBean>>getCommissionlevel(@Body RequestBody body);
+    Flowable<BaseData<CommissionlevelBean>>getCommissionlevel(@Query("token") String token);
 
     /**
      * 系统佣金等级配置
@@ -564,10 +565,11 @@ public interface MainApi {
     /**
      * 根据选择佣金等级计算服务商当月佣金
      * @param
+     * @param configId
      * @return
      */
     @GET("share/calculateChargeByConfigId")
-    Flowable<BaseData<SelectCommissionlevelBean>>getSelectCommissionlevel(@Body RequestBody body);
+    Flowable<BaseData<SelectCommissionlevelBean>>getSelectCommissionlevel(@Query("token") String token,@Query("configId") int configId);
 
 
     /**
@@ -593,6 +595,14 @@ public interface MainApi {
      * @param
      * @return
      */
-    @GET("")
+    @GET("share/getRightsByConfigId")
     Flowable<BaseData<GradeofinterestBean>>getGradeofinterest(@Query("id") String id);
+
+    /**
+     * 服务包订单-线下购买
+     * @param
+     * @return
+     */
+    @POST("chargeOrder/chargeOrderOffLine")
+    Flowable<BuynowBean>getBuynow(@Body RequestBody body);
 }

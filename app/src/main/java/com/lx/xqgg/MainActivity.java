@@ -34,6 +34,7 @@ import com.lx.xqgg.ui.product.ProductFragment;
 import com.lx.xqgg.util.AppApplicationUtil;
 import com.lx.xqgg.util.AppExitUtil;
 import com.lx.xqgg.util.JPushUtil;
+import com.lx.xqgg.util.SpUtil;
 import com.lx.xqgg.util.UpdateUtil;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -158,6 +159,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
                             if (objectBaseData.getCode() != 1) {
                                 userServiceFragment = new UserServiceFragment(objectBaseData);
                                 userServiceFragment.show(getSupportFragmentManager(), "");
+                            }else {
+                                SpUtil.getInstance().saveString("servisername",objectBaseData.getData().getService_name());
                             }
                         }
                     }

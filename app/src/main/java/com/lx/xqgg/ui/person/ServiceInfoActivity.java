@@ -10,6 +10,7 @@ import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
+import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.home.bean.UserServiceBean;
 
@@ -69,6 +70,7 @@ public class ServiceInfoActivity extends BaseActivity {
                                 tvAddress.setText(objectBaseData.getData().getAddress() + "");
                                 tvPhone.setText(objectBaseData.getData().getPhone() + "");
                                 tvName.setText(objectBaseData.getData().getLegal_person() + "");
+
                                 String status = "";
                                 switch (objectBaseData.getData().getStatus()) {
                                     case "normal":

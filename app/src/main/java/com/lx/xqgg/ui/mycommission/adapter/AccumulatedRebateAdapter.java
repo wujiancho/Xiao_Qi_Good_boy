@@ -1,23 +1,34 @@
 package com.lx.xqgg.ui.mycommission.adapter;
 
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
-import com.lx.xqgg.ui.mycommission.bean.AccumulatedPointslistBean;
+import com.lx.xqgg.config.Config;
+import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class AccumulatedRebateAdapter extends BaseQuickAdapter<AccumulatedPointslistBean, BaseViewHolder> {
-    public AccumulatedRebateAdapter(@Nullable List<AccumulatedPointslistBean> data) {
+public class AccumulatedRebateAdapter extends BaseQuickAdapter<HistoryPointsdetailstBean.DataBean.ListBean, BaseViewHolder> {
+    public AccumulatedRebateAdapter(@Nullable List<HistoryPointsdetailstBean.DataBean.ListBean> data) {
         super(R.layout.accumulatedrebateitem, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, AccumulatedPointslistBean item) {
-       helper.setText(R.id.accumulated_pointscontent,item.getTime());
-       helper.setImageResource(R.id.accumulated_pointsimg,item.getVipimg());
+    protected void convert(BaseViewHolder helper, HistoryPointsdetailstBean.DataBean.ListBean item) {
+        int  productCharge = item.getProductCharge();
+        DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+        String productChargez= df.format(productCharge);
+       helper.setText(R.id.accumulated_pointscontent,item.getMonth()+" 佣金积分 "+productChargez);
+        Glide.with(mContext)
+                .load(R.drawable.mygm)
+                .into((ImageView) helper.getView(R.id.accumulated_pointsimg));
+        //Config.IMGURL + item.getPicture()
        helper.addOnClickListener(R.id.integraldetailed);
     }
 }

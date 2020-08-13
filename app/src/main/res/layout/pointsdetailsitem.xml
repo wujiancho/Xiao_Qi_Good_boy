@@ -270,11 +270,12 @@
                 android:layout_marginRight="8dp"
                 android:padding="4dp"
                 android:text="60,000.00业务积分"
-                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginTop="@dimen/dp_90"
                 android:textColor="#676767"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                  />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

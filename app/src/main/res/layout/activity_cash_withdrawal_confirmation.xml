@@ -44,13 +44,14 @@
           android:layout_marginTop="@dimen/dp_29"
           android:layout_marginLeft="@dimen/dp_65"
           />
-      <View
-          android:layout_width="@dimen/dp_10"
-          android:layout_height="@dimen/dp_10"
+      <ImageView
+          android:layout_width="@dimen/dp_20"
+          android:layout_height="@dimen/dp_20"
           android:layout_marginTop="@dimen/dp_97"
-          android:layout_marginLeft="@dimen/dp_33"
-          android:background="@drawable/tx_qd_bg1"
-          ></View>
+          android:layout_marginLeft="@dimen/dp_30"
+          android:src="@drawable/shiz"
+          ></ImageView>
+
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

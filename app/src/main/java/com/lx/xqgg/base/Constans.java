@@ -21,4 +21,6 @@ public class Constans {
 
     public static QccBean qccBean;
     public static String productDetails;
+    public static String servisername;
+
 }
