@@ -19,7 +19,7 @@ public class PointsDetailsAdapter extends BaseQuickAdapter<ThisMothPointsdetails
     @Override
     protected void convert(BaseViewHolder helper, ThisMothPointsdetailstBean item) {
      helper.setText(R.id.tv_product_name,item.getTitle());
-     helper.setText(R.id.tv_usingletterstime,"用信时间："+item.getCreditTime());
+     helper.setText(R.id.tv_usingletterstime,"用信时间："+item.getCreditTime().substring(0,item.getCreditTime().indexOf(" ")));
      helper.setText(R.id.tv_order_num,"订单编号："+item.getOrderNo());
      helper.setText(R.id.tv_company_name,"企业名称："+item.getCompanyName());
      helper.setText(R.id.tv_kh_name,"客户姓名："+item.getCustomerName());

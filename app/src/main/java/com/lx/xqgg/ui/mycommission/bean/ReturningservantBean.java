@@ -3,16 +3,17 @@ package com.lx.xqgg.ui.mycommission.bean;
 import java.io.Serializable;
 
 public class ReturningservantBean implements Serializable {
-
-    /**可提返佣-本月返佣-累计返佣
+    /**
      * allCharge : 5811
      * cashCharge : 891
      * currentMonthCharge : 4917
+     * createdMoney :
      */
 
     private int allCharge;
     private int cashCharge;
     private int currentMonthCharge;
+    private String createdMoney;
 
     public int getAllCharge() {
         return allCharge;
@@ -37,4 +38,15 @@ public class ReturningservantBean implements Serializable {
     public void setCurrentMonthCharge(int currentMonthCharge) {
         this.currentMonthCharge = currentMonthCharge;
     }
+
+    public String getCreatedMoney() {
+        return createdMoney;
+    }
+
+    public void setCreatedMoney(String createdMoney) {
+        this.createdMoney = createdMoney;
+    }
+
+
+
 }

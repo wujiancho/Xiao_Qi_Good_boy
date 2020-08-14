@@ -13,6 +13,7 @@ import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.adapter.AccumulatedRebateAdapter;
+import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.PointsDetailsAdapter;
 import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
@@ -103,10 +104,11 @@ public class AccumulatedRebateActivity extends BaseActivity {
                                     }
                                 });
                             }else {
-                                accumulatedRebateAdapter = new AccumulatedRebateAdapter(historyaccumulatedPointslist);
+                                List<String> error =new ArrayList<>();
+                                ErrorAdapter eerr = new ErrorAdapter(error);
                                 accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                                accumulatedrebateRecyclerView.setAdapter(accumulatedRebateAdapter);
-                                accumulatedRebateAdapter.setEmptyView(R.layout.layout_empty, accumulatedrebateRecyclerView);
+                                accumulatedrebateRecyclerView.setAdapter(eerr);
+                                eerr.setEmptyView(R.layout.layout_empty, accumulatedrebateRecyclerView);
                             }
                         }
                     }
@@ -114,10 +116,11 @@ public class AccumulatedRebateActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable t) {
                         super.onError(t);
-                        accumulatedRebateAdapter = new AccumulatedRebateAdapter(historyaccumulatedPointslist);
+                        List<String> error =new ArrayList<>();
+                        ErrorAdapter eerr = new ErrorAdapter(error);
                         accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                        accumulatedrebateRecyclerView.setAdapter(accumulatedRebateAdapter);
-                        accumulatedRebateAdapter.setEmptyView(R.layout.layout_empty, accumulatedrebateRecyclerView);
+                        accumulatedrebateRecyclerView.setAdapter(eerr);
+                        eerr.setEmptyView(R.layout.layout_empty, accumulatedrebateRecyclerView);
                     }
                 }));
 

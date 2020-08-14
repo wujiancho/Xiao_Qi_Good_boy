@@ -537,7 +537,7 @@ public interface MainApi {
      * @return
      */
     @GET("share/getHistoryServiceCashAdvance")
-    Flowable<BaseData<HistoryCommissionwithdrawalBean>>getHistoryCommissionwithdrawal(@Body RequestBody body);
+    Flowable<HistoryCommissionwithdrawalBean>getHistoryCommissionwithdrawal(@Query("token") String token);
 
     /**
      * 佣金提现获取银行信息

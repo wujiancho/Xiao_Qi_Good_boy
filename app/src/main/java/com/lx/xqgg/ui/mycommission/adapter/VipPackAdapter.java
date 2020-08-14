@@ -64,7 +64,13 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
                 public void onClick(View v) {
                    // 一定要刷新适配器 当条目发生改变这是必须的
                     getListener.onClick(position);
-                    ServiseridurlEvent event=new ServiseridurlEvent(data.get(position).getId(),data.get(position).getPicture(),data.get(position).getName());
+                    ServiseridurlEvent event=new ServiseridurlEvent();
+                    event.setId(data.get(position).getId());
+                    event.setVipname(data.get(position).getName());
+                    event.setImgurl(data.get(position).getPicture());
+                    event.setEndTime(data.get(position).getEndTime());
+                    event.setRightsNum(data.get(position).getRightsNum());
+                    event.setPosition(position);
                     EventBus.getDefault().postSticky(event);
                     notifyDataSetChanged();
                 }

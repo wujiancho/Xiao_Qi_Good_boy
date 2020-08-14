@@ -5,44 +5,47 @@ import android.graphics.Color;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
+import com.lx.xqgg.ui.mycommission.bean.HistoryCommissionwithdrawalBean;
 import com.lx.xqgg.ui.mycommission.bean.WithdrawalrecordBean;
 
 import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class WithdrawalrecordAdapter extends BaseQuickAdapter<WithdrawalrecordBean, BaseViewHolder> {
+public class WithdrawalrecordAdapter extends BaseQuickAdapter<HistoryCommissionwithdrawalBean.DataBean.ListBean, BaseViewHolder> {
     public static final int typeji = 0;
     public static final int typeo = 1;
-    public WithdrawalrecordAdapter(@Nullable List<WithdrawalrecordBean> data) {
+    public WithdrawalrecordAdapter(@Nullable List<HistoryCommissionwithdrawalBean.DataBean.ListBean> data) {
         super(R.layout.integralqueryhistorryitem, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WithdrawalrecordBean item) {
-     helper.setText(R.id.history_time,item.getTime());
-     helper.setText(R.id.last_number,item.getBandlastnumber());
-     helper.setText(R.id.money,item.getMoney());
-     if (item.getStatus()==0){
-         helper.setText(R.id.history_status,"失败");
-     }else if (item.getStatus()==1){
-         helper.setText(R.id.history_status,"待结算");
-     }else  if (item.getStatus()==2){
-         helper.setText(R.id.history_status,"已完成");
-     }
-        switch (helper.getItemViewType()){
-            case typeji:
-                helper.setBackgroundColor(R.id.history_time,Color.parseColor("#FFFFFF"));
-                helper.setBackgroundColor(R.id.last_number,Color.parseColor("#FFFFFF"));
-                helper.setBackgroundColor(R.id.money,Color.parseColor("#FFFFFF"));
-                helper.setBackgroundColor(R.id.history_status,Color.parseColor("#FFFFFF"));
-                break;
-            case typeo:
-                helper.setBackgroundColor(R.id.history_time, Color.parseColor("#F0F0F0"));
-                helper.setBackgroundColor(R.id.last_number, Color.parseColor("#F0F0F0"));
-                helper.setBackgroundColor(R.id.money, Color.parseColor("#F0F0F0"));
-                helper.setBackgroundColor(R.id.history_status, Color.parseColor("#F0F0F0"));
-                break;
+    protected void convert(BaseViewHolder helper, HistoryCommissionwithdrawalBean.DataBean.ListBean item) {
+        if (getData().size()>0){
+            helper.setText(R.id.history_time,item.getApplyTime().substring(0,item.getApplyTime().indexOf(" ")));
+            helper.setText(R.id.last_number,item.getBankNo().substring(item.getBankNo().length()-4,item.getBankNo().length()));
+            helper.setText(R.id.money,item.getMoney());
+            if ("failed ".equals(item.getStatus())){
+                helper.setText(R.id.history_status,"失败");
+            }else if ("created".equals(item.getStatus())){
+                helper.setText(R.id.history_status,"待结算");
+            }else  if ("normal ".equals(item.getStatus())){
+                helper.setText(R.id.history_status,"已完成");
+            }
+            switch (helper.getItemViewType()){
+                case typeji:
+                    helper.setBackgroundColor(R.id.history_time,Color.parseColor("#FFFFFF"));
+                    helper.setBackgroundColor(R.id.last_number,Color.parseColor("#FFFFFF"));
+                    helper.setBackgroundColor(R.id.money,Color.parseColor("#FFFFFF"));
+                    helper.setBackgroundColor(R.id.history_status,Color.parseColor("#FFFFFF"));
+                    break;
+                case typeo:
+                    helper.setBackgroundColor(R.id.history_time, Color.parseColor("#F0F0F0"));
+                    helper.setBackgroundColor(R.id.last_number, Color.parseColor("#F0F0F0"));
+                    helper.setBackgroundColor(R.id.money, Color.parseColor("#F0F0F0"));
+                    helper.setBackgroundColor(R.id.history_status, Color.parseColor("#F0F0F0"));
+                    break;
+            }
         }
 
     }

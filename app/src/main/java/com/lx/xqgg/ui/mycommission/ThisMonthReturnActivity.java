@@ -11,6 +11,7 @@ import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
+import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.PointsDetailsAdapter;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
@@ -48,6 +49,7 @@ public class ThisMonthReturnActivity extends BaseActivity {
     private PointsDetailsAdapter pointsDetailsAdapter;
     private String token;
     private String time;
+    private String vipname;
 
     @Override
     protected int getLayoutId() {
@@ -63,6 +65,10 @@ public class ThisMonthReturnActivity extends BaseActivity {
     protected void initData() {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
+        vipname = getIntent().getStringExtra("vipname");
+        if (!"".equals(vipname)){
+            vipName.setText("享受"+vipname+"返佣权益");
+        }
         //当月佣金明细
         ThisMothpointsdetails();
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
@@ -100,10 +106,11 @@ public class ThisMonthReturnActivity extends BaseActivity {
                               thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                           }
                           else {
-                              pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
+                              List<String> error =new ArrayList<>();
+                              ErrorAdapter eerr = new ErrorAdapter(error);
                               thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                              thisMonthpointsRecyclerView.setAdapter(pointsDetailsAdapter);
-                              pointsDetailsAdapter.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
+                              thisMonthpointsRecyclerView.setAdapter(eerr);
+                              eerr.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
                           }
 
                       }
@@ -112,10 +119,11 @@ public class ThisMonthReturnActivity extends BaseActivity {
                   @Override
                   public void onError(Throwable t) {
                       super.onError(t);
-                      pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
+                      List<String> error =new ArrayList<>();
+                      ErrorAdapter eerr = new ErrorAdapter(error);
                       thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                      thisMonthpointsRecyclerView.setAdapter(pointsDetailsAdapter);
-                      pointsDetailsAdapter.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
+                      thisMonthpointsRecyclerView.setAdapter(eerr);
+                      eerr.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
                   }
               }));
     }

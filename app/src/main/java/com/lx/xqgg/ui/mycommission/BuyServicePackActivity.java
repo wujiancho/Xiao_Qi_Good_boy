@@ -107,11 +107,12 @@ public class BuyServicePackActivity extends BaseActivity {
     TextView welfare;
      private  String token;
     private VIpListAdapter vIpListAdapter;
-    private List<ListofinterestsBean> viplist;
+    private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
     private VipPackAdapter vipPackAdapter;
     private String buyname;
     private int bugid;
+    private int positions;
 
     @Override
     protected int getLayoutId() {
@@ -125,11 +126,8 @@ public class BuyServicePackActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
-        Glide.with(mContext)
-                .load(Config.IMGURL + "/common/image?fileId=90c66810d9f849c8b880942f2cd3cd7a.png")
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                .into(vipselectbg);
-
+        //默认
+        selectCommissionlevel( 24, "/common/image?fileId=90c66810d9f849c8b880942f2cd3cd7a.png");
     }
     //获取eventbus参数
     @Subscribe(threadMode = ThreadMode.BACKGROUND,sticky = true)
@@ -137,10 +135,18 @@ public class BuyServicePackActivity extends BaseActivity {
        int id = event.getId();
        String imgurl = event.getImgurl();
        String vipname = event.getVipname();
-       vipnameChange.setText(vipname+"服务包");
+       String endTime = event.getEndTime();
+       int rightsNum = event.getRightsNum();
+       int position = event.getPosition();
+        viplist.clear();
+        positions=position;
         //根据选择佣金等级计算服务商当月佣金
         selectCommissionlevel( id, imgurl);
         bugid=id;
+        jurisdictionCount.setText("当前"+vipname+"服务包可以解锁"+rightsNum+"个权限");
+        termOfValidity.setText("有效期："+endTime);
+
+        vIpListAdapter.notifyDataSetChanged();
     }
     @Override
     protected void initData() {
@@ -164,14 +170,16 @@ public class BuyServicePackActivity extends BaseActivity {
         if (!"".equals(servisername)){
             usercompanyName.setText(servisername);
         }
-        termOfValidity.setText("有效期：2021-08-04");
+
 
 
         //vip卡片
         vipcard();
 
         //获取权益列表
-        Listofinterests();
+       // Listofinterests();
+
+
 
     }
 
@@ -203,20 +211,22 @@ public class BuyServicePackActivity extends BaseActivity {
                         @Override
                         public void onNext(BaseData<SelectCommissionlevelBean> selectCommissionlevelBeanBaseData) {
                             SelectCommissionlevelBean data = selectCommissionlevelBeanBaseData.getData();
-                            int newCharge = data.getNewCharge();//计算出的新佣金
-                            int oldCharge=data.getOldCharge();//之前的佣金
-                            String promote =data.getPromote();//提升的比例
-                            int rightsNum=data.getRightsNum();//新的等级对应的权益个数
-                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-                            String newChargez= df.format(newCharge);
-                            String oldChargez= df.format(oldCharge);
-                            vipCommissioncountno.setText(oldChargez);
-                            vipCommissioncountchamge.setText(newChargez);
-                            Glide.with(mContext)
-                                    .load(Config.IMGURL + imgurl)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                                    .into(vipselectbg);
-                            welfare.setText("佣金至少提升"+promote+"%,获得额外"+rightsNum+"项权益");
+                            if (selectCommissionlevelBeanBaseData.isSuccess()){
+                                int newCharge = data.getNewCharge();//计算出的新佣金
+                                int oldCharge=data.getOldCharge();//之前的佣金
+                                String promote =data.getPromote();//提升的比例
+                                int rightsNum=data.getRightsNum();//新的等级对应的权益个数
+                                DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                                String newChargez= df.format(newCharge);
+                                String oldChargez= df.format(oldCharge);
+                                vipCommissioncountno.setText(oldChargez);
+                                vipCommissioncountchamge.setText(newChargez);
+                                Glide.with(mContext)
+                                        .load(Config.IMGURL + imgurl)
+                                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                        .into(vipselectbg);
+                                welfare.setText("佣金至少提升"+promote+"%,获得额外"+rightsNum+"项权益");
+                            }
                         }
                     }));
     }
@@ -243,27 +253,8 @@ public class BuyServicePackActivity extends BaseActivity {
                                 }
                             });
                             }
-
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        toast(t.getMessage());
-                        super.onError(t);
-                    }
-                }));
-
-    }
-    //获取权益列表
-    private void Listofinterests() {
-        ApiManage.getInstance().getMainApi().getListofinterests()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<List<ListofinterestsBean>>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<List<ListofinterestsBean>> listBaseData) {
                         viplist = new ArrayList<>();
-                        viplist.addAll(listBaseData.getData());
+                        viplist.addAll(listBaseData.getData().get(positions).getRights());
                         //设置vip权限服务列表
                         vIpListAdapter = new VIpListAdapter(viplist);
                         vipRecyclerView.setAdapter(vIpListAdapter);
@@ -285,6 +276,25 @@ public class BuyServicePackActivity extends BaseActivity {
                                 }
                             }
                         });
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        toast(t.getMessage());
+                        super.onError(t);
+                    }
+                }));
+
+    }
+    //获取权益列表
+    private void Listofinterests() {
+        ApiManage.getInstance().getMainApi().getListofinterests()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<ListofinterestsBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<ListofinterestsBean>> listBaseData) {
+
                     }
 
                     @Override

@@ -224,9 +224,9 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1,000"
+            android:hint="请输入要提现的积分："
             android:textColor="#ff2f2f2f"
-            android:textSize="18sp"
+            android:textSize="10sp"
             android:id="@+id/tx_countsr"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp_36"
@@ -266,7 +266,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¥100"
+            android:text="¥"
             android:textColor="#ff2f2f2f"
             android:textSize="15sp"
             android:layout_gravity="center"

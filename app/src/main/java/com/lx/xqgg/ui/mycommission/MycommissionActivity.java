@@ -110,10 +110,12 @@ public class MycommissionActivity extends BaseActivity {
     @BindView(R.id.vipbg)
     ImageView vipbg;
     private VIpListAdapter vIpListAdapter;
-    private List<ListofinterestsBean> viplist;
+    private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
     private String token;
     private String currentLevel;
+    private int rightsNum;
+    private String name;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_mycommission;
@@ -132,6 +134,14 @@ public class MycommissionActivity extends BaseActivity {
        if (!"".equals(servisername)){
            usercompanyName.setText(servisername);
        }
+        String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
+        if (!"".equals(returningservantdata)){
+            ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
+            int allRebate = returningservantBean.getAllCharge();
+            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+            String allRebatez= df.format(allRebate);
+            accumulatedPoints.setText("小麒乖乖已累计为您返佣"+allRebatez+"积分");
+        }
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
         //获取用户的可提返佣-本月返佣-累计返佣
@@ -140,35 +150,9 @@ public class MycommissionActivity extends BaseActivity {
         Userlevel();
         //vip卡片
         vipcard();
-        jurisdictionCount.setText("当前黄金服务包可以解锁4个权限");
-        //联动改变权限
-        xbannerVip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    // jurisdictionCount.setText("当前"+xbannerdata.get(0).getVipname()+"可以解锁4个权限");
-                }
-                if (position == 1) {
-                    // jurisdictionCount.setText("当前"+xbannerdata.get(1).getVipname()+"可以解锁8个权限");
-                }
-                if (position == 2) {
-                    //  jurisdictionCount.setText("当前"+xbannerdata.get(2).getVipname()+"可以解锁12个权限");
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         //获取权益列表
-        Listofinterests();
+        //Listofinterests();
     }
 
     @OnClick({R.id.cash_withdrawal_rebatez, R.id.this_monthcommissionz, R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.xqgg_fy, R.id.toobar_back})
@@ -182,6 +166,7 @@ public class MycommissionActivity extends BaseActivity {
             //跳转本月返佣
             case R.id.this_monthcommissionz:
                 Intent intenthistmr = new Intent(MycommissionActivity.this, ThisMonthReturnActivity.class);
+                intenthistmr.putExtra("vipname",currentLevel);
                 startActivity(intenthistmr);
                 break;
             //跳转累计返佣
@@ -247,17 +232,17 @@ public class MycommissionActivity extends BaseActivity {
                     public void onNext(BaseData<CommissionlevelBean> commissionlevelBeanBaseData) {
                         CommissionlevelBean data = commissionlevelBeanBaseData.getData();
                         vipName.setText(data.getCurrentLevel());
-                        currentLevel = data.getCurrentLevel();
                         //设置进度条经验 根据用户动态改变的
                         progressBarH.setProgress((int) data.getOrderMoney());
                         progressBarH.setMax(data.getNextLevelMoney());
-                        if ("青铜".equals(data.getCurrentLevel())) {
+                        currentLevel = data.getCurrentLevel();
+                    /*    if ("准铂金".equals(data.getCurrentLevel())) {
                             ClipDrawable drawable = new ClipDrawable(new ColorDrawable(Color.parseColor("#646464")), Gravity.LEFT, ClipDrawable.HORIZONTAL);
-                          progressBarH.setProgressDrawable(drawable);
+                           progressBarH.setProgressDrawable(drawable);
                         } else if ("准钻石".equals(data.getCurrentLevel())) {
                             ClipDrawable drawable = new ClipDrawable(new ColorDrawable(Color.parseColor("#000000")), Gravity.LEFT, ClipDrawable.HORIZONTAL);
                             progressBarH.setProgressDrawable(drawable);
-                        }
+                        }*/
                         Glide.with(mContext)
                                 .load(Config.IMGURL +data.getPicture())
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
@@ -267,7 +252,7 @@ public class MycommissionActivity extends BaseActivity {
                             vipCount.setText(data.getOrderMoney()+"/99999，已享受最高返佣权益");
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
-                            vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
+                            vipCount.setText(data.getOrderMoney()+ "/" +data.getNextLevelMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
                         }
                     }
                 }));
@@ -281,29 +266,7 @@ public class MycommissionActivity extends BaseActivity {
                 .subscribeWith(new BaseSubscriber<BaseData<List<ListofinterestsBean>>>(mContext, null) {
                     @Override
                     public void onNext(BaseData<List<ListofinterestsBean>> listBaseData) {
-                        viplist = new ArrayList<>();
-                        viplist.addAll(listBaseData.getData());
-                        //设置vip权限服务列表
-                        vIpListAdapter = new VIpListAdapter(viplist);
-                        vipRecyclerView.setAdapter(vIpListAdapter);
-                        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
-                        vIpListAdapter.statusvip(4);
-                        vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
-                                    vIpListAdapter.statusvip(viplist.size());
-                                    vIpListAdapter.notifyDataSetChanged();
-                                    vipRecyclerViewstatus.setText("收起");
-                                    stuartImg.setImageResource(R.drawable.sla);
-                                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
-                                    vIpListAdapter.statusvip(4);
-                                    vIpListAdapter.notifyDataSetChanged();
-                                    vipRecyclerViewstatus.setText("展开");
-                                    stuartImg.setImageResource(R.drawable.xla);
-                                }
-                            }
-                        });
+
                     }
 
                     @Override
@@ -318,7 +281,7 @@ public class MycommissionActivity extends BaseActivity {
     //vip卡片
     private void vipcard() {
         systemCommissionlevel = new ArrayList<>();
-
+        Log.d("mytoken", "vipcard: "+token);
         addSubscribe(ApiManage.getInstance().getMainApi().getSystemCommissionlevel(token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -337,9 +300,10 @@ public class MycommissionActivity extends BaseActivity {
                                     Button no_purchase = (Button) view.findViewById(R.id.no_purchase);
                                     TextView termof_validity = (TextView) view.findViewById(R.id.termof_validity);
                                     Button purchase = (Button) view.findViewById(R.id.purchase);
-
+                                    rightsNum = systemCommissionlevel.get(position).getRightsNum();
+                                    name = systemCommissionlevel.get(position).getName();
                                     vipname.setText(systemCommissionlevel.get(position).getName() + "服务包");
-                                    tvContent.setText("享受" + systemCommissionlevel.get(position).getName() + "级别返佣、额外13项权益");
+                                    tvContent.setText("享受" + systemCommissionlevel.get(position).getName() + "级别返佣、额外"+systemCommissionlevel.get(position).getRightsNum()+"项权益");
                                     Glide.with(mContext)
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getPicture())
                                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
@@ -368,12 +332,76 @@ public class MycommissionActivity extends BaseActivity {
                                         purchase.setText("已购买");
                                         no_purchase.setVisibility(View.GONE);
                                         termof_validity.setVisibility(View.VISIBLE);
-                                        termof_validity.setText("有效期:2021-12-31");
+                                        termof_validity.setText("有效期："+systemCommissionlevel.get(position).getEndTime());
+                                        jurisdictionCount.setText("当前"+name+"服务包可以解锁"+rightsNum+"个权限");
                                     }
 
                                 }
                             });
+
+                            viplist = new ArrayList<>();
+                            for (int i = 0; i <listBaseData.getData().size() ; i++) {
+                                viplist.addAll(listBaseData.getData().get(i).getRights());
+                            }
+                            //设置vip权限服务列表
+                            vIpListAdapter = new VIpListAdapter(viplist);
+                            vipRecyclerView.setAdapter(vIpListAdapter);
+                            vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+                            vIpListAdapter.statusvip(4);
+                            vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
+                                        vIpListAdapter.statusvip(viplist.size());
+                                        vIpListAdapter.notifyDataSetChanged();
+                                        vipRecyclerViewstatus.setText("收起");
+                                        stuartImg.setImageResource(R.drawable.sla);
+                                    } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
+                                        vIpListAdapter.statusvip(4);
+                                        vIpListAdapter.notifyDataSetChanged();
+                                        vipRecyclerViewstatus.setText("展开");
+                                        stuartImg.setImageResource(R.drawable.xla);
+                                    }
+                                }
+                            });
+
                         }
+
+                        //联动改变权限
+                        xbannerVip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                            @Override
+                            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                            }
+                            @Override
+                            public void onPageSelected(int position) {
+                                if (position == 0) {
+                                    jurisdictionCount.setText("当前"+name+"服务包可以解锁"+rightsNum+"个权限");
+                                        viplist.clear();
+                                        viplist.addAll(listBaseData.getData().get(position).getRights());
+                                        vIpListAdapter.notifyDataSetChanged();
+
+                                }
+                                if (position == 1) {
+                                    jurisdictionCount.setText("当前"+name+"服务包可以解锁"+rightsNum+"个权限");
+                                    viplist.clear();
+                                    viplist.addAll(listBaseData.getData().get(position).getRights());
+                                    vIpListAdapter.notifyDataSetChanged();
+
+                                }
+                                if (position == 2) {
+                                    jurisdictionCount.setText("当前"+name+"服务包可以解锁"+rightsNum+"个权限");
+                                    viplist.clear();
+                                    viplist.addAll(listBaseData.getData().get(position).getRights());
+                                    vIpListAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onPageScrollStateChanged(int state) {
+
+                            }
+                        });
 
                     }
 

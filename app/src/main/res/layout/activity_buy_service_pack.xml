@@ -256,6 +256,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="@dimen/dp_13"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_13">
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>

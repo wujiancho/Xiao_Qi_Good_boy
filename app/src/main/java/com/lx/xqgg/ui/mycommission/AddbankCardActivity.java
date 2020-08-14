@@ -19,13 +19,18 @@ import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
+import com.lx.xqgg.ui.mycommission.bean.SaveBankinfortionBean;
 import com.lx.xqgg.util.SpUtil;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 //添加银行卡
 public class AddbankCardActivity extends BaseActivity {
@@ -41,10 +46,9 @@ public class AddbankCardActivity extends BaseActivity {
     EditText bankCardNumber;
     @BindView(R.id.btn_addbankfinish)
     Button btnAddbankfinish;
-    private Editable accountNameText;
-    private Editable bankOfDepositText;
-    private Editable bankCardNumberText;
-    private String token;
+    private String accountNameText;
+    private String bankOfDepositText;
+    private String bankCardNumberText;
 
     @Override
     protected int getLayoutId() {
@@ -58,18 +62,35 @@ public class AddbankCardActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //获取用户token
-        token = SharedPrefManager.getUser().getToken();
-        accountNameText = accountName.getText();
-        bankOfDepositText = bankOfDeposit.getText();
-        bankCardNumberText = bankCardNumber.getText();
+        //回显
+        String  data=   SpUtil.getInstance().getSpString("bankinfortion");
+        SaveBankinfortionBean saveBankinfortionBean=new Gson().fromJson(data, SaveBankinfortionBean.class);
+        String bankNamesave=saveBankinfortionBean.getBankName();
+        String bankNosvae=saveBankinfortionBean.getBankNo();
+        String bankUsersave=saveBankinfortionBean.getBankUser();
+        if (!"".equals(bankNamesave)){
+            accountName.setText(bankNamesave);
+        }
+        if (!"".equals(bankNosvae)){
+            bankCardNumber.setText(bankNosvae);
+        }
+        if (!"".equals(bankUsersave)){
+            bankOfDeposit.setText(bankUsersave);
+        }
 
-        //佣金提现获取银行信息
-      //  Accesstobankinformation();
     }
-
-
-
+    //添加银行卡信息保存
+    private void savebankinfortion() {
+        accountNameText = accountName.getText().toString();
+        bankOfDepositText = bankOfDeposit.getText().toString();
+        bankCardNumberText = bankCardNumber.getText().toString();
+        HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("bankName", accountNameText);
+        paramsMap.put("bankUser", bankOfDepositText);
+        paramsMap.put("bankNo", bankCardNumberText);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+        SpUtil.getInstance().saveString("bankinfortion",new Gson().toJson(body));
+    }
     @OnClick({R.id.toobar_back, R.id.btn_addbankfinish})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -88,32 +109,12 @@ public class AddbankCardActivity extends BaseActivity {
                 }
                 else {
                     toast("银行卡添加成功");
+                    //添加银行卡信息保存
+                    savebankinfortion();
                     finish();
                 }
                 break;
         }
     }
 
-    //佣金提现获取银行信息
-    private void Accesstobankinformation() {
-        addSubscribe(ApiManage.getInstance().getMainApi().getBandinformation(token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
-                        BandinformationBean data=bandinformationBeanBaseData.getData();
-                        accountName.setText(data.getBankName());
-                        bankOfDeposit.setText(data.getBankUser());
-                        bankCardNumber.setText(data.getBankNo());
-                        SpUtil.getInstance().saveString("bankinfortion",new Gson().toJson(data));
-                       /* ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                        // 创建普通字符型ClipData
-                        ClipData mClipData = ClipData.newPlainText("Label", data.getBankName() + "");
-                        // 将ClipData内容放到系统剪贴板里。
-                        cm.setPrimaryClip(mClipData);
-                        toast("账户名称已复制到剪切板");*/
-                    }
-                }));
-    }
 }

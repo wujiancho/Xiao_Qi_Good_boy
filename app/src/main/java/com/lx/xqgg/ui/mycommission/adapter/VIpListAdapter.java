@@ -13,6 +13,7 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.ui.mycommission.bean.DetailsofinterestBean;
 import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
+import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
 
 import java.util.List;
 
@@ -20,19 +21,19 @@ import androidx.annotation.Nullable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class VIpListAdapter extends BaseQuickAdapter<ListofinterestsBean, BaseViewHolder> {
+public class VIpListAdapter extends BaseQuickAdapter<SystemCommissionlevelBean.RightsBean, BaseViewHolder> {
     public int listsize;
-    public VIpListAdapter( @Nullable List<ListofinterestsBean> data) {
+    public VIpListAdapter( @Nullable List<SystemCommissionlevelBean.RightsBean> data) {
         super(R.layout.viplistitem, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ListofinterestsBean item) {
+    protected void convert(BaseViewHolder helper, SystemCommissionlevelBean.RightsBean item) {
         Glide.with(mContext)
-                .load(Config.IMGURL + item.getImage())
+                .load(R.drawable.mygm)
                 .into((ImageView) helper.getView(R.id.vip_img));
-
-        helper.setText(R.id.vip_name,item.getName());
+//Config.IMGURL + item.getImage()
+        helper.setText(R.id.vip_name,item.getRightsName());
       /*  helper.setOnClickListener(R.id.detailsofinterests, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -10,6 +10,7 @@ import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
+import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.PointsDetailsAdapter;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
@@ -96,10 +97,11 @@ public class RefundDetailsActivity extends BaseActivity {
                                 pointsDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
                             }
                             else {
-                                pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
+                                List<String> error =new ArrayList<>();
+                                ErrorAdapter eerr = new ErrorAdapter(error);
                                 pointsDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                                pointsDetailsRecyclerView.setAdapter(pointsDetailsAdapter);
-                                pointsDetailsAdapter.setEmptyView(R.layout.layout_empty, pointsDetailsRecyclerView);
+                                pointsDetailsRecyclerView.setAdapter(eerr);
+                                eerr.setEmptyView(R.layout.layout_empty, pointsDetailsRecyclerView);
                             }
 
                         }
@@ -108,10 +110,11 @@ public class RefundDetailsActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable t) {
                         super.onError(t);
-                        pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
+                        List<String> error =new ArrayList<>();
+                        ErrorAdapter eerr = new ErrorAdapter(error);
                         pointsDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                        pointsDetailsRecyclerView.setAdapter(pointsDetailsAdapter);
-                        pointsDetailsAdapter.setEmptyView(R.layout.layout_empty, pointsDetailsRecyclerView);
+                        pointsDetailsRecyclerView.setAdapter(eerr);
+                        eerr.setEmptyView(R.layout.layout_empty, pointsDetailsRecyclerView);
                     }
                 }));
     }
