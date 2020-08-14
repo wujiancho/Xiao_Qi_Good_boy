@@ -138,15 +138,13 @@ public class BuyServicePackActivity extends BaseActivity {
        String endTime = event.getEndTime();
        int rightsNum = event.getRightsNum();
        int position = event.getPosition();
-
+       vipnameChange.setText(vipname+"服务包");
         positions=position;
         //根据选择佣金等级计算服务商当月佣金
         selectCommissionlevel( id, imgurl);
         bugid=id;
         jurisdictionCount.setText("当前"+vipname+"服务包可以解锁"+rightsNum+"个权限");
         termOfValidity.setText("有效期："+endTime);
-
-
     }
     @Override
     protected void initData() {
@@ -172,8 +170,6 @@ public class BuyServicePackActivity extends BaseActivity {
         }
 
 
-
-        //vip卡片
         vipcard();
 
         //获取权益列表
@@ -250,6 +246,8 @@ public class BuyServicePackActivity extends BaseActivity {
 //                                 把点击的下标回传给适配器 确定下标
                                     vipPackAdapter.setmPosition(position);
                                     vipPackAdapter.notifyDataSetChanged();
+                                    viplist.clear();
+                                    viplist.addAll(listBaseData.getData().get(position).getRights());
                                 }
                             });
                             }

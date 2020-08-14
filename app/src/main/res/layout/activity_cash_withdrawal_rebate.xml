@@ -119,13 +119,6 @@
                     android:textColor="#2F2F2F"
                     android:textSize="12sp"
                     />
-
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dp_6"
-                    android:src="@drawable/gengduo"></ImageView>
             </LinearLayout>
         </LinearLayout>
 

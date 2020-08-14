@@ -762,6 +762,9 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     public void handleShare(){
         UMWeb web = new UMWeb(webview.getUrl());
         web.setThumb(new UMImage(WebViewActivity.this,  R.drawable.logo));
+        web.setTitle("权益服务");
+        //  web.setThumb(new UMImage(WebViewActivity.this, proLogo));
+        web.setDescription("开通vip享受更多优惠服务");
         new ShareAction(mContext)
                 .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
                 .setShareboardclickCallback(new ShareBoardlistener() {
