@@ -46,7 +46,7 @@ public class CashWithdrawalConfirmationActivity extends BaseActivity {
     @Override
     protected void initData() {
         bankName = getIntent().getStringExtra("bankName");
-        bankno = getIntent().getStringExtra("bankno");
+        bankno = getIntent().getStringExtra("bankNo");
         money = getIntent().getStringExtra("money");
         if (!"".equals(money)){
             txMoney.setText("¥"+money);

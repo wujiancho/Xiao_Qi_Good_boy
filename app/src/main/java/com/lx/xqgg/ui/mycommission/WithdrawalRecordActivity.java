@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
@@ -14,8 +15,11 @@ import com.lx.xqgg.ui.mycommission.adapter.AccumulatedRebateAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.WithdrawalrecordAdapter;
 import com.lx.xqgg.ui.mycommission.bean.HistoryCommissionwithdrawalBean;
+import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.WithdrawalrecordBean;
+import com.lx.xqgg.util.SpUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +62,14 @@ public class WithdrawalRecordActivity extends BaseActivity {
     protected void initData() {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
+        String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
+        if (!"".equals(returningservantdata)){
+            ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
+            int allRebate = returningservantBean.getAllCharge();
+            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+            String allRebatez= df.format(allRebate);
+            accumulativeWithdrawal.setText("您已累计提现积分"+allRebatez+"积分");
+        }
         //提现数据获取
         Withdrawalrecord();
     }

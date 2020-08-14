@@ -3,6 +3,7 @@ package com.lx.xqgg.ui.mycommission;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -20,8 +21,10 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
 import com.lx.xqgg.ui.mycommission.bean.SaveBankinfortionBean;
+import com.lx.xqgg.ui.person.bean.ProductDetailBean;
 import com.lx.xqgg.util.SpUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -62,23 +65,28 @@ public class AddbankCardActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //回显
-        String  data=   SpUtil.getInstance().getSpString("bankinfortion");
-        SaveBankinfortionBean saveBankinfortionBean=new Gson().fromJson(data, SaveBankinfortionBean.class);
-        String bankNamesave=saveBankinfortionBean.getBankName();
-        String bankNosvae=saveBankinfortionBean.getBankNo();
-        String bankUsersave=saveBankinfortionBean.getBankUser();
-        if (!"".equals(bankNamesave)){
-            accountName.setText(bankNamesave);
-        }
-        if (!"".equals(bankNosvae)){
-            bankCardNumber.setText(bankNosvae);
-        }
-        if (!"".equals(bankUsersave)){
-            bankOfDeposit.setText(bankUsersave);
-        }
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //回显
+        String  data=   SpUtil.getInstance().getSpString("bankinfortion");
+        if(!"".equals(data)){
+            SaveBankinfortionBean saveBankinfortionBean=new Gson().fromJson(data, SaveBankinfortionBean.class);
+            if (!"".equals(saveBankinfortionBean.getBankName())){
+                accountName.setText(saveBankinfortionBean.getBankName());
+            }
+            if (!"".equals(saveBankinfortionBean.getBankNo())){
+                bankCardNumber.setText(saveBankinfortionBean.getBankNo());
+            }
+            if (!"".equals(saveBankinfortionBean.getBankUser())){
+                bankOfDeposit.setText(saveBankinfortionBean.getBankUser());
+            }
+        }
+    }
+
     //添加银行卡信息保存
     private void savebankinfortion() {
         accountNameText = accountName.getText().toString();
@@ -88,8 +96,7 @@ public class AddbankCardActivity extends BaseActivity {
         paramsMap.put("bankName", accountNameText);
         paramsMap.put("bankUser", bankOfDepositText);
         paramsMap.put("bankNo", bankCardNumberText);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
-        SpUtil.getInstance().saveString("bankinfortion",new Gson().toJson(body));
+        SpUtil.getInstance().saveString("bankinfortion", new Gson().toJson(paramsMap));
     }
     @OnClick({R.id.toobar_back, R.id.btn_addbankfinish})
     public void onViewClicked(View view) {
@@ -98,21 +105,27 @@ public class AddbankCardActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_addbankfinish:
-                if (TextUtils.isEmpty(accountNameText)){
-                    toast("企业名称不能为空");
+                if (bankOfDeposit.getText().toString().length()<4){
+                    toast("请输入正确的企业名称");
+                    return;
                 }
-               else if (TextUtils.isEmpty(bankOfDepositText)){
-                    toast("银行名称不能为空");
+                if (accountName.getText().toString().length()<4){
+                    toast("请输入正确的银行名称");
+                    return;
                 }
-               else if (TextUtils.isEmpty(bankCardNumberText)){
-                    toast("银行卡号不能为空");
+                if (bankCardNumber.getText().toString().length()<10){
+                    toast("请输入正确的银行卡号");
+                    return;
                 }
-                else {
                     toast("银行卡添加成功");
                     //添加银行卡信息保存
                     savebankinfortion();
-                    finish();
-                }
+                Intent intenaddbcd=new Intent(AddbankCardActivity.this,CashWithdrawalRebateActivity.class);
+                intenaddbcd.putExtra("bankname",accountNameText);
+                intenaddbcd.putExtra("bankno",bankCardNumberText);
+                intenaddbcd.putExtra("bankUser",bankOfDepositText);
+                setResult(1, intenaddbcd);
+                finish();
                 break;
         }
     }

@@ -138,7 +138,7 @@ public class BuyServicePackActivity extends BaseActivity {
        String endTime = event.getEndTime();
        int rightsNum = event.getRightsNum();
        int position = event.getPosition();
-        viplist.clear();
+
         positions=position;
         //根据选择佣金等级计算服务商当月佣金
         selectCommissionlevel( id, imgurl);
@@ -146,7 +146,7 @@ public class BuyServicePackActivity extends BaseActivity {
         jurisdictionCount.setText("当前"+vipname+"服务包可以解锁"+rightsNum+"个权限");
         termOfValidity.setText("有效期："+endTime);
 
-        vIpListAdapter.notifyDataSetChanged();
+
     }
     @Override
     protected void initData() {
@@ -254,12 +254,14 @@ public class BuyServicePackActivity extends BaseActivity {
                             });
                             }
                         viplist = new ArrayList<>();
+                        viplist.clear();
                         viplist.addAll(listBaseData.getData().get(positions).getRights());
                         //设置vip权限服务列表
                         vIpListAdapter = new VIpListAdapter(viplist);
                         vipRecyclerView.setAdapter(vIpListAdapter);
                         vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
                         vIpListAdapter.statusvip(4);
+                        vIpListAdapter.notifyDataSetChanged();
                         vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
