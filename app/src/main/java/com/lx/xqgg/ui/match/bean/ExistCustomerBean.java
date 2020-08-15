@@ -13,8 +13,25 @@ public class ExistCustomerBean implements Serializable {
     private String id_card1;
     private String link_man;
     private String industry;
-    private String link_phone;
+    private String userPhone ;
     private String area;
+    private String link_phone;
+
+    public String getLink_phone() {
+        return link_phone;
+    }
+
+    public void setLink_phone(String link_phone) {
+        this.link_phone = link_phone;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
 
     public String getType() {
         return type;
@@ -96,13 +113,7 @@ public class ExistCustomerBean implements Serializable {
         this.industry = industry;
     }
 
-    public String getLink_phone() {
-        return link_phone;
-    }
 
-    public void setLink_phone(String link_phone) {
-        this.link_phone = link_phone;
-    }
 
     public String getArea() {
         return area;

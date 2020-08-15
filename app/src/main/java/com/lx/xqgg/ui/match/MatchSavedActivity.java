@@ -75,6 +75,7 @@ public class MatchSavedActivity extends BaseActivity {
                 Intent intent = new Intent(mContext, MatchSavedDetailActivity.class);
                 intent.putExtra("ids", list.get(position).getId());
                 intent.putExtra("company", list.get(position).getCompany());
+                intent.putExtra("name", list.get(position).getLink_man());
                 startActivity(intent);
             }
         });

@@ -12,6 +12,7 @@
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
 
+
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_bg_listlogo</item>
         <item name="android:windowFullscreen">true</item>

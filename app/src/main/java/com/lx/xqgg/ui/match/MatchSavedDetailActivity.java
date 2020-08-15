@@ -46,6 +46,7 @@ public class MatchSavedDetailActivity extends BaseActivity {
 
     private List<MatchResultBean> listProducts = new ArrayList<>();
     private List<MultiItemEntity> list1 = new ArrayList<>();
+    private String name;
 
     @Override
     protected int getLayoutId() {
@@ -56,8 +57,10 @@ public class MatchSavedDetailActivity extends BaseActivity {
     protected void initView() {
         tvTitle.setText(getIntent().getStringExtra("company"));
         ids = getIntent().getIntExtra("ids", 0);
+        name = getIntent().getStringExtra("name");
         Log.d("id---", "initView: "+ids);
         SpUtil.getInstance().saveString("companymach",getIntent().getStringExtra("company"));
+        SpUtil.getInstance().saveString("namemach",getIntent().getStringExtra("name"));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         matchResultAdapter = new MatchResultAdapter(list1, true);
 

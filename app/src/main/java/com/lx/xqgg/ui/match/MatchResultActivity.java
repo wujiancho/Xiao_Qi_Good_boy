@@ -105,7 +105,7 @@ public class MatchResultActivity extends BaseActivity {
         tvTime.setText(sim);
 
 
-        matchResultAdapter = new MatchResultAdapter(list1, false);
+        matchResultAdapter = new MatchResultAdapter(list1, true);
 
         rvResult.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         rvResult.setAdapter(matchResultAdapter);

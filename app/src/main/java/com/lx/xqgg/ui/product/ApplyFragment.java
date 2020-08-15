@@ -365,8 +365,6 @@ public class ApplyFragment extends DialogFragment {
                                 etPhone.setText(TextUtils.isEmpty(applyHistoryBean.getLink_phone()) ? "" : applyHistoryBean.getLink_phone());
                                 tvArea.setText(TextUtils.isEmpty(applyHistoryBean.getArea()) ? "" : applyHistoryBean.getArea());
                                 id_card = applyHistoryBean.getId_card();
-                                Log.d("id_card+", "onNext: "+applyHistoryBean.getId_card());
-                                Log.d("id_card-", "onNext: "+applyHistoryBean.getId_card1());
                                 yincang.setBackgroundResource(R.drawable.closeeyes);
                                 yincang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                     @Override
