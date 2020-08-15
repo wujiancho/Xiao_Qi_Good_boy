@@ -1,6 +1,8 @@
-package com.lx.xqgg.ui.product.bean;
+package com.lx.xqgg.ui.match.bean;
 
-public class ApplyHistoryBean {
+import java.io.Serializable;
+
+public class ExistCustomerInfortionBean implements Serializable {
 
     /**
      * area : 北京  东城区
@@ -12,26 +14,25 @@ public class ApplyHistoryBean {
      * isTop : null
      * link_man : 王兰凤
      * link_phone : 15896504793
+     * company1 :
+     * link_man1 :
+     * link_phone1 :
+     * id_card1 :
      */
 
     private String area;
     private String company;
-    private String creditCode;
+    private Object creditCode;
     private int id;
     private String id_card;
-    private String id_card1;
     private String industry;
-    private String isTop;
+    private Object isTop;
     private String link_man;
     private String link_phone;
-
-    public String getId_card1() {
-        return id_card1;
-    }
-
-    public void setId_card1(String id_card1) {
-        this.id_card1 = id_card1;
-    }
+    private String company1;
+    private String link_man1;
+    private String link_phone1;
+    private String id_card1;
 
     public String getArea() {
         return area;
@@ -49,11 +50,11 @@ public class ApplyHistoryBean {
         this.company = company;
     }
 
-    public String getCreditCode() {
+    public Object getCreditCode() {
         return creditCode;
     }
 
-    public void setCreditCode(String creditCode) {
+    public void setCreditCode(Object creditCode) {
         this.creditCode = creditCode;
     }
 
@@ -85,7 +86,7 @@ public class ApplyHistoryBean {
         return isTop;
     }
 
-    public void setIsTop(String isTop) {
+    public void setIsTop(Object isTop) {
         this.isTop = isTop;
     }
 
@@ -103,5 +104,37 @@ public class ApplyHistoryBean {
 
     public void setLink_phone(String link_phone) {
         this.link_phone = link_phone;
+    }
+
+    public String getCompany1() {
+        return company1;
+    }
+
+    public void setCompany1(String company1) {
+        this.company1 = company1;
+    }
+
+    public String getLink_man1() {
+        return link_man1;
+    }
+
+    public void setLink_man1(String link_man1) {
+        this.link_man1 = link_man1;
+    }
+
+    public String getLink_phone1() {
+        return link_phone1;
+    }
+
+    public void setLink_phone1(String link_phone1) {
+        this.link_phone1 = link_phone1;
+    }
+
+    public String getId_card1() {
+        return id_card1;
+    }
+
+    public void setId_card1(String id_card1) {
+        this.id_card1 = id_card1;
     }
 }

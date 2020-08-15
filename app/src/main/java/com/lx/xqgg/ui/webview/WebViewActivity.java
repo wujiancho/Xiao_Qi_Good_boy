@@ -702,7 +702,8 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                 finish();
                 break;
             case R.id.tv_share:
-                share2(Config.URL+image,title,count);
+                //share2(Config.URL+image,title,count);
+                share();
                 break;
         }
     }

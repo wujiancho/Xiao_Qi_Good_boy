@@ -371,8 +371,8 @@ public class PersonFragment extends BaseFragment {
         list1.add(new MatterBean("我的客户", "MyClientActivity", R.drawable.ic_p_wdkh));
         list1.add(new MatterBean("推荐有礼", "ShareFaceActivity", R.drawable.ic_p_tjyl));
         //list1.add(new MatterBean("积分查询", "", R.drawable.ic_p_jfcx));//IntegralQueryActivity
-        list1.add(new MatterBean("我的拓客", "", R.drawable.tuoke));//MyTuokeActivity
-        list1.add(new MatterBean("业绩返佣", "MycommissionActivity", R.drawable.yongjin));
+       // list1.add(new MatterBean("我的拓客", "", R.drawable.tuoke));//MyTuokeActivity
+      //  list1.add(new MatterBean("业绩返佣", "MycommissionActivity", R.drawable.yongjin));
         homeBaseAdapter1.notifyDataSetChanged();
 
 //
@@ -393,8 +393,8 @@ public class PersonFragment extends BaseFragment {
         list2.add(new MatterBean("帮助中心", "HelperActivity", R.drawable.ic_p_bzxx));
         list2.add(new MatterBean("匹配结果", "MatchSavedActivity", R.drawable.ic_p_ppjg));
         //list2.add(new MatterBean("CRM", "", R.drawable.crm));
-        list2.add(new MatterBean("我的购买", "", R.drawable.mygm));
-        list2.add(new MatterBean("我的收藏", "", R.drawable.mysc));
+       // list2.add(new MatterBean("我的购买", "", R.drawable.mygm));
+       // list2.add(new MatterBean("我的收藏", "", R.drawable.mysc));
         homeBaseAdapter2.notifyDataSetChanged();
 
         list3.add(new MatterBean("智能匹配", "MatchFirstActivity", R.drawable.ic_znpp));
@@ -405,7 +405,7 @@ public class PersonFragment extends BaseFragment {
         list3.add(new MatterBean("企业培训", "CorporateTrainActivity", R.drawable.ic_p_qypx));
         list3.add(new MatterBean("人法网", "", R.drawable.ic_p_rfw));
         list3.add(new MatterBean("税务局", "", R.drawable.ic_p_swj));
-        list3.add(new MatterBean("助"+dai+"学院", "LACollegeActivity", R.drawable.ic_p_zdxy));
+       // list3.add(new MatterBean("助"+dai+"学院", "LACollegeActivity", R.drawable.ic_p_zdxy));
 
         homeBaseAdapter3.notifyDataSetChanged();
     }

@@ -8,7 +8,7 @@
     </item>
     <item>
        <bitmap
-           android:src="@drawable/splachd"
+           android:src="@drawable/shpp"
            android:gravity="fill"
            ></bitmap>
     </item>

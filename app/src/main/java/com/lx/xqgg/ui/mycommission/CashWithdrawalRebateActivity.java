@@ -66,7 +66,6 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     Button bttTxjl;
     @BindView(R.id.check_tx)
     CheckBox checkTx;
-    int jifeng;
     private boolean checked;
     private String bankName;
     private String bankNo;

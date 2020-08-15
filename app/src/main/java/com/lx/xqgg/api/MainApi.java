@@ -15,6 +15,7 @@ import com.lx.xqgg.ui.login.bean.LoginBean;
 import com.lx.xqgg.ui.login.bean.MsgBean;
 import com.lx.xqgg.ui.login.bean.UserInfoBean;
 import com.lx.xqgg.ui.login.bean.crmLoginBean;
+import com.lx.xqgg.ui.match.bean.ExistCustomerInfortionBean;
 import com.lx.xqgg.ui.match.bean.MatchResultBean;
 import com.lx.xqgg.ui.match.bean.MatchSaveFirstBean;
 import com.lx.xqgg.ui.message.bean.MessageBean;
@@ -149,6 +150,15 @@ public interface MainApi {
      */
     @POST("product/autoProduct")
     Flowable<BaseData<List<MatchResultBean>>> getMatchResult(@Body RequestBody body);
+
+
+    /**
+     * 智能匹配申请订单获取客户
+     * @param
+     * @return
+     */
+    @POST("user/getExistCustomer")
+    Flowable<BaseData<ExistCustomerInfortionBean>> getExistCustomerInfortion(@Body RequestBody body);
 
 
     /**

@@ -145,7 +145,7 @@ public class SearchActivity extends BaseActivity {
                                     .setAutoTitle(false)
                                     .setIsFwb(false)
                                     .setTitle("产品详情")
-                                    .setNeedShare(true)
+                                    .setNeedShare(false)
                                     .setUrl(jiekong));
                         }
 

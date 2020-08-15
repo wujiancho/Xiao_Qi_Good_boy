@@ -18,9 +18,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.google.gson.Gson;
 import com.lx.xqgg.R;
+import com.lx.xqgg.api.ApiManage;
+import com.lx.xqgg.base.BaseData;
+import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.helper.SharedPrefManager;
+import com.lx.xqgg.ui.match.bean.ExistCustomerBean;
+import com.lx.xqgg.ui.match.bean.ExistCustomerInfortionBean;
 import com.lx.xqgg.ui.match.bean.MatchRequestBean;
 import com.lx.xqgg.ui.match.bean.MatchResultBean;
 import com.lx.xqgg.ui.match.bean.MatchSavedBean;
@@ -29,12 +34,18 @@ import com.lx.xqgg.ui.product.ProductDetailActivity;
 import com.lx.xqgg.ui.product.bean.ProductBean;
 import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.Base64;
+import com.lx.xqgg.util.SpUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
     private MatchRequestBean matchRequestBean;
@@ -175,6 +186,7 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                     helper.setText(R.id.tv_status,status);
                     helper.setOnClickListener(R.id.layout, new View.OnClickListener() {
 
+                        private String companymach;
                         private ProductDetailBean productDetailBean;
 
                         @Override
@@ -195,50 +207,74 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                             String userphone= SharedPrefManager.getUserInfo().getMobile();
                             int userid= twoBean.getId();
                             String cityname= Constans.CITY;
+                            HashMap<String, Object> paramsMap = new HashMap<>();
+                            paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                            paramsMap.put("mobile", userphone);
+                            paramsMap.put("name", SharedPrefManager.getUser().getUsername());
+                            paramsMap.put("company", companymach);
+                            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+                            ApiManage.getInstance().getMainApi().getExistCustomerInfortion(body)
+                                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribeWith(new BaseSubscriber<BaseData<ExistCustomerInfortionBean>>(mContext,null) {
+                                @Override
+                                public void onNext(BaseData<ExistCustomerInfortionBean> existCustomerInfortionBeanBaseData) {
+                                    ExistCustomerInfortionBean data= existCustomerInfortionBeanBaseData.getData();
+                                    if (existCustomerInfortionBeanBaseData.isSuccess()){
+                                       companymach = SpUtil.getInstance().getSpString("companymach");
+                                       ArrayList<ProductDetailBean> gson2= new ArrayList<>();
+                                       productDetailBean = new ProductDetailBean();
+                                       productDetailBean.setUserPhone(userphone);
+                                       productDetailBean.setType("h5");
+                                       productDetailBean.setId(userid+"");
+                                       productDetailBean.setStatusHeight("30.000");
+                                       productDetailBean.setCityName("");
+                                       gson2.add(productDetailBean);
+                                       String url2=new Gson().toJson(gson2);
+                                       String json2 =url2.substring(1,url2.length()-1);
+                                       Log.e("zlz",json2);
 
-                            ArrayList<ProductDetailBean> gson2= new ArrayList<>();
-                            productDetailBean = new ProductDetailBean();
-                            productDetailBean.setUserPhone(userphone);
-                            productDetailBean.setType("h5");
-                            productDetailBean.setId(userid+"");
-                            productDetailBean.setStatusHeight("30.000");
-                            productDetailBean.setCityName("");
-                            gson2.add(productDetailBean);
-                            String url2=new Gson().toJson(gson2);
-                            String json2 =url2.substring(1,url2.length()-1);
-                            Log.e("zlz",json2);
+                                       //加密json
+                                       String jiajson2= Base64.encode(json2.getBytes());
+                                       //生成产品详细页的接口
+                                       String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
+                                       Constans.productDetails=jiekong2;
+                                       ArrayList<ExistCustomerBean> gson= new ArrayList<>();
+                                       ExistCustomerBean existCustomerBean = new ExistCustomerBean();
+                                       existCustomerBean.setCityName(cityname+"");
+                                       existCustomerBean.setCompany(companymach+"");
+                                       existCustomerBean.setType("match");
+                                       existCustomerBean.setId(userid+"");
+                                       existCustomerBean.setCreditCode(data.getCreditCode()+"");
+                                       existCustomerBean.setId_card(data.getId_card()+"");
+                                       existCustomerBean.setLink_man(data.getLink_man()+"");
+                                       existCustomerBean.setIndustry(data.getIndustry()+"");
+                                       existCustomerBean.setId_card1(data.getId_card1()+"");
+                                       existCustomerBean.setLink_phone(userphone+"");
+                                       existCustomerBean.setArea(data.getArea()+"");
+                                       existCustomerBean.setStatusHeight("30.000");
+                                       gson.add(existCustomerBean);
+                                       String url=new Gson().toJson(gson);
+                                       String json =url.substring(1,url.length()-1);
+                                       Log.e("zlz",json);
+                                       //加密json
+                                       String jiajson= Base64.encode(json.getBytes());
+                                       //生成产品详细页的接口
 
-                            //加密json
-                            String jiajson2= Base64.encode(json2.getBytes());
-                            //生成产品详细页的接口
-                            String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
-                            Constans.productDetails=jiekong2;
+                                       String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
+                                       Log.e("zlz",jiekong);
 
-                            ArrayList<ProductDetailBean> gson= new ArrayList<>();
-                            productDetailBean = new ProductDetailBean();
-                            productDetailBean.setUserPhone(userphone);
-                            productDetailBean.setCityName(cityname);
-                            productDetailBean.setType("app");
-                            productDetailBean.setId(userid+"");
-                            productDetailBean.setStatusHeight("30.000");
-                            gson.add(productDetailBean);
-                            String url=new Gson().toJson(gson);
-                            String json =url.substring(1,url.length()-1);
-                            Log.e("zlz",json);
-                            //加密json
-                            String jiajson= Base64.encode(json.getBytes());
-                            //生成产品详细页的接口
+                                       if(!"".equals(jiekong2)){
+                                           WebViewActivity.open(new WebViewActivity.Builder()
+                                                   .setContext(mContext)
+                                                   .setAutoTitle(false)
+                                                   .setIsFwb(false)
+                                                   .setTitle("产品详情")
+                                                   .setNeedShare(false)
+                                                   .setUrl(jiekong),false);
+                                       }
+                                   }
+                                }
+                            });
 
-                            String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
-                            Log.e("zlz",jiekong);
-
-                            if(!"".equals(jiekong2)){
-                                WebViewActivity.open(new WebViewActivity.Builder()
-                                        .setContext(mContext)
-                                        .setAutoTitle(false)
-                                        .setIsFwb(false)
-                                        .setUrl(jiekong));
-                            }
 
                         }
                     });

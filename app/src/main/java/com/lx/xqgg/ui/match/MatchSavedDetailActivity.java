@@ -17,6 +17,7 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.ui.match.adapter.MatchResultAdapter;
 import com.lx.xqgg.ui.match.bean.MatchResultBean;
 import com.lx.xqgg.ui.product.ProductDetailActivity;
+import com.lx.xqgg.util.SpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,9 @@ public class MatchSavedDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvTitle.setText(getIntent().getStringExtra("company"));
-
         ids = getIntent().getIntExtra("ids", 0);
+        Log.d("id---", "initView: "+ids);
+        SpUtil.getInstance().saveString("companymach",getIntent().getStringExtra("company"));
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         matchResultAdapter = new MatchResultAdapter(list1, true);
 

@@ -8,10 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,7 +18,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -31,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
@@ -57,6 +54,7 @@ import com.lx.xqgg.ui.product.bean.QccBean;
 import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.util.CountDownTimerUtils;
 import com.lx.xqgg.util.FastClickUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -79,6 +77,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+
 public class ApplyFragment extends DialogFragment {
     @BindView(R.id.v_close)
     View vClose;
@@ -110,6 +109,9 @@ public class ApplyFragment extends DialogFragment {
     TextView tvAnnounce;
     @BindView(R.id.layout_msg)
     LinearLayout layoutMsg;
+    @BindView(R.id.yincang)
+    CheckBox yincang;
+
     private Unbinder mUnBinder;
     private ProductBean.RecordsBean bean;
     private boolean needMsg = true;
@@ -126,9 +128,9 @@ public class ApplyFragment extends DialogFragment {
     private ListPopupWindow companyWindow;
     private List<String> companyList = new ArrayList<>();
     private ArrayAdapter<String> arrayAdapter;
-    private boolean isSelected=false;
+    private boolean isSelected = false;
 
-
+    private String id_card;
     public ApplyFragment(ProductBean.RecordsBean recordsBean) {
         this.bean = recordsBean;
     }
@@ -148,8 +150,8 @@ public class ApplyFragment extends DialogFragment {
     private void init() {
         countDownTimer = new CountDownTimerUtils(btnGetCode, 60000, 1000, handler);
 
-        arrayAdapter=new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, companyList);
-        companyWindow=new ListPopupWindow(mContext);
+        arrayAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, companyList);
+        companyWindow = new ListPopupWindow(mContext);
         companyWindow.setAdapter(arrayAdapter);
         companyWindow.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
         companyWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -161,8 +163,8 @@ public class ApplyFragment extends DialogFragment {
         companyWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                edFocus=false;
-                isSelected=true;
+                edFocus = false;
+                isSelected = true;
                 checkHistory(companyList.get(position), "company");
                 InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -185,13 +187,13 @@ public class ApplyFragment extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e("zlz",s.toString());
-                Log.e("zlz",s.toString().length()+"");
-                Log.e("zlz",isSelected+"");
-                if(isSelected){
+                Log.e("zlz", s.toString());
+                Log.e("zlz", s.toString().length() + "");
+                Log.e("zlz", isSelected + "");
+                if (isSelected) {
                     return;
                 }
-                if(s.toString().length()>0){
+                if (s.toString().length() > 0) {
                     HashMap<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("token", SharedPrefManager.getUser().getToken());
                     paramsMap.put("search_words", s.toString());
@@ -202,29 +204,29 @@ public class ApplyFragment extends DialogFragment {
                             .subscribeWith(new BaseSubscriber<BaseData<List<String>>>(mContext, null) {
                                 @Override
                                 public void onNext(BaseData<List<String>> listBaseData) {
-                                    Log.e("zlz",new Gson().toJson(listBaseData));
-                                    if(listBaseData.isSuccess()){
-                                        if(listBaseData.getData()!=null&&listBaseData.getData().size()>0){
+                                    Log.e("zlz", new Gson().toJson(listBaseData));
+                                    if (listBaseData.isSuccess()) {
+                                        if (listBaseData.getData() != null && listBaseData.getData().size() > 0) {
                                             companyList.clear();
                                             companyList.addAll(listBaseData.getData());
-                                            if(!companyWindow.isShowing()){
+                                            if (!companyWindow.isShowing()) {
                                                 companyWindow.show();
                                             }
                                             arrayAdapter.notifyDataSetChanged();
-                                        }else {
-                                            if(companyWindow.isShowing()){
+                                        } else {
+                                            if (companyWindow.isShowing()) {
                                                 companyWindow.dismiss();
                                             }
                                         }
-                                    }else {
-                                        if(companyWindow.isShowing()){
+                                    } else {
+                                        if (companyWindow.isShowing()) {
                                             companyWindow.dismiss();
                                         }
                                     }
                                 }
                             }));
-                }else {
-                    if(companyWindow.isShowing()){
+                } else {
+                    if (companyWindow.isShowing()) {
                         companyWindow.dismiss();
                     }
                 }
@@ -235,7 +237,7 @@ public class ApplyFragment extends DialogFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    isSelected=false;
+                    isSelected = false;
                     edFocus = true;
                 } else {
                     if (edFocus) {
@@ -347,27 +349,61 @@ public class ApplyFragment extends DialogFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<ApplyHistoryBean>>(mContext, null) {
+
                     @Override
                     public void onNext(BaseData<ApplyHistoryBean> applyHistoryBeanBaseData) {
                         Log.e("test", new Gson().toJson(applyHistoryBeanBaseData));
                         if (applyHistoryBeanBaseData.isSuccess()) {
                             if (applyHistoryBeanBaseData.getData() != null) {
                                 ApplyHistoryBean applyHistoryBean = applyHistoryBeanBaseData.getData();
-                                isSelected=true;
+                                isSelected = true;
                                 etCpmpanyName.setText(TextUtils.isEmpty(applyHistoryBean.getCompany()) ? "" : applyHistoryBean.getCompany());
                                 etSocialCode.setText(TextUtils.isEmpty(applyHistoryBean.getCreditCode()) ? "" : applyHistoryBean.getCreditCode());
-                                etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card()) ? "" : applyHistoryBean.getId_card());
+                                etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card1()) ? "" : applyHistoryBean.getId_card1());
                                 etFrName.setText(TextUtils.isEmpty(applyHistoryBean.getLink_man()) ? "" : applyHistoryBean.getLink_man());
                                 tvHyType.setText(TextUtils.isEmpty(applyHistoryBean.getIndustry()) ? "" : applyHistoryBean.getIndustry());
                                 etPhone.setText(TextUtils.isEmpty(applyHistoryBean.getLink_phone()) ? "" : applyHistoryBean.getLink_phone());
                                 tvArea.setText(TextUtils.isEmpty(applyHistoryBean.getArea()) ? "" : applyHistoryBean.getArea());
+                                id_card = applyHistoryBean.getId_card();
+                                Log.d("id_card+", "onNext: "+applyHistoryBean.getId_card());
+                                Log.d("id_card-", "onNext: "+applyHistoryBean.getId_card1());
+                                yincang.setBackgroundResource(R.drawable.closeeyes);
+                                yincang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                    @Override
+                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                        if (isChecked){
+                                            etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card()) ? "" : applyHistoryBean.getId_card());
+                                            yincang.setBackgroundResource(R.drawable.openeyes);
 
+                                        }else {
+                                            etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card1()) ? "" : applyHistoryBean.getId_card1());
+                                            yincang.setBackgroundResource(R.drawable.closeeyes);
+                                        }
+                                    }
+                                });
+                                etIdNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                                    @Override
+                                    public void onFocusChange(View v, boolean hasFocus) {
+                                        if(hasFocus){
+                                            yincang.setVisibility(View.GONE);
+                                            String edd=etIdNum.getText().toString();
+                                            if (edd.equals(applyHistoryBean.getId_card1())){
+                                                edd=applyHistoryBean.getId_card();
+                                                id_card=edd;
+                                            }else {
+                                                id_card=edd;
+                                            }
+
+                                        }
+                                    }
+                                });
                                 ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                                 // 创建普通字符型ClipData
                                 ClipData mClipData = ClipData.newPlainText("Label", applyHistoryBean.getCreditCode() + "");
                                 // 将ClipData内容放到系统剪贴板里。
                                 cm.setPrimaryClip(mClipData);
                                 toast("信用代码已复制到剪切板");
+
                             } else {
                                 if (!TextUtils.isEmpty(etCpmpanyName.getText().toString())) {
                                     checkCompany(keywords);
@@ -380,7 +416,10 @@ public class ApplyFragment extends DialogFragment {
                         }
                     }
                 }));
+
     }
+
+
 
     /**
      * 调用企查查查询
@@ -483,7 +522,9 @@ public class ApplyFragment extends DialogFragment {
                 if (FastClickUtil.isFastClick()) {
                     return;
                 }
-                getIdAuth();
+
+              getIdAuth();
+
                 break;
             case R.id.btn_commit:
                 commit();
@@ -501,7 +542,7 @@ public class ApplyFragment extends DialogFragment {
      * 三证合一
      */
     private void getIdAuth() {
-        if (etIdNum.getText().toString().trim().length() < 18) {
+        if (id_card.length() < 18) {
             toast("请输入正确的身份证号码");
             return;
         }
@@ -513,10 +554,9 @@ public class ApplyFragment extends DialogFragment {
             toast("请输入正确的手机号码");
             return;
         }
-
-
+        Log.d("idcard", "getIdAuth: "+id_card);
         HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("idCard", etIdNum.getText().toString());
+        paramsMap.put("idCard", id_card);
         paramsMap.put("mobile", etPhone.getText().toString());
         paramsMap.put("name", etFrName.getText().toString());
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
@@ -553,7 +593,7 @@ public class ApplyFragment extends DialogFragment {
     }
 
     private void getMsgCode() {
-        addSubscribe(ApiManage.getInstance().getMainApi().getMsg(etPhone.getText().toString(), "userauth",SharedPrefManager.getUser().getToken(),etFrName.getText().toString())
+        addSubscribe(ApiManage.getInstance().getMainApi().getMsg(etPhone.getText().toString(), "userauth", SharedPrefManager.getUser().getToken(), etFrName.getText().toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<MsgBean>(getActivity(), null) {
@@ -696,7 +736,7 @@ public class ApplyFragment extends DialogFragment {
     private void applyProduct() {
 
         HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("idCard", etIdNum.getText().toString());
+        paramsMap.put("idCard", id_card);
         paramsMap.put("mobile", etPhone.getText().toString());
         paramsMap.put("name", etFrName.getText().toString());
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
@@ -763,21 +803,21 @@ public class ApplyFragment extends DialogFragment {
                             SharedPrefManager.setPhone(etPhone.getText().toString());
                             String url = bean.getCityLink();
                             if (Config.FUMIN_TITLE.equals(bean.getTitle())) {
-                               FumingBean fuminBean = new Gson().fromJson(objectBaseData.getData(), FumingBean.class);
-                               if (fuminBean.getStatus().equals("200")){
-                                String token=fuminBean.getBusOutBody().getToken();
-                                   try {
-                                   String urlencode=URLEncoder.encode(Config.URL+"/view/fuminSuccess.html","utf-8");
-                                    url= Config.FUMIN_BANK+"?token="+token+"&cburl="+urlencode;
-                                       Log.d("url", "onNext: "+url);
-                                   } catch (UnsupportedEncodingException e) {
-                                       e.printStackTrace();
-                                   }
-                               }  else if (fuminBean.getStatus().equals("400")) {
-                                   toast(fuminBean.getMessage());
-                               }else {
-                                   toast(fuminBean.getMessage());
-                               }
+                                FumingBean fuminBean = new Gson().fromJson(objectBaseData.getData(), FumingBean.class);
+                                if (fuminBean.getStatus().equals("200")) {
+                                    String token = fuminBean.getBusOutBody().getToken();
+                                    try {
+                                        String urlencode = URLEncoder.encode(Config.URL + "/view/fuminSuccess.html", "utf-8");
+                                        url = Config.FUMIN_BANK + "?token=" + token + "&cburl=" + urlencode;
+                                        Log.d("url", "onNext: " + url);
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else if (fuminBean.getStatus().equals("400")) {
+                                    toast(fuminBean.getMessage());
+                                } else {
+                                    toast(fuminBean.getMessage());
+                                }
                             }
 
                             if (Config.NORMALURL.equals(url)) {
@@ -790,7 +830,7 @@ public class ApplyFragment extends DialogFragment {
                                     .setAutoTitle(false)
                                     .setIsFwb(false)
                                     .setTitle(bean.getTitle())
-                                   // .setUrl("http://192.168.1.144:8081/xiaoqiguaiguai-mobile//view/fuminSuccess.html"));
+                                    // .setUrl("http://192.168.1.144:8081/xiaoqiguaiguai-mobile//view/fuminSuccess.html"));
                                     .setUrl(url));
 
 //                            Uri uri = Uri.parse(url);

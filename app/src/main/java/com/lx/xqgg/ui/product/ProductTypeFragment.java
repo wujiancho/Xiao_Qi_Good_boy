@@ -196,7 +196,7 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                                 .setAutoTitle(false)
                                                 .setIsFwb(false)
                                                 .setTitle("产品详情")
-                                                .setNeedShare(true)
+                                                .setNeedShare(false)
                                                 .setUrl(jiekong));
                                 }
                             }

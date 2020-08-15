@@ -2,6 +2,7 @@ package com.lx.xqgg.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 import com.zxy.tiny.Tiny;
 
 import org.xutils.x;
@@ -37,7 +39,7 @@ public class BaseApplication extends Application {
     public static synchronized BaseApplication getInstance() {
         return instance;
     }
-
+    public final static float DESIGN_WIDTH = 750; //绘制页面时参照的设计图宽度
     @Override
     public void onCreate() {
         super.onCreate();
@@ -46,6 +48,8 @@ public class BaseApplication extends Application {
         JPushInterface.init(this);
         x.Ext.init(this);
         Tiny.getInstance().init(this);
+        //适配
+        ScreenAdapterTools.init(this);
         // 对Snake进行初始化
       //  Snake.init(this);
         Logger.addLogAdapter(new AndroidLogAdapter(){
@@ -124,5 +128,12 @@ public class BaseApplication extends Application {
         YSFOptions options = new YSFOptions();
         options.statusBarNotificationConfig = new StatusBarNotificationConfig();
         return options;
+    }
+
+    //旋转适配,如果应用屏幕固定了某个方向不旋转的话(比如qq和微信),下面可不写.
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        ScreenAdapterTools.getInstance().reset(this);
     }
 }

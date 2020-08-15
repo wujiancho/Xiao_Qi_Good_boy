@@ -26,6 +26,7 @@ import com.lx.xqgg.ui.login.bean.UserInfoBean;
 import com.lx.xqgg.util.JPushUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
+import com.yatoooon.screenadaptation.ScreenAdapterTools;
 
 import java.util.HashMap;
 
@@ -46,7 +47,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       //setContentView( R.layout.spalsh);
+       setContentView( R.layout.spalsh);
+        //ScreenAdapterTools.getInstance().reset(this);//如果希望android7.0分屏也适配的话,加上这句
+        //在setContentView();后面加上适配语句
+        ScreenAdapterTools.getInstance().loadView(getWindow().getDecorView());
         if (!this.isTaskRoot()) {
             Intent mainIntent = getIntent();
             String action = mainIntent.getAction();
