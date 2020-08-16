@@ -1,23 +1,17 @@
 package com.lx.xqgg;
 
-import androidx.annotation.Nullable;
-import butterknife.BindView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
 import com.lx.xqgg.api.ApiManage;
+import com.lx.xqgg.api.ImitationexaminationBean;
 import com.lx.xqgg.base.BaseActivity;
-import com.lx.xqgg.base.BaseActivityflase;
 import com.lx.xqgg.base.BaseApplication;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
@@ -33,7 +27,6 @@ import com.lx.xqgg.ui.person.PersonFragment;
 import com.lx.xqgg.ui.product.ProductFragment;
 import com.lx.xqgg.util.AppApplicationUtil;
 import com.lx.xqgg.util.AppExitUtil;
-import com.lx.xqgg.util.JPushUtil;
 import com.lx.xqgg.util.SpUtil;
 import com.lx.xqgg.util.UpdateUtil;
 import com.roughike.bottombar.BottomBar;
@@ -42,9 +35,22 @@ import com.roughike.bottombar.OnTabSelectListener;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
 public class MainActivity extends BaseActivity implements OnTabSelectListener {
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
+    @BindView(R.id.contentContainer)
+    FrameLayout contentContainer;
+
 
     private HomeFragment homeFragment;
     private ProductFragment productFragment;
@@ -57,23 +63,23 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     public static final int UNKNOW_APP_SOURCE_CODE = 10088;
 
     private String type;
-    private  Boolean code=true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
 
-
     @Override
     protected void initView() {
+
         homeFragment = new HomeFragment();
         productFragment = new ProductFragment();
         orderFragment = new OrderFragment();
         personFragment = new PersonFragment();
         bottomBar.setOnTabSelectListener(this);
         loadMultipleRootFragment(R.id.contentContainer, 0, homeFragment, productFragment, orderFragment, personFragment);
-      //  JPushUtil.initJPush(mContext, SharedPrefManager.getUser().getMobile(), null);
+        //  JPushUtil.initJPush(mContext, SharedPrefManager.getUser().getMobile(), null);
         try {
             type = getIntent().getStringExtra("type");
             Log.e("zlz", type + "");
@@ -91,11 +97,13 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
         } catch (Exception e) {
             Log.e("zlz", e.toString());
         }
+
     }
 
 
     @Override
     protected void initData() {
+        doCheckPermission2();
         checkUpdate(true);
         getUserServiceInfo();
         getAdvert();
@@ -122,12 +130,12 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
     }*/
 
 
-
     @Override
     public void onTabSelected(int tabId) {
         switch (tabId) {
             case R.id.tab_home:
                 showHideFragment(homeFragment);
+                doCheckPermission2();
                 break;
             case R.id.tab_stock:
                 showHideFragment(productFragment);
@@ -159,8 +167,8 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
                             if (objectBaseData.getCode() != 1) {
                                 userServiceFragment = new UserServiceFragment(objectBaseData);
                                 userServiceFragment.show(getSupportFragmentManager(), "");
-                            }else {
-                                SpUtil.getInstance().saveString("servisername",objectBaseData.getData().getService_name());
+                            } else {
+                                SpUtil.getInstance().saveString("servisername", objectBaseData.getData().getService_name());
                             }
                         }
                     }
@@ -253,5 +261,27 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
                     }
                 });
     }
+
+    private  void doCheckPermission2() {
+        ApiManage.getInstance().getMainApi().getImitationexamination()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<ImitationexaminationBean>>(getApplicationContext(), null) {
+                    @Override
+                    public void onNext(BaseData<ImitationexaminationBean> imitationexaminationBeanBaseData) {
+                        Log.e("zlz11", new Gson().toJson(imitationexaminationBeanBaseData));
+                        if (imitationexaminationBeanBaseData.isSuccess()) {
+                            if (!"".equals(imitationexaminationBeanBaseData.getData())) {
+                                SharedPrefManager.setImitationexamination(imitationexaminationBeanBaseData.getData());
+                            }
+                        }
+                    }
+                });
+    }
+
+
+
+
+
 
 }

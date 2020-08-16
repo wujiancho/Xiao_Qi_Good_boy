@@ -228,8 +228,8 @@ public class PersonFragment extends BaseFragment {
                                                     .setContext(mContext)
                                                     .setAutoTitle(false)
                                                     .setIsFwb(false)
-                                                    .setUrl(Config.CRMURL+ "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=30"));
-                                                     //.setUrl(Config.CRMURLS + "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=44"));
+                                                    //.setUrl(Config.CRMURL+ "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=30"));
+                                                     .setUrl(Config.CRMURLS + "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=44"));
 
                                     }
                                     else {

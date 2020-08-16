@@ -166,8 +166,11 @@ public class HomeFragment extends BaseFragment {
                 String title = listTjcp.get(position).getTitle();
                 int quota = listTjcp.get(position).getQuota();
                 String rate = listTjcp.get(position).getRate();
+
                String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
                 String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
+
+
                 String count = ed+":" + (quota / 10000) + ",日"+fee+":" + rate;
                 ProductDetailEvent event = new ProductDetailEvent();
                 event.setImage(image);

@@ -79,7 +79,7 @@ public class LoginActivity extends BaseActivity {
         vClose.setVisibility(View.INVISIBLE);
         tvTitle.setText("登录");
         tvVersion.setText("V" + AppApplicationUtil.getVersionName(mContext));
-        doCheckPermission2();
+
     }
 
     @Override
@@ -218,25 +218,7 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
-    private void doCheckPermission2(){
-                                ApiManage.getInstance().getMainApi().getImitationexamination()
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribeWith(new  BaseSubscriber<BaseData<ImitationexaminationBean>>(getApplicationContext(), null){
-                                            @Override
-                                            public void onNext(BaseData<ImitationexaminationBean> imitationexaminationBeanBaseData) {
-                                                Log.e("zlz11", new Gson().toJson(imitationexaminationBeanBaseData));
-                                                if (imitationexaminationBeanBaseData.isSuccess()) {
-                                                    new Handler().postDelayed(new Runnable(){
-                                                        @Override
-                                                        public void run() {
-                                                            SharedPrefManager.setImitationexamination(imitationexaminationBeanBaseData.getData());
-                                                        }
-                                                    }, 1000);
-                                                }
-                                            }
-                                        });
-                            }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

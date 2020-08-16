@@ -69,7 +69,11 @@ public class SharedPrefManager {
     }
 
     public static ImitationexaminationBean getImitationexamination() {
+
         ImitationexaminationBean imitationexaminationBean = new Gson().fromJson(ACCOUNT.getString("imitation_examination", ""), ImitationexaminationBean.class);
+        if (imitationexaminationBean==null){
+            return new ImitationexaminationBean();
+        }
         return imitationexaminationBean;
     }
 

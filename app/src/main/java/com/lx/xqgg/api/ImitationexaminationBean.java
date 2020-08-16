@@ -258,4 +258,35 @@ public class ImitationexaminationBean implements Serializable {
     public void setPro_fee(String pro_fee) {
         this.pro_fee = pro_fee;
     }
+
+    public ImitationexaminationBean() {
+        this.pro_lxi = "";
+        this.pro_ren = "";
+        this.pro_bji = "";
+        this.pro_nas = "";
+        this.pro_yuq = "";
+        this.pro_mou = "";
+        this.pro_kai = "";
+        this.pro_yon = "";
+        this.pro_yus = "";
+        this.pro_cre = "";
+        this.pro_pro = "";
+        this.pro_rat = "";
+        this.pro_wan = "";
+        this.pro_xi = "";
+        this.pro_pay = "";
+        this.pro_shui = "";
+        this.pro_loa = "";
+        this.pro_bal = "";
+        this.pro_mon = "";
+        this.pro_dai = "";
+        this.pro_yuh = "";
+        this.pro_ben = "";
+        this.pro_bao = "";
+        this.pro_ban = "";
+        this.pro_jin = "";
+        this.pro_hou = "";
+        this.pro_qia = "";
+        this.pro_fee = "";
+    }
 }

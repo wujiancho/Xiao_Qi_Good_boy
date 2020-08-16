@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.home.adapter;
 
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ public class TjcpAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, ProductBean.RecordsBean item) {
+        Log.d("convert-------", "convert: "+SharedPrefManager.getImitationexamination());
         String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
         String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
         String  wan= SharedPrefManager.getImitationexamination().getPro_wan();
@@ -32,8 +34,8 @@ public class TjcpAdapter extends BaseQuickAdapter<ProductBean.RecordsBean, BaseV
                 .apply(new RequestOptions().placeholder(R.drawable.ic_default))
                 .into((ImageView) helper.getView(R.id.iv_icon));
         helper.setText(R.id.tv_num, item.getQuota()/10000 + "");
-        helper.setText(R.id.cppe, wan+"元");
+        helper.setText(R.id.cppe, wan);
 
-        helper.setText(R.id.tv_rlv, "日"+fee + item.getRate() + "");
+        helper.setText(R.id.tv_rlv, "日"+fee+item.getRate() + "");
     }
 }
