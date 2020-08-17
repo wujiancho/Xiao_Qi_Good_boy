@@ -103,8 +103,10 @@
                    android:layout_gravity="center"
                    android:id="@+id/yincang"
                    android:button="@null"
+                   android:visibility="gone"
                    android:layout_marginRight="@dimen/dp_20"
                    ></CheckBox>
+
            </LinearLayout>
 
             <EditText

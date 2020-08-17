@@ -43,10 +43,10 @@ public class TjFullScreenActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        listAll = (List<TjBean>) getIntent().getSerializableExtra("list1");
-        listDetail = (List<TjBean>) getIntent().getSerializableExtra("list2");
         cre = SharedPrefManager.getImitationexamination().getPro_cre();
         yxj.setText(cre+"(件)");
+        listAll = (List<TjBean>) getIntent().getSerializableExtra("list1");
+        listDetail = (List<TjBean>) getIntent().getSerializableExtra("list2");
     }
 
     @Override

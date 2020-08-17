@@ -40,7 +40,10 @@ public class PicFragment extends DialogFragment {
     private String name;
 
     public PicFragment(AdvertBean advertBean) {
-        this.advertBean = advertBean;
+        if (advertBean!=null){
+            this.advertBean = advertBean;
+        }
+
     }
     @Nullable
     @Override
@@ -55,9 +58,6 @@ public class PicFragment extends DialogFragment {
         Glide.with(getActivity())
                 .load(Config.IMGURL + advertBean.getImage())
                 .into(imageView);
-
-        Log.d("guangao", "onCreateView: "+Config.IMGURL + advertBean.getImage());
-        Log.d("guangao2", "onCreateView: "+advertBean.getUrl());
         userid = advertBean.getBusId();
       /*  name 目前有两个值，name = advert的时候，判断有没有URL，
         有就直接跳，没有就不跳，如果name = product，需要取busId，跳到产品详情页面。  advert为广告类型 product为业务产品类型*/
@@ -138,4 +138,6 @@ public class PicFragment extends DialogFragment {
 
         return view;
     }
+
+
 }

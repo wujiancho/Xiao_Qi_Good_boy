@@ -51,7 +51,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
             super.onCreate(savedInstanceState);
-
             setContentView(getView());
             ButterKnife.bind(this);
             AppActivityTaskManager.getInstance().addActivity(this);

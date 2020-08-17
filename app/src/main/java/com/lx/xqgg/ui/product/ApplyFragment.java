@@ -131,6 +131,8 @@ public class ApplyFragment extends DialogFragment {
     private boolean isSelected = false;
 
     private String id_card;
+    private String link_phone;
+    private String link_man;
     public ApplyFragment(ProductBean.RecordsBean recordsBean) {
         this.bean = recordsBean;
     }
@@ -267,28 +269,7 @@ public class ApplyFragment extends DialogFragment {
             }
         });
 
-        etPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().equals(SharedPrefManager.getPhone())) {
-                    layoutMsg.setVisibility(View.VISIBLE);
-                    needMsg = true;
-                } else {
-                    layoutMsg.setVisibility(View.GONE);
-                    needMsg = false;
-                }
-            }
-        });
 
         if (TextUtils.isEmpty(SharedPrefManager.getPhone())) {
             needMsg = true;
@@ -349,7 +330,6 @@ public class ApplyFragment extends DialogFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<ApplyHistoryBean>>(mContext, null) {
-
                     @Override
                     public void onNext(BaseData<ApplyHistoryBean> applyHistoryBeanBaseData) {
                         Log.e("test", new Gson().toJson(applyHistoryBeanBaseData));
@@ -359,13 +339,103 @@ public class ApplyFragment extends DialogFragment {
                                 isSelected = true;
                                 etCpmpanyName.setText(TextUtils.isEmpty(applyHistoryBean.getCompany()) ? "" : applyHistoryBean.getCompany());
                                 etSocialCode.setText(TextUtils.isEmpty(applyHistoryBean.getCreditCode()) ? "" : applyHistoryBean.getCreditCode());
-                                etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card1()) ? "" : applyHistoryBean.getId_card1());
+                                etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card()) ? "" : applyHistoryBean.getId_card());
                                 etFrName.setText(TextUtils.isEmpty(applyHistoryBean.getLink_man()) ? "" : applyHistoryBean.getLink_man());
                                 tvHyType.setText(TextUtils.isEmpty(applyHistoryBean.getIndustry()) ? "" : applyHistoryBean.getIndustry());
                                 etPhone.setText(TextUtils.isEmpty(applyHistoryBean.getLink_phone()) ? "" : applyHistoryBean.getLink_phone());
                                 tvArea.setText(TextUtils.isEmpty(applyHistoryBean.getArea()) ? "" : applyHistoryBean.getArea());
                                 id_card = applyHistoryBean.getId_card();
-                                yincang.setBackgroundResource(R.drawable.closeeyes);
+                                link_man = applyHistoryBean.getLink_man();
+                                link_phone = applyHistoryBean.getLink_phone();
+                                if (!"".equals(id_card)){
+                                    etIdNum.setVisibility(View.GONE);
+                                }
+                                etFrName.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        if(!s.toString().equals(link_man)) {
+                                            etIdNum.setVisibility(View.VISIBLE);
+                                            etIdNum.setText("");
+                                            String edd = etIdNum.getText().toString();
+                                            if(!"".equals(edd)){
+                                                String edd2 = etFrName.getText().toString();
+                                                id_card = edd;
+                                                link_man = edd2;
+                                                if (id_card.equals(applyHistoryBean.getId_card()))
+                                                id_card =applyHistoryBean.getId_card() ;
+                                                etIdNum.setVisibility(View.GONE);
+                                            }
+                                        }
+                                        else {
+                                            etIdNum.setText(id_card);
+                                            etIdNum.setVisibility(View.GONE);
+                                            }
+
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+                                    }
+                                });
+
+                                etPhone.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                    }
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+                                        if (!s.toString().equals(SharedPrefManager.getPhone())) {
+                                        etIdNum.setVisibility(View.VISIBLE);
+                                        etIdNum.setText("");
+                                        String edd=etIdNum.getText().toString();
+                                       if(!"".equals(edd)){
+                                           String edd3=etPhone.getText().toString();
+                                           id_card=edd;
+                                           link_phone=edd3;
+                                           if (id_card.equals(applyHistoryBean.getId_card()))
+                                               id_card =applyHistoryBean.getId_card() ;
+                                           etIdNum.setVisibility(View.GONE);
+                                       }
+                                            layoutMsg.setVisibility(View.VISIBLE);
+                                            needMsg = true;
+                                        } else {
+                                           etIdNum.setText(id_card);
+                                            etIdNum.setVisibility(View.GONE);
+                                            layoutMsg.setVisibility(View.GONE);
+                                            needMsg = false;
+                                        }
+                                    }
+                                });
+                               etIdNum.addTextChangedListener(new TextWatcher() {
+                                   @Override
+                                   public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                   }
+
+                                   @Override
+                                   public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                      if(s.toString().equals(id_card)){
+                                          etIdNum.setVisibility(View.GONE);
+                                      }
+                                   }
+
+                                   @Override
+                                   public void afterTextChanged(Editable s) {
+
+                                   }
+                               });
+
+                                /*yincang.setBackgroundResource(R.drawable.closeeyes);
                                 yincang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                     @Override
                                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -378,23 +448,7 @@ public class ApplyFragment extends DialogFragment {
                                             yincang.setBackgroundResource(R.drawable.closeeyes);
                                         }
                                     }
-                                });
-                                etIdNum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                                    @Override
-                                    public void onFocusChange(View v, boolean hasFocus) {
-                                        if(hasFocus){
-                                            yincang.setVisibility(View.GONE);
-                                            String edd=etIdNum.getText().toString();
-                                            if (edd.equals(applyHistoryBean.getId_card1())){
-                                                edd=applyHistoryBean.getId_card();
-                                                id_card=edd;
-                                            }else {
-                                                id_card=edd;
-                                            }
-
-                                        }
-                                    }
-                                });
+                                });*/
                                 ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                                 // 创建普通字符型ClipData
                                 ClipData mClipData = ClipData.newPlainText("Label", applyHistoryBean.getCreditCode() + "");
@@ -544,19 +598,19 @@ public class ApplyFragment extends DialogFragment {
             toast("请输入正确的身份证号码");
             return;
         }
-        if (TextUtils.isEmpty(etFrName.getText().toString().trim())) {
+        if (TextUtils.isEmpty(link_man.trim())) {
             toast("请输入姓名");
             return;
         }
-        if (etPhone.getText().toString().trim().length() < 11) {
+        if (link_phone.trim().length() < 11) {
             toast("请输入正确的手机号码");
             return;
         }
         Log.d("idcard", "getIdAuth: "+id_card);
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("idCard", id_card);
-        paramsMap.put("mobile", etPhone.getText().toString());
-        paramsMap.put("name", etFrName.getText().toString());
+        paramsMap.put("mobile", link_phone);
+        paramsMap.put("name", link_man);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getIdAuth(body)
                 .subscribeOn(Schedulers.io())
@@ -735,8 +789,8 @@ public class ApplyFragment extends DialogFragment {
 
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("idCard", id_card);
-        paramsMap.put("mobile", etPhone.getText().toString());
-        paramsMap.put("name", etFrName.getText().toString());
+        paramsMap.put("mobile", link_phone);
+        paramsMap.put("name", link_man);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getIdAuth(body)
                 .subscribeOn(Schedulers.io())
