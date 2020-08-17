@@ -29,6 +29,14 @@ public class TjFullScreenActivity extends BaseActivity {
     RecyclerView rvContent;
     @BindView(R.id.yxj)
     TextView yxj;
+    @BindView(R.id.spj)
+    TextView spj;
+    @BindView(R.id.ysxj)
+    TextView ysxj;
+    @BindView(R.id.yxl)
+    TextView yxl;
+    @BindView(R.id.yxe)
+    TextView yxe;
 
     private TjAdapter tjAllAdapter;
     private List<TjBean> listAll = new ArrayList<>();
@@ -43,8 +51,14 @@ public class TjFullScreenActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        cre = SharedPrefManager.getImitationexamination().getPro_cre();
-        yxj.setText(cre+"(件)");
+        String cre = SharedPrefManager.getImitationexamination().getPro_cre();
+        String pro = SharedPrefManager.getImitationexamination().getPro_pro();
+        String yus = SharedPrefManager.getImitationexamination().getPro_yus();
+        yxj.setText(cre+ "(件)");
+        yxl.setText(cre+ "率(%)");
+        yxe.setText(cre+ "额（分）");
+        spj.setText(pro+ "中(件");
+        ysxj.setText(yus+"(件)");
         listAll = (List<TjBean>) getIntent().getSerializableExtra("list1");
         listDetail = (List<TjBean>) getIntent().getSerializableExtra("list2");
     }
@@ -65,4 +79,6 @@ public class TjFullScreenActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+
 }

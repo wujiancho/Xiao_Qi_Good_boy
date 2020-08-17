@@ -1,9 +1,7 @@
 package com.lx.xqgg.ui.home;
 
-import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +25,6 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import butterknife.BindView;
 
 public class PicFragment extends DialogFragment {
 
@@ -40,10 +37,7 @@ public class PicFragment extends DialogFragment {
     private String name;
 
     public PicFragment(AdvertBean advertBean) {
-        if (advertBean!=null){
-            this.advertBean = advertBean;
-        }
-
+        this.advertBean = advertBean;
     }
     @Nullable
     @Override

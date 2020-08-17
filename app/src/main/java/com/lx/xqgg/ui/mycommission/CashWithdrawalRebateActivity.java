@@ -3,6 +3,7 @@ package com.lx.xqgg.ui.mycommission;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -66,6 +67,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     Button bttTxjl;
     @BindView(R.id.check_tx)
     CheckBox checkTx;
+    @BindView(R.id.riqitix)
+    TextView riqitix;
     private boolean checked;
     private String bankName;
     private String bankNo;
@@ -80,7 +83,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-      toobarTitle.setText("可提积分");
+        toobarTitle.setText("可提积分");
     }
 
     @Override
@@ -88,31 +91,32 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
         //获取可提现总积分
+        riqitix.setText("提示：每月"+SharedPrefManager.getUserInfo().getCharge_type()+"可申请提现积分");
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
-        if (!"".equals(returningservantdata)){
+        if (!"".equals(returningservantdata)) {
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
             cashCharge = returningservantBean.getCashCharge();
             String createdMoney = returningservantBean.getCreatedMoney();
-            int ccc=Integer.valueOf( createdMoney.substring(0,createdMoney.indexOf(".")));
+            int ccc = Integer.valueOf(createdMoney.substring(0, createdMoney.indexOf(".")));
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String cashRebatez= df.format(cashCharge);
-            withdrawablePointsZong.setText((cashCharge+ccc)+"");
+            String cashRebatez = df.format(cashCharge);
+            withdrawablePointsZong.setText((cashCharge + ccc) + "");
             withSettlement.setText(createdMoney);
             withdrawalRebate.setText(cashRebatez);
         }
-         //获取银行卡信息
-        String  data=   SpUtil.getInstance().getSpString("bankinfortion");
-        SaveBankinfortionBean saveBankinfortionBean=new Gson().fromJson(data, SaveBankinfortionBean.class);
-        if (!"".equals(data)){
-            bankName=saveBankinfortionBean.getBankName();
-            bankNo=saveBankinfortionBean.getBankNo();
-            bankUser=saveBankinfortionBean.getBankUser();
-            addbankName.setText(bankName.substring(bankName.length()-4,bankName.length())+"("+bankNo.substring(bankNo.length()-5,bankNo.length())+")");
+        //获取银行卡信息
+        String data = SpUtil.getInstance().getSpString("bankinfortion");
+        SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
+        if (!"".equals(data)) {
+            bankName = saveBankinfortionBean.getBankName();
+            bankNo = saveBankinfortionBean.getBankNo();
+            bankUser = saveBankinfortionBean.getBankUser();
+            addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
         }
         addbankName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intenaddbcd=new Intent(CashWithdrawalRebateActivity.this,AddbankCardActivity.class);
+                Intent intenaddbcd = new Intent(CashWithdrawalRebateActivity.this, AddbankCardActivity.class);
                 intenaddbcd.addCategory(Intent.CATEGORY_DEFAULT);
                 startActivityForResult(intenaddbcd, 2);
             }
@@ -125,11 +129,11 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String count2=txCountsr.getText().toString().trim();
-               if (!"".equals(count2)){
-                   int jf= Integer.valueOf(count2);
-                   txMoney.setText("¥"+(jf/10));
-               }
+                String count2 = txCountsr.getText().toString().trim();
+                if (!"".equals(count2)) {
+                    int jf = Integer.valueOf(count2);
+                    txMoney.setText("¥" + (jf / 10));
+                }
             }
 
             @Override
@@ -138,7 +142,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             }
         });
         //调用佣金提现获取银行信息
-         Accesstobankinformation();
+        Accesstobankinformation();
         withSettlement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +152,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                     dialog.dismiss();
+                        dialog.dismiss();
                     }
                 });
                 builder1.show();
@@ -156,24 +160,24 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.toobar_back,  R.id.but_alltx,  R.id.btt_txmoney, R.id.btt_txjl})
+    @OnClick({R.id.toobar_back, R.id.but_alltx, R.id.btt_txmoney, R.id.btt_txjl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toobar_back:
                 finish();
                 break;
             case R.id.but_alltx:
-                 txCountsr.setText(cashCharge+"");
-                 txMoney.setText("￥"+(cashCharge/10));
+                txCountsr.setText(cashCharge + "");
+                txMoney.setText("￥" + (cashCharge / 10));
                 break;
             case R.id.btt_txmoney:
-               checked = checkTx.isChecked();
-               //提现方法
-               tixian(bankName,bankNo,bankUser);
+                checked = checkTx.isChecked();
+                //提现方法
+                tixian(bankName, bankNo, bankUser);
                 break;
-                //提现记录
+            //提现记录
             case R.id.btt_txjl:
-                Intent intenwdr=new Intent(CashWithdrawalRebateActivity.this,WithdrawalRecordActivity.class);
+                Intent intenwdr = new Intent(CashWithdrawalRebateActivity.this, WithdrawalRecordActivity.class);
                 startActivity(intenwdr);
                 break;
         }
@@ -187,62 +191,62 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
                     @Override
                     public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
-                        BandinformationBean data=bandinformationBeanBaseData.getData();
+                        BandinformationBean data = bandinformationBeanBaseData.getData();
                       /*  String bankName2 = data.getBankName();
                         String bankNo2 = data.getBankNo();*/
-        }
-        }));
+                    }
+                }));
     }
+
     //提现方法
-    private void tixian(String bankName,String bankNo,String bankUser){
-        if (checked==true){
+    private void tixian(String bankName, String bankNo, String bankUser) {
+        if (checked == true) {
             //获取系统的 日期
-            Calendar calendar= Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             //日
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             //day>=25&&day<=29
-            if (day>1){
+            if (day > 1) {
                 if (TextUtils.isEmpty(bankName)) {
                     toast("请先绑定银行卡");
                     return;
                 }
-                if (txMoney.length()<3){
+                if (txMoney.length() < 3) {
                     toast("提现金额不能小于3位");
                     return;
                 }
-                    String money1= txMoney.getText().toString();
-                    String money=money1.substring(1,money1.length()-1);
-                    HashMap<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                    paramsMap.put("bankName", bankName);
-                    paramsMap.put("bankNo", bankNo);
-                    paramsMap.put("bankUser", bankUser);
-                    paramsMap.put("money", money);
-                    RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
-                    addSubscribe(ApiManage.getInstance().getMainApi().getCommissionwithdrawal(body)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeWith(new BaseSubscriber<CommissionwithdrawalBean>(mContext, null
-                            ) {
-                                @Override
-                                public void onNext(CommissionwithdrawalBean commissionwithdrawalBean) {
-                                    if(commissionwithdrawalBean.isSuccess()){
-                                        Intent intencwdcf=new Intent(CashWithdrawalRebateActivity.this,CashWithdrawalConfirmationActivity.class);
-                                        intencwdcf.putExtra("bankName",bankName);
-                                        intencwdcf.putExtra("bankNo",bankNo);
-                                        intencwdcf.putExtra("money",money);
-                                        startActivity(intencwdcf);
-                                    }
-                                    else {
-                                        toast(commissionwithdrawalBean.getMessage().toString());
-                                    }
+                String money1 = txMoney.getText().toString();
+                String money = money1.substring(1, money1.length() - 1);
+                HashMap<String, Object> paramsMap = new HashMap<>();
+                paramsMap.put("token", SharedPrefManager.getUser().getToken());
+                paramsMap.put("bankName", bankName);
+                paramsMap.put("bankNo", bankNo);
+                paramsMap.put("bankUser", bankUser);
+                paramsMap.put("money", money);
+                RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+                addSubscribe(ApiManage.getInstance().getMainApi().getCommissionwithdrawal(body)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new BaseSubscriber<CommissionwithdrawalBean>(mContext, null
+                        ) {
+                            @Override
+                            public void onNext(CommissionwithdrawalBean commissionwithdrawalBean) {
+                                if (commissionwithdrawalBean.isSuccess()) {
+                                    Intent intencwdcf = new Intent(CashWithdrawalRebateActivity.this, CashWithdrawalConfirmationActivity.class);
+                                    intencwdcf.putExtra("bankName", bankName);
+                                    intencwdcf.putExtra("bankNo", bankNo);
+                                    intencwdcf.putExtra("money", money);
+                                    startActivity(intencwdcf);
+                                } else {
+                                    toast(commissionwithdrawalBean.getMessage().toString());
                                 }
-                            }));
+                            }
+                        }));
 
-            }else {
-                toast("提示：每月25日~29日可申请提现积分");
+            } else {
+                toast("提示：每月"+SharedPrefManager.getUserInfo().getCharge_type()+"可申请提现积分");
             }
-        }else {
+        } else {
             toast("请先勾选小麒乖乖返佣规则");
         }
     }
@@ -250,11 +254,11 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-     bankName=  data.getStringExtra("bankname");
-     bankNo =  data.getStringExtra("bankno");
-     bankUser =  data.getStringExtra("bankUser");
-        if (requestCode==2){
-            addbankName.setText(bankName.substring(bankName.length()-4,bankName.length())+"("+bankNo.substring(bankNo.length()-5,bankNo.length())+")");
+        bankName = data.getStringExtra("bankname");
+        bankNo = data.getStringExtra("bankno");
+        bankUser = data.getStringExtra("bankUser");
+        if (requestCode == 2) {
+            addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
         }
     }
 }

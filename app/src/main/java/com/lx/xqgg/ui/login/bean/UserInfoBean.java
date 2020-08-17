@@ -32,8 +32,17 @@ public class UserInfoBean implements Serializable {
         private String mobile;
         private String nickname;
         private String username;
+        private String charge_type;
 
-        public String getAvatar() {
+    public String getCharge_type() {
+        return charge_type;
+    }
+
+    public void setCharge_type(String charge_type) {
+        this.charge_type = charge_type;
+    }
+
+    public String getAvatar() {
             return avatar;
         }
 
