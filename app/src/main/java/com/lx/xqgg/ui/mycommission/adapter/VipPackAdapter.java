@@ -50,13 +50,18 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
             holder.vip_money.setText(data.get(position).getPrice()+"元");
         if ("青铜".equals(data.get(position).getName())){
             holder.vippackitem.setBackgroundResource(R.drawable.momeybgh);
+            holder.vip_money.setTextColor(Color.parseColor("#000000"));
+        }
+        else if ("黄金".equals(data.get(position).getName())){
+            holder.vippackitem.setBackgroundResource(R.drawable.momeybgh);
             holder.vip_money.setTextColor(Color.parseColor("#8D5D19"));
-        }else if ("钻石".equals(data.get(position).getName())){
+        }
+        else if ("铂金".equals(data.get(position).getName())){
             holder.vippackitem.setBackgroundResource(R.drawable.momeybgb);
             holder.vip_money.setTextColor(Color.parseColor("#606060"));
-        }else  if ("王者".equals(data.get(position).getName())){
+        }else  if ("钻石".equals(data.get(position).getName())){
             holder.vippackitem.setBackgroundResource(R.drawable.momeybgz);
-            holder.vip_money.setTextColor(Color.parseColor("#8410BA"));
+            holder.vip_money.setTextColor(Color.parseColor("#9C27B0"));
         }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,12 +93,19 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
                             .load(R.drawable.momeybgh)
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                             .into(holder.vippackitem);
-                }else if ("王者".equals(data.get(position).getName())){
+                }else if ("黄金".equals(data.get(position).getName())){
+                    Glide.with(context)
+                            .load(R.drawable.momeybgh)
+                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                            .into(holder.vippackitem);
+
+                }else if ("铂金".equals(data.get(position).getName())){
                     Glide.with(context)
                             .load(R.drawable.momeybgb)
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                             .into(holder.vippackitem);
-                }else  if ("钻石".equals(data.get(position).getName())){
+                }
+                else  if ("钻石".equals(data.get(position).getName())){
                     Glide.with(context)
                             .load(R.drawable.momeybgz)
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))

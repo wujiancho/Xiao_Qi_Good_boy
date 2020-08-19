@@ -136,7 +136,6 @@ public class ApplyFragment extends DialogFragment {
     public ApplyFragment(ProductBean.RecordsBean recordsBean) {
         this.bean = recordsBean;
     }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -231,6 +230,12 @@ public class ApplyFragment extends DialogFragment {
                     if (companyWindow.isShowing()) {
                         companyWindow.dismiss();
                     }
+                    etIdNum.setText("");
+                    etPhone.setText("");
+                    etFrName.setText("");
+                    etCode.setText("");
+                    etSocialCode.setText("");
+                    tvArea.setText("");
                 }
             }
         });
@@ -269,6 +274,33 @@ public class ApplyFragment extends DialogFragment {
             }
         });
 
+        etPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals(link_phone)) {
+                    etIdNum.setVisibility(View.VISIBLE);
+                    etIdNum.setText("");
+                    layoutMsg.setVisibility(View.VISIBLE);
+                    needMsg = true;
+                } else {
+                    etIdNum.setText(id_card);
+                    etIdNum.setVisibility(View.GONE);
+                    layoutMsg.setVisibility(View.GONE);
+                    needMsg = false;
+                }
+
+            }
+
+        });
 
 
         if (TextUtils.isEmpty(SharedPrefManager.getPhone())) {
@@ -347,7 +379,8 @@ public class ApplyFragment extends DialogFragment {
                                 id_card = applyHistoryBean.getId_card();
                                 link_man = applyHistoryBean.getLink_man();
                                 link_phone = applyHistoryBean.getLink_phone();
-                                if (!"".equals(id_card)){
+                                if (!"".equals(id_card) && id_card !=null){
+                                    etIdNum.setText(id_card);
                                     etIdNum.setVisibility(View.GONE);
                                 }
                                 etFrName.addTextChangedListener(new TextWatcher() {
@@ -357,98 +390,21 @@ public class ApplyFragment extends DialogFragment {
                                     }
                                     @Override
                                     public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
                                         if(!s.toString().equals(link_man)) {
-                                            etIdNum.setVisibility(View.VISIBLE);
                                             etIdNum.setText("");
-                                            String edd = etIdNum.getText().toString();
-                                            if(!"".equals(edd)){
-                                                String edd2 = etFrName.getText().toString();
-                                                id_card = edd;
-                                                link_man = edd2;
-                                                if (id_card.equals(applyHistoryBean.getId_card()))
-                                                id_card =applyHistoryBean.getId_card() ;
-                                                etIdNum.setVisibility(View.GONE);
-                                            }
+                                            etIdNum.setVisibility(View.VISIBLE);
                                         }
                                         else {
                                             etIdNum.setText(id_card);
                                             etIdNum.setVisibility(View.GONE);
-                                            }
-
-                                    }
-
-                                    @Override
-                                    public void afterTextChanged(Editable s) {
-                                    }
-                                });
-
-                                etPhone.addTextChangedListener(new TextWatcher() {
-                                    @Override
-                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                    }
-
-                                    @Override
-                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                                    }
-                                    @Override
-                                    public void afterTextChanged(Editable s) {
-                                        if (!s.toString().equals(SharedPrefManager.getPhone())) {
-                                        etIdNum.setVisibility(View.VISIBLE);
-                                        etIdNum.setText("");
-                                        String edd=etIdNum.getText().toString();
-                                       if(!"".equals(edd)){
-                                           String edd3=etPhone.getText().toString();
-                                           id_card=edd;
-                                           link_phone=edd3;
-                                           if (id_card.equals(applyHistoryBean.getId_card()))
-                                               id_card =applyHistoryBean.getId_card() ;
-                                           etIdNum.setVisibility(View.GONE);
-                                       }
-                                            layoutMsg.setVisibility(View.VISIBLE);
-                                            needMsg = true;
-                                        } else {
-                                           etIdNum.setText(id_card);
-                                            etIdNum.setVisibility(View.GONE);
-                                            layoutMsg.setVisibility(View.GONE);
-                                            needMsg = false;
                                         }
                                     }
                                 });
-                               etIdNum.addTextChangedListener(new TextWatcher() {
-                                   @Override
-                                   public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                   }
-
-                                   @Override
-                                   public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                      if(s.toString().equals(id_card)){
-                                          etIdNum.setVisibility(View.GONE);
-                                      }
-                                   }
-
-                                   @Override
-                                   public void afterTextChanged(Editable s) {
-
-                                   }
-                               });
-
-                                /*yincang.setBackgroundResource(R.drawable.closeeyes);
-                                yincang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                    @Override
-                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                                        if (isChecked){
-                                            etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card()) ? "" : applyHistoryBean.getId_card());
-                                            yincang.setBackgroundResource(R.drawable.openeyes);
-
-                                        }else {
-                                            etIdNum.setText(TextUtils.isEmpty(applyHistoryBean.getId_card1()) ? "" : applyHistoryBean.getId_card1());
-                                            yincang.setBackgroundResource(R.drawable.closeeyes);
-                                        }
-                                    }
-                                });*/
                                 ClipboardManager cm = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                                 // 创建普通字符型ClipData
                                 ClipData mClipData = ClipData.newPlainText("Label", applyHistoryBean.getCreditCode() + "");
@@ -490,12 +446,29 @@ public class ApplyFragment extends DialogFragment {
                         if (s.isSuccess()) {
                             QccBean qccBean = new Gson().fromJson(s.getData(), QccBean.class);
                             if (qccBean == null) {
+                                toast("请输入正确的公司");
                                 return;
                             }
-
+                            if ("查询无结果".equals(qccBean.getMessage())) {
+                                toast("抱歉未找到相关公司，请检查");
+                                return;
+                            }
+                            if (qccBean.getMessage().equals("查询失败")) {
+                                toast("请输入正确的公司");
+                                return;
+                            }
                             Log.e("zlz", new Gson().toJson(qccBean));
                             try {
-                                tvHyType.setText(TextUtils.isEmpty(qccBean.getResult().getIndustry().getIndustry()) ? "" : qccBean.getResult().getIndustry().getIndustry());
+                                 String subIndustry= qccBean.getResult().getIndustry().getSubIndustry();
+                                 String industry= qccBean.getResult().getIndustry().getIndustry();
+                                if (subIndustry!= null) {
+                                    tvHyType.setText(subIndustry);
+                                } else if (industry != null) {
+                                    tvHyType.setText(industry);
+                                }else{
+                                    tvHyType.setText("未知行业");
+                                }
+
                             } catch (Exception e) {
 
                             }
@@ -539,7 +512,15 @@ public class ApplyFragment extends DialogFragment {
 
                             }
                             try {
-                                tvArea.setText(qccBean.getResult().getArea().getProvince() + " " + qccBean.getResult().getArea().getCity());
+                                String  province = qccBean.getResult().getArea().getProvince();
+                                String city=qccBean.getResult().getArea().getCity();
+                                String county= qccBean.getResult().getArea().getCounty();
+                                 if (province.equals(city)){
+                                     tvArea.setText(city+" "+county);
+                                 }else {
+                                     tvArea.setText(province+" "+city);
+                                 }
+
                             } catch (Exception e) {
 
                             }
@@ -594,23 +575,22 @@ public class ApplyFragment extends DialogFragment {
      * 三证合一
      */
     private void getIdAuth() {
-        if (id_card.length() < 18) {
+        if (etIdNum.getText().toString().length() < 18) {
             toast("请输入正确的身份证号码");
             return;
         }
-        if (TextUtils.isEmpty(link_man.trim())) {
+        if (TextUtils.isEmpty(etFrName.getText().toString())) {
             toast("请输入姓名");
             return;
         }
-        if (link_phone.trim().length() < 11) {
+        if (etPhone.getText().toString().length() < 11) {
             toast("请输入正确的手机号码");
             return;
         }
-        Log.d("idcard", "getIdAuth: "+id_card);
         HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("idCard", id_card);
-        paramsMap.put("mobile", link_phone);
-        paramsMap.put("name", link_man);
+        paramsMap.put("idCard", etIdNum.getText().toString());
+        paramsMap.put("mobile", etPhone.getText().toString());
+        paramsMap.put("name", etFrName.getText().toString());
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getIdAuth(body)
                 .subscribeOn(Schedulers.io())
@@ -674,15 +654,15 @@ public class ApplyFragment extends DialogFragment {
 
     private void commit() {
         //只有企業貸款所有信息都要验证
-        if ("2".equals(bean.getLoantype())) {
-            if (TextUtils.isEmpty(etCpmpanyName.getText().toString().trim())) {
-                toast("请输入企业名称");
-                return;
-            }
-            if (TextUtils.isEmpty(etSocialCode.getText().toString().trim())) {
-                toast("请输入社会统一信用代码");
-                return;
-            }
+            if ("2".equals(bean.getLoantype())) {
+                if (TextUtils.isEmpty(etCpmpanyName.getText().toString().trim())) {
+                    toast("请输入企业名称");
+                    return;
+                }
+                if (TextUtils.isEmpty(etSocialCode.getText().toString().trim())) {
+                    toast("请输入社会统一信用代码");
+                    return;
+                }
 //            if (TextUtils.isEmpty(tvHyType.getText().toString().trim())) {
 //                Toast.makeText(getContext(), "请选择行业类型", Toast.LENGTH_SHORT).show();
 //                return;
@@ -691,17 +671,16 @@ public class ApplyFragment extends DialogFragment {
 //                Toast.makeText(getContext(), "请选择地区", Toast.LENGTH_SHORT).show();
 //                return;
 //            }
-        }
-
-        if (etIdNum.getText().toString().trim().length() < 18) {
+            }
+        if (etIdNum.getText().toString().length() < 18) {
             toast("请输入正确的身份证号码");
             return;
         }
-        if (TextUtils.isEmpty(etFrName.getText().toString().trim())) {
+        if (TextUtils.isEmpty(etFrName.getText().toString())) {
             toast("请输入姓名");
             return;
         }
-        if (etPhone.getText().toString().trim().length() < 11) {
+        if (etPhone.getText().toString().length() < 11) {
             toast("请输入正确的手机号码");
             return;
         }
@@ -786,11 +765,10 @@ public class ApplyFragment extends DialogFragment {
     }
 
     private void applyProduct() {
-
         HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("idCard", id_card);
-        paramsMap.put("mobile", link_phone);
-        paramsMap.put("name", link_man);
+        paramsMap.put("idCard", etIdNum.getText().toString());
+        paramsMap.put("mobile", etPhone.getText().toString());
+        paramsMap.put("name", etFrName.getText().toString());
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getIdAuth(body)
                 .subscribeOn(Schedulers.io())

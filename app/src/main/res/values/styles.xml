@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimTheme</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
 
@@ -23,6 +23,13 @@
 
     <style name="FullScreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimTheme</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
 
     <!--Activity切换动画-->

@@ -310,6 +310,8 @@ public class ProductBean implements Serializable{
             this.classifyList = classifyList;
         }
 
+
+
         public static class ConditionBean implements Serializable{
             /**
              * ageEnd : 60

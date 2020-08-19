@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivity extends SupportActivity {
     protected View view;
     protected Gson gson;
 
@@ -134,7 +134,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
             mCompositeDisposable.clear();
         }
     }
-//栈内存在一个页面不可以侧滑返回
+/*//栈内存在一个页面不可以侧滑返回
     @Override
     public boolean swipeBackPriority() {
         if (AppActivityTaskManager.getInstance().getActivitySize()==1){
@@ -143,7 +143,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
            else {
                return  true;
         }
-    }
+    }*/
    //销毁页面要出栈和取消订阅
     @Override
     protected void onDestroy() {

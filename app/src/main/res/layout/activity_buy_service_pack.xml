@@ -196,118 +196,129 @@
             android:id="@+id/welfare"
             />
     </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/vip_packRecyclerView"
-        ></androidx.recyclerview.widget.RecyclerView>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_txfy"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
         android:orientation="vertical"
         >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/vip_packRecyclerView"
+            ></androidx.recyclerview.widget.RecyclerView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/jurisdiction_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_13"
-                android:text="当前黄金服务包可以解锁4个权限"
-                android:textColor="#ff303030"
-                android:textSize="12sp"></TextView>
-
-            <TextView
-                android:id="@+id/vip_RecyclerViewstatus"
+            android:background="@drawable/bg_txfy"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="vertical"
+            >
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_40"
-                android:layout_marginRight="@dimen/dp_35"
-                android:gravity="right"
-                android:text="展开"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/jurisdiction_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:text="当前黄金服务包可以解锁4个权限"
+                    android:textColor="#ff303030"
+                    android:textSize="12sp"></TextView>
+
+                <TextView
+                    android:id="@+id/vip_RecyclerViewstatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_40"
+                    android:layout_marginRight="@dimen/dp_35"
+                    android:gravity="right"
+                    android:text="展开"
+                    android:textColor="#ff303030"
+                    android:textSize="11sp"></TextView>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/stuart_img"
+                android:layout_width="7dp"
+                android:layout_height="4dp"
+                android:layout_marginRight="@dimen/dp_27"
+                android:layout_gravity="right"
+                android:src="@drawable/xla"
                 android:textColor="#ff303030"
-                android:textSize="11sp"></TextView>
+                ></ImageView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vip_RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/dp_13"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_13">
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/stuart_img"
-            android:layout_width="7dp"
-            android:layout_height="4dp"
-            android:layout_marginRight="@dimen/dp_27"
-            android:layout_gravity="right"
-            android:src="@drawable/xla"
-            android:textColor="#ff303030"
-            ></ImageView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vip_RecyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/dp_13"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_13">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_17"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开通服务先阅读并同意"
+                android:textColor="#ff686868"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《**规则》"
+                android:textColor="#EB3349"
+                android:textSize="12sp"
+                android:id="@+id/guizhe1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="及"
+                android:textColor="#ff686868"
+                android:textSize="12sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《**规则》"
+                android:textColor="#EB3349"
+                android:textSize="12sp"
+                android:id="@+id/guizhe2"
+                />
+        </LinearLayout>
+        <Button
+            android:layout_width="@dimen/dp_107"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_50"
+            android:text="立即开通"
+            android:textColor="#ffffffff"
+            android:textSize="18sp"
+            android:id="@+id/btn_activate_now"
+            android:background="@drawable/btn_activate_nowbg"
+            ></Button>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_17"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开通服务先阅读并同意"
-            android:textColor="#ff686868"
-            android:textSize="12sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="《**规则》"
-            android:textColor="#EB3349"
-            android:textSize="12sp"
-            android:id="@+id/guizhe1"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="及"
-            android:textColor="#ff686868"
-            android:textSize="12sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="《**规则》"
-            android:textColor="#EB3349"
-            android:textSize="12sp"
-            android:id="@+id/guizhe2"
-            />
-    </LinearLayout>
- <Button
-     android:layout_width="@dimen/dp_107"
-     android:layout_height="@dimen/dp_30"
-     android:layout_gravity="center"
-     android:layout_marginTop="@dimen/dp_50"
-     android:text="立即开通"
-     android:textColor="#ffffffff"
-     android:textSize="18sp"
-     android:id="@+id/btn_activate_now"
-     android:background="@drawable/btn_activate_nowbg"
-     ></Button>
+</ScrollView>
+
 
 </LinearLayout>

@@ -169,6 +169,10 @@ public class QccMainSearchActivity extends BaseActivity implements HistoryAdapte
                         if (s.isSuccess()) {
                             QccBean qccBean = new Gson().fromJson(s.getData(), QccBean.class);
                             Log.e("qcc", new Gson().toJson(qccBean));
+                            if (qccBean == null) {
+                                toast("请输入正确的公司");
+                                return;
+                            }
                             if ("查询失败".equals(qccBean.getMessage())) {
                                 toast("抱歉未找到相关公司，请检查");
                                 return;

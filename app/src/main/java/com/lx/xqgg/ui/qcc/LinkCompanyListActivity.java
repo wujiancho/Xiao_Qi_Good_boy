@@ -81,6 +81,11 @@ public class LinkCompanyListActivity extends BaseActivity {
                                     QccBean qccBean = new Gson().fromJson(s.getData(), QccBean.class);
 //                            Log.e("zlz", new Gson().toJson(qccBean));
                                     if(qccBean==null){
+                                        toast("未查询相关信息，请确认企业名称输入无误");
+                                        return;
+                                    }
+                                    if ("查询失败".equals(qccBean.getMessage())) {
+                                        toast("未查询相关信息，请确认企业名称输入无误");
                                         return;
                                     }
                                     if ("查询无结果".equals(qccBean.getMessage())) {

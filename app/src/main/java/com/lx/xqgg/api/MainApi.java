@@ -29,6 +29,7 @@ import com.lx.xqgg.ui.mycommission.bean.GradeofinterestBean;
 import com.lx.xqgg.ui.mycommission.bean.HistoryCommissionwithdrawalBean;
 import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
 import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
+import com.lx.xqgg.ui.mycommission.bean.MonthlysettlementBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
@@ -615,4 +616,13 @@ public interface MainApi {
      */
     @POST("chargeOrder/chargeOrderOffLine")
     Flowable<BuynowBean>getBuynow(@Body RequestBody body);
+
+    /**
+     * 申请月结
+     * @param
+     * @return
+     */
+    @POST("share/updateChargeType")
+    Flowable<MonthlysettlementBean>getMonthlysettlement();
+
 }

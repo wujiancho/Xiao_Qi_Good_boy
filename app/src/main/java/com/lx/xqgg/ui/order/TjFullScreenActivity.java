@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.order;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -78,7 +79,24 @@ public class TjFullScreenActivity extends BaseActivity {
     @OnClick(R.id.v_close)
     public void onViewClicked() {
         finish();
+        if (android.os.Build.VERSION.SDK_INT >= 27) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (android.os.Build.VERSION.SDK_INT >= 27) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (android.os.Build.VERSION.SDK_INT >= 27) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+    }
 }

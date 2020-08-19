@@ -232,7 +232,15 @@ public class MatchSecondActivity extends BaseActivity {
                             Log.e("zlz", company + "");
                             QccBean qccBean = new Gson().fromJson(s.getData(), QccBean.class);
 //                            Log.e("zlz", new Gson().toJson(qccBean));
-                            if (qccBean.getMessage().equals("查询无结果")) {
+                            if (qccBean == null) {
+                                toast("请输入正确的公司");
+                                return;
+                            }
+                            if ("查询无结果".equals(qccBean.getMessage())) {
+                                toast("抱歉未找到相关公司，请检查");
+                                return;
+                            }
+                            if (qccBean.getMessage().equals("查询失败")) {
                                 toast("未查询相关信息，请确认企业名称输入无误");
                                 return;
                             }

@@ -52,11 +52,6 @@ public class RefundDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
-    }
-
-    @Override
-    protected void initData() {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
         month = getIntent().getStringExtra("month");
@@ -72,6 +67,11 @@ public class RefundDetailsActivity extends BaseActivity {
             String cashRebatez= df.format(integral);
             selectPointsDetails.setText(cashRebatez);
         }
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
 

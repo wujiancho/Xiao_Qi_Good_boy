@@ -372,7 +372,9 @@
         <activity
             android:name=".ui.order.TjFullScreenActivity"
             android:launchMode="singleTop"
+            android:exported="true"
             android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/FullScreen" />
         <activity
             android:name=".ui.my_client.ClientDetailActivity"
