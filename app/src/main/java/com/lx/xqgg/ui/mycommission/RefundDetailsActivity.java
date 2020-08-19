@@ -54,19 +54,19 @@ public class RefundDetailsActivity extends BaseActivity {
     protected void initView() {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
-        month = getIntent().getStringExtra("month");
-        integral = getIntent().getIntExtra("integral",-1);
-        if (!"".equals(month)||month!=null){
+      //  month = getIntent().getStringExtra("month");
+        //integral = getIntent().getIntExtra("integral",-1);
+        //if (!"".equals(month)||month!=null){
             //跳转时获取会动态改变
-            toobarTitle.setText(month+"佣金积分明细");
+         //   toobarTitle.setText(month+"佣金积分明细");
             //当月佣金明细
-            ThisMothpointsdetails(month);
-        }
-        if (!"".equals(integral)){
-            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String cashRebatez= df.format(integral);
-            selectPointsDetails.setText(cashRebatez);
-        }
+            ThisMothpointsdetails("2020-08");
+      //  }
+       // if (!"".equals(integral)){
+           // DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+          // // String cashRebatez= df.format(integral);
+           // selectPointsDetails.setText(cashRebatez);
+       // }
     }
 
     @Override

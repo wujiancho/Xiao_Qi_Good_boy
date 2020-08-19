@@ -18,15 +18,15 @@ public class Config {
 //   public static final String URL = HTTP + "://" + HOST + ":" + PORT + "/";
 
 //       // 本地
-public static final String URL = "http://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
+//public static final String URL = "http://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
 //
-public static final String IMGURL = "http://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
+//public static final String IMGURL = "http://192.168.1.144:8081/xiaoqiguaiguai-mobile/";
     public static final String URLS = "https://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
 
         //正式
- //public static final String URL = "http://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
+ public static final String URL = "http://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
 
-//public static final String IMGURL = "http://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
+public static final String IMGURL = "http://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
 
  // 测试
  //public static final String URL = "http://app.xhsqy.com/xiaoqiguaiguai-mobile/";

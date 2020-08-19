@@ -1,5 +1,7 @@
 package com.lx.xqgg.ui.mycommission.adapter;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -7,6 +9,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.ui.mycommission.AccumulatedRebateActivity;
+import com.lx.xqgg.ui.mycommission.RefundDetailsActivity;
 import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
 
 import java.text.DecimalFormat;
@@ -26,9 +30,17 @@ public class AccumulatedRebateAdapter extends BaseQuickAdapter<HistoryPointsdeta
         String productChargez= df.format(productCharge);
        helper.setText(R.id.accumulated_pointscontent,item.getMonth()+" 佣金积分 "+productChargez);
         Glide.with(mContext)
-                .load(R.drawable.mygm)
+                .load(Config.IMGURL+item.getIco())
                 .into((ImageView) helper.getView(R.id.accumulated_pointsimg));
         //Config.IMGURL + item.getPicture()
-       helper.addOnClickListener(R.id.integraldetailed);
+       helper.setOnClickListener(R.id.integraldetailed, new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intentrd=new Intent(mContext, RefundDetailsActivity.class);
+               intentrd.putExtra("month",item.getMonth());
+               intentrd.putExtra("integral",item.getProductCharge());
+               mContext.startActivity(intentrd);
+           }
+       });
     }
 }

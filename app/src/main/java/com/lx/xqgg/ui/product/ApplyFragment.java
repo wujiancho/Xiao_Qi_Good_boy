@@ -230,12 +230,12 @@ public class ApplyFragment extends DialogFragment {
                     if (companyWindow.isShowing()) {
                         companyWindow.dismiss();
                     }
-                    etIdNum.setText("");
+                   /* etIdNum.setText("");
                     etPhone.setText("");
                     etFrName.setText("");
                     etCode.setText("");
                     etSocialCode.setText("");
-                    tvArea.setText("");
+                    tvArea.setText("");*/
                 }
             }
         });

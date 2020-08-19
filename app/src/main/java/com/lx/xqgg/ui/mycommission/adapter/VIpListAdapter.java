@@ -35,7 +35,7 @@ public class VIpListAdapter extends BaseQuickAdapter<SystemCommissionlevelBean.R
     @Override
     protected void convert(BaseViewHolder helper, SystemCommissionlevelBean.RightsBean item) {
         Glide.with(mContext)
-                .load(R.drawable.mygm)
+                .load(Config.IMGURL+item.getImage())
                 .into((ImageView) helper.getView(R.id.vip_img));
 //Config.IMGURL + item.getImage()
         helper.setText(R.id.vip_name,item.getRightsName());

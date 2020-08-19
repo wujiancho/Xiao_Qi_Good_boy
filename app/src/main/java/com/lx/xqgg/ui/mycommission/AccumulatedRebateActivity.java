@@ -93,16 +93,6 @@ public class AccumulatedRebateActivity extends BaseActivity {
                                 accumulatedRebateAdapter = new AccumulatedRebateAdapter(historyaccumulatedPointslist);
                                 accumulatedrebateRecyclerView.setAdapter(accumulatedRebateAdapter);
                                 accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
-                                //点击条目跳转到点击月份的返佣明细
-                                accumulatedRebateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                                    @Override
-                                    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                                        Intent intentrd=new Intent(AccumulatedRebateActivity.this,RefundDetailsActivity.class);
-                                        intentrd.putExtra("month",historyaccumulatedPointslist.get(position).getMonth());
-                                        intentrd.putExtra("integral",historyaccumulatedPointslist.get(position).getProductCharge());
-                                        startActivity(intentrd);
-                                    }
-                                });
                             }else {
                                 List<String> error =new ArrayList<>();
                                 ErrorAdapter eerr = new ErrorAdapter(error);
