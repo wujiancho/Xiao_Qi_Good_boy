@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ExistCustomerInfortionBean implements Serializable {
 
+
     /**
      * area : 北京  东城区
      * company :
@@ -18,6 +19,7 @@ public class ExistCustomerInfortionBean implements Serializable {
      * link_man1 :
      * link_phone1 :
      * id_card1 :
+     * city :
      */
 
     private String area;
@@ -33,6 +35,7 @@ public class ExistCustomerInfortionBean implements Serializable {
     private String link_man1;
     private String link_phone1;
     private String id_card1;
+    private String city;
 
     public String getArea() {
         return area;
@@ -136,5 +139,13 @@ public class ExistCustomerInfortionBean implements Serializable {
 
     public void setId_card1(String id_card1) {
         this.id_card1 = id_card1;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

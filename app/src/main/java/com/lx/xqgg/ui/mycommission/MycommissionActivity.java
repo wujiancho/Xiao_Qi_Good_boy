@@ -348,6 +348,8 @@ public class MycommissionActivity extends BaseActivity {
                                                 Intent intentbuysp = new Intent(MycommissionActivity.this, BuyServicePackActivity.class);
                                                 if (!"".equals(currentLevel)) {
                                                     intentbuysp.putExtra("buyname", currentLevel);
+                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(position).getId());
+                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(position).getPicture());
                                                 }
                                                 startActivity(intentbuysp);
                                             }

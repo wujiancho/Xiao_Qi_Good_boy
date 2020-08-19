@@ -56,7 +56,7 @@ public class RefundDetailsActivity extends BaseActivity {
         token = SharedPrefManager.getUser().getToken();
         month = getIntent().getStringExtra("month");
         integral = getIntent().getIntExtra("integral",-1);
-        if (!"".equals(month)){
+        if (!"".equals(month)||month!=null){
             //跳转时获取会动态改变
             toobarTitle.setText(month+"佣金积分明细");
             //当月佣金明细

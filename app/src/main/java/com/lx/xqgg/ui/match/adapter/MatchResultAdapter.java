@@ -209,7 +209,6 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                             namemach = SpUtil.getInstance().getSpString("namemach");
                             companymach = SpUtil.getInstance().getSpString("companymach");
                             int userid= twoBean.getId();
-                            String cityname= Constans.CITY;
                             HashMap<String, Object> paramsMap = new HashMap<>();
                             paramsMap.put("token", SharedPrefManager.getUser().getToken());
                             paramsMap.put("name", namemach);
@@ -241,7 +240,7 @@ public class MatchResultAdapter extends BaseMultiItemQuickAdapter<MultiItemEntit
                                             Constans.productDetails=jiekong2;
 
                                             HashMap<String, Object> paramsMap = new HashMap<>();
-                                            paramsMap.put("cityName", cityname+"");
+                                            paramsMap.put("cityName", data.getCity());
                                             paramsMap.put("company", companymach+"");
                                             paramsMap.put("type", "app");
                                             paramsMap.put("id", userid+"");

@@ -2,20 +2,16 @@ package com.lx.xqgg.ui.mycommission;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
@@ -33,13 +29,11 @@ import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
 import com.lx.xqgg.util.SpUtil;
-import com.stx.xhb.xbanner.XBanner;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +42,6 @@ import java.util.List;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -105,7 +98,9 @@ public class BuyServicePackActivity extends BaseActivity {
     TextView vipCommissioncountchamge;
     @BindView(R.id.welfare)
     TextView welfare;
-     private  String token;
+    @BindView(R.id.user_viplogo)
+    ImageView userViplogo;
+    private String token;
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
@@ -113,6 +108,8 @@ public class BuyServicePackActivity extends BaseActivity {
     private String buyname;
     private int bugid;
     private int positions;
+    private int id;
+    private String imgurl;
 
     @Override
     protected int getLayoutId() {
@@ -127,45 +124,52 @@ public class BuyServicePackActivity extends BaseActivity {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
         //默认
-        selectCommissionlevel( 24, "/common/image?fileId=90c66810d9f849c8b880942f2cd3cd7a.png");
+        id = getIntent().getIntExtra("id", 24);
+        imgurl = getIntent().getStringExtra("imgurl");
+        if (!"".equals(id) || !"".equals(imgurl)) {
+            selectCommissionlevel(id, imgurl);
+        }
     }
+
     //获取eventbus参数
-    @Subscribe(threadMode = ThreadMode.BACKGROUND,sticky = true)
-    public  void ServiseridurlEvent(ServiseridurlEvent event){
-       int id = event.getId();
-       String imgurl = event.getImgurl();
-       String vipname = event.getVipname();
-       String endTime = event.getEndTime();
-       int rightsNum = event.getRightsNum();
-       int position = event.getPosition();
-       vipnameChange.setText(vipname+"服务包");
-        positions=position;
+    @Subscribe(threadMode = ThreadMode.BACKGROUND, sticky = true)
+    public void ServiseridurlEvent(ServiseridurlEvent event) {
+        int id = event.getId();
+        String imgurl = event.getImgurl();
+        String vipname = event.getVipname();
+        String endTime = event.getEndTime();
+        int rightsNum = event.getRightsNum();
+        int position = event.getPosition();
+        vipnameChange.setText(vipname + "服务包");
+        positions = position;
         //根据选择佣金等级计算服务商当月佣金
-        selectCommissionlevel( id, imgurl);
-        bugid=id;
-        jurisdictionCount.setText("当前"+vipname+"服务包可以解锁"+rightsNum+"个权限");
-        termOfValidity.setText("有效期："+endTime);
+        selectCommissionlevel(id, imgurl);
+        bugid = id;
+        jurisdictionCount.setText("当前" + vipname + "服务包可以解锁" + rightsNum + "个权限");
+        termOfValidity.setText("有效期：" + endTime);
+
     }
+
     @Override
     protected void initData() {
 
         buyname = getIntent().getStringExtra("buyname");
-        if (!"".equals(buyname)){
-            vipCommissionno.setText("当前用户等级："+buyname);
+        if (!"".equals(buyname)) {
+            vipCommissionno.setText("当前用户等级：" + buyname);
         }
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
-        if (!"".equals(returningservantdata)){
+        if (!"".equals(returningservantdata)) {
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
             int allRebate = returningservantBean.getAllCharge();
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String allRebatez= df.format(allRebate);
-            accumulatedPoints.setText("小麒乖乖已累计为您返佣"+allRebatez+"积分");
+            String allRebatez = df.format(allRebate);
+            accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
         }
 
         //获取用户信息
-       userName .setText(SharedPrefManager.getUserInfo().getUsername());
-        String servisername= SpUtil.getInstance().getSpString("servisername");
-        if (!"".equals(servisername)){
+        userName.setText(SharedPrefManager.getUserInfo().getUsername());
+        String servisername = SpUtil.getInstance().getSpString("servisername");
+        if (!"".equals(servisername)) {
             usercompanyName.setText(servisername);
         }
 
@@ -173,8 +177,7 @@ public class BuyServicePackActivity extends BaseActivity {
         vipcard();
 
         //获取权益列表
-       // Listofinterests();
-
+        // Listofinterests();
 
 
     }
@@ -199,33 +202,34 @@ public class BuyServicePackActivity extends BaseActivity {
     }
 
     //根据选择佣金等级计算服务商当月佣金
-    private void selectCommissionlevel(int id,String imgurl ){
-            addSubscribe(ApiManage.getInstance().getMainApi().getSelectCommissionlevel(token,id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new BaseSubscriber<BaseData<SelectCommissionlevelBean>>(mContext, null) {
-                        @Override
-                        public void onNext(BaseData<SelectCommissionlevelBean> selectCommissionlevelBeanBaseData) {
-                            SelectCommissionlevelBean data = selectCommissionlevelBeanBaseData.getData();
-                            if (selectCommissionlevelBeanBaseData.isSuccess()){
-                                int newCharge = data.getNewCharge();//计算出的新佣金
-                                int oldCharge=data.getOldCharge();//之前的佣金
-                                String promote =data.getPromote();//提升的比例
-                                int rightsNum=data.getRightsNum();//新的等级对应的权益个数
-                                DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-                                String newChargez= df.format(newCharge);
-                                String oldChargez= df.format(oldCharge);
-                                vipCommissioncountno.setText(oldChargez);
-                                vipCommissioncountchamge.setText(newChargez);
-                                Glide.with(mContext)
-                                        .load(Config.IMGURL + imgurl)
-                                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                                        .into(vipselectbg);
-                                welfare.setText("佣金至少提升"+promote+"%,获得额外"+rightsNum+"项权益");
-                            }
+    private void selectCommissionlevel(int id, String imgurl) {
+        addSubscribe(ApiManage.getInstance().getMainApi().getSelectCommissionlevel(token, id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<SelectCommissionlevelBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<SelectCommissionlevelBean> selectCommissionlevelBeanBaseData) {
+                        SelectCommissionlevelBean data = selectCommissionlevelBeanBaseData.getData();
+                        if (selectCommissionlevelBeanBaseData.isSuccess()) {
+                            int newCharge = data.getNewCharge();//计算出的新佣金
+                            int oldCharge = data.getOldCharge();//之前的佣金
+                            String promote = data.getPromote();//提升的比例
+                            int rightsNum = data.getRightsNum();//新的等级对应的权益个数
+                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                            String newChargez = df.format(newCharge);
+                            String oldChargez = df.format(oldCharge);
+                            vipCommissioncountno.setText(oldChargez);
+                            vipCommissioncountchamge.setText(newChargez);
+                            Glide.with(mContext)
+                                    .load(Config.IMGURL + imgurl)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                    .into(vipselectbg);
+                            welfare.setText("佣金至少提升" + promote + "%,获得额外" + rightsNum + "项权益");
                         }
-                    }));
+                    }
+                }));
     }
+
     //vip卡片
     private void vipcard() {
         systemCommissionlevel = new ArrayList<>();
@@ -236,13 +240,17 @@ public class BuyServicePackActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseData<List<SystemCommissionlevelBean>> listBaseData) {
                         if (listBaseData.isSuccess()) {
+
                             systemCommissionlevel.addAll(listBaseData.getData());
-                            vipPackAdapter = new VipPackAdapter(systemCommissionlevel,mContext);
+                            vipPackAdapter = new VipPackAdapter(systemCommissionlevel, mContext);
                             vipPackRecyclerView.setAdapter(vipPackAdapter);
-                            vipPackRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.HORIZONTAL,false));
+                            vipPackRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
                             vipPackAdapter.setGetListener(new VipPackAdapter.GetListener() {
                                 @Override
                                 public void onClick(int position) {
+                                    Glide.with(mContext)
+                                            .load(Config.IMGURL + listBaseData.getData().get(position).getIco())
+                                            .into(userViplogo);
 //                                 把点击的下标回传给适配器 确定下标
                                     vipPackAdapter.setmPosition(position);
                                     vipPackAdapter.notifyDataSetChanged();
@@ -250,7 +258,7 @@ public class BuyServicePackActivity extends BaseActivity {
                                     viplist.addAll(listBaseData.getData().get(position).getRights());
                                 }
                             });
-                            }
+                        }
                         viplist = new ArrayList<>();
                         viplist.clear();
                         viplist.addAll(listBaseData.getData().get(positions).getRights());
@@ -286,6 +294,7 @@ public class BuyServicePackActivity extends BaseActivity {
                 }));
 
     }
+
     //获取权益列表
     private void Listofinterests() {
         ApiManage.getInstance().getMainApi().getListofinterests()
@@ -305,49 +314,52 @@ public class BuyServicePackActivity extends BaseActivity {
                 });
 
     }
+
     //立即开通
-    private  void  activatenow(int id){
+    private void activatenow(int id) {
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("token", SharedPrefManager.getUser().getToken());
         paramsMap.put("configId", id);
-        Log.d("mydata", "activatenow: "+id+token);
+        Log.d("mydata", "activatenow: " + id + token);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         ApiManage.getInstance().getMainApi().getBuynow(body)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableSubscriber<BuynowBean>() {
-                            @Override
-                            public void onNext(BuynowBean buynowBean) {
-                                if (buynowBean.isSuccess()){
-                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(BuyServicePackActivity.this);
-                                    builder1.setMessage("已申请线下购买，小麒乖乖处理中，会有渠道人员联系您开通服务包申请，请耐心等待");
-                                    builder1.setTitle("温馨提示");
-                                    builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    });
-                                    builder1.show();
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSubscriber<BuynowBean>() {
+                    @Override
+                    public void onNext(BuynowBean buynowBean) {
+                        if (buynowBean.isSuccess()) {
+                            AlertDialog.Builder builder1 = new AlertDialog.Builder(BuyServicePackActivity.this);
+                            builder1.setMessage("已申请线下购买，小麒乖乖处理中，会有渠道人员联系您开通服务包申请，请耐心等待");
+                            builder1.setTitle("温馨提示");
+                            builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    finish();
                                 }
-                            }
+                            });
+                            builder1.show();
+                        }
+                    }
 
-                            @Override
-                            public void onError(Throwable t) {
-                            toast(t.getMessage());
-                            }
+                    @Override
+                    public void onError(Throwable t) {
+                        toast(t.getMessage());
+                    }
 
-                            @Override
-                            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                            }
-                        });
+                    }
+                });
 
     }
+
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 }
