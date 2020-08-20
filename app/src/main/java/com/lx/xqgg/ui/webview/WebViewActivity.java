@@ -141,7 +141,9 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
     private boolean needShare = false;
     private  File file;
     private  File filelogo;
+    private  File filelogo2;
     private String decodeFile;
+    private String decodeFile2;
     private String image;
     private String title;
     private String count;
@@ -760,40 +762,46 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
 
     //权益详情分享
     @JavascriptInterface
-    public void handleShare(){
-        UMWeb web = new UMWeb(webview.getUrl());
-        web.setThumb(new UMImage(WebViewActivity.this,  R.drawable.logo));
-        web.setTitle("权益服务");
-        //  web.setThumb(new UMImage(WebViewActivity.this, proLogo));
-        web.setDescription("开通vip享受更多优惠服务");
-        new ShareAction(mContext)
-                .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                .setShareboardclickCallback(new ShareBoardlistener() {
-                    @Override
-                    public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-                        if (share_media == SHARE_MEDIA.QQ) {
-                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
-                                    .withMedia(web)
-                                    .setCallback(umShareListener)
-                                    .share();
-                        } else if (share_media == SHARE_MEDIA.WEIXIN) {
-                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
-                                    .withMedia(web)
-                                    .setCallback(umShareListener)
-                                    .share();
-                        } else if (share_media == SHARE_MEDIA.QZONE) {
-                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
-                                    .withMedia(web)
-                                    .setCallback(umShareListener)
-                                    .share();
-                        } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                            new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                    .withMedia(web)
-                                    .setCallback(umShareListener)
-                                    .share();
+    public void handleShare(String shareId,String name,String image,String desc){
+        returnBitMap2(Config.IMGURL+image);
+        if (!"".equals(filelogo2)) {
+            UMWeb web = new UMWeb(Constans.interestsDetails);
+            Log.d("onstansinterestsetails", "convert: "+Constans.interestsDetails);
+            web.setThumb(new UMImage(WebViewActivity.this,filelogo2));
+            web.setTitle(name);
+            //  web.setThumb(new UMImage(WebViewActivity.this, proLogo));
+            web.setDescription(desc);
+            new ShareAction(mContext)
+                    .setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setShareboardclickCallback(new ShareBoardlistener() {
+                        @Override
+                        public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                            if (share_media == SHARE_MEDIA.QQ) {
+                                web.setThumb(new UMImage(WebViewActivity.this, decodeFile2));
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QQ)
+                                        .withMedia(web)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.WEIXIN) {
+                                web.setThumb(new UMImage(WebViewActivity.this, filelogo2));
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN)
+                                        .withMedia(web)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.QZONE) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.QZONE)
+                                        .withMedia(web)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                                new ShareAction(mContext).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                        .withMedia(web)
+                                        .setCallback(umShareListener)
+                                        .share();
+                            }
                         }
-                    }
-                }).open();
+                    }).open();
+        }
     }
 
         //详细页H5页面分享
@@ -913,7 +921,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             }
         }
     //H5获取商店logo图片保存到本地
-    public void returnBitMap(final String url){
+    public void returnBitMap( String url){
         Observable.create(new ObservableOnSubscribe<File>() {
             @Override
             public void subscribe(ObservableEmitter<File> e) throws Exception {
@@ -945,6 +953,46 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
                         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                                 Uri.fromFile(new File(destFile.getPath()))));
                         decodeFile = destFile.getPath();
+                        Looper.prepare();
+                        Looper.loop();
+                    }
+
+                });
+
+    }
+    //H5获取商店logo图片保存到本地
+    public void returnBitMap2( String url){
+        Observable.create(new ObservableOnSubscribe<File>() {
+            @Override
+            public void subscribe(ObservableEmitter<File> e) throws Exception {
+                //通过gilde下载得到file文件,这里需要注意android.permission.INTERNET权限
+                e.onNext(Glide.with(mContext)
+                        .load(url)
+                        .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get());
+                e.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(new Consumer<File>() {
+                    @Override
+                    public void accept(File file) throws Exception {
+                        //获取到下载得到的图片，进行本地保存
+                        File pictureFolder = Environment.getExternalStorageDirectory();
+                        //第二个参数为你想要保存的目录名称
+                        File appDir = new File(pictureFolder, "quanyilogo");
+                        if (!appDir.exists()) {
+                            appDir.mkdirs();
+                        }
+                        String fileName = System.currentTimeMillis() + ".jpg";
+                        File destFile = new File(appDir, fileName);
+                        //把gilde下载得到图片复制到定义好的目录中去
+                        copy(file, destFile);
+                        filelogo2=new File(destFile.getPath());
+                        // 最后通知图库更新
+                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                Uri.fromFile(new File(destFile.getPath()))));
+                        decodeFile2 = destFile.getPath();
                         Looper.prepare();
                         Looper.loop();
                     }

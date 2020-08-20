@@ -524,7 +524,7 @@ public interface MainApi {
      * @return
      */
     @GET("share/getMonthCharge")
-    Flowable<BaseData<List<ThisMothPointsdetailstBean>>>getThisMothPointsdetailst(@Query("token") String token,@Query("month") String month);
+    Flowable<ThisMothPointsdetailstBean>getThisMothPointsdetailst(@Query("token") String token,@Query("month") String month);
 
     /**
      * 历史佣金
@@ -623,6 +623,6 @@ public interface MainApi {
      * @return
      */
     @POST("share/updateChargeType")
-    Flowable<MonthlysettlementBean>getMonthlysettlement();
+    Flowable<MonthlysettlementBean>getMonthlysettlement(@Query("token") String token);
 
 }

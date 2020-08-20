@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,8 +40,7 @@ public class RefundDetailsActivity extends BaseActivity {
     TextView selectPointsDetails;
     @BindView(R.id.points_details_RecyclerView)
     RecyclerView pointsDetailsRecyclerView;
-    private String token;
-    private List<ThisMothPointsdetailstBean> pointsdetailslist;
+    private List<ThisMothPointsdetailstBean.DataBean> pointsdetailslist;
     private PointsDetailsAdapter pointsDetailsAdapter;
     private String month;
     private int integral;
@@ -52,26 +52,27 @@ public class RefundDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        //获取用户token
-        token = SharedPrefManager.getUser().getToken();
-      //  month = getIntent().getStringExtra("month");
-        //integral = getIntent().getIntExtra("integral",-1);
-        //if (!"".equals(month)||month!=null){
-            //跳转时获取会动态改变
-         //   toobarTitle.setText(month+"佣金积分明细");
-            //当月佣金明细
-            ThisMothpointsdetails("2020-08");
-      //  }
-       // if (!"".equals(integral)){
-           // DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-          // // String cashRebatez= df.format(integral);
-           // selectPointsDetails.setText(cashRebatez);
-       // }
+
     }
 
     @Override
     protected void initData() {
-
+        //获取用户token
+          month = getIntent().getStringExtra("month");
+        Log.d("getTokenddddd", "initData: "+SharedPrefManager.getUser().getToken());
+        //  if (!"".equals(token)||token!=null){
+        // }
+        integral = getIntent().getIntExtra("integral",-1);
+        if (!"".equals(month)||month!=null){
+            //跳转时获取会动态改变
+            toobarTitle.setText(month+"佣金积分明细");
+        }
+        if (!"".equals(integral)){
+            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+            String cashRebatez= df.format(integral);
+            selectPointsDetails.setText(cashRebatez);
+        }
+        ThisMothpointsdetails();
     }
 
 
@@ -81,14 +82,17 @@ public class RefundDetailsActivity extends BaseActivity {
     }
 
     //当月佣金明细
-    private void ThisMothpointsdetails(String time){
-        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(token,time)
+    private void ThisMothpointsdetails(){
+        Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
+        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(SharedPrefManager.getUser().getToken(),month)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<List<ThisMothPointsdetailstBean>>>(mContext, null) {
+                .subscribeWith(new BaseSubscriber<ThisMothPointsdetailstBean>(mContext, null) {
+
                     @Override
-                    public void onNext(BaseData<List<ThisMothPointsdetailstBean>> listBaseData) {
+                    public void onNext(ThisMothPointsdetailstBean listBaseData) {
                         if (listBaseData.isSuccess()){
+                            Log.d("listBaseData/////", "onNext: "+listBaseData.getData());
                             if (listBaseData.getData()!= null && listBaseData.getData().size() > 0){
                                 pointsdetailslist = new ArrayList<>();
                                 pointsdetailslist.addAll(listBaseData.getData());

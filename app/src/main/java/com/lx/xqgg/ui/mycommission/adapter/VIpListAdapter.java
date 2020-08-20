@@ -12,6 +12,7 @@ import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
+import com.lx.xqgg.base.Constans;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.ui.mycommission.bean.DetailsofinterestBean;
 import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
@@ -39,24 +40,41 @@ public class VIpListAdapter extends BaseQuickAdapter<SystemCommissionlevelBean.R
                 .into((ImageView) helper.getView(R.id.vip_img));
 //Config.IMGURL + item.getImage()
         helper.setText(R.id.vip_name,item.getRightsName());
-        HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("id", item.getRightsId());
-        paramsMap.put("ident", "app");
-        paramsMap.put("statusHeight", "20");
-        String json= new Gson().toJson(paramsMap);
-        Log.d("quanyi", "convert: "+json);
-        String jiajson= Base64.encode(json.getBytes());
-        String jiekong= Config.URL+"view/rights.html?bean="+jiajson;
-        Log.d("quanyi", "convert: "+jiekong);
+
         helper.setOnClickListener(R.id.detailsofinterests, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewActivity.open(new WebViewActivity.Builder()
-                        .setContext(mContext)
-                        .setAutoTitle(false)
-                        .setIsFwb(false)
-                        .setNeedShare(false)
-                        .setUrl(jiekong),false);
+                HashMap<String, Object> paramsMap2 = new HashMap<>();
+                paramsMap2.put("id", item.getRightsId());
+                paramsMap2.put("ident", "h5");
+                String json2= new Gson().toJson(paramsMap2);
+                Log.d("quanyi2", "convert: "+json2);
+                String jiajson2= Base64.encode(json2.getBytes());
+                String jiekong2= Config.URL+"view/rights.html?bean="+jiajson2;
+                Log.d("quanyi2", "convert: "+jiekong2);
+                Constans.interestsDetails=jiekong2;
+
+
+                HashMap<String, Object> paramsMap = new HashMap<>();
+                paramsMap.put("id", item.getRightsId());
+                paramsMap.put("ident", "app");
+                paramsMap.put("statusHeight", "20");
+                String json= new Gson().toJson(paramsMap);
+                Log.d("quanyi", "convert: "+json);
+                String jiajson= Base64.encode(json.getBytes());
+                String jiekong= Config.URL+"view/rights.html?bean="+jiajson;
+                Log.d("quanyi", "convert: "+jiekong);
+
+
+
+                if (!"".equals(jiajson2)){
+                    WebViewActivity.open(new WebViewActivity.Builder()
+                            .setContext(mContext)
+                            .setAutoTitle(false)
+                            .setIsFwb(false)
+                            .setNeedShare(false)
+                            .setUrl(jiekong),false);
+                }
             }
         });
     }

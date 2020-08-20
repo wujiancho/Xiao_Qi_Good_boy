@@ -39,14 +39,48 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ui.mycommission.RefundDetailsActivity"></activity>
-        <activity android:name=".ui.mycommission.AddbankCardActivity" />
-        <activity android:name=".ui.mycommission.WithdrawalRecordActivity" />
-        <activity android:name=".ui.mycommission.CashWithdrawalConfirmationActivity" />
-        <activity android:name=".ui.mycommission.AccumulatedRebateActivity" />
-        <activity android:name=".ui.mycommission.ThisMonthReturnActivity" />
-        <activity android:name=".ui.mycommission.CashWithdrawalRebateActivity" />
-        <activity android:name=".ui.mycommission.BuyServicePackActivity" />
+        <activity android:name=".ui.mycommission.RefundDetailsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.mycommission.AddbankCardActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.mycommission.WithdrawalRecordActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+        <activity android:name=".ui.mycommission.CashWithdrawalConfirmationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.mycommission.AccumulatedRebateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.mycommission.ThisMonthReturnActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.mycommission.CashWithdrawalRebateActivity"
+
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.mycommission.BuyServicePackActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".ui.lacollege.LACollegeActivity"
             android:launchMode="singleTop"

@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -45,9 +46,8 @@ public class ThisMonthReturnActivity extends BaseActivity {
     RecyclerView thisMonthpointsRecyclerView;
     @BindView(R.id.vip_name)
     TextView vipName;
-    private List<ThisMothPointsdetailstBean> pointsdetailslist;
+    private List<ThisMothPointsdetailstBean.DataBean> pointsdetailslist;
     private PointsDetailsAdapter pointsDetailsAdapter;
-    private String token;
     private String time;
     private String vipname;
 
@@ -63,8 +63,7 @@ public class ThisMonthReturnActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //获取用户token
-        token = SharedPrefManager.getUser().getToken();
+
         vipname = getIntent().getStringExtra("vipname");
         if (!"".equals(vipname)){
             vipName.setText("享受"+vipname+"返佣权益");
@@ -88,19 +87,21 @@ public class ThisMonthReturnActivity extends BaseActivity {
     //当月佣金明细
     private void ThisMothpointsdetails(){
         Date t = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
         time = df.format(t);
-        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(token,time)
+        Log.d("tome00000", "ThisMothpointsdetails: "+time);
+        Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
+        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(SharedPrefManager.getUser().getToken(),time)
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
-              .subscribeWith(new BaseSubscriber<BaseData<List<ThisMothPointsdetailstBean>>>(mContext, null) {
+              .subscribeWith(new BaseSubscriber<ThisMothPointsdetailstBean>(mContext, null) {
                   @Override
-                  public void onNext(BaseData<List<ThisMothPointsdetailstBean>> listBaseData) {
-                      if (listBaseData.isSuccess()){
-                          if (listBaseData.getData()!= null && listBaseData.getData().size() > 0){
+                  public void onNext(ThisMothPointsdetailstBean listBaseData) {
+                      if (listBaseData.isSuccess()) {
+                          if (listBaseData.getData() != null && listBaseData.getData().size() > 0) {
                               pointsdetailslist = new ArrayList<>();
                               pointsdetailslist.addAll(listBaseData.getData());
-                              vipName.setText("享受"+listBaseData.getData().get(0).getChargeName()+"返佣权益");
+                              vipName.setText("享受" + listBaseData.getData().get(0).getChargeName() + "返佣权益");
                               pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
                               thisMonthpointsRecyclerView.setAdapter(pointsDetailsAdapter);
                               thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
@@ -112,7 +113,6 @@ public class ThisMonthReturnActivity extends BaseActivity {
                               thisMonthpointsRecyclerView.setAdapter(eerr);
                               eerr.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
                           }
-
                       }
                   }
 

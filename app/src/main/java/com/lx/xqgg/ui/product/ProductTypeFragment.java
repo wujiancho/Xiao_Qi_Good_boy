@@ -129,78 +129,16 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                         rvProduct.setAdapter(productAdapter);
                         productAdapter.setEmptyView(R.layout.layout_empty, rvProduct);
                         productAdapter.setOnLoadMoreListener(ProductTypeFragment.this::onLoadMoreRequested);
-                        productAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-
-                            private ProductDetailBean productDetailBean;
+                     /*   productAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
 
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                /*Intent intent = new Intent(mContext, ProductDetailActivity.class);
+                                *//*Intent intent = new Intent(mContext, ProductDetailActivity.class);
                                 intent.putExtra("data", list.get(position).getId());
-                                startActivity(intent);*/
+                                startActivity(intent);*//*
                               //  toast("跳转产品详细页H5");
-                                //接受的数据生成jsonbean数据
-                                String userphone= SharedPrefManager.getUser().getMobile();
-                                int userid= productBean.getRecords().get(position).getId();
-                                String image = productBean.getRecords().get(position).getImage();
-                                String  title = productBean.getRecords().get(position).getTitle();
-                                int quota = productBean.getRecords().get(position).getQuota();
-                                String rate = productBean.getRecords().get(position).getRate();
-                                String  ed= SharedPrefManager.getImitationexamination().getPro_bal();
-                                String  fee= SharedPrefManager.getImitationexamination().getPro_fee();
-                                String count=ed+":"+(quota/10000)+",日"+fee+":" + rate;
-                                ProductDetailEvent event=new ProductDetailEvent();
-                                event.setImage(image);
-                                event.setTitle(title);
-                                event.setCount(count);
-                                EventBus.getDefault().postSticky(event);
-                                String cityname= Constans.CITY;
-
-                                //生成产品详细页的接口
-                                ArrayList<ProductDetailBean> gson2= new ArrayList<>();
-                                productDetailBean = new ProductDetailBean();
-                                productDetailBean.setUserPhone(userphone);
-                                productDetailBean.setType("h5");
-                                productDetailBean.setId(userid+"");
-                                productDetailBean.setStatusHeight("30.000");
-                                productDetailBean.setCityName("");
-                                gson2.add(productDetailBean);
-                                String url2=new Gson().toJson(gson2);
-                                String json2 =url2.substring(1,url2.length()-1);
-                                Log.e("zlz",json2);
-                                //加密json
-                                String jiajson2= Base64.encode(json2.getBytes());
-                                //生成产品详细页的接口
-                                String jiekong2=Config.URL+"view/productDetails.html?bean="+jiajson2;
-                                Constans.productDetails=jiekong2;
-
-                                ArrayList<ProductDetailBean> gson= new ArrayList<>();
-                                productDetailBean = new ProductDetailBean();
-                                productDetailBean.setUserPhone(userphone);
-                                productDetailBean.setType("app");
-                                productDetailBean.setId(userid+"");
-                                productDetailBean.setStatusHeight("30.000");
-                                productDetailBean.setCityName(cityname);
-                                gson.add(productDetailBean);
-                                String url=new Gson().toJson(gson);
-                                String json =url.substring(1,url.length()-1);
-                                Log.e("zlz",json);
-                                //加密json
-                                String jiajson= Base64.encode(json.getBytes());
-                                String jiekong= Config.URL+"view/productDetails.html?bean="+jiajson;
-                                Log.e("zlz",jiekong);
-
-                                if (!"".equals(jiekong2)) {
-                                        WebViewActivity.open(new WebViewActivity.Builder()
-                                                .setContext(mContext)
-                                                .setAutoTitle(false)
-                                                .setIsFwb(false)
-                                                .setTitle("产品详情")
-                                                .setNeedShare(false)
-                                                .setUrl(jiekong));
-                                }
                             }
-                        });
+                        });*/
                         productAdapter.bindToRecyclerView(rvProduct);
                         refreshLayout.setOnRefreshListener(ProductTypeFragment.this::onRefresh);
                         productAdapter.setOnApplyClickListener(ProductTypeFragment.this::onClick);
@@ -354,6 +292,7 @@ public class ProductTypeFragment extends BaseFragment implements SwipeRefreshLay
                                 productAdapter.loadMoreComplete();
                             }
                         } else {
+                            toast(productBean.getMessage());
                             productAdapter.loadMoreComplete();
                         }
                     }

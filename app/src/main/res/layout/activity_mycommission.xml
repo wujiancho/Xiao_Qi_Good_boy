@@ -315,7 +315,7 @@
                 android:indeterminateOnly="false"
                 android:max="800"
                 android:progress="309"
-                android:progressDrawable="@drawable/progress_bar_bg"
+                android:progressDrawable="@drawable/progress_bar_bgp"
                 />
         </LinearLayout>
 

@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.xqgg.R;
@@ -20,6 +22,7 @@ import com.lx.xqgg.ui.explain.ExplainActivity;
 import com.lx.xqgg.ui.login.LoginActivity;
 import com.lx.xqgg.util.AppActivityTaskManager;
 import com.lx.xqgg.util.AppApplicationUtil;
+import com.lx.xqgg.util.DataCleanManager;
 import com.lx.xqgg.util.JPushUtil;
 import com.zxy.tiny.Tiny;
 import com.zxy.tiny.callback.FileCallback;
@@ -32,6 +35,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
@@ -50,6 +54,16 @@ public class SettingActivity extends BaseActivity implements ChooseDialogFragmen
     Button btnLogout;
     @BindView(R.id.iv_head)
     CircleImageView circleImageView;
+    @BindView(R.id.layout_yhfwxy)
+    LinearLayout layoutYhfwxy;
+    @BindView(R.id.layout_ysbhsm)
+    LinearLayout layoutYsbhsm;
+    @BindView(R.id.layout_yjfk)
+    LinearLayout layoutYjfk;
+    @BindView(R.id.huancun_count)
+    TextView huancunCount;
+    @BindView(R.id.layout_qchc)
+    LinearLayout layoutQchc;
 
     //照片文件父文件夹
     private File dirFile;
@@ -81,6 +95,15 @@ public class SettingActivity extends BaseActivity implements ChooseDialogFragmen
         if (!dirFile.exists()) {
             dirFile.mkdirs();
         }
+        //获得缓存
+        String totalCache= null;
+        try {
+            totalCache = DataCleanManager.getTotalCacheSize(mContext);
+            huancunCount.setText(totalCache);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -88,7 +111,7 @@ public class SettingActivity extends BaseActivity implements ChooseDialogFragmen
 
     }
 
-    @OnClick({R.id.v_close, R.id.btn_logout, R.id.layout_yhfwxy, R.id.layout_ysbhsm, R.id.layout_yjfk,R.id.iv_head})
+    @OnClick({R.id.v_close, R.id.btn_logout, R.id.layout_yhfwxy, R.id.layout_ysbhsm, R.id.layout_yjfk, R.id.iv_head,R.id.layout_qchc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.v_close:
@@ -120,7 +143,21 @@ public class SettingActivity extends BaseActivity implements ChooseDialogFragmen
                 finish();
                 break;
             case R.id.iv_head:
-                chooseDialogFragment.show(getSupportFragmentManager(),"");
+                chooseDialogFragment.show(getSupportFragmentManager(), "");
+                break;
+
+            case R.id.layout_qchc:
+                String totalCache= null;
+                //清除缓存
+                DataCleanManager.clearAllCache(SettingActivity.this);
+                try {
+                    //清除完缓存更新一下缓存数据
+                    totalCache = DataCleanManager.getTotalCacheSize(SettingActivity.this);
+                    toast("清除成功");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                huancunCount.setText(totalCache);
                 break;
         }
     }

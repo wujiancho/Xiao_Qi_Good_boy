@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,11 +25,13 @@ import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
 import com.lx.xqgg.ui.mycommission.bean.CommissionwithdrawalBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SaveBankinfortionBean;
+import com.lx.xqgg.ui.vip.bean.PayListBean;
 import com.lx.xqgg.util.SpUtil;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -69,12 +72,17 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     CheckBox checkTx;
     @BindView(R.id.riqitix)
     TextView riqitix;
+    @BindView(R.id.yihuo)
+    TextView yihuo;
+    @BindView(R.id.fanyongguiz)
+    TextView fanyongguiz;
     private boolean checked;
     private String bankName;
     private String bankNo;
     private String bankUser;
     private String token;
     private int cashCharge;
+    private String riyuejie;
 
     @Override
     protected int getLayoutId() {
@@ -91,7 +99,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
         //获取可提现总积分
-        riqitix.setText("提示：每月"+SharedPrefManager.getUserInfo().getCharge_type()+"可申请提现积分");
+        riqitix.setText("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)) {
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
@@ -158,9 +166,10 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 builder1.show();
             }
         });
+        riyuejie = getIntent().getStringExtra("riyuejie");
     }
 
-    @OnClick({R.id.toobar_back, R.id.but_alltx, R.id.btt_txmoney, R.id.btt_txjl})
+    @OnClick({R.id.toobar_back, R.id.but_alltx, R.id.btt_txmoney, R.id.btt_txjl,R.id.fanyongguiz})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toobar_back:
@@ -179,6 +188,10 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             case R.id.btt_txjl:
                 Intent intenwdr = new Intent(CashWithdrawalRebateActivity.this, WithdrawalRecordActivity.class);
                 startActivity(intenwdr);
+                break;
+
+            case R.id.fanyongguiz:
+                initCharacter();
                 break;
         }
     }
@@ -211,12 +224,17 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                     toast("请先绑定银行卡");
                     return;
                 }
-                if (txMoney.length() < 3) {
-                    toast("提现金额不能小于3位");
+
+                if ("日结".equals(riyuejie)) {
+                    toast("您是日结不可以提现，升级为月结用户才可提现");
                     return;
                 }
                 String money1 = txMoney.getText().toString();
                 String money = money1.substring(1, money1.length() - 1);
+                if (money.length() < 3) {
+                    toast("提现金额不能小于3位");
+                    return;
+                }
                 HashMap<String, Object> paramsMap = new HashMap<>();
                 paramsMap.put("token", SharedPrefManager.getUser().getToken());
                 paramsMap.put("bankName", bankName);
@@ -244,7 +262,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                         }));
 
             } else {
-                toast("提示：每月"+SharedPrefManager.getUserInfo().getCharge_type()+"可申请提现积分");
+                toast("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
             }
         } else {
             toast("请先勾选小麒乖乖返佣规则");
@@ -260,5 +278,34 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         if (requestCode == 2) {
             addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
         }
+    }
+    private void initCharacter() {
+        HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        paramsMap.put("group", "buyRule");
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
+                        Log.e("zlz", new Gson().toJson(listBaseData));
+                        if (listBaseData.isSuccess()) {
+                            if (listBaseData.getData() != null) {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(CashWithdrawalRebateActivity.this);
+                                builder1.setMessage(listBaseData.getData().get(0).getValue());
+                                builder1.setTitle(listBaseData.getData().get(0).getName());
+                                builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                builder1.show();
+                            }
+                        }
+                    }
+                }));
     }
 }

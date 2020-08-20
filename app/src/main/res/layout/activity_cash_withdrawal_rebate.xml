@@ -328,6 +328,7 @@
             android:layout_height="wrap_content"
             android:text="我已阅读小麒乖乖返佣规则"
             android:textColor="#ff2f2f2f"
+            android:id="@+id/fanyongguiz"
             android:textSize="12sp"
             />
     </LinearLayout>

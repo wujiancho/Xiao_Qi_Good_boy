@@ -240,7 +240,8 @@ public class MatchSecondActivity extends BaseActivity {
                                 toast("抱歉未找到相关公司，请检查");
                                 return;
                             }
-                            if (qccBean.getMessage().equals("查询失败")) {
+                            if ("查询失败".equals(qccBean.getMessage())) {
+                                matchRequestBean.setCompanyName("");
                                 toast("未查询相关信息，请确认企业名称输入无误");
                                 return;
                             }
@@ -435,6 +436,10 @@ public class MatchSecondActivity extends BaseActivity {
         }
         if (TextUtils.isEmpty(et6Count.getText().toString().trim())) {
             toast("请填写近6月" + loa + "查询");
+            return;
+        }
+        if ("".equals(matchRequestBean.getCompanyName())) {
+            toast("未查询相关信息，请确认企业名称输入无误");
             return;
         }
         matchRequestBean.setCityName(Constans.CITY);

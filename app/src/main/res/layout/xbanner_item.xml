@@ -18,7 +18,7 @@
         android:textColor="#ff70460a"
         android:textSize="19sp"
         android:id="@+id/vip_name"
-        android:layout_marginTop="@dimen/dp_23"
+        android:layout_marginTop="@dimen/dp_47"
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_alignParentLeft="true"
         />
@@ -31,32 +31,26 @@
         android:id="@+id/vip_jurisdiction"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/dp_24"
-         android:layout_marginTop="@dimen/dp_67"
+         android:layout_marginTop="@dimen/dp_76"
         />
-    <Button
-        android:layout_width="@dimen/dp_73"
-        android:layout_height="@dimen/dp_25"
-        android:text="未购买"
-        android:textColor="#ff593605"
-        android:textSize="13sp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dp_21"
-        android:id="@+id/no_purchase"
-        android:background="@drawable/no_purchasebg"
-        />
+    <ImageView
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_55"
+        android:layout_marginLeft="@dimen/dp_125"
+        ></ImageView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="有效期2021-12-31"
         android:textColor="#ff6f460a"
         android:textSize="12sp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/dp_21"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_23"
         android:id="@+id/termof_validity"
         android:layout_marginRight="@dimen/dp_9"
-        android:visibility="gone"
         />
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_20"
         android:text="立即购买"
@@ -69,7 +63,6 @@
         android:layout_marginBottom="@dimen/dp_18"
         android:gravity="center"
         android:id="@+id/purchase"
-        android:background="@drawable/purchasebg"
         />
 
 </RelativeLayout>

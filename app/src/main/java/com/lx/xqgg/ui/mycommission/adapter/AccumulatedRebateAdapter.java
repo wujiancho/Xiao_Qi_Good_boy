@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lx.xqgg.R;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.AccumulatedRebateActivity;
 import com.lx.xqgg.ui.mycommission.RefundDetailsActivity;
 import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
@@ -33,14 +34,6 @@ public class AccumulatedRebateAdapter extends BaseQuickAdapter<HistoryPointsdeta
                 .load(Config.IMGURL+item.getIco())
                 .into((ImageView) helper.getView(R.id.accumulated_pointsimg));
         //Config.IMGURL + item.getPicture()
-       helper.setOnClickListener(R.id.integraldetailed, new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent intentrd=new Intent(mContext, RefundDetailsActivity.class);
-               intentrd.putExtra("month",item.getMonth());
-               intentrd.putExtra("integral",item.getProductCharge());
-               mContext.startActivity(intentrd);
-           }
-       });
+       helper.addOnClickListener(R.id.integraldetailed);
     }
 }

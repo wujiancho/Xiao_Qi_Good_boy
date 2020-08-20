@@ -119,7 +119,6 @@ public class MycommissionActivity extends BaseActivity {
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
-    private String token;
     private String currentLevel;
     private int rightsNum;
     private String name;
@@ -150,8 +149,6 @@ public class MycommissionActivity extends BaseActivity {
             String allRebatez = df.format(allRebate);
             accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
         }
-        //获取用户token
-        token = SharedPrefManager.getUser().getToken();
         //获取用户的可提返佣-本月返佣-累计返佣
         Returningaservant();
         //获取用户当前的vip等级
@@ -169,6 +166,7 @@ public class MycommissionActivity extends BaseActivity {
             //跳转可提现返佣
             case R.id.cash_withdrawal_rebatez:
                 Intent intentcashwr = new Intent(MycommissionActivity.this, CashWithdrawalRebateActivity.class);
+                intentcashwr.putExtra("riyuejie",riyuejie.getText().toString());
                 startActivity(intentcashwr);
                 break;
             //跳转本月返佣
@@ -209,7 +207,7 @@ public class MycommissionActivity extends BaseActivity {
 
     //返佣方法
     public void Returningaservant() {
-        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(token)
+        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<ReturningservantBean>>(mContext, null) {
@@ -242,7 +240,7 @@ public class MycommissionActivity extends BaseActivity {
 
     //获取用户当前的vip等级
     public void Userlevel() {
-        addSubscribe(ApiManage.getInstance().getMainApi().getCommissionlevel(token)
+        addSubscribe(ApiManage.getInstance().getMainApi().getCommissionlevel(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<CommissionlevelBean>>(mContext, null) {
@@ -254,13 +252,6 @@ public class MycommissionActivity extends BaseActivity {
                         progressBarH.setProgress((int) data.getOrderMoney());
                         progressBarH.setMax(data.getNextLevelMoney());
                         currentLevel = data.getCurrentLevel();
-                    /*    if ("准铂金".equals(data.getCurrentLevel())) {
-                            ClipDrawable drawable = new ClipDrawable(new ColorDrawable(Color.parseColor("#646464")), Gravity.LEFT, ClipDrawable.HORIZONTAL);
-                           progressBarH.setProgressDrawable(drawable);
-                        } else if ("准钻石".equals(data.getCurrentLevel())) {
-                            ClipDrawable drawable = new ClipDrawable(new ColorDrawable(Color.parseColor("#000000")), Gravity.LEFT, ClipDrawable.HORIZONTAL);
-                            progressBarH.setProgressDrawable(drawable);
-                        }*/
                         Glide.with(mContext)
                                 .load(Config.IMGURL + data.getPicture())
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
@@ -284,29 +275,15 @@ public class MycommissionActivity extends BaseActivity {
 
     //获取权益列表
     private void Listofinterests() {
-        ApiManage.getInstance().getMainApi().getListofinterests()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<List<ListofinterestsBean>>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<List<ListofinterestsBean>> listBaseData) {
 
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        super.onError(t);
-                        Log.e("zlz", t.toString());
-                    }
-                });
 
     }
 
     //vip卡片
     private void vipcard() {
         systemCommissionlevel = new ArrayList<>();
-        Log.d("mytoken", "vipcard: " + token);
-        addSubscribe(ApiManage.getInstance().getMainApi().getSystemCommissionlevel(token)
+        Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
+        addSubscribe(ApiManage.getInstance().getMainApi().getSystemCommissionlevel(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<BaseData<List<SystemCommissionlevelBean>>>(mContext, null) {
@@ -321,9 +298,8 @@ public class MycommissionActivity extends BaseActivity {
                                     TextView vipname = (TextView) view.findViewById(R.id.vip_name);
                                     TextView tvContent = (TextView) view.findViewById(R.id.vip_jurisdiction);
                                     ImageView picture = (ImageView) view.findViewById(R.id.bgpicture);
-                                    Button no_purchase = (Button) view.findViewById(R.id.no_purchase);
                                     TextView termof_validity = (TextView) view.findViewById(R.id.termof_validity);
-                                    Button purchase = (Button) view.findViewById(R.id.purchase);
+                                    TextView purchase = (TextView) view.findViewById(R.id.purchase);
                                     rightsNum = systemCommissionlevel.get(position).getRightsNum();
                                     name = systemCommissionlevel.get(position).getName();
                                     vipname.setText(systemCommissionlevel.get(position).getName() + "服务包");
@@ -332,14 +308,6 @@ public class MycommissionActivity extends BaseActivity {
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getPicture())
                                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                                             .into(picture);
-                                    if ("铂金".equals(systemCommissionlevel.get(position).getName())) {
-                                        purchase.setTextColor(Color.parseColor("#676767"));
-                                        purchase.setBackgroundResource(R.drawable.purchasebgp);
-                                    } else if ("钻石".equals(systemCommissionlevel.get(position).getName())) {
-                                        purchase.setTextColor(Color.parseColor("#ffffff"));
-                                        purchase.setBackgroundResource(R.drawable.purchasebgz);
-                                    }
-
                                     if (systemCommissionlevel.get(position).isBuy() == false) {
                                         purchase.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -356,7 +324,6 @@ public class MycommissionActivity extends BaseActivity {
                                         });
                                     } else {
                                         purchase.setText("已购买");
-                                        no_purchase.setVisibility(View.GONE);
                                         termof_validity.setVisibility(View.VISIBLE);
                                         termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
                                         jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
@@ -430,7 +397,7 @@ public class MycommissionActivity extends BaseActivity {
 
     //申请月结
     private  void  Monthlysettlement(){
-        ApiManage.getInstance().getMainApi().getMonthlysettlement()
+        ApiManage.getInstance().getMainApi().getMonthlysettlement(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSubscriber<MonthlysettlementBean>() {

@@ -10,16 +10,16 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class PointsDetailsAdapter extends BaseQuickAdapter<ThisMothPointsdetailstBean, BaseViewHolder> {
+public class PointsDetailsAdapter extends BaseQuickAdapter<ThisMothPointsdetailstBean.DataBean, BaseViewHolder> {
 
-    public PointsDetailsAdapter(@Nullable List<ThisMothPointsdetailstBean> data) {
+    public PointsDetailsAdapter(@Nullable List<ThisMothPointsdetailstBean.DataBean> data) {
         super(R.layout.pointsdetailsitem, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ThisMothPointsdetailstBean item) {
+    protected void convert(BaseViewHolder helper, ThisMothPointsdetailstBean.DataBean item) {
      helper.setText(R.id.tv_product_name,item.getTitle());
-     helper.setText(R.id.tv_usingletterstime,"用信时间："+item.getCreditTime().substring(0,item.getCreditTime().indexOf(" ")));
+     helper.setText(R.id.tv_usingletterstime,"用信时间："+item.getCreditTime());
      helper.setText(R.id.tv_order_num,"订单编号："+item.getOrderNo());
      helper.setText(R.id.tv_company_name,"企业名称："+item.getCompanyName());
      helper.setText(R.id.tv_kh_name,"客户姓名："+item.getCustomerName());

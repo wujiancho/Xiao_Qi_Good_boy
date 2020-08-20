@@ -1,190 +1,247 @@
 package com.lx.xqgg.ui.mycommission.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ThisMothPointsdetailstBean  implements Serializable {
 
     /**
-     * chargeName : 青铜
-     * companyName : 苏州罗****技有限公司
-     * creditTime : 2020-08-03 00:00:00.0
-     * customerName : 高*
-     * customerPhone : 189****1567
-     * ico : null
-     * id : 1
-     * month : 2020-08
-     * orderNo : 20200803164509553000
-     * orderStatus : usecredit
-     * picture : null
-     * productCharge : 4917
-     * productCreditMoney : 447000
-     * product_id : 682
-     * radio : 0.01
-     * service_id : 301
-     * title : 张农银行 - 优企贷
-     * userName : 高辉
+     * code : 200
+     * data : [{"chargeName":"青铜","companyName":"苏州罗****技有限公司","creditTime":"2020-08-03 00:00:00.0","customerName":"高*","customerPhone":"189****1567","ico":null,"id":1,"month":"2020-08","orderNo":"20200803164509553000","orderStatus":"usecredit","picture":null,"productCharge":4917,"productCreditMoney":447000,"product_id":682,"radio":0.01,"service_id":301,"title":"张农银行 - 优企贷","userName":"高辉"}]
+     * message : null
+     * success : true
+     * timestamp : 1597110543813
      */
 
-    private String chargeName;
-    private String companyName;
-    private String creditTime;
-    private String customerName;
-    private String customerPhone;
-    private Object ico;
-    private int id;
-    private String month;
-    private String orderNo;
-    private String orderStatus;
-    private Object picture;
-    private int productCharge;
-    private int productCreditMoney;
-    private int product_id;
-    private double radio;
-    private int service_id;
-    private String title;
-    private String userName;
+    private int code;
+    private Object message;
+    private boolean success;
+    private long timestamp;
+    private List<DataBean> data;
 
-    public String getChargeName() {
-        return chargeName;
+    public int getCode() {
+        return code;
     }
 
-    public void setChargeName(String chargeName) {
-        this.chargeName = chargeName;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public Object getMessage() {
+        return message;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setMessage(Object message) {
+        this.message = message;
     }
 
-    public String getCreditTime() {
-        return creditTime;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setCreditTime(String creditTime) {
-        this.creditTime = creditTime;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getCustomerPhone() {
-        return customerPhone;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public Object getIco() {
-        return ico;
-    }
+    public static class DataBean {
+        /**
+         * chargeName : 青铜
+         * companyName : 苏州罗****技有限公司
+         * creditTime : 2020-08-03 00:00:00.0
+         * customerName : 高*
+         * customerPhone : 189****1567
+         * ico : null
+         * id : 1
+         * month : 2020-08
+         * orderNo : 20200803164509553000
+         * orderStatus : usecredit
+         * picture : null
+         * productCharge : 4917
+         * productCreditMoney : 447000
+         * product_id : 682
+         * radio : 0.01
+         * service_id : 301
+         * title : 张农银行 - 优企贷
+         * userName : 高辉
+         */
 
-    public void setIco(Object ico) {
-        this.ico = ico;
-    }
+        private String chargeName;
+        private String companyName;
+        private String creditTime;
+        private String customerName;
+        private String customerPhone;
+        private Object ico;
+        private int id;
+        private String month;
+        private String orderNo;
+        private String orderStatus;
+        private Object picture;
+        private int productCharge;
+        private int productCreditMoney;
+        private int product_id;
+        private double radio;
+        private int service_id;
+        private String title;
+        private String userName;
 
-    public int getId() {
-        return id;
-    }
+        public String getChargeName() {
+            return chargeName;
+        }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        public void setChargeName(String chargeName) {
+            this.chargeName = chargeName;
+        }
 
-    public String getMonth() {
-        return month;
-    }
+        public String getCompanyName() {
+            return companyName;
+        }
 
-    public void setMonth(String month) {
-        this.month = month;
-    }
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
 
-    public String getOrderNo() {
-        return orderNo;
-    }
+        public String getCreditTime() {
+            return creditTime;
+        }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
+        public void setCreditTime(String creditTime) {
+            this.creditTime = creditTime;
+        }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
+        public String getCustomerName() {
+            return customerName;
+        }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
+        public void setCustomerName(String customerName) {
+            this.customerName = customerName;
+        }
 
-    public Object getPicture() {
-        return picture;
-    }
+        public String getCustomerPhone() {
+            return customerPhone;
+        }
 
-    public void setPicture(Object picture) {
-        this.picture = picture;
-    }
+        public void setCustomerPhone(String customerPhone) {
+            this.customerPhone = customerPhone;
+        }
 
-    public int getProductCharge() {
-        return productCharge;
-    }
+        public Object getIco() {
+            return ico;
+        }
 
-    public void setProductCharge(int productCharge) {
-        this.productCharge = productCharge;
-    }
+        public void setIco(Object ico) {
+            this.ico = ico;
+        }
 
-    public int getProductCreditMoney() {
-        return productCreditMoney;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public void setProductCreditMoney(int productCreditMoney) {
-        this.productCreditMoney = productCreditMoney;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public int getProduct_id() {
-        return product_id;
-    }
+        public String getMonth() {
+            return month;
+        }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
-    }
+        public void setMonth(String month) {
+            this.month = month;
+        }
 
-    public double getRadio() {
-        return radio;
-    }
+        public String getOrderNo() {
+            return orderNo;
+        }
 
-    public void setRadio(double radio) {
-        this.radio = radio;
-    }
+        public void setOrderNo(String orderNo) {
+            this.orderNo = orderNo;
+        }
 
-    public int getService_id() {
-        return service_id;
-    }
+        public String getOrderStatus() {
+            return orderStatus;
+        }
 
-    public void setService_id(int service_id) {
-        this.service_id = service_id;
-    }
+        public void setOrderStatus(String orderStatus) {
+            this.orderStatus = orderStatus;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public Object getPicture() {
+            return picture;
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public void setPicture(Object picture) {
+            this.picture = picture;
+        }
 
-    public String getUserName() {
-        return userName;
-    }
+        public int getProductCharge() {
+            return productCharge;
+        }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+        public void setProductCharge(int productCharge) {
+            this.productCharge = productCharge;
+        }
+
+        public int getProductCreditMoney() {
+            return productCreditMoney;
+        }
+
+        public void setProductCreditMoney(int productCreditMoney) {
+            this.productCreditMoney = productCreditMoney;
+        }
+
+        public int getProduct_id() {
+            return product_id;
+        }
+
+        public void setProduct_id(int product_id) {
+            this.product_id = product_id;
+        }
+
+        public double getRadio() {
+            return radio;
+        }
+
+        public void setRadio(double radio) {
+            this.radio = radio;
+        }
+
+        public int getService_id() {
+            return service_id;
+        }
+
+        public void setService_id(int service_id) {
+            this.service_id = service_id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
     }
 }

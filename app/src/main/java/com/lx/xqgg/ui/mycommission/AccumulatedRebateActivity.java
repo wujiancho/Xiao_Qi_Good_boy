@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.mycommission;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,7 +45,6 @@ public class AccumulatedRebateActivity extends BaseActivity {
     RecyclerView accumulatedrebateRecyclerView;
     private List<HistoryPointsdetailstBean.DataBean.ListBean> historyaccumulatedPointslist;
     private AccumulatedRebateAdapter accumulatedRebateAdapter;
-    private String token;
 
     @Override
     protected int getLayoutId() {
@@ -53,8 +53,6 @@ public class AccumulatedRebateActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        //获取用户token
-        token = SharedPrefManager.getUser().getToken();
         toobarTitle.setText("累计佣金");
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)){
@@ -80,7 +78,8 @@ public class AccumulatedRebateActivity extends BaseActivity {
     }
 
     private  void Accumulatedpoints(){
-        addSubscribe(ApiManage.getInstance().getMainApi().getHistoryPointsdetailst(token)
+        Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
+        addSubscribe(ApiManage.getInstance().getMainApi().getHistoryPointsdetailst(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<HistoryPointsdetailstBean>(mContext, null) {
@@ -93,6 +92,15 @@ public class AccumulatedRebateActivity extends BaseActivity {
                                 accumulatedRebateAdapter = new AccumulatedRebateAdapter(historyaccumulatedPointslist);
                                 accumulatedrebateRecyclerView.setAdapter(accumulatedRebateAdapter);
                                 accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
+                                 accumulatedRebateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                                     @Override
+                                     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                                         Intent intentrd=new Intent(mContext, RefundDetailsActivity.class);
+                                         intentrd.putExtra("month",listBean.getData().getList().get(position).getMonth());
+                                         intentrd.putExtra("integral",listBean.getData().getList().get(position).getProductCharge());
+                                         mContext.startActivity(intentrd);
+                                     }
+                                 });
                             }else {
                                 List<String> error =new ArrayList<>();
                                 ErrorAdapter eerr = new ErrorAdapter(error);

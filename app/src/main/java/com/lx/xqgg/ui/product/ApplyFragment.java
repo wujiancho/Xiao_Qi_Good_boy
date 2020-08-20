@@ -286,7 +286,7 @@ public class ApplyFragment extends DialogFragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if (!s.toString().equals(link_phone)) {
+                if (!s.toString().equals(SharedPrefManager.getPhone())) {
                     etIdNum.setVisibility(View.VISIBLE);
                     etIdNum.setText("");
                     layoutMsg.setVisibility(View.VISIBLE);
