@@ -14,69 +14,11 @@
       android:layout_marginTop="1dp"
       android:background="#fff"
       >
-      <View
-          android:layout_width="0.5dp"
-          android:layout_height="@dimen/dp_75"
-          android:layout_marginTop="@dimen/dp_35"
-          android:layout_marginLeft="@dimen/dp_37"
-          android:background="@drawable/tx_qd_bg3"
-          ></View>
-      <View
-          android:layout_width="0.5dp"
-          android:layout_height="@dimen/dp_75"
-          android:layout_marginTop="@dimen/dp_105"
-          android:layout_marginLeft="@dimen/dp_37"
-          android:background="@drawable/tx_qd_bg4"
-          ></View>
-  <View
-      android:layout_width="@dimen/dp_10"
-      android:layout_height="@dimen/dp_10"
-      android:layout_marginTop="@dimen/dp_34"
-      android:layout_marginLeft="@dimen/dp_33"
-      android:background="@drawable/tx_qd_bg1"
-      ></View>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="发起提现申请"
-          android:textColor="#ff676767"
-          android:textSize="15sp"
-          android:layout_marginTop="@dimen/dp_29"
-          android:layout_marginLeft="@dimen/dp_65"
-          />
       <ImageView
-          android:layout_width="@dimen/dp_20"
-          android:layout_height="@dimen/dp_20"
-          android:layout_marginTop="@dimen/dp_97"
-          android:layout_marginLeft="@dimen/dp_30"
-          android:src="@drawable/shiz"
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/dp_303"
+          android:src="@drawable/sqlc"
           ></ImageView>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="小麒乖乖处理中"
-          android:textColor="#ff2f2f2f"
-          android:textSize="15sp"
-          android:layout_marginTop="@dimen/dp_92"
-          android:layout_marginLeft="@dimen/dp_65"
-          />
-      <View
-          android:layout_width="@dimen/dp_10"
-          android:layout_height="@dimen/dp_10"
-          android:layout_marginTop="@dimen/dp_181"
-          android:layout_marginLeft="@dimen/dp_33"
-          android:background="@drawable/tx_qd_bg2"
-          ></View>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="等待到账"
-          android:textColor="#ff959595"
-          android:textSize="15sp"
-          android:layout_marginTop="@dimen/dp_180"
-          android:layout_marginLeft="@dimen/dp_65"
-          />
       <View
           android:layout_width="match_parent"
           android:layout_height="0.5dp"

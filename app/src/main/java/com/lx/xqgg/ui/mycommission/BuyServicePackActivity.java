@@ -192,9 +192,12 @@ public class BuyServicePackActivity extends BaseActivity {
                 initCharacter("buyAgreement");
                 break;
             case R.id.guizhe2:
-                initCharacter("buyStrategy");
+                initCharacter("buyRule");
                 break;
             case R.id.btn_activate_now:
+               /* if(){
+
+                }*/
                 //立即开通
                 activatenow(bugid);
                 break;

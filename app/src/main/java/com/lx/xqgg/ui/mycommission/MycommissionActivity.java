@@ -256,7 +256,7 @@ public class MycommissionActivity extends BaseActivity {
                                 .load(Config.IMGURL + data.getPicture())
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                                 .into(vipbg);
-                        if (data.getNextLevel() == null) {
+                        if ("".equals(data.getNextLevel() )||data.getNextLevel() == null) {
                             vipNameQy.setText("已享受最高返佣权益");
                             vipCount.setText(data.getOrderMoney() + "/99999，已享受最高返佣权益");
                         } else {
@@ -282,7 +282,6 @@ public class MycommissionActivity extends BaseActivity {
     //vip卡片
     private void vipcard() {
         systemCommissionlevel = new ArrayList<>();
-        Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
         addSubscribe(ApiManage.getInstance().getMainApi().getSystemCommissionlevel(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -316,8 +315,8 @@ public class MycommissionActivity extends BaseActivity {
                                                 Intent intentbuysp = new Intent(MycommissionActivity.this, BuyServicePackActivity.class);
                                                 if (!"".equals(currentLevel)) {
                                                     intentbuysp.putExtra("buyname", currentLevel);
-                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(position).getId());
-                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(position).getPicture());
+                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(0).getId());
+                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(0).getPicture());
                                                 }
                                                 startActivity(intentbuysp);
                                             }
@@ -331,21 +330,19 @@ public class MycommissionActivity extends BaseActivity {
 
                                 }
                             });
-                            //jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" +  systemCommissionlevel.get(0).getRightsNum() + "个权限");
-
                             //联动改变权限
                             xbannerVip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                                 @Override
                                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
-                                    viplist.clear();
-                                    viplist.addAll(listBaseData.getData().get(position).getRights());
-                                    vIpListAdapter.notifyDataSetChanged();
+
                                 }
 
                                 @Override
                                 public void onPageSelected(int position) {
-
+                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    viplist.clear();
+                                    viplist.addAll(listBaseData.getData().get(position).getRights());
+                                    vIpListAdapter.notifyDataSetChanged();
                                 }
 
                                 @Override

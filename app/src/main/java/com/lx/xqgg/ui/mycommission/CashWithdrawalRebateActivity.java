@@ -140,6 +140,10 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 String count2 = txCountsr.getText().toString().trim();
                 if (!"".equals(count2)) {
                     int jf = Integer.valueOf(count2);
+                  /*  if (jf>cashCharge){
+                        toast("请输入正确的积分");
+                        return;
+                    }*/
                     txMoney.setText("¥" + (jf / 10));
                 }
             }
@@ -213,6 +217,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
 
     //提现方法
     private void tixian(String bankName, String bankNo, String bankUser) {
+        String count2 = txCountsr.getText().toString().trim();
+        int jf = Integer.valueOf(count2);
         if (checked == true) {
             //获取系统的 日期
             Calendar calendar = Calendar.getInstance();
@@ -224,13 +230,16 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                     toast("请先绑定银行卡");
                     return;
                 }
-
-                if ("日结".equals(riyuejie)) {
-                    toast("您是日结不可以提现，升级为月结用户才可提现");
+//                if ("日结".equals(riyuejie)) {
+//                    toast("您是日结不可以提现，升级为月结用户才可提现");
+//                    return;
+//                }
+                if(jf<0||count2.length()<4){
+                    toast("请输入正确的积分");
                     return;
                 }
                 String money1 = txMoney.getText().toString();
-                String money = money1.substring(1, money1.length() - 1);
+                String money = money1.substring(1, money1.length());
                 if (money.length() < 3) {
                     toast("提现金额不能小于3位");
                     return;
@@ -260,6 +269,11 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                                 }
                             }
                         }));
+              /*  Intent intencwdcf = new Intent(CashWithdrawalRebateActivity.this, CashWithdrawalConfirmationActivity.class);
+                intencwdcf.putExtra("bankName", bankName);
+                intencwdcf.putExtra("bankNo", bankNo);
+                intencwdcf.putExtra("money", money);
+                startActivity(intencwdcf);*/
 
             } else {
                 toast("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
@@ -272,17 +286,17 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        bankName = data.getStringExtra("bankname");
-        bankNo = data.getStringExtra("bankno");
-        bankUser = data.getStringExtra("bankUser");
-        if (requestCode == 2) {
+        if (resultCode==1||data!=null){
+            bankName = data.getStringExtra("bankname");
+            bankNo = data.getStringExtra("bankno");
+            bankUser = data.getStringExtra("bankUser");
             addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
         }
     }
     private void initCharacter() {
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("group", "buyRule");
+        paramsMap.put("group", "buyStrategy");
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
                 .subscribeOn(Schedulers.io())
