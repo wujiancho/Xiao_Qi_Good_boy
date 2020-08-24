@@ -144,17 +144,20 @@ public class BuyServicePackActivity extends BaseActivity {
         String endTime = event.getEndTime();
         int rightsNum = event.getRightsNum();
         int position = event.getPosition();
-        vipnameChange.setText(vipname + "服务包");
+        vipnameChange.setText(vipname+"服务包");
         positions = position;
         //根据选择佣金等级计算服务商当月佣金
         selectCommissionlevel(id, imgurl);
         bugid = id;
         jurisdictionCount.setText("当前" + vipname + "服务包可以解锁" + rightsNum + "个权限");
-        if (!"".equals(endTime)||endTime!=null){
-            termOfValidity.setText("有效期：" + endTime);
+
+        if (!"".equals(endTime)&&endTime!=null){
+            termOfValidity.setText("有效期："+endTime);
+            Log.d("endTime++++", "ServiseridurlEvent: "+endTime);
         }
        else {
             termOfValidity.setVisibility(View.GONE);
+            Log.d("endTime----", "ServiseridurlEvent: "+endTime);
         }
 
     }

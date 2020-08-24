@@ -14,11 +14,86 @@
       android:layout_marginTop="1dp"
       android:background="#fff"
       >
+      <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/dp_34"
+    android:layout_marginLeft="@dimen/dp_32"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/txcgy"
+        android:layout_gravity="center"
+        ></ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发起提现申请"
+        android:textColor="#ff686868"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:textSize="15sp"
+        />
+</LinearLayout>
       <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/dp_303"
-          android:src="@drawable/sqlc"
+          android:layout_width="1dp"
+          android:layout_height="@dimen/dp_62"
+          android:background="@drawable/txcgliue"
+          android:layout_marginTop="@dimen/dp_40"
+          android:layout_marginLeft="@dimen/dp_35"
           ></ImageView>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_marginTop="@dimen/dp_97"
+          android:layout_marginLeft="@dimen/dp_28"
+          >
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/shizhong"
+              android:layout_gravity="center"
+              ></ImageView>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="小麒乖乖处理中"
+              android:layout_marginLeft="@dimen/dp_46"
+              android:textColor="#ff303030"
+              android:textSize="15sp"
+              />
+      </LinearLayout>
+      <ImageView
+          android:layout_width="1dp"
+          android:layout_height="@dimen/dp_90"
+          android:layout_marginTop="@dimen/dp_100"
+          android:layout_marginLeft="@dimen/dp_35"
+          android:background="@drawable/txcghui"
+          ></ImageView>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_marginTop="@dimen/dp_181"
+          android:layout_marginLeft="@dimen/dp_32"
+          >
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:src="@drawable/txcg2"
+              android:layout_gravity="center"
+              ></ImageView>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="等待到账"
+              android:textColor="#ff686868"
+              android:layout_marginLeft="@dimen/dp_50"
+              android:textSize="15sp"
+              />
+      </LinearLayout>
       <View
           android:layout_width="match_parent"
           android:layout_height="0.5dp"
@@ -72,7 +147,7 @@
           android:layout_height="@dimen/dp_29"
           android:id="@+id/btn_txfinish"
           android:layout_centerHorizontal="true"
-          android:layout_marginTop="433dp"
+          android:layout_marginTop="441dp"
           android:text="完成"
           android:textColor="#ff22ac38"
           android:textSize="15sp"

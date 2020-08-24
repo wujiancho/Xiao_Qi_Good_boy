@@ -98,8 +98,14 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     protected void initData() {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
+        riyuejie = getIntent().getStringExtra("riyuejie");
         //获取可提现总积分
-        riqitix.setText("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "日可申请提现积分");
+        if ("日结".equals(riyuejie)){
+            riqitix.setText("非常抱歉您为日结用户只能支持每天线下日结");
+        }else {
+            riqitix.setText("提示：每月25日~29日可申请提现积分");
+        }
+
       /*  String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)) {
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
@@ -171,7 +177,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 builder1.show();
             }
         });
-        riyuejie = getIntent().getStringExtra("riyuejie");
+
     }
 
     @OnClick({R.id.toobar_back, R.id.but_alltx, R.id.btt_txmoney, R.id.btt_txjl,R.id.fanyongguiz})
@@ -221,20 +227,26 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         String count2 = txCountsr.getText().toString().trim();
         int jf = Integer.valueOf(count2);
         if (checked == true) {
+        toast("请先勾选小麒乖乖返佣规则");
+        return;
+        }
             //获取系统的 日期
             Calendar calendar = Calendar.getInstance();
             //日
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             //day>=25&&day<=29
             if (day > 1) {
+            toast("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
+            return;
+            }
                 if (TextUtils.isEmpty(bankName)) {
                     toast("请先绑定银行卡");
                     return;
                 }
-//                if ("日结".equals(riyuejie)) {
-//                    toast("您是日结不可以提现，升级为月结用户才可提现");
-//                    return;
-//                }
+               if ("日结".equals(riyuejie)) {
+                   toast("您是日结不可以提现，升级为月结用户才可提现");
+                   return;
+               }
                 if(jf<0||count2.length()<4){
                     toast("请输入正确的积分");
                     return;
@@ -275,14 +287,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 intencwdcf.putExtra("bankNo", bankNo);
                 intencwdcf.putExtra("money", money);
                 startActivity(intencwdcf);*/
-
-            } else {
-                toast("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
-            }
-        } else {
-            toast("请先勾选小麒乖乖返佣规则");
         }
-    }
+
     //返佣方法
     public void Returningaservant() {
         addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())

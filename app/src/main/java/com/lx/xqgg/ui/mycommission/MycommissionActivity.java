@@ -149,6 +149,15 @@ public class MycommissionActivity extends BaseActivity {
             String allRebatez = df.format(allRebate);
             accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
         }
+        String chargeType = SharedPrefManager.getUserInfo().getCharge_type();
+        if ("2".equals(chargeType)||!"".equals(chargeType)||chargeType!=null){
+            riyuejie.setText("日结");
+        }else if ("1".equals(chargeType)||!"".equals(chargeType)||chargeType!=null){
+            riyuejie.setText("月结");
+            riyuejie.setVisibility(View.GONE);
+        }else {
+            riyuejie.setVisibility(View.GONE);
+        }
         //获取用户的可提返佣-本月返佣-累计返佣
         Returningaservant();
         //获取用户当前的vip等级
@@ -338,7 +347,7 @@ public class MycommissionActivity extends BaseActivity {
                                             termof_validity.setVisibility(View.GONE);
                                         }else {
                                             termof_validity.setVisibility(View.VISIBLE);
-                                            termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
+                                            termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
                                         }
                                         jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
                                     }
