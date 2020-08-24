@@ -122,7 +122,7 @@ public class MycommissionActivity extends BaseActivity {
     private String currentLevel;
     private int rightsNum;
     private String name;
-
+    private int positions;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_mycommission;
@@ -226,7 +226,7 @@ public class MycommissionActivity extends BaseActivity {
                             thisMonthcommission.setText(thismothRebatez);
                             accumulatedRebate.setText(allRebatez);
                             accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
-                            SpUtil.getInstance().saveString("returningservantdata", new Gson().toJson(returningservantBeanBaseData.getData()));
+                            //SpUtil.getInstance().saveString("returningservantdata", new Gson().toJson(returningservantBeanBaseData.getData()));
                         }
                     }
 
@@ -299,6 +299,7 @@ public class MycommissionActivity extends BaseActivity {
                                     ImageView picture = (ImageView) view.findViewById(R.id.bgpicture);
                                     TextView termof_validity = (TextView) view.findViewById(R.id.termof_validity);
                                     TextView purchase = (TextView) view.findViewById(R.id.purchase);
+                                    ImageView viplogo = (ImageView) view.findViewById(R.id.viplogo);
                                     rightsNum = systemCommissionlevel.get(position).getRightsNum();
                                     name = systemCommissionlevel.get(position).getName();
                                     vipname.setText(systemCommissionlevel.get(position).getName() + "服务包");
@@ -307,7 +308,16 @@ public class MycommissionActivity extends BaseActivity {
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getPicture())
                                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                                             .into(picture);
+                                    Glide.with(mContext)
+                                            .load(Config.IMGURL + systemCommissionlevel.get(position).getIco())
+                                            .into(viplogo);
                                     if (systemCommissionlevel.get(position).isBuy() == false) {
+                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
+                                            termof_validity.setVisibility(View.GONE);
+                                        }else {
+                                            termof_validity.setVisibility(View.VISIBLE);
+                                            termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
+                                        }
                                         purchase.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -324,8 +334,12 @@ public class MycommissionActivity extends BaseActivity {
                                         });
                                     } else {
                                         purchase.setText("已购买");
-                                        termof_validity.setVisibility(View.VISIBLE);
-                                        termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
+                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
+                                            termof_validity.setVisibility(View.GONE);
+                                        }else {
+                                            termof_validity.setVisibility(View.VISIBLE);
+                                            termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
+                                        }
                                         jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
                                     }
 
@@ -339,11 +353,8 @@ public class MycommissionActivity extends BaseActivity {
                             vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
                             jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" +  systemCommissionlevel.get(0).getRightsNum() + "个权限");
                             viplist.clear();
-                            viplist.addAll(listBaseData.getData().get(0).getRights());
+                            viplist.addAll(listBaseData.getData().get(positions).getRights());
                             vIpListAdapter.notifyDataSetChanged();
-                            for (int i = 0; i < listBaseData.getData().size(); i++) {
-                                viplist.addAll(listBaseData.getData().get(i).getRights());
-                            }
                             vIpListAdapter.statusvip(4);
                             vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -372,6 +383,7 @@ public class MycommissionActivity extends BaseActivity {
                                 @Override
                                 public void onPageSelected(int position) {
                                     jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    positions=position;
                                     viplist.clear();
                                     viplist.addAll(listBaseData.getData().get(position).getRights());
                                     vIpListAdapter.notifyDataSetChanged();

@@ -54,7 +54,7 @@ public class AccumulatedRebateActivity extends BaseActivity {
     @Override
     protected void initView() {
         toobarTitle.setText("累计佣金");
-        String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
+      /*  String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)){
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
             int allRebate = returningservantBean.getAllCharge();
@@ -62,7 +62,8 @@ public class AccumulatedRebateActivity extends BaseActivity {
             String allRebatez= df.format(allRebate);
             //网络获取积分
             accumulatedPoints.setText(allRebatez);
-        }
+        }*/
+      Returningaservant();
     }
 
     @Override
@@ -70,7 +71,35 @@ public class AccumulatedRebateActivity extends BaseActivity {
      //获取累计积分
         Accumulatedpoints();
     }
+    //返佣方法
+    public void Returningaservant() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<ReturningservantBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<ReturningservantBean> returningservantBeanBaseData) {
+                        if (returningservantBeanBaseData.isSuccess()) {
+                            ReturningservantBean data = returningservantBeanBaseData.getData();
+                            int allRebate = data.getAllCharge();
+                            int cashRebate = data.getCashCharge();
+                            int thismothRebate = data.getCurrentMonthCharge();
+                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                            String allRebatez = df.format(allRebate);//累计返佣
+                            String cashRebatez = df.format(cashRebate);//可提返佣
+                            String thismothRebatez = df.format(thismothRebate);//本月返佣
+                            //网络获取积分
+                            accumulatedPoints.setText(allRebatez);
+                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
+                    }
+                }));
+    }
 
     @OnClick(R.id.toobar_back)
     public void onViewClicked() {

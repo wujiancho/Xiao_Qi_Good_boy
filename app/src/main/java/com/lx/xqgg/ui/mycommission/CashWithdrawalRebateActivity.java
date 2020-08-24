@@ -99,8 +99,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
         //获取可提现总积分
-        riqitix.setText("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
-        String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
+        riqitix.setText("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "日可申请提现积分");
+      /*  String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)) {
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
             cashCharge = returningservantBean.getCashCharge();
@@ -111,7 +111,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             withdrawablePointsZong.setText((cashCharge + ccc) + "");
             withSettlement.setText(createdMoney);
             withdrawalRebate.setText(cashRebatez);
-        }
+        }*/
+      Returningaservant();
         //获取银行卡信息
         String data = SpUtil.getInstance().getSpString("bankinfortion");
         SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
@@ -282,7 +283,38 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             toast("请先勾选小麒乖乖返佣规则");
         }
     }
+    //返佣方法
+    public void Returningaservant() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<ReturningservantBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<ReturningservantBean> returningservantBeanBaseData) {
+                        if (returningservantBeanBaseData.isSuccess()) {
+                            ReturningservantBean data = returningservantBeanBaseData.getData();
+                            int allRebate = data.getAllCharge();
+                            int cashRebate = data.getCashCharge();
+                            String createdMoney = data.getCreatedMoney();
+                            int ccc = Integer.valueOf(createdMoney.substring(0, createdMoney.indexOf(".")));
+                            int thismothRebate = data.getCurrentMonthCharge();
+                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                            String allRebatez = df.format(allRebate);//累计返佣
+                            String cashRebatez = df.format(cashRebate);//可提返佣
+                            String thismothRebatez = df.format(thismothRebate);//本月返佣
+                            withdrawablePointsZong.setText((cashCharge + ccc) + "");
+                            withSettlement.setText(createdMoney);
+                            withdrawalRebate.setText(cashRebatez);
+                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
+                    }
+                }));
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

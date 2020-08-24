@@ -36,6 +36,7 @@
         android:layout_width="@dimen/dp_10"
         android:layout_height="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_55"
+        android:id="@+id/viplogo"
         android:layout_marginLeft="@dimen/dp_125"
         ></ImageView>
     <TextView

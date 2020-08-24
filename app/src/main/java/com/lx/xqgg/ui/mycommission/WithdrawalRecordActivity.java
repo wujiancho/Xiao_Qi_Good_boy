@@ -62,14 +62,15 @@ public class WithdrawalRecordActivity extends BaseActivity {
     protected void initData() {
         //获取用户token
         token = SharedPrefManager.getUser().getToken();
-        String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
+        /*String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)){
             ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
             int allRebate = returningservantBean.getAllCharge();
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
             String allRebatez= df.format(allRebate);
             accumulativeWithdrawal.setText("您已累计提现积分"+allRebatez+"积分");
-        }
+        }*/
+        Returningaservant();
         //提现数据获取
         Withdrawalrecord();
     }
@@ -112,5 +113,34 @@ public class WithdrawalRecordActivity extends BaseActivity {
     @OnClick(R.id.toobar_back)
     public void onViewClicked() {
         finish();
+    }
+
+    //返佣方法
+    public void Returningaservant() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<ReturningservantBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<ReturningservantBean> returningservantBeanBaseData) {
+                        if (returningservantBeanBaseData.isSuccess()) {
+                            ReturningservantBean data = returningservantBeanBaseData.getData();
+                            int allRebate = data.getAllCharge();
+                            int cashRebate = data.getCashCharge();
+                            int thismothRebate = data.getCurrentMonthCharge();
+                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                            String allRebatez = df.format(allRebate);//累计返佣
+                            String cashRebatez = df.format(cashRebate);//可提返佣
+                            String thismothRebatez = df.format(thismothRebate);//本月返佣
+                            accumulativeWithdrawal.setText("您已累计提现积分"+allRebatez+"积分");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
+                    }
+                }));
     }
 }

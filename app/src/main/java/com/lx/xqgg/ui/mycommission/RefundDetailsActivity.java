@@ -122,4 +122,33 @@ public class RefundDetailsActivity extends BaseActivity {
                     }
                 }));
     }
+
+    //返佣方法
+    public void Returningaservant() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<ReturningservantBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<ReturningservantBean> returningservantBeanBaseData) {
+                        if (returningservantBeanBaseData.isSuccess()) {
+                            ReturningservantBean data = returningservantBeanBaseData.getData();
+                            int allRebate = data.getAllCharge();
+                            int cashRebate = data.getCashCharge();
+                            int thismothRebate = data.getCurrentMonthCharge();
+                            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
+                            String allRebatez = df.format(allRebate);//累计返佣
+                            String cashRebatez = df.format(cashRebate);//可提返佣
+                            String thismothRebatez = df.format(thismothRebate);//本月返佣
+                            SpUtil.getInstance().saveString("returningservantdata", new Gson().toJson(returningservantBeanBaseData.getData()));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
+                    }
+                }));
+    }
 }
