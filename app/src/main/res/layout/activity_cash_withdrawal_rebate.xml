@@ -226,8 +226,9 @@
             android:layout_marginLeft="@dimen/dp_36"
             android:background="@null"
             android:maxLength = "9"
+            android:inputType="number"
+            android:maxLines="1"
             android:layout_weight="1"
-            android:digits="1234567890"
             />
         <TextView
             android:layout_width="wrap_content"

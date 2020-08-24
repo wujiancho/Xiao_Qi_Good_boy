@@ -111,11 +111,12 @@ public class BuyServicePackActivity extends BaseActivity {
     private int positions;
     private int id;
     private String imgurl;
+    private String icn;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_service_pack;
-    }
+}
 
     @Override
     protected void initView() {
@@ -127,9 +128,11 @@ public class BuyServicePackActivity extends BaseActivity {
         //默认
         id = getIntent().getIntExtra("id", 24);
         imgurl = getIntent().getStringExtra("imgurl");
+        icn = getIntent().getStringExtra("icn");
         if (!"".equals(id) || !"".equals(imgurl)) {
             selectCommissionlevel(id, imgurl);
         }
+
     }
 
     //获取eventbus参数
@@ -147,7 +150,12 @@ public class BuyServicePackActivity extends BaseActivity {
         selectCommissionlevel(id, imgurl);
         bugid = id;
         jurisdictionCount.setText("当前" + vipname + "服务包可以解锁" + rightsNum + "个权限");
-        termOfValidity.setText("有效期：" + endTime);
+        if (!"".equals(endTime)||endTime!=null){
+            termOfValidity.setText("有效期：" + endTime);
+        }
+       else {
+            termOfValidity.setVisibility(View.GONE);
+        }
 
     }
 
@@ -246,11 +254,13 @@ public class BuyServicePackActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseData<List<SystemCommissionlevelBean>> listBaseData) {
                         if (listBaseData.isSuccess()) {
-
                             systemCommissionlevel.addAll(listBaseData.getData());
                             vipPackAdapter = new VipPackAdapter(systemCommissionlevel, mContext);
                             vipPackRecyclerView.setAdapter(vipPackAdapter);
                             vipPackRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
+                            Glide.with(mContext)
+                                    .load(Config.IMGURL + icn)
+                                    .into(userViplogo);
                             vipPackAdapter.setGetListener(new VipPackAdapter.GetListener() {
                                 @Override
                                 public void onClick(int position) {

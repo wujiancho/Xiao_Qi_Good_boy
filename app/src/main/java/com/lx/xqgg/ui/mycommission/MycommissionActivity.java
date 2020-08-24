@@ -317,6 +317,7 @@ public class MycommissionActivity extends BaseActivity {
                                                     intentbuysp.putExtra("buyname", currentLevel);
                                                     intentbuysp.putExtra("id", systemCommissionlevel.get(0).getId());
                                                     intentbuysp.putExtra("imgurl", systemCommissionlevel.get(0).getPicture());
+                                                    intentbuysp.putExtra("icn", systemCommissionlevel.get(0).getIco());
                                                 }
                                                 startActivity(intentbuysp);
                                             }
@@ -330,34 +331,19 @@ public class MycommissionActivity extends BaseActivity {
 
                                 }
                             });
-                            //联动改变权限
-                            xbannerVip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                                @Override
-                                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                                }
-
-                                @Override
-                                public void onPageSelected(int position) {
-                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
-                                    viplist.clear();
-                                    viplist.addAll(listBaseData.getData().get(position).getRights());
-                                    vIpListAdapter.notifyDataSetChanged();
-                                }
-
-                                @Override
-                                public void onPageScrollStateChanged(int state) {
-
-                                }
-                            });
                             viplist = new ArrayList<>();
-                            for (int i = 0; i < listBaseData.getData().size(); i++) {
-                                viplist.addAll(listBaseData.getData().get(i).getRights());
-                            }
+
                             //设置vip权限服务列表
                             vIpListAdapter = new VIpListAdapter(viplist);
                             vipRecyclerView.setAdapter(vIpListAdapter);
                             vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+                            jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" +  systemCommissionlevel.get(0).getRightsNum() + "个权限");
+                            viplist.clear();
+                            viplist.addAll(listBaseData.getData().get(0).getRights());
+                            vIpListAdapter.notifyDataSetChanged();
+                            for (int i = 0; i < listBaseData.getData().size(); i++) {
+                                viplist.addAll(listBaseData.getData().get(i).getRights());
+                            }
                             vIpListAdapter.statusvip(4);
                             vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -377,6 +363,25 @@ public class MycommissionActivity extends BaseActivity {
                             });
 
 
+                            //联动改变权限
+                            xbannerVip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                @Override
+                                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                                }
+
+                                @Override
+                                public void onPageSelected(int position) {
+                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    viplist.clear();
+                                    viplist.addAll(listBaseData.getData().get(position).getRights());
+                                    vIpListAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onPageScrollStateChanged(int state) {
+
+                                }
+                            });
                         }
 
 
