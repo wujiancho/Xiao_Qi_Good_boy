@@ -189,7 +189,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
      //设置WebView的一些允许的权限
     private void initwebview() {
         WebSettings settings = webview.getSettings();
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);

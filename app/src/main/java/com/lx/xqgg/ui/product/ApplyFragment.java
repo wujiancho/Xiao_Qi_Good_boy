@@ -109,8 +109,7 @@ public class ApplyFragment extends DialogFragment {
     TextView tvAnnounce;
     @BindView(R.id.layout_msg)
     LinearLayout layoutMsg;
-    @BindView(R.id.yincang)
-    CheckBox yincang;
+
 
     private Unbinder mUnBinder;
     private ProductBean.RecordsBean bean;

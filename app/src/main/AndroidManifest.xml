@@ -39,48 +39,50 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ui.mycommission.RefundDetailsActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.mycommission.AddbankCardActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.mycommission.WithdrawalRecordActivity"
+        <activity android:name=".ui.mytuoke.CumulativedevelopmentActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            >
-
-        </activity>
-        <activity android:name=".ui.mycommission.CashWithdrawalConfirmationActivity"
+            ></activity>
+        <activity android:name=".ui.mytuoke.WithdrawalrecordTuokeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.mycommission.AccumulatedRebateActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+        <activity android:name=".ui.mytuoke.DerivableintegralTuokeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.mycommission.ThisMonthReturnActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+        <activity
+            android:name=".ui.mycommission.RefundDetailsActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.mycommission.CashWithdrawalRebateActivity"
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.AddbankCardActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
-        <activity android:name=".ui.mycommission.BuyServicePackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.WithdrawalRecordActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.CashWithdrawalConfirmationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.AccumulatedRebateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.ThisMonthReturnActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.CashWithdrawalRebateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycommission.BuyServicePackActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.lacollege.LACollegeActivity"
             android:launchMode="singleTop"
@@ -153,8 +155,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".SplashActivity" >
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -405,10 +406,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.order.TjFullScreenActivity"
-            android:launchMode="singleTop"
-            android:exported="true"
-            android:screenOrientation="landscape"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"
             android:theme="@style/FullScreen" />
         <activity
             android:name=".ui.my_client.ClientDetailActivity"
@@ -534,16 +535,16 @@
 
         <meta-data
             android:name="designwidth"
-            android:value="1080" />  <!--设计图的宽,单位是像素,推荐用markman测量,量出来如果是750px那么请尽量去找ui设计师要一份android的设计图.-->
+            android:value="1080" /> <!-- 设计图的宽,单位是像素,推荐用markman测量,量出来如果是750px那么请尽量去找ui设计师要一份android的设计图. -->
         <meta-data
             android:name="designdpi"
-            android:value="480" />   <!--设计图对应的标准dpi,根据下面的那张图找到对应的dpi,比如1080就对应480dpi,如果拿到的是其他宽度的设计图,那么选择一个相近的dpi就好了-->
+            android:value="480" /> <!-- 设计图对应的标准dpi,根据下面的那张图找到对应的dpi,比如1080就对应480dpi,如果拿到的是其他宽度的设计图,那么选择一个相近的dpi就好了 -->
         <meta-data
             android:name="fontsize"
-            android:value="1.0" />   <!--全局字体的大小倍数,有时候老板会觉得你的所有的字小了或者大了,你总不能一个一个去改吧-->
+            android:value="1.0" /> <!-- 全局字体的大小倍数,有时候老板会觉得你的所有的字小了或者大了,你总不能一个一个去改吧 -->
         <meta-data
             android:name="unit"
-            android:value="px" />   <!--你的布局里面用的是px这就写px,你的布局里面用的是dp这就写dp,要统一,不要一会儿px一会儿dp,字体也用px或者dp,不要用sp,微信qq用的肯定不是sp.-->
+            android:value="px" />
     </application>
 
 </manifest>

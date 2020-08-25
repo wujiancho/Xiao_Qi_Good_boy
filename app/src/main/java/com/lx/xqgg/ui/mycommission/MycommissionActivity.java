@@ -450,7 +450,7 @@ public class MycommissionActivity extends BaseActivity {
            }
        }).create();
        TextView mlinearViewById=mlinear.findViewById(R.id.riyuejiename);
-       mlinearViewById.setText(SharedPrefManager.getUserInfo().getUsername()+",您的返佣结算为日结,在业绩返佣内无法提现，数据仅供参考。");
+       mlinearViewById.setText(SharedPrefManager.getUserInfo().getUsername()+"您好,您的返佣结算为日结,在业绩返佣内无法提现，数据仅供参考。");
        dialog.setView(mlinear);
        Window window = dialog.getWindow();
        //设置弹出位置

@@ -162,7 +162,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         });
         //调用佣金提现获取银行信息
         Accesstobankinformation();
-        withSettlement.setOnClickListener(new View.OnClickListener() {
+        yihuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(CashWithdrawalRebateActivity.this);
