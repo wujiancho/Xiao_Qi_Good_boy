@@ -161,7 +161,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             }
         });
         //调用佣金提现获取银行信息
-        Accesstobankinformation();
+      //  Accesstobankinformation();
         yihuo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,26 +207,13 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         }
     }
 
-    //佣金提现获取银行信息
-    private void Accesstobankinformation() {
-        addSubscribe(ApiManage.getInstance().getMainApi().getBandinformation(token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
-                        BandinformationBean data = bandinformationBeanBaseData.getData();
-                      /*  String bankName2 = data.getBankName();
-                        String bankNo2 = data.getBankNo();*/
-                    }
-                }));
-    }
+
 
     //提现方法
     private void tixian(String bankName, String bankNo, String bankUser) {
         String count2 = txCountsr.getText().toString().trim();
         int jf = Integer.valueOf(count2);
-        if (checked == true) {
+        if (checked == false) {
         toast("请先勾选小麒乖乖返佣规则");
         return;
         }
@@ -248,7 +235,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                    return;
                }
                 if(jf<0||count2.length()<4){
-                    toast("请输入正确的积分");
+                    toast("提现积分不能少于4位");
                     return;
                 }
                 String money1 = txMoney.getText().toString();
@@ -331,6 +318,9 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
         }
     }
+
+
+
     private void initCharacter() {
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("token", SharedPrefManager.getUser().getToken());

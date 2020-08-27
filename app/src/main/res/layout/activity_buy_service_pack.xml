@@ -295,7 +295,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="《购买协议》"
+                android:text="《小麒乖乖服务包协议》"
                 android:textColor="#EB3349"
                 android:textSize="12sp"
                 android:id="@+id/guizhe1"
@@ -310,7 +310,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="《购买规则》"
+                android:text="《返佣规则》"
                 android:textColor="#EB3349"
                 android:textSize="12sp"
                 android:id="@+id/guizhe2"

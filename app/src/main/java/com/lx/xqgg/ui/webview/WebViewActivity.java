@@ -189,15 +189,16 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
      //设置WebView的一些允许的权限
     private void initwebview() {
         WebSettings settings = webview.getSettings();
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
+        settings.setDomStorageEnabled(false);
         settings.setDatabaseEnabled(true);
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
         settings.setDomStorageEnabled(true);
+        settings.setAppCacheEnabled(false);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
         if (Build.VERSION.SDK_INT >= 19) {
             settings.setLoadsImagesAutomatically(true);
@@ -250,7 +251,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
             @SuppressLint("MissingPermission")
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
-
+                Log.e("zlz", "goback"+s);
                 if (s.startsWith("alipays:") || s.startsWith("alipay")) {
                     try {
                         startActivity(new Intent("android.intent.action.VIEW", Uri.parse(s)));
@@ -466,6 +467,8 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         webview.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onJsAlert(WebView webView, String url, String message, final JsResult jsResult) {
+              //  String url=   webview.getUrl();
+
                 new MaterialDialog.Builder(mContext)
                         .title("提示")
                         .content(message)

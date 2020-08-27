@@ -218,7 +218,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:hint="请输入提现积分"
             android:textColor="#ff2f2f2f"
             android:textSize="12sp"
             android:id="@+id/tx_countsr"
@@ -328,8 +328,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我已阅读小麒乖乖返佣规则"
+            android:text="我已阅读小麒乖乖"
             android:textColor="#ff2f2f2f"
+            android:textSize="12sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《返佣提现规则》"
+            android:textColor="#EB3349"
             android:id="@+id/fanyongguiz"
             android:textSize="12sp"
             />

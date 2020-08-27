@@ -33,6 +33,7 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.adapter.VIpListAdapter;
+import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
 import com.lx.xqgg.ui.mycommission.bean.CommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
 import com.lx.xqgg.ui.mycommission.bean.MonthlysettlementBean;
@@ -174,6 +175,7 @@ public class MycommissionActivity extends BaseActivity {
         switch (view.getId()) {
             //跳转可提现返佣
             case R.id.cash_withdrawal_rebatez:
+               // Accesstobankinformation();
                 Intent intentcashwr = new Intent(MycommissionActivity.this, CashWithdrawalRebateActivity.class);
                 intentcashwr.putExtra("riyuejie",riyuejie.getText().toString());
                 startActivity(intentcashwr);
@@ -263,11 +265,11 @@ public class MycommissionActivity extends BaseActivity {
                         currentLevel = data.getCurrentLevel();
                         Glide.with(mContext)
                                 .load(Config.IMGURL + data.getPicture())
-                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                                 .into(vipbg);
-                        if ("".equals(data.getNextLevel() )||data.getNextLevel() == null) {
+                        if ("".equals(data.getNextLevel() )||data.getNextLevel() == null||data.getNextLevelMoney()==0) {
                             vipNameQy.setText("已享受最高返佣权益");
-                            vipCount.setText(data.getOrderMoney() + "/99999，已享受最高返佣权益");
+                            vipCount.setText(data.getOrderMoney() + "/99999，已享受所有权益");
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
                             vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
@@ -350,6 +352,17 @@ public class MycommissionActivity extends BaseActivity {
                                             termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
                                         }
                                         jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
+                                        positions=position;
+                                        xbannerVip.setPointPosition(position);
+                                        viplist = new ArrayList<>();
+                                        //设置vip权限服务列表
+                                        vIpListAdapter = new VIpListAdapter(viplist);
+                                        vipRecyclerView.setAdapter(vIpListAdapter);
+                                        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+                                        jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" +  systemCommissionlevel.get(0).getRightsNum() + "个权限");
+                                        viplist.clear();
+                                        viplist.addAll(listBaseData.getData().get(positions).getRights());
+                                        vIpListAdapter.notifyDataSetChanged();
                                     }
 
                                 }
@@ -393,6 +406,7 @@ public class MycommissionActivity extends BaseActivity {
                                 public void onPageSelected(int position) {
                                     jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
                                     positions=position;
+
                                     viplist.clear();
                                     viplist.addAll(listBaseData.getData().get(position).getRights());
                                     vIpListAdapter.notifyDataSetChanged();
@@ -467,4 +481,22 @@ public class MycommissionActivity extends BaseActivity {
        dialog.show();
 
    }
+
+    //佣金提现获取银行信息
+    private void Accesstobankinformation() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getBandinformation(SharedPrefManager.getUser().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
+                        BandinformationBean data = bandinformationBeanBaseData.getData();
+                        if (data!=null||!"".equals(data)){
+                            String bankName2 = data.getBankName();
+                            String bankNo2 = data.getBankNo();
+                        }
+
+                    }
+                }));
+    }
 }

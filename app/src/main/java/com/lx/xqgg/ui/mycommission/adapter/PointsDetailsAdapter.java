@@ -25,12 +25,14 @@ public class PointsDetailsAdapter extends BaseQuickAdapter<ThisMothPointsdetails
      helper.setText(R.id.tv_kh_name,"客户姓名："+item.getCustomerName());
      helper.setText(R.id.tv_phone,"手机号："+item.getCustomerPhone());
      helper.setText(R.id.tv_yg_name,"员工姓名："+item.getUserName());
-     if ("usecredit".equals(item.getOrderStatus())){
+/*     if ("usecredit".equals(item.getOrderStatus())){
          helper.setText(R.id.tv_status,"用信");
      } else if ("pass".equals(item.getOrderStatus())){
             helper.setText(R.id.tv_status,"终审通过");
-        }
-     helper.setText(R.id.tv_jiapoint,"+"+item.getProductCharge()+"佣金积分");
+        }*/
+        helper.setText(R.id.tv_status,item.getOrderStatus());
+
+        helper.setText(R.id.tv_jiapoint,"+"+item.getProductCharge()+"佣金积分");
         int productCreditMoney = item.getProductCreditMoney();
         DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
         String productCreditMoneyz = df.format(productCreditMoney);

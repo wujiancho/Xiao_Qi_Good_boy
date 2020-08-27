@@ -103,7 +103,7 @@ public class ThisMonthReturnActivity extends BaseActivity {
                             String allRebatez = df.format(allRebate);//累计返佣
                             String cashRebatez = df.format(cashRebate);//可提返佣
                             String thismothRebatez = df.format(thismothRebate);//本月返佣
-                            thisMonthPoints.setText(cashRebatez);
+                            thisMonthPoints.setText(thismothRebatez);
                         }
                     }
 

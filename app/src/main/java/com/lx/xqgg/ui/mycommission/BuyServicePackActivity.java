@@ -166,6 +166,7 @@ public class BuyServicePackActivity extends BaseActivity {
     protected void initData() {
 
         buyname = getIntent().getStringExtra("buyname");
+        Returningaservant();
         if (!"".equals(buyname)) {
             vipCommissionno.setText("当前用户等级：" + buyname);
         }
@@ -349,7 +350,7 @@ public class BuyServicePackActivity extends BaseActivity {
                     public void onNext(BuynowBean buynowBean) {
                         if (buynowBean.isSuccess()) {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(BuyServicePackActivity.this);
-                            builder1.setMessage("已申请线下购买，小麒乖乖处理中，会有渠道人员联系您开通服务包申请，请耐心等待");
+                            builder1.setMessage("您已申请线下购买，小麒乖乖处理中，会有渠道人员联系您开通服务包申请，请耐心等待");
                             builder1.setTitle("温馨提示");
                             builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
@@ -392,7 +393,6 @@ public class BuyServicePackActivity extends BaseActivity {
                             String cashRebatez = df.format(cashRebate);//可提返佣
                             String thismothRebatez = df.format(thismothRebate);//本月返佣
                             accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
-                            SpUtil.getInstance().saveString("returningservantdata", new Gson().toJson(returningservantBeanBaseData.getData()));
                         }
                     }
 

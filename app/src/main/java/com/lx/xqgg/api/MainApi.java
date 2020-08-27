@@ -80,7 +80,6 @@ public interface MainApi {
      *
      * @return
      */
-    @Headers("Content-Type:application/json")
     @POST()
     Flowable<BaseData<crmLoginBean>> crmlogin(@Url String url, @Body RequestBody body);
     /**
@@ -555,7 +554,7 @@ public interface MainApi {
      * @param
      * @return
      */
-    @GET("share/getBankForServiceCashAdvance")
+    @GET("share/getBankForServiceCashAdvanceshare/getBankForServiceCashAdvanceshare/getBankForServiceCashAdvance")
     Flowable<BaseData<BandinformationBean>>getBandinformation(@Query("token") String token);
     /**
      * 佣金当前等级和下一级等级
