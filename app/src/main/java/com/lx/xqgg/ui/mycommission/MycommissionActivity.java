@@ -269,7 +269,7 @@ public class MycommissionActivity extends BaseActivity {
                                 .into(vipbg);
                         if ("".equals(data.getNextLevel() )||data.getNextLevel() == null||data.getNextLevelMoney()==0) {
                             vipNameQy.setText("已享受最高返佣权益");
-                            vipCount.setText(data.getOrderMoney() + "/99999，已享受所有权益");
+                            vipCount.setText(data.getOrderMoney() + "/ "+data.getNextLevelMoney()+ "，已享受所有权益");
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
                             vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
@@ -323,12 +323,14 @@ public class MycommissionActivity extends BaseActivity {
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getIco())
                                             .into(viplogo);
                                     if (systemCommissionlevel.get(position).isBuy() == false) {
-                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
+                                 /*       if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
                                             termof_validity.setVisibility(View.GONE);
                                         }else {
                                             termof_validity.setVisibility(View.VISIBLE);
                                             termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
-                                        }
+                                        }*/
+                                        termof_validity.setVisibility(View.GONE);
+
                                         purchase.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -345,13 +347,14 @@ public class MycommissionActivity extends BaseActivity {
                                         });
                                     } else {
                                         purchase.setText("已购买");
-                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
-                                            termof_validity.setVisibility(View.GONE);
-                                        }else {
+                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime())&&systemCommissionlevel.get(position).getEndTime()!=null){
                                             termof_validity.setVisibility(View.VISIBLE);
                                             termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
+
+                                        }else {
+                                            termof_validity.setVisibility(View.GONE);
                                         }
-                                        jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
+                                       /* jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
                                         positions=position;
                                         xbannerVip.setPointPosition(position);
                                         viplist = new ArrayList<>();
@@ -362,7 +365,7 @@ public class MycommissionActivity extends BaseActivity {
                                         jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" +  systemCommissionlevel.get(0).getRightsNum() + "个权限");
                                         viplist.clear();
                                         viplist.addAll(listBaseData.getData().get(positions).getRights());
-                                        vIpListAdapter.notifyDataSetChanged();
+                                        vIpListAdapter.notifyDataSetChanged();*/
                                     }
 
                                 }

@@ -201,16 +201,20 @@ public class BuyServicePackActivity extends BaseActivity {
             case R.id.vip_RecyclerViewstatus:
                 break;
             case R.id.guizhe1:
-                initCharacter("buyAgreement");
+                initCharacter("serviceAgree");
                 break;
             case R.id.guizhe2:
-                initCharacter("buyRule");
+                initCharacter("rakebackRule");
                 break;
             case R.id.btn_activate_now:
                /* if(){
 
                 }*/
                 //立即开通
+                if ("钻石".equals(buyname)){
+                    toast("您已是最高级别用户等到有效期满后才可购买");
+                    return;
+                }
                 activatenow(bugid);
                 break;
             case R.id.toobar_back:

@@ -324,7 +324,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     private void initCharacter() {
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("group", "buyStrategy");
+        paramsMap.put("group", "rakebackTackOutRule");
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
                 .subscribeOn(Schedulers.io())
@@ -338,6 +338,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(CashWithdrawalRebateActivity.this);
                                 builder1.setMessage(listBaseData.getData().get(0).getValue());
                                 builder1.setTitle(listBaseData.getData().get(0).getName());
+
                                 builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
