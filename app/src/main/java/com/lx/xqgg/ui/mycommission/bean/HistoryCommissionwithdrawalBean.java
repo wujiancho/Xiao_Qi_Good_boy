@@ -99,6 +99,7 @@ public class HistoryCommissionwithdrawalBean implements Serializable {
              */
 
             private String applyTime;
+            private String applyTimeStr;
             private Object approveTime;
             private String bankName;
             private String bankNo;
@@ -108,6 +109,14 @@ public class HistoryCommissionwithdrawalBean implements Serializable {
             private int service_id;
             private String status;
             private int user_id;
+
+            public String getApplyTimeStr() {
+                return applyTimeStr;
+            }
+
+            public void setApplyTimeStr(String applyTimeStr) {
+                this.applyTimeStr = applyTimeStr;
+            }
 
             public String getApplyTime() {
                 return applyTime;

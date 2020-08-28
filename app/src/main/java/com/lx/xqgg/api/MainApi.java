@@ -554,7 +554,7 @@ public interface MainApi {
      * @param
      * @return
      */
-    @GET("share/getBankForServiceCashAdvanceshare/getBankForServiceCashAdvanceshare/getBankForServiceCashAdvance")
+    @GET("share/getBankForServiceCashAdvance")
     Flowable<BaseData<BandinformationBean>>getBandinformation(@Query("token") String token);
     /**
      * 佣金当前等级和下一级等级

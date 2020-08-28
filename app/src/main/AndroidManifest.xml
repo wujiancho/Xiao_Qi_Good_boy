@@ -39,18 +39,19 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ui.mytuoke.CumulativedevelopmentActivity"
+        <activity android:name=".ui.mycommission.XieYiActivity"></activity>
+        <activity
+            android:name=".ui.mytuoke.CumulativedevelopmentActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name=".ui.mytuoke.WithdrawalrecordTuokeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mytuoke.WithdrawalrecordTuokeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name=".ui.mytuoke.DerivableintegralTuokeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mytuoke.DerivableintegralTuokeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            ></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mycommission.RefundDetailsActivity"
             android:launchMode="singleTop"

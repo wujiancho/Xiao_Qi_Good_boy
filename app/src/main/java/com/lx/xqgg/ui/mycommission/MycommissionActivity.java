@@ -175,7 +175,7 @@ public class MycommissionActivity extends BaseActivity {
         switch (view.getId()) {
             //跳转可提现返佣
             case R.id.cash_withdrawal_rebatez:
-               // Accesstobankinformation();
+                //Accesstobankinformation();
                 Intent intentcashwr = new Intent(MycommissionActivity.this, CashWithdrawalRebateActivity.class);
                 intentcashwr.putExtra("riyuejie",riyuejie.getText().toString());
                 startActivity(intentcashwr);

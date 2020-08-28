@@ -73,12 +73,6 @@ public class ClientDetailActivity extends BaseActivity implements SwipeRefreshLa
         recyclerView.setAdapter(orderAdapter);
         orderAdapter.setEmptyView(R.layout.layout_empty, recyclerView);
         orderAdapter.setOnLoadMoreListener(this);
-        orderAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-            }
-        });
         orderAdapter.bindToRecyclerView(recyclerView);
         refreshLayout.setOnRefreshListener(this);
         customerName = getIntent().getStringExtra("customerName");
@@ -121,6 +115,12 @@ public class ClientDetailActivity extends BaseActivity implements SwipeRefreshLa
                                 orderAdapter.notifyDataSetChanged();
                             }
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
                     }
                 }));
     }

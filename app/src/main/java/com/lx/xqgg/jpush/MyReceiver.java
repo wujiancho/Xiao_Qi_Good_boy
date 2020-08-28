@@ -43,6 +43,7 @@ public class MyReceiver extends BroadcastReceiver {
                     context.startActivity(intent1);
                 }*/
                 Intent intent1 = new Intent(context, MessageActivity.class);
+               // intent1.putExtra("type", "order");
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 context.startActivity(intent1);
             } else {

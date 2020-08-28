@@ -22,16 +22,18 @@ public class WithdrawalrecordAdapter extends BaseQuickAdapter<HistoryCommissionw
     @Override
     protected void convert(BaseViewHolder helper, HistoryCommissionwithdrawalBean.DataBean.ListBean item) {
         if (getData().size()>0){
-            helper.setText(R.id.history_time,item.getApplyTime().substring(0,item.getApplyTime().indexOf(" ")));
-            helper.setText(R.id.last_number,item.getBankNo().substring(item.getBankNo().length()-4,item.getBankNo().length()));
+            helper.setText(R.id.history_time,item.getApplyTimeStr());
+            helper.setText(R.id.last_number,item.getBankNo());
+           // helper.setText(R.id.last_number,item.getBankNo().substring(item.getBankNo().length()-4,item.getBankNo().length()));
             helper.setText(R.id.money,item.getMoney());
-            if ("failed ".equals(item.getStatus())){
+         /*   if ("failed ".equals(item.getStatus())){
                 helper.setText(R.id.history_status,"失败");
             }else if ("created".equals(item.getStatus())){
                 helper.setText(R.id.history_status,"待结算");
             }else  if ("normal ".equals(item.getStatus())){
                 helper.setText(R.id.history_status,"已完成");
-            }
+            }*/
+            helper.setText(R.id.history_status,item.getStatus());
             switch (helper.getItemViewType()){
                 case typeji:
                     helper.setBackgroundColor(R.id.history_time,Color.parseColor("#FFFFFF"));

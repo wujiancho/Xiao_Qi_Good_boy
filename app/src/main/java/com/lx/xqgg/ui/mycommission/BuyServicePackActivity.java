@@ -2,6 +2,7 @@ package com.lx.xqgg.ui.mycommission;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -201,10 +202,14 @@ public class BuyServicePackActivity extends BaseActivity {
             case R.id.vip_RecyclerViewstatus:
                 break;
             case R.id.guizhe1:
-                initCharacter("serviceAgree");
+                Intent intenxieyi = new Intent(BuyServicePackActivity.this, XieYiActivity.class);
+                intenxieyi.putExtra("group","serviceAgree");
+                startActivity(intenxieyi);
                 break;
             case R.id.guizhe2:
-                initCharacter("rakebackRule");
+                Intent intenxieyi2 = new Intent(BuyServicePackActivity.this, XieYiActivity.class);
+                intenxieyi2.putExtra("group","rakebackRule");
+                startActivity(intenxieyi2);
                 break;
             case R.id.btn_activate_now:
                /* if(){
@@ -412,33 +417,5 @@ public class BuyServicePackActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
-    private void initCharacter(String name) {
-        HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("group",name);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
-        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
-                        Log.e("zlz", new Gson().toJson(listBaseData));
-                        if (listBaseData.isSuccess()) {
-                            if (listBaseData.getData() != null) {
-                                AlertDialog.Builder builder1 = new AlertDialog.Builder(BuyServicePackActivity.this);
-                                builder1.setMessage(listBaseData.getData().get(0).getValue());
-                                builder1.setTitle(listBaseData.getData().get(0).getName());
-                                builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder1.show();
-                            }
-                        }
-                    }
-                }));
-    }
+
 }

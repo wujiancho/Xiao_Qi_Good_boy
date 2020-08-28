@@ -78,8 +78,11 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     TextView fanyongguiz;
     private boolean checked;
     private String bankName;
+    private String bankName2;
     private String bankNo;
+    private String bankNo2;
     private String bankUser;
+    private String bankUser2;
     private String token;
     private int cashCharge;
     private String riyuejie;
@@ -101,7 +104,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         riyuejie = getIntent().getStringExtra("riyuejie");
         //获取可提现总积分
         if ("日结".equals(riyuejie)){
-            riqitix.setText("非常抱歉您为日结用户只能支持每天线下日结");
+            riqitix.setText("非常抱歉您为日结用户只能支持每天线下日结,暂不支持该提现功能");
         }else {
             riqitix.setText("提示：每月25日~29日可申请提现积分");
         }
@@ -119,23 +122,37 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             withdrawalRebate.setText(cashRebatez);
         }*/
       Returningaservant();
+    //  Accesstobankinformation();
         //获取银行卡信息
-        String data = SpUtil.getInstance().getSpString("bankinfortion");
-        SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
-        if (!"".equals(data)) {
-            bankName = saveBankinfortionBean.getBankName();
-            bankNo = saveBankinfortionBean.getBankNo();
-            bankUser = saveBankinfortionBean.getBankUser();
-            addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
-        }
-        addbankName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intenaddbcd = new Intent(CashWithdrawalRebateActivity.this, AddbankCardActivity.class);
-                intenaddbcd.addCategory(Intent.CATEGORY_DEFAULT);
-                startActivityForResult(intenaddbcd, 2);
+    /*    if (!"".equals(bankName2)||!"".equals(bankNo2)||!"".equals(bankUser2)){
+            addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
+        }else {
+            String data = SpUtil.getInstance().getSpString("bankinfortion");
+            SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
+            if (!"".equals(data)) {
+                bankName = saveBankinfortionBean.getBankName();
+                bankNo = saveBankinfortionBean.getBankNo();
+                bankUser = saveBankinfortionBean.getBankUser();
+                addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
             }
-        });
+*/
+            String data = SpUtil.getInstance().getSpString("bankinfortion");
+            SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
+            if (!"".equals(data)) {
+                bankName = saveBankinfortionBean.getBankName();
+                bankNo = saveBankinfortionBean.getBankNo();
+                bankUser = saveBankinfortionBean.getBankUser();
+                addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
+            addbankName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intenaddbcd = new Intent(CashWithdrawalRebateActivity.this, AddbankCardActivity.class);
+                    intenaddbcd.addCategory(Intent.CATEGORY_DEFAULT);
+                    startActivityForResult(intenaddbcd, 2);
+                }
+            });
+        }
+
         txCountsr.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -202,7 +219,9 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 break;
 
             case R.id.fanyongguiz:
-                initCharacter();
+                Intent intenxieyi = new Intent(CashWithdrawalRebateActivity.this, XieYiActivity.class);
+                intenxieyi.putExtra("group","rakebackTackOutRule");
+                startActivity(intenxieyi);
                 break;
         }
     }
@@ -212,6 +231,10 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     //提现方法
     private void tixian(String bankName, String bankNo, String bankUser) {
         String count2 = txCountsr.getText().toString().trim();
+        if("".equals(count2)){
+            toast("提现积分不能为空");
+            return;
+        }
         int jf = Integer.valueOf(count2);
         if (checked == false) {
         toast("请先勾选小麒乖乖返佣规则");
@@ -221,11 +244,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             Calendar calendar = Calendar.getInstance();
             //日
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            //day>=25&&day<=29
-            if (day > 1) {
-            toast("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
-            return;
-            }
+
                 if (TextUtils.isEmpty(bankName)) {
                     toast("请先绑定银行卡");
                     return;
@@ -244,12 +263,31 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                     toast("提现金额不能小于3位");
                     return;
                 }
+        //day>=25&&day<=29
+        if (day < 1) {
+            toast("提示：每月" + SharedPrefManager.getUserInfo().getCharge_type() + "可申请提现积分");
+            return;
+        }
+
                 HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                paramsMap.put("bankName", bankName);
-                paramsMap.put("bankNo", bankNo);
-                paramsMap.put("bankUser", bankUser);
-                paramsMap.put("money", money);
+      /*  if (!"".equals(bankName2)||!"".equals(bankNo2)||!"".equals(bankUser2)){
+            paramsMap.put("token", SharedPrefManager.getUser().getToken());
+            paramsMap.put("bankName", bankName2);
+            paramsMap.put("bankNo", bankNo2);
+            paramsMap.put("bankUser", bankUser2);
+            paramsMap.put("money", money);
+        }else {
+            paramsMap.put("token", SharedPrefManager.getUser().getToken());
+            paramsMap.put("bankName", bankName);
+            paramsMap.put("bankNo", bankNo);
+            paramsMap.put("bankUser", bankUser);
+            paramsMap.put("money", money);
+        }*/
+        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        paramsMap.put("bankName", bankName);
+        paramsMap.put("bankNo", bankNo);
+        paramsMap.put("bankUser", bankUser);
+        paramsMap.put("money", money);
                 RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
                 addSubscribe(ApiManage.getInstance().getMainApi().getCommissionwithdrawal(body)
                         .subscribeOn(Schedulers.io())
@@ -317,38 +355,35 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             bankUser = data.getStringExtra("bankUser");
             addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
         }
+        //Returningaservant();
     }
-
-
-
-    private void initCharacter() {
-        HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("group", "rakebackTackOutRule");
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
-        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
+    //佣金提现获取银行信息
+    private void Accesstobankinformation() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getBandinformation(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
+                .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
                     @Override
-                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
-                        Log.e("zlz", new Gson().toJson(listBaseData));
-                        if (listBaseData.isSuccess()) {
-                            if (listBaseData.getData() != null) {
-                                AlertDialog.Builder builder1 = new AlertDialog.Builder(CashWithdrawalRebateActivity.this);
-                                builder1.setMessage(listBaseData.getData().get(0).getValue());
-                                builder1.setTitle(listBaseData.getData().get(0).getName());
+                    public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
+                        if (bandinformationBeanBaseData.isSuccess()){
+                            BandinformationBean data = bandinformationBeanBaseData.getData();
 
-                                builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder1.show();
+                            if (data!=null||!"".equals(data)){
+                                bankName2 = data.getBankName();
+                                bankNo2 = data.getBankNo();
+                                bankUser2 = data.getBankUser();
                             }
                         }
                     }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
+                    }
                 }));
     }
+
+
+
 }
