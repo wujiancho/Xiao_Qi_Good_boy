@@ -1,6 +1,8 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -63,8 +65,20 @@ public class CashWithdrawalConfirmationActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_txfinish:
+                setResult(2);
                 finish();
                 break;
         }
+    }
+
+
+    //点击返回上一页面
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            setResult(2, intent);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

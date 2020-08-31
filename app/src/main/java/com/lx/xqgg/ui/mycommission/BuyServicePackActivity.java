@@ -133,7 +133,7 @@ public class BuyServicePackActivity extends BaseActivity {
         if (!"".equals(id) || !"".equals(imgurl)) {
             selectCommissionlevel(id, imgurl);
         }
-
+        bugid = id;
     }
 
     //获取eventbus参数

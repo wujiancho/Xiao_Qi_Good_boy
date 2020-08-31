@@ -7,10 +7,10 @@ public class HistoryCommissionwithdrawalBean implements Serializable {
 
     /**
      * code : 200
-     * data : {"list":[{"applyTime":"2020-07-10 13:54:14","approveTime":null,"bankName":"zhaoshangyinh","bankNo":"6226095120620526","bankUser":"gh","id":2,"money":2,"service_id":301,"status":"failed","user_id":2}],"money":0}
+     * data : {"list":[{"applyTime":"2020-08-31 09:19:09","applyTimeStr":"2020-08-31","approveTime":null,"bankName":"工商银行","bankNo":"1234567890","bankUser":"苏州工商银行","id":4,"money":100,"service_id":301,"status":"未完成","user_id":3008}],"money":0}
      * message : null
      * success : true
-     * timestamp : 1597131327421
+     * timestamp : 1598837043581
      */
 
     private int code;
@@ -61,7 +61,7 @@ public class HistoryCommissionwithdrawalBean implements Serializable {
 
     public static class DataBean {
         /**
-         * list : [{"applyTime":"2020-07-10 13:54:14","approveTime":null,"bankName":"zhaoshangyinh","bankNo":"6226095120620526","bankUser":"gh","id":2,"money":2,"service_id":301,"status":"failed","user_id":2}]
+         * list : [{"applyTime":"2020-08-31 09:19:09","applyTimeStr":"2020-08-31","approveTime":null,"bankName":"工商银行","bankNo":"1234567890","bankUser":"苏州工商银行","id":4,"money":100,"service_id":301,"status":"未完成","user_id":3008}]
          * money : 0
          */
 
@@ -86,16 +86,17 @@ public class HistoryCommissionwithdrawalBean implements Serializable {
 
         public static class ListBean {
             /**
-             * applyTime : 2020-07-10 13:54:14
+             * applyTime : 2020-08-31 09:19:09
+             * applyTimeStr : 2020-08-31
              * approveTime : null
-             * bankName : zhaoshangyinh
-             * bankNo : 6226095120620526
-             * bankUser : gh
-             * id : 2
-             * money : 2
+             * bankName : 工商银行
+             * bankNo : 1234567890
+             * bankUser : 苏州工商银行
+             * id : 4
+             * money : 100
              * service_id : 301
-             * status : failed
-             * user_id : 2
+             * status : 未完成
+             * user_id : 3008
              */
 
             private String applyTime;
@@ -110,20 +111,20 @@ public class HistoryCommissionwithdrawalBean implements Serializable {
             private String status;
             private int user_id;
 
-            public String getApplyTimeStr() {
-                return applyTimeStr;
-            }
-
-            public void setApplyTimeStr(String applyTimeStr) {
-                this.applyTimeStr = applyTimeStr;
-            }
-
             public String getApplyTime() {
                 return applyTime;
             }
 
             public void setApplyTime(String applyTime) {
                 this.applyTime = applyTime;
+            }
+
+            public String getApplyTimeStr() {
+                return applyTimeStr;
+            }
+
+            public void setApplyTimeStr(String applyTimeStr) {
+                this.applyTimeStr = applyTimeStr;
             }
 
             public Object getApproveTime() {

@@ -21,11 +21,10 @@ public class WithdrawalrecordAdapter extends BaseQuickAdapter<HistoryCommissionw
 
     @Override
     protected void convert(BaseViewHolder helper, HistoryCommissionwithdrawalBean.DataBean.ListBean item) {
-        if (getData().size()>0){
             helper.setText(R.id.history_time,item.getApplyTimeStr());
-            helper.setText(R.id.last_number,item.getBankNo());
-           // helper.setText(R.id.last_number,item.getBankNo().substring(item.getBankNo().length()-4,item.getBankNo().length()));
-            helper.setText(R.id.money,item.getMoney());
+          //  helper.setText(R.id.last_number,item.getBankNo());
+            helper.setText(R.id.last_number,"尾号"+item.getBankNo().substring(item.getBankNo().length()-4,item.getBankNo().length()));
+            helper.setText(R.id.money,item.getMoney()+"");
          /*   if ("failed ".equals(item.getStatus())){
                 helper.setText(R.id.history_status,"失败");
             }else if ("created".equals(item.getStatus())){
@@ -48,8 +47,6 @@ public class WithdrawalrecordAdapter extends BaseQuickAdapter<HistoryCommissionw
                     helper.setBackgroundColor(R.id.history_status, Color.parseColor("#F0F0F0"));
                     break;
             }
-        }
-
     }
 
     @Override

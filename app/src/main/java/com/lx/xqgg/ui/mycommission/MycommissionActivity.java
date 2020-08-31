@@ -46,6 +46,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -178,7 +179,7 @@ public class MycommissionActivity extends BaseActivity {
                 //Accesstobankinformation();
                 Intent intentcashwr = new Intent(MycommissionActivity.this, CashWithdrawalRebateActivity.class);
                 intentcashwr.putExtra("riyuejie",riyuejie.getText().toString());
-                startActivity(intentcashwr);
+                startActivityForResult(intentcashwr,2);
                 break;
             //跳转本月返佣
             case R.id.this_monthcommissionz:
@@ -286,7 +287,21 @@ public class MycommissionActivity extends BaseActivity {
 
     //获取权益列表
     private void Listofinterests() {
+        ApiManage.getInstance().getMainApi().getListofinterests()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<ListofinterestsBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<ListofinterestsBean>> listBaseData) {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        Log.e("zlz", t.toString());
+                    }
+                });
 
     }
 
@@ -501,5 +516,14 @@ public class MycommissionActivity extends BaseActivity {
 
                     }
                 }));
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if (resultCode == 2) {
+                Returningaservant();
+            }
+        }
     }
 }
