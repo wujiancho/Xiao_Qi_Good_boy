@@ -229,7 +229,7 @@ public class PersonFragment extends BaseFragment {
                                                     .setAutoTitle(false)
                                                     .setIsFwb(false)
                                                     //.setUrl(Config.CRMURL+ "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=30"));
-                                                     .setUrl(Config.CRMURLS + "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=30"));
+                                                     .setUrl(Config.CRMURLS + "?token=" +crmLoginbean.getData().getToken()+ "&identity=app&statusHeight=30"),false);
                                     }
                                     else {
                                         toast(crmLoginbean.getMessage());
@@ -266,7 +266,7 @@ public class PersonFragment extends BaseFragment {
                             .setAutoTitle(false)
                             .setIsFwb(false)
                             .setTitle("征信网点")
-                            .setUrl(Config.ZXWDURL));
+                            .setUrl(Config.ZXWDURL),false);
                     return;
                 }
                 if (list3.get(position).getName().equals("人法网")) {
@@ -275,7 +275,7 @@ public class PersonFragment extends BaseFragment {
                             .setAutoTitle(false)
                             .setIsFwb(false)
                             .setTitle("人法网")
-                            .setUrl(Config.RFWURL));
+                            .setUrl(Config.RFWURL),false);
                     return;
                 }
                 if (list3.get(position).getName().equals("税务局")) {
@@ -292,7 +292,7 @@ public class PersonFragment extends BaseFragment {
                                                 .setAutoTitle(false)
                                                 .setIsFwb(false)
                                                 .setTitle("税务局")
-                                                .setUrl(stringBaseData.getData()));
+                                                .setUrl(stringBaseData.getData()),false);
                                     }
                                 }
                             }));

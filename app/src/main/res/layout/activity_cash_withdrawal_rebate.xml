@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mycommission.CashWithdrawalRebateActivity">
+    tools:context=".ui.mycommission.CashWithdrawalRebateActivity"
+    android:background="#D6D6D6"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_221"
@@ -139,6 +141,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
+            android:id="@+id/yihuo"
             android:orientation="vertical">
 
             <TextView
@@ -156,7 +159,7 @@
                     android:gravity="center"
                     android:text="待结算积分?"
                     android:layout_marginTop="@dimen/dp_16"
-                    android:id="@+id/yihuo"
+
                     android:textColor="#2F2F2F"
                     android:textSize="12sp" />
         </LinearLayout>

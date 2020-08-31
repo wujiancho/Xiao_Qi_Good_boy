@@ -1305,15 +1305,7 @@ public class WebViewActivity extends BaseActivity implements ChooseDialogFragmen
         }
     }
      //设置WebView的构建者模式的参数类型
-    public static void open(Builder builder) {
-        Intent intent = new Intent(builder.context, WebViewActivity.class);
-        intent.putExtra("title", builder.title);
-        intent.putExtra("url", builder.url);
-        intent.putExtra("autotitle", builder.autoTitle);
-        intent.putExtra("isFwb", builder.isFWB);
-        intent.putExtra("needShare", builder.needShare);
-        builder.context.startActivity(intent);
-    }
+
     public static void open(Builder builder,Boolean fumin) {
         Intent intent = new Intent(builder.context, WebViewActivity.class);
         intent.putExtra("title", builder.title);

@@ -139,7 +139,7 @@ public class MatchSavedAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity
                                     .setAutoTitle(false)
                                     .setIsFwb(false)
                                     .setNeedShare(false)
-                                    .setUrl(jiekong));
+                                    .setUrl(jiekong),false);
                         }
 
                     }

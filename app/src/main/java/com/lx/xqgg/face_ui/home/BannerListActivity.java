@@ -74,7 +74,7 @@ public class BannerListActivity extends BaseActivity {
                         .setIsFwb(false)
                         .setNeedShare(true)
                         .setTitle(list.get(position).getSeriesTitle())
-                        .setUrl(Config.URL+list.get(position).getSeriesVideo()));
+                        .setUrl(Config.URL+list.get(position).getSeriesVideo()),false);
             }
         });
     }

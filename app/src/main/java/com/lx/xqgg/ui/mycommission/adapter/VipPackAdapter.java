@@ -146,7 +146,7 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
     public void setGetListener(GetListener getListener) {
         this.getListener = getListener;
     }
-    private  int mPosition;
+    private  int mPosition=-1;
 
     public int getmPosition() {
         return mPosition;

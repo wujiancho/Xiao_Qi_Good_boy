@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +30,6 @@ import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
-import com.lx.xqgg.ui.vip.bean.PayListBean;
 import com.lx.xqgg.util.SpUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -102,6 +102,8 @@ public class BuyServicePackActivity extends BaseActivity {
     TextView welfare;
     @BindView(R.id.user_viplogo)
     ImageView userViplogo;
+    @BindView(R.id.vip_RecyclerViewstatusly)
+    LinearLayout vipRecyclerViewstatusly;
     private String token;
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
@@ -113,11 +115,13 @@ public class BuyServicePackActivity extends BaseActivity {
     private int id;
     private String imgurl;
     private String icn;
+    private int positionss;
+    private String buyname1;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_service_pack;
-}
+    }
 
     @Override
     protected void initView() {
@@ -128,12 +132,16 @@ public class BuyServicePackActivity extends BaseActivity {
         token = SharedPrefManager.getUser().getToken();
         //默认
         id = getIntent().getIntExtra("id", 24);
+        buyname1 = getIntent().getStringExtra("buyname1");
         imgurl = getIntent().getStringExtra("imgurl");
+        vipnameChange.setText(buyname1 + "服务包");
         icn = getIntent().getStringExtra("icn");
+        positionss = getIntent().getIntExtra("position", 0);
         if (!"".equals(id) || !"".equals(imgurl)) {
-            selectCommissionlevel(id, imgurl);
+            selectCommissionlevel(id, imgurl, positionss);
         }
         bugid = id;
+
     }
 
     //获取eventbus参数
@@ -145,20 +153,19 @@ public class BuyServicePackActivity extends BaseActivity {
         String endTime = event.getEndTime();
         int rightsNum = event.getRightsNum();
         int position = event.getPosition();
-        vipnameChange.setText(vipname+"服务包");
+        vipnameChange.setText(vipname + "服务包");
         positions = position;
         //根据选择佣金等级计算服务商当月佣金
-        selectCommissionlevel(id, imgurl);
+        selectCommissionlevel(id, imgurl, positions);
         bugid = id;
         jurisdictionCount.setText("当前" + vipname + "服务包可以解锁" + rightsNum + "个权限");
 
-        if (!"".equals(endTime)&&endTime!=null){
-            termOfValidity.setText("有效期："+endTime);
-            Log.d("endTime++++", "ServiseridurlEvent: "+endTime);
-        }
-       else {
+        if (!"".equals(endTime) && endTime != null) {
+            termOfValidity.setText("有效期：" + endTime);
+            Log.d("endTime++++", "ServiseridurlEvent: " + endTime);
+        } else {
             termOfValidity.setVisibility(View.GONE);
-            Log.d("endTime----", "ServiseridurlEvent: "+endTime);
+            Log.d("endTime----", "ServiseridurlEvent: " + endTime);
         }
 
     }
@@ -188,12 +195,10 @@ public class BuyServicePackActivity extends BaseActivity {
         }
 
 
-        vipcard();
-
         //获取权益列表
         // Listofinterests();
 
-
+        vipcard();
     }
 
     @OnClick({R.id.vip_RecyclerViewstatus, R.id.guizhe1, R.id.guizhe2, R.id.btn_activate_now, R.id.toobar_back})
@@ -203,12 +208,12 @@ public class BuyServicePackActivity extends BaseActivity {
                 break;
             case R.id.guizhe1:
                 Intent intenxieyi = new Intent(BuyServicePackActivity.this, XieYiActivity.class);
-                intenxieyi.putExtra("group","serviceAgree");
+                intenxieyi.putExtra("group", "serviceAgree");
                 startActivity(intenxieyi);
                 break;
             case R.id.guizhe2:
                 Intent intenxieyi2 = new Intent(BuyServicePackActivity.this, XieYiActivity.class);
-                intenxieyi2.putExtra("group","rakebackRule");
+                intenxieyi2.putExtra("group", "rakebackRule");
                 startActivity(intenxieyi2);
                 break;
             case R.id.btn_activate_now:
@@ -216,7 +221,7 @@ public class BuyServicePackActivity extends BaseActivity {
 
                 }*/
                 //立即开通
-                if ("钻石".equals(buyname)){
+                if ("钻石".equals(buyname)) {
                     toast("您已是最高级别用户等到有效期满后才可购买");
                     return;
                 }
@@ -229,7 +234,7 @@ public class BuyServicePackActivity extends BaseActivity {
     }
 
     //根据选择佣金等级计算服务商当月佣金
-    private void selectCommissionlevel(int id, String imgurl) {
+    private void selectCommissionlevel(int id, String imgurl, int positionss) {
         addSubscribe(ApiManage.getInstance().getMainApi().getSelectCommissionlevel(token, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -384,6 +389,7 @@ public class BuyServicePackActivity extends BaseActivity {
                 });
 
     }
+
     //返佣方法
     public void Returningaservant() {
         addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
@@ -412,10 +418,12 @@ public class BuyServicePackActivity extends BaseActivity {
                     }
                 }));
     }
+
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 
 }

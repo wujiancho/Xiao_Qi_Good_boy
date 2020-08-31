@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".ui.mycommission.BuyServicePackActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,7 +58,7 @@
                 android:scaleType="fitXY"
                 ></ImageView>
             <de.hdodenhof.circleimageview.CircleImageView
-                android:src="@drawable/pkq"
+                android:src="@drawable/logo"
                 android:id="@+id/circleImageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -220,6 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/vip_packRecyclerView"
+            android:background="#fff"
             ></androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
@@ -229,6 +231,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:orientation="vertical"
+
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -244,28 +247,37 @@
                     android:text="当前黄金服务包可以解锁4个权限"
                     android:textColor="#ff303030"
                     android:textSize="12sp"></TextView>
-
-                <TextView
-                    android:id="@+id/vip_RecyclerViewstatus"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_40"
-                    android:layout_marginRight="@dimen/dp_35"
+                    android:orientation="horizontal"
                     android:gravity="right"
-                    android:text="展开"
-                    android:textColor="#ff303030"
-                    android:textSize="11sp"></TextView>
+                    android:id="@+id/vip_RecyclerViewstatusly"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_40"
+                        android:gravity="right"
+                        android:text="展开"
+                        android:textColor="#ff303030"
+                        android:id="@+id/vip_RecyclerViewstatus"
+                        android:textSize="11sp"></TextView>
+
+                    <ImageView
+                        android:id="@+id/stuart_img"
+                        android:layout_width="7dp"
+                        android:layout_height="4dp"
+                        android:layout_marginRight="@dimen/dp_27"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_gravity="center"
+                        android:src="@drawable/xla"
+                        android:textColor="#ff303030"
+                        ></ImageView>
+                </LinearLayout>
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/stuart_img"
-                android:layout_width="7dp"
-                android:layout_height="4dp"
-                android:layout_marginRight="@dimen/dp_27"
-                android:layout_gravity="right"
-                android:src="@drawable/xla"
-                android:textColor="#ff303030"
-                ></ImageView>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/vip_RecyclerView"

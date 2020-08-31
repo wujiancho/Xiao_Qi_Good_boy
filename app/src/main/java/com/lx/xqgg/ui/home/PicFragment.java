@@ -75,7 +75,7 @@ public class PicFragment extends DialogFragment {
                                 .setContext(getActivity())
                                 .setAutoTitle(false)
                                 .setIsFwb(false)
-                                .setUrl(url));
+                                .setUrl(url),false);
                     }
                     else  if ("product".equals(name)){
                         //接受的数据生成jsonbean数据

@@ -221,7 +221,7 @@ public class HomeFragment extends BaseFragment {
                             .setIsFwb(false)
                             .setTitle("产品详情")
                             .setNeedShare(false)
-                            .setUrl(jiekong));
+                            .setUrl(jiekong),false);
                 }
 
 
@@ -255,7 +255,7 @@ public class HomeFragment extends BaseFragment {
                             .setAutoTitle(false)
                             .setIsFwb(false)
                             .setTitle("征信网点")
-                            .setUrl(Config.ZXWDURL));
+                            .setUrl(Config.ZXWDURL),false);
                     return;
                 }
                 if (listXlgj.get(position).getName().equals("人法网")) {
@@ -264,7 +264,7 @@ public class HomeFragment extends BaseFragment {
                             .setAutoTitle(false)
                             .setIsFwb(false)
                             .setTitle("人法网")
-                            .setUrl(Config.RFWURL));
+                            .setUrl(Config.RFWURL),false);
                     return;
                 }
                 try {

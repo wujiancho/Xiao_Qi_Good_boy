@@ -860,7 +860,7 @@ public class ApplyFragment extends DialogFragment {
                                     .setIsFwb(false)
                                     .setTitle(bean.getTitle())
                                     // .setUrl("http://192.168.1.144:8081/xiaoqiguaiguai-mobile//view/fuminSuccess.html"));
-                                    .setUrl(url));
+                                    .setUrl(url),false);
 
 //                            Uri uri = Uri.parse(url);
 //                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);

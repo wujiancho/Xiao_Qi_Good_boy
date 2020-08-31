@@ -79,7 +79,7 @@ public class HotMsgListActivity extends BaseActivity implements SwipeRefreshLayo
                                             .setAutoTitle(false)
                                             .setIsFwb(true)
                                             .setTitle(recordsBeanBaseData.getData().getTitle())
-                                            .setUrl(recordsBeanBaseData.getData().getContent()));
+                                            .setUrl(recordsBeanBaseData.getData().getContent()),false);
                                 } else {
                                     showDialog(recordsBeanBaseData.getMessage());
                                 }

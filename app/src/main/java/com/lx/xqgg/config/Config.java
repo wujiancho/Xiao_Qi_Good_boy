@@ -41,7 +41,7 @@ public static final String IMGURL = "http://192.168.1.144:8081/xiaoqiguaiguai-mo
 
     public static final String CRMURL = URL+"crm/view/serviceHome.html";
     public static final String CRMURLS = URLS+"crm/view/serviceHome.html";
-    public static final String FUMIN_TITLE = "富民";
+    public static final String FUMIN_TITLE = "富民银行 - 富税贷";
     public static final String  FUMIN_BANK = "https://h5rapidloan.cqfmbank.com/H5/page/blank/CAH001.html";
 
 

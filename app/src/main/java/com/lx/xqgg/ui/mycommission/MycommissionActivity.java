@@ -3,13 +3,9 @@ package com.lx.xqgg.ui.mycommission;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -100,6 +95,7 @@ public class MycommissionActivity extends BaseActivity {
     TextView jurisdictionCount;
     @BindView(R.id.vip_RecyclerViewstatus)
     TextView vipRecyclerViewstatus;
+
     @BindView(R.id.stuart_img)
     ImageView stuartImg;
     @BindView(R.id.myjurisdiction)
@@ -118,6 +114,10 @@ public class MycommissionActivity extends BaseActivity {
     ImageView vipbg;
     @BindView(R.id.riyuejie)
     Button riyuejie;
+    @BindView(R.id.vip_RecyclerViewstatusly)
+    LinearLayout vipRecyclerViewstatusly;
+    @BindView(R.id.vip)
+    LinearLayout vip;
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
@@ -125,6 +125,7 @@ public class MycommissionActivity extends BaseActivity {
     private int rightsNum;
     private String name;
     private int positions;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_mycommission;
@@ -152,12 +153,12 @@ public class MycommissionActivity extends BaseActivity {
             accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
         }
         String chargeType = SharedPrefManager.getUserInfo().getCharge_type();
-        if ("2".equals(chargeType)||!"".equals(chargeType)||chargeType!=null){
+        if ("2".equals(chargeType)) {
             riyuejie.setText("日结");
-        }else if ("1".equals(chargeType)||!"".equals(chargeType)||chargeType!=null){
+        } else if ("1".equals(chargeType)) {
             riyuejie.setText("月结");
             riyuejie.setVisibility(View.GONE);
-        }else {
+        } else {
             riyuejie.setVisibility(View.GONE);
         }
         //获取用户的可提返佣-本月返佣-累计返佣
@@ -171,15 +172,15 @@ public class MycommissionActivity extends BaseActivity {
         //Listofinterests();
     }
 
-    @OnClick({R.id.cash_withdrawal_rebatez, R.id.riyuejie,R.id.this_monthcommissionz, R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.xqgg_fy, R.id.toobar_back})
+    @OnClick({R.id.cash_withdrawal_rebatez, R.id.riyuejie, R.id.this_monthcommissionz, R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.xqgg_fy, R.id.toobar_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //跳转可提现返佣
             case R.id.cash_withdrawal_rebatez:
                 //Accesstobankinformation();
                 Intent intentcashwr = new Intent(MycommissionActivity.this, CashWithdrawalRebateActivity.class);
-                intentcashwr.putExtra("riyuejie",riyuejie.getText().toString());
-                startActivityForResult(intentcashwr,2);
+                intentcashwr.putExtra("riyuejie", riyuejie.getText().toString());
+                startActivityForResult(intentcashwr, 2);
                 break;
             //跳转本月返佣
             case R.id.this_monthcommissionz:
@@ -259,21 +260,35 @@ public class MycommissionActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseData<CommissionlevelBean> commissionlevelBeanBaseData) {
                         CommissionlevelBean data = commissionlevelBeanBaseData.getData();
-                        vipName.setText(data.getCurrentLevel());
-                        //设置进度条经验 根据用户动态改变的
-                        progressBarH.setProgress((int) data.getOrderMoney());
-                        progressBarH.setMax(data.getNextLevelMoney());
+                        if (data.getCurrentLevel()==null||"".equals(data.getCurrentLevel())){
+                            vipName.setText("准普通");
+                        }else {
+                            vipName.setText(data.getCurrentLevel());
+                        }
+
+                        if ((int) data.getOrderMoney() == 0 || data.getNextLevelMoney() == 0) {
+                            progressBarH.setProgress(5);
+                            progressBarH.setMax(100);
+                        } else {
+                            //设置进度条经验 根据用户动态改变的
+                            progressBarH.setProgress((int) data.getOrderMoney());
+                            progressBarH.setMax(data.getNextLevelMoney());
+                        }
                         currentLevel = data.getCurrentLevel();
                         Glide.with(mContext)
                                 .load(Config.IMGURL + data.getPicture())
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                                 .into(vipbg);
-                        if ("".equals(data.getNextLevel() )||data.getNextLevel() == null||data.getNextLevelMoney()==0) {
-                            vipNameQy.setText("已享受最高返佣权益");
-                            vipCount.setText(data.getOrderMoney() + "/ "+data.getNextLevelMoney()+ "，已享受所有权益");
+
+                        if ("".equals(data.getNextLevel()) || data.getNextLevel() == null || data.getNextLevelMoney() == 0) {
+                            vipCount.setText("本月放款过千，您享受最高返佣");
+                            vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
+                        } else if ("".equals(data.getCurrentLevel()) || data.getCurrentLevel() == null) {
+                            vipNameQy.setText("享受准普通返佣权益");
+
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
-                            vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + data.getCurrentCharge() + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
+                            vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" +(data.getNextLevelMoney()-data.getOrderMoney())+ "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
                         }
                     }
 
@@ -317,6 +332,11 @@ public class MycommissionActivity extends BaseActivity {
                         if (listBaseData.isSuccess()) {
                             systemCommissionlevel.addAll(listBaseData.getData());
                             xbannerVip.setBannerData(R.layout.xbanner_item, systemCommissionlevel);
+                            for (int i = 0; i < systemCommissionlevel.size(); i++) {
+                                if (systemCommissionlevel.get(i).isBuy() == true){
+                                  xbannerVip.setBannerCurrentItem(i);
+                                }
+                            }
                             xbannerVip.loadImage(new XBanner.XBannerAdapter() {
                                 @Override
                                 public void loadBanner(XBanner banner, Object model, View view, int position) {
@@ -337,13 +357,23 @@ public class MycommissionActivity extends BaseActivity {
                                     Glide.with(mContext)
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getIco())
                                             .into(viplogo);
-                                    if (systemCommissionlevel.get(position).isBuy() == false) {
+                                    if (systemCommissionlevel.get(position).isBuy() == true) {
+                                        purchase.setText("已购买");
+                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime()) && systemCommissionlevel.get(position).getEndTime() != null) {
+                                            termof_validity.setVisibility(View.VISIBLE);
+                                            termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
+
+                                        } else {
+                                            termof_validity.setVisibility(View.GONE);
+                                        }
                                  /*       if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
                                             termof_validity.setVisibility(View.GONE);
                                         }else {
                                             termof_validity.setVisibility(View.VISIBLE);
                                             termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
                                         }*/
+
+                                    } else {
                                         termof_validity.setVisibility(View.GONE);
 
                                         purchase.setOnClickListener(new View.OnClickListener() {
@@ -353,22 +383,15 @@ public class MycommissionActivity extends BaseActivity {
                                                 Intent intentbuysp = new Intent(MycommissionActivity.this, BuyServicePackActivity.class);
                                                 if (!"".equals(currentLevel)) {
                                                     intentbuysp.putExtra("buyname", currentLevel);
-                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(0).getId());
-                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(0).getPicture());
-                                                    intentbuysp.putExtra("icn", systemCommissionlevel.get(0).getIco());
+                                                    intentbuysp.putExtra("buyname1", systemCommissionlevel.get(position).getName());
+                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(position).getId());
+                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(position).getPicture());
+                                                    intentbuysp.putExtra("icn", systemCommissionlevel.get(position).getIco());
+                                                    intentbuysp.putExtra("position", position);
                                                 }
                                                 startActivity(intentbuysp);
                                             }
                                         });
-                                    } else {
-                                        purchase.setText("已购买");
-                                        if (!"".equals(systemCommissionlevel.get(position).getEndTime())&&systemCommissionlevel.get(position).getEndTime()!=null){
-                                            termof_validity.setVisibility(View.VISIBLE);
-                                            termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
-
-                                        }else {
-                                            termof_validity.setVisibility(View.GONE);
-                                        }
                                        /* jurisdictionCount.setText("当前" + name + "服务包可以解锁" + rightsNum + "个权限");
                                         positions=position;
                                         xbannerVip.setPointPosition(position);
@@ -391,7 +414,7 @@ public class MycommissionActivity extends BaseActivity {
                             vIpListAdapter = new VIpListAdapter(viplist);
                             vipRecyclerView.setAdapter(vIpListAdapter);
                             vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
-                            jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" +  systemCommissionlevel.get(0).getRightsNum() + "个权限");
+                            jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包可以解锁" + systemCommissionlevel.get(0).getRightsNum() + "个权限");
                             viplist.clear();
                             viplist.addAll(listBaseData.getData().get(positions).getRights());
                             vIpListAdapter.notifyDataSetChanged();
@@ -422,9 +445,9 @@ public class MycommissionActivity extends BaseActivity {
 
                                 @Override
                                 public void onPageSelected(int position) {
-                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" +  systemCommissionlevel.get(position).getRightsNum() + "个权限");
-                                    positions=position;
-
+                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" + systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    positions = position;
+                                    vip.setVisibility(View.VISIBLE);
                                     viplist.clear();
                                     viplist.addAll(listBaseData.getData().get(position).getRights());
                                     vIpListAdapter.notifyDataSetChanged();
@@ -436,7 +459,6 @@ public class MycommissionActivity extends BaseActivity {
                                 }
                             });
                         }
-
 
 
                     }
@@ -451,7 +473,7 @@ public class MycommissionActivity extends BaseActivity {
     }
 
     //申请月结
-    private  void  Monthlysettlement(){
+    private void Monthlysettlement() {
         ApiManage.getInstance().getMainApi().getMonthlysettlement(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -472,33 +494,34 @@ public class MycommissionActivity extends BaseActivity {
                     }
                 });
     }
-    //申请月结
-   private void initPopWindow(){
-       LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitem,null);
-       AlertDialog dialog=new AlertDialog.Builder(this).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               dialog.dismiss();
-           }
-       }).create();
-       TextView mlinearViewById=mlinear.findViewById(R.id.riyuejiename);
-       mlinearViewById.setText(SharedPrefManager.getUserInfo().getUsername()+"您好,您的返佣结算为日结,在业绩返佣内无法提现，数据仅供参考。");
-       dialog.setView(mlinear);
-       Window window = dialog.getWindow();
-       //设置弹出位置
-       window.setGravity(Gravity.TOP);
-       int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;//父布局的宽度
-       Window dialogWindow = dialog.getWindow();
-       dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER);
-       WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-       lp.width = matchParent;
-       lp.height = matchParent;
-       lp.x = matchParent;
-       lp.y = 130;  //设置出现的高度，距离顶部
-       window.setAttributes(lp);
-       dialog.show();
 
-   }
+    //申请月结
+    private void initPopWindow() {
+        LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitem, null);
+        AlertDialog dialog = new AlertDialog.Builder(this).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).create();
+        TextView mlinearViewById = mlinear.findViewById(R.id.riyuejiename);
+        mlinearViewById.setText(SharedPrefManager.getUserInfo().getUsername() + "您好,您的返佣结算为日结,在业绩返佣内无法提现，数据仅供参考。");
+        dialog.setView(mlinear);
+        Window window = dialog.getWindow();
+        //设置弹出位置
+        window.setGravity(Gravity.TOP);
+        int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;//父布局的宽度
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = matchParent;
+        lp.height = matchParent;
+        lp.x = matchParent;
+        lp.y = 130;  //设置出现的高度，距离顶部
+        window.setAttributes(lp);
+        dialog.show();
+
+    }
 
     //佣金提现获取银行信息
     private void Accesstobankinformation() {
@@ -509,7 +532,7 @@ public class MycommissionActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
                         BandinformationBean data = bandinformationBeanBaseData.getData();
-                        if (data!=null||!"".equals(data)){
+                        if (data != null || !"".equals(data)) {
                             String bankName2 = data.getBankName();
                             String bankNo2 = data.getBankNo();
                         }
@@ -517,6 +540,7 @@ public class MycommissionActivity extends BaseActivity {
                     }
                 }));
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -526,4 +550,6 @@ public class MycommissionActivity extends BaseActivity {
             }
         }
     }
+
+
 }

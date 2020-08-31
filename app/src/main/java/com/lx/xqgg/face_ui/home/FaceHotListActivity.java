@@ -78,7 +78,7 @@ public class FaceHotListActivity extends BaseActivity implements SwipeRefreshLay
                                             .setAutoTitle(false)
                                             .setIsFwb(true)
                                             .setTitle(recordsBeanBaseData.getData().getTitle())
-                                            .setUrl(recordsBeanBaseData.getData().getContent()));
+                                            .setUrl(recordsBeanBaseData.getData().getContent()),false);
                                 } else {
                                     showDialog(recordsBeanBaseData.getMessage());
                                 }
