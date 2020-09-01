@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.mycommission.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.xqgg.R;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.event.ServiseridurlEvent;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
+import com.lx.xqgg.util.RoundedCornersTransformation;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,9 +34,10 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
    private  List<SystemCommissionlevelBean> data=new ArrayList<>();
    private Context context;
 
-    public VipPackAdapter(List<SystemCommissionlevelBean> data, Context context) {
+    public VipPackAdapter(List<SystemCommissionlevelBean> data, Context context,int mPosition) {
         this.data = data;
         this.context = context;
+        this.mPosition = mPosition;
     }
 
 
@@ -48,7 +53,8 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
             holder.vip_moth.setText(data.get(position).getMonth()+"个月");
             holder.vip_name.setText(data.get(position).getName()+"服务包");
             holder.vip_money.setText(data.get(position).getPrice()+"元");
-        if ("青铜".equals(data.get(position).getName())){
+            addpich(holder,position);
+     /*   if ("青铜".equals(data.get(position).getName())){
             holder.vippackitem.setBackgroundResource(R.drawable.momeybgh);
             holder.vip_money.setTextColor(Color.parseColor("#000000"));
         }
@@ -62,8 +68,7 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
         }else  if ("钻石".equals(data.get(position).getName())){
             holder.vippackitem.setBackgroundResource(R.drawable.momeybgz);
             holder.vip_money.setTextColor(Color.parseColor("#9C27B0"));
-        }
-
+        }*/
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -81,14 +86,11 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
                 }
             });
 
-            if (position==getmPosition()){
-                Glide.with(context)
-                        .load(Config.IMGURL + data.get(position).getPicture())
-                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                        .into(holder.vippackitem);
+            if (position==getmPosition()||position==mPosition){
+                addpich(holder,position);
                 holder.vip_itembg.setBackgroundResource(R.drawable.bg_bian_vipitem);
             }else {
-                if ("青铜".equals(data.get(position).getName())){
+                /*if ("青铜".equals(data.get(position).getName())){
                     Glide.with(context)
                             .load(R.drawable.momeybgh)
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
@@ -110,7 +112,8 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
                             .load(R.drawable.momeybgz)
                             .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
                             .into(holder.vippackitem);
-                }
+                }*/
+                addpich(holder,position);
                 holder.vip_itembg.setBackgroundResource(R.drawable.bg_bian_vipitem2);
             }
     }
@@ -154,5 +157,22 @@ public class VipPackAdapter extends RecyclerView.Adapter<VipPackAdapter.MyHolder
 
     public void setmPosition(int mPosition) {
         this.mPosition = mPosition;
+    }
+
+    private void addpich(MyHolder holder ,int mPosition){
+        RoundedCornersTransformation transformation = new RoundedCornersTransformation
+                (20, 0, RoundedCornersTransformation.CornerType.TOP_LEFT);
+        //顶部右边圆角
+        RoundedCornersTransformation transformation1 = new RoundedCornersTransformation
+                (20, 0, RoundedCornersTransformation.CornerType.TOP_RIGHT);
+
+        //组合各种Transformation,
+        MultiTransformation<Bitmap> mation = new MultiTransformation<>
+                //Glide设置圆角图片后设置ImageVIew的scanType="centerCrop"无效解决办法,将new CenterCrop()添加至此
+                (new CenterCrop(), transformation, transformation1);
+        Glide.with(context)
+                .load(Config.IMGURL + data.get(mPosition).getPicture())
+                .apply(RequestOptions.bitmapTransform(mation))
+                .into(holder.vippackitem);
     }
 }

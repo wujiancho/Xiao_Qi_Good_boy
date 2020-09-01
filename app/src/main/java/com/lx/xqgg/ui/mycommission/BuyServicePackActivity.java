@@ -3,6 +3,7 @@ package com.lx.xqgg.ui.mycommission;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
@@ -30,6 +33,7 @@ import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
+import com.lx.xqgg.util.RoundedCornersTransformation;
 import com.lx.xqgg.util.SpUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -115,8 +119,8 @@ public class BuyServicePackActivity extends BaseActivity {
     private int id;
     private String imgurl;
     private String icn;
-    private int positionss;
     private String buyname1;
+    private int rightsNum;
 
     @Override
     protected int getLayoutId() {
@@ -134,13 +138,15 @@ public class BuyServicePackActivity extends BaseActivity {
         id = getIntent().getIntExtra("id", 24);
         buyname1 = getIntent().getStringExtra("buyname1");
         imgurl = getIntent().getStringExtra("imgurl");
+        rightsNum = getIntent().getIntExtra("rightsNum", 3);
         vipnameChange.setText(buyname1 + "服务包");
         icn = getIntent().getStringExtra("icn");
-        positionss = getIntent().getIntExtra("position", 0);
-        if (!"".equals(id) || !"".equals(imgurl)) {
-            selectCommissionlevel(id, imgurl, positionss);
+        positions = getIntent().getIntExtra("position", 0);
+        if (!"".equals(id) && !"".equals(imgurl)) {
+            selectCommissionlevel(id, imgurl, positions);
         }
         bugid = id;
+        jurisdictionCount.setText("当前" + buyname1 + "服务包解锁" + rightsNum + "项权益");
 
     }
 
@@ -158,14 +164,12 @@ public class BuyServicePackActivity extends BaseActivity {
         //根据选择佣金等级计算服务商当月佣金
         selectCommissionlevel(id, imgurl, positions);
         bugid = id;
-        jurisdictionCount.setText("当前" + vipname + "服务包可以解锁" + rightsNum + "个权限");
+        jurisdictionCount.setText("当前" + vipname + "服务包解锁" + rightsNum + "项权益");
 
         if (!"".equals(endTime) && endTime != null) {
             termOfValidity.setText("有效期：" + endTime);
-            Log.d("endTime++++", "ServiseridurlEvent: " + endTime);
         } else {
             termOfValidity.setVisibility(View.GONE);
-            Log.d("endTime----", "ServiseridurlEvent: " + endTime);
         }
 
     }
@@ -175,7 +179,7 @@ public class BuyServicePackActivity extends BaseActivity {
 
         buyname = getIntent().getStringExtra("buyname");
         Returningaservant();
-        if (!"".equals(buyname)) {
+        if (!"".equals(buyname)&&buyname!=null) {
             vipCommissionno.setText("当前用户等级：" + buyname);
         }
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
@@ -190,7 +194,7 @@ public class BuyServicePackActivity extends BaseActivity {
         //获取用户信息
         userName.setText(SharedPrefManager.getUserInfo().getUsername());
         String servisername = SpUtil.getInstance().getSpString("servisername");
-        if (!"".equals(servisername)) {
+        if (!"".equals(servisername)&&servisername!=null) {
             usercompanyName.setText(servisername);
         }
 
@@ -252,9 +256,21 @@ public class BuyServicePackActivity extends BaseActivity {
                             String oldChargez = df.format(oldCharge);
                             vipCommissioncountno.setText(oldChargez);
                             vipCommissioncountchamge.setText(newChargez);
+                            // 圆角图片 new RoundedCornersTransformation 参数为 ：半径 , 外边距 , 圆角方向(ALL,BOTTOM,TOP,RIGHT,LEFT,BOTTOM_LEFT等等)
+                            //顶部左边圆角
+                            RoundedCornersTransformation transformation = new RoundedCornersTransformation
+                                    (20, 0, RoundedCornersTransformation.CornerType.TOP_LEFT);
+                            //顶部右边圆角
+                            RoundedCornersTransformation transformation1 = new RoundedCornersTransformation
+                                    (20, 0, RoundedCornersTransformation.CornerType.TOP_RIGHT);
+
+                            //组合各种Transformation,
+                            MultiTransformation<Bitmap> mation = new MultiTransformation<>
+                                    //Glide设置圆角图片后设置ImageVIew的scanType="centerCrop"无效解决办法,将new CenterCrop()添加至此
+                                    (new CenterCrop(), transformation, transformation1);
                             Glide.with(mContext)
                                     .load(Config.IMGURL + imgurl)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                    .apply(RequestOptions.bitmapTransform(mation))
                                     .into(vipselectbg);
                             welfare.setText("佣金至少提升" + promote + "%,获得额外" + rightsNum + "项权益");
                         }
@@ -273,7 +289,7 @@ public class BuyServicePackActivity extends BaseActivity {
                     public void onNext(BaseData<List<SystemCommissionlevelBean>> listBaseData) {
                         if (listBaseData.isSuccess()) {
                             systemCommissionlevel.addAll(listBaseData.getData());
-                            vipPackAdapter = new VipPackAdapter(systemCommissionlevel, mContext);
+                            vipPackAdapter = new VipPackAdapter(systemCommissionlevel, mContext,positions);
                             vipPackRecyclerView.setAdapter(vipPackAdapter);
                             vipPackRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
                             Glide.with(mContext)
@@ -288,36 +304,16 @@ public class BuyServicePackActivity extends BaseActivity {
 //                                 把点击的下标回传给适配器 确定下标
                                     vipPackAdapter.setmPosition(position);
                                     vipPackAdapter.notifyDataSetChanged();
-                                    viplist.clear();
-                                    viplist.addAll(listBaseData.getData().get(position).getRights());
+                                    addviplist(listBaseData,position);
+                                    if (!"".equals(listBaseData.getData().get(position).getEndTime()) && listBaseData.getData().get(position).getEndTime() != null) {
+                                        termOfValidity.setText("有效期：" + listBaseData.getData().get(position).getEndTime());
+                                    } else {
+                                        termOfValidity.setVisibility(View.GONE);
+                                    }
                                 }
                             });
                         }
-                        viplist = new ArrayList<>();
-                        viplist.clear();
-                        viplist.addAll(listBaseData.getData().get(positions).getRights());
-                        //设置vip权限服务列表
-                        vIpListAdapter = new VIpListAdapter(viplist);
-                        vipRecyclerView.setAdapter(vIpListAdapter);
-                        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
-                        vIpListAdapter.statusvip(4);
-                        vIpListAdapter.notifyDataSetChanged();
-                        vipRecyclerViewstatus.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
-                                    vIpListAdapter.statusvip(viplist.size());
-                                    vIpListAdapter.notifyDataSetChanged();
-                                    vipRecyclerViewstatus.setText("收起");
-                                    stuartImg.setImageResource(R.drawable.sla);
-                                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
-                                    vIpListAdapter.statusvip(4);
-                                    vIpListAdapter.notifyDataSetChanged();
-                                    vipRecyclerViewstatus.setText("展开");
-                                    stuartImg.setImageResource(R.drawable.xla);
-                                }
-                            }
-                        });
+                        addviplist(listBaseData,positions);
                     }
 
                     @Override
@@ -348,7 +344,33 @@ public class BuyServicePackActivity extends BaseActivity {
                 });
 
     }
-
+    private  void addviplist(BaseData<List<SystemCommissionlevelBean>> data,int position){
+        viplist = new ArrayList<>();
+        viplist.clear();
+        viplist.addAll(data.getData().get(position).getRights());
+        //设置vip权限服务列表
+        vIpListAdapter = new VIpListAdapter(viplist);
+        vipRecyclerView.setAdapter(vIpListAdapter);
+        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        vIpListAdapter.statusvip(4);
+        vIpListAdapter.notifyDataSetChanged();
+        vipRecyclerViewstatusly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
+                    vIpListAdapter.statusvip(viplist.size());
+                    vIpListAdapter.notifyDataSetChanged();
+                    vipRecyclerViewstatus.setText("收起");
+                    stuartImg.setImageResource(R.drawable.sla);
+                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
+                    vIpListAdapter.statusvip(4);
+                    vIpListAdapter.notifyDataSetChanged();
+                    vipRecyclerViewstatus.setText("展开");
+                    stuartImg.setImageResource(R.drawable.xla);
+                }
+            }
+        });
+    }
     //立即开通
     private void activatenow(int id) {
         HashMap<String, Object> paramsMap = new HashMap<>();

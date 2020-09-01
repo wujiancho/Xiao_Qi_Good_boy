@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.mycommission.CashWithdrawalRebateActivity"
-    android:background="#D6D6D6"
+    android:background="#E0E0E0"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -170,7 +170,7 @@
     android:orientation="vertical"
     android:layout_marginRight="@dimen/dp_10"
     android:layout_marginLeft="@dimen/dp_10"
-    android:layout_marginTop="@dimen/dp_305"
+    android:layout_marginTop="@dimen/dp_302"
     android:background="@drawable/bg_txfy"
     >
     <LinearLayout
@@ -300,6 +300,7 @@
     android:background="@drawable/tx_fy"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toLeftOf="@+id/btt_txjl"
+    android:layout_marginRight="@dimen/dp_50"
     ></Button>
 
         <Button
@@ -312,6 +313,7 @@
             android:background="@drawable/tx_fy"
            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/btt_txmoney"
+            android:layout_marginLeft="@dimen/dp_50"
             ></Button>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

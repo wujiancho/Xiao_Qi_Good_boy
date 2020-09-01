@@ -124,7 +124,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             withdrawalRebate.setText(cashRebatez);
         }*/
       Returningaservant();
-      //Accesstobankinformation();
+      Accesstobankinformation();
             String data = SpUtil.getInstance().getSpString("bankinfortion");
             SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
             if (!"".equals(data)) {
@@ -152,10 +152,10 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 String count2 = txCountsr.getText().toString().trim();
                 if (!"".equals(count2)) {
                     int jf = Integer.valueOf(count2);
-                  /*  if (jf>cashCharge){
-                        toast("请输入正确的积分");
+                    if (jf>cashRebate){
+                        toast("输入积分不能大于已有积分");
                         return;
-                    }*/
+                    }
                     txMoney.setText("¥" + (jf / 10));
                 }
             }
@@ -249,41 +249,41 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                     return;
                 }
         //day>=25&&day<=29
-        //获取系统的 日期
+       /* //获取系统的 日期
         Calendar calendar = Calendar.getInstance();
         //日
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         if (day<=25||day>=29) {
             toast("提示：每月25日~29日可申请提现积分");
             return;
-        }
+        }*/
 
         HashMap<String, Object> paramsMap = new HashMap<>();
-       /* if (!"".equals(bankName2)||!"".equals(bankNo2)||!"".equals(bankUser2)){
+        if (!"".equals(bankName2)&&!"".equals(bankNo2)&&!"".equals(bankUser2)){
             paramsMap.put("token", SharedPrefManager.getUser().getToken());
             paramsMap.put("bankName", bankName2);
             paramsMap.put("bankNo", bankNo2);
             paramsMap.put("bankUser", bankUser2);
             paramsMap.put("money", money);
-        }*//* else if (!bankName.equals(bankName2)||!bankNo.equals(bankNo2)||!bankUser.equals(bankUser2)){
+        } else if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)){
             paramsMap.put("token", SharedPrefManager.getUser().getToken());
-            paramsMap.put("bankName", bankName);
-            paramsMap.put("bankNo", bankNo);
-            paramsMap.put("bankUser", bankUser);
+            paramsMap.put("bankName", bankName2);
+            paramsMap.put("bankNo", bankNo2);
+            paramsMap.put("bankUser", bankUser2);
             paramsMap.put("money", money);
-        }*//*
+        }
         else {
             paramsMap.put("token", SharedPrefManager.getUser().getToken());
             paramsMap.put("bankName", bankName);
             paramsMap.put("bankNo", bankNo);
             paramsMap.put("bankUser", bankUser);
             paramsMap.put("money", money);
-        }*/
-        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        }
+    /*    paramsMap.put("token", SharedPrefManager.getUser().getToken());
         paramsMap.put("bankName", bankName);
         paramsMap.put("bankNo", bankNo);
         paramsMap.put("bankUser", bankUser);
-        paramsMap.put("money", money);
+        paramsMap.put("money", money);*/
                 RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
                 addSubscribe(ApiManage.getInstance().getMainApi().getCommissionwithdrawal(body)
                         .subscribeOn(Schedulers.io())
@@ -367,24 +367,17 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                     public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
                         if (bandinformationBeanBaseData.isSuccess()){
                             BandinformationBean data = bandinformationBeanBaseData.getData();
-                            if (!"".equals(data)||data!=null){
+                            if (!"".equals(data)&&data!=null){
                                 bankName2 = data.getBankName();
                                 bankNo2 = data.getBankNo();
                                 bankUser2 = data.getBankUser();
                                 //获取银行卡信息
-                                if (!"".equals(bankName2)||!"".equals(bankNo2)||!"".equals(bankUser2)||bankName2!=null||bankNo2!=null||bankUser2!=null){
+                                if (!"".equals(bankName2)&&!"".equals(bankNo2)&&!"".equals(bankUser2)&&bankName2!=null&&bankNo2!=null&&bankUser2!=null){
                                     addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
                                 }
-                              /*  else if (!bankName.equals(bankName2)||!bankNo.equals(bankNo2)||!bankUser.equals(bankUser2)){
-                                    String data2 = SpUtil.getInstance().getSpString("bankinfortion");
-                                    SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data2, SaveBankinfortionBean.class);
-                                    if (!"".equals(data2)) {
-                                        bankName = saveBankinfortionBean.getBankName();
-                                        bankNo = saveBankinfortionBean.getBankNo();
-                                        bankUser = saveBankinfortionBean.getBankUser();
-                                        addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
-                                    }
-                                }*/
+                                else if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)){
+                                    addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
+                                }
                                 else {
                                     String spdata = SpUtil.getInstance().getSpString("bankinfortion");
                                     SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(spdata, SaveBankinfortionBean.class);

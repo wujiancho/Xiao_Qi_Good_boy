@@ -41,12 +41,4 @@
         android:textColor="#ff686868"
         android:textSize="12sp"
         />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="您已成功提交，次月返佣将变为月结，同时，享受更高返佣。如有疑问，请联系小麒乖乖相关服务人员。"
-        android:textColor="#ff686868"
-        android:textSize="12sp"
-        />
 </LinearLayout>

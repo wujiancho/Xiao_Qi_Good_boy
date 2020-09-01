@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
+    android:background="#E0E0E0"
     tools:context=".ui.mycommission.BuyServicePackActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -126,88 +126,92 @@
                 />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_102"
-        android:background="#fff"
+        android:orientation="horizontal"
+        android:background="#fff">
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+         android:layout_weight="1"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="未购买"
-            android:id="@+id/vip_commissionno"
-            android:textColor="#ff6f460a"
-            android:textSize="12sp"
-            android:layout_marginTop="@dimen/dp_13"
-            android:layout_marginLeft="@dimen/dp_26"
-            />
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5,000 "
-        android:id="@+id/vip_commissioncountno"
-        android:textColor="#ffeb3349"
-        android:textSize="18sp"
-        android:layout_marginTop="@dimen/dp_36"
-        android:layout_marginLeft="@dimen/dp_73"
-        />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="本月佣金"
-            android:textColor="#ff676767"
-            android:textSize="10sp"
-            android:layout_marginTop="@dimen/dp_65"
-            android:layout_marginLeft="@dimen/dp_78"
-            />
+         <TextView
+             android:id="@+id/vip_commissionno"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/dp_26"
+             android:layout_marginTop="@dimen/dp_13"
+             android:text="未购买"
+             android:textColor="#ff6f460a"
+             android:textSize="12sp" />
+
+         <TextView
+             android:id="@+id/vip_commissioncountno"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/dp_73"
+             android:layout_marginTop="@dimen/dp_10"
+             android:text="5,000 "
+             android:textColor="#ffeb3349"
+             android:textSize="18sp" />
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="@dimen/dp_78"
+             android:layout_marginTop="@dimen/dp_10"
+             android:text="本月佣金"
+             android:textColor="#ff676767"
+             android:textSize="10sp" />
+     </LinearLayout>
         <View
             android:layout_width="0.5dp"
             android:layout_height="@dimen/dp_82"
-            android:background="#9F9F9F"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_177"
-            ></View>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="黄金服务包"
-            android:textColor="#ff6f460a"
-            android:textSize="12sp"
-            android:layout_marginTop="@dimen/dp_13"
-            android:layout_marginLeft="@dimen/dp_200"
-            android:id="@+id/vipname_change"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7,000 "
-            android:textColor="#ffeb3349"
-            android:textSize="18sp"
-            android:id="@+id/vip_commissioncountchamge"
-            android:layout_marginTop="@dimen/dp_36"
-            android:layout_marginLeft="@dimen/dp_263"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="本月佣金"
-            android:textColor="#ff676767"
-            android:textSize="10sp"
-            android:layout_marginTop="@dimen/dp_65"
-            android:layout_marginLeft="@dimen/dp_265"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="佣金至少提升20%,获得额外13项权益"
-            android:textColor="#ff676767"
-            android:textSize="8sp"
-            android:layout_marginTop="@dimen/dp_81"
-            android:layout_marginLeft="@dimen/dp_210"
-            android:id="@+id/welfare"
-            />
-    </RelativeLayout>
-<ScrollView
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="#9F9F9F"></View>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    >
+    <TextView
+        android:id="@+id/vipname_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_13"
+        android:text="黄金服务包"
+        android:textColor="#ff6f460a"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/vip_commissioncountchamge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="7,000 "
+        android:textColor="#ffeb3349"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/welfare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="佣金至少提升20%,获得额外13项权益"
+        android:textColor="#ff676767"
+        android:textSize="8sp" />
+</LinearLayout>
+    </LinearLayout>
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -216,13 +220,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/vip_packRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/vip_packRecyclerView"
-            android:background="#fff"
-            ></androidx.recyclerview.widget.RecyclerView>
+            android:background="#E0E0E0">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -241,33 +246,31 @@
 
                 <TextView
                     android:id="@+id/jurisdiction_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_13"
-                    android:text="当前黄金服务包可以解锁4个权限"
-                    android:textColor="#ff303030"
-                    android:textSize="12sp"></TextView>
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_13"
+                    android:layout_weight="1"
+                    android:text="当前黄金服务包可以解锁4个权限"
+                    android:textColor="#ff303030"
+                    android:textSize="15sp"></TextView>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="right"
                     android:id="@+id/vip_RecyclerViewstatusly"
                     >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_40"
-                        android:gravity="right"
                         android:text="展开"
                         android:textColor="#ff303030"
                         android:id="@+id/vip_RecyclerViewstatus"
-                        android:textSize="11sp"></TextView>
+                        android:textSize="15sp"></TextView>
 
                     <ImageView
                         android:id="@+id/stuart_img"
-                        android:layout_width="7dp"
-                        android:layout_height="4dp"
+                        android:layout_width="8dp"
+                        android:layout_height="5dp"
                         android:layout_marginRight="@dimen/dp_27"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:layout_gravity="center"
