@@ -267,7 +267,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             paramsMap.put("bankNo", bankNo2);
             paramsMap.put("bankUser", bankUser2);
             paramsMap.put("money", money);
-             if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)&&!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
+            /* if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)&&!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
                 paramsMap.put("token", SharedPrefManager.getUser().getToken());
                 paramsMap.put("bankName", bankName2);
                 paramsMap.put("bankNo", bankNo2);
@@ -279,7 +279,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                  paramsMap.put("bankNo", bankNo);
                  paramsMap.put("bankUser", bankUser);
                  paramsMap.put("money", money);
-             }
+             }*/
         }
         else {
             paramsMap.put("token", SharedPrefManager.getUser().getToken());
@@ -384,7 +384,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                                 //获取银行卡信息
                                 if (!"".equals(bankName2)&&!"".equals(bankNo2)&&!"".equals(bankUser2)&&bankName2!=null&&bankNo2!=null&&bankUser2!=null){
                                     addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
-                                    if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)&&!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
+                                /*    if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)&&!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
                                         addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
                                     }
                                     else {
@@ -396,7 +396,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                                             bankUser = saveBankinfortionBean.getBankUser();
                                             addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
                                         }
-                                    }
+                                    }*/
                                 }
                                 else {
                                     String spdata = SpUtil.getInstance().getSpString("bankinfortion");
