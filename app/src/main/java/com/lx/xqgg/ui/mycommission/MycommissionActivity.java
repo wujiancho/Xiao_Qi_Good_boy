@@ -284,18 +284,23 @@ public class MycommissionActivity extends BaseActivity {
                     public void onNext(BaseData<CommissionlevelBean> commissionlevelBeanBaseData) {
                         CommissionlevelBean data = commissionlevelBeanBaseData.getData();
                         if (data.getCurrentLevel() == null && "".equals(data.getCurrentLevel())) {
-                            vipName.setText("准普通");
+                            vipName.setText(data.getCurrentLevel());
+                            /*vipName.setText("准普通");
                             dangq.setVisibility(View.GONE);
                         } else {
                             vipName.setText(data.getCurrentLevel());
                             if (data.getCurrentLevel().contains("准")) {
                                 dangq.setVisibility(View.GONE);
-                            }
+                            }*/
                         }
-                        if ((int) data.getOrderMoney() == 0 || data.getNextLevelMoney() == 0) {
+                        if ((int) data.getOrderMoney() == 0 ) {
                             progressBarH.setProgress(5);
                             progressBarH.setMax(100);
-                        } else {
+                        } else if ( data.getNextLevelMoney() == 0){
+                            progressBarH.setProgress(100);
+                            progressBarH.setMax(100);
+                        }
+                        else {
                             //设置进度条经验 根据用户动态改变的
                             progressBarH.setProgress((int) data.getOrderMoney());
                             progressBarH.setMax(data.getNextLevelMoney());
