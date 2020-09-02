@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_16"
+    android:background="@drawable/tx_buttombg"
+    android:gravity="center"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="您已成功提交，次月返佣将变为月结，同时，享受更高返佣。"
+        android:textColor="#686868"
+        android:textSize="12sp"
+        android:layout_marginTop="@dimen/dp_20"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="如有疑问，请联系小麒乖乖相关服务人员。"
+        android:textColor="#686868"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="12sp"
+        android:layout_marginBottom="@dimen/dp_20"
+        />
+</LinearLayout>

@@ -146,8 +146,6 @@ public class BuyServicePackActivity extends BaseActivity {
             selectCommissionlevel(id, imgurl, positions);
         }
         bugid = id;
-        jurisdictionCount.setText("当前" + buyname1 + "服务包解锁" + rightsNum + "项权益");
-
     }
 
     //获取eventbus参数
@@ -164,8 +162,7 @@ public class BuyServicePackActivity extends BaseActivity {
         //根据选择佣金等级计算服务商当月佣金
         selectCommissionlevel(id, imgurl, positions);
         bugid = id;
-        jurisdictionCount.setText("当前" + vipname + "服务包解锁" + rightsNum + "项权益");
-
+        //jurisdictionCount.setText("当前" + vipname + "服务包解锁" + rightsNum + "项权益");
         if (!"".equals(endTime) && endTime != null) {
             termOfValidity.setText("有效期：" + endTime);
         } else {
@@ -180,7 +177,11 @@ public class BuyServicePackActivity extends BaseActivity {
         buyname = getIntent().getStringExtra("buyname");
         Returningaservant();
         if (!"".equals(buyname)&&buyname!=null) {
-            vipCommissionno.setText("当前用户等级：" + buyname);
+            if (buyname.contains("准")||buyname.contains("普通")){
+                vipCommissionno.setText("未购买");
+            }else {
+                vipCommissionno.setText("当前用户等级：" + buyname);
+            }
         }
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)) {
@@ -225,10 +226,6 @@ public class BuyServicePackActivity extends BaseActivity {
 
                 }*/
                 //立即开通
-                if ("钻石".equals(buyname)) {
-                    toast("您已是最高级别用户等到有效期满后才可购买");
-                    return;
-                }
                 activatenow(bugid);
                 break;
             case R.id.toobar_back:
@@ -310,10 +307,21 @@ public class BuyServicePackActivity extends BaseActivity {
                                     } else {
                                         termOfValidity.setVisibility(View.GONE);
                                     }
+                                   if ( systemCommissionlevel.get(position).isBuy() == true){
+                                       btnActivateNow.setVisibility(View.GONE);
+                                   }else {
+                                       btnActivateNow.setVisibility(View.VISIBLE);
+                                   }
                                 }
                             });
                         }
+
                         addviplist(listBaseData,positions);
+                        if ( systemCommissionlevel.get(positions).isBuy() == true){
+                            btnActivateNow.setVisibility(View.GONE);
+                        }else {
+                            btnActivateNow.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override
@@ -345,6 +353,7 @@ public class BuyServicePackActivity extends BaseActivity {
 
     }
     private  void addviplist(BaseData<List<SystemCommissionlevelBean>> data,int position){
+        jurisdictionCount.setText("当前" + data.getData().get(position).getName() + "服务包解锁" + data.getData().get(position).getRightsNum() + "项权益");
         viplist = new ArrayList<>();
         viplist.clear();
         viplist.addAll(data.getData().get(position).getRights());

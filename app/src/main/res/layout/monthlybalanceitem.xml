@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/dp_16"
-    android:background="@drawable/tx_buttombg"
-    >
+    android:background="@drawable/tx_buttombg">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,4 +42,33 @@
         android:textColor="#ff686868"
         android:textSize="12sp"
         />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:layout_marginTop="@dimen/dp_20"
+        >
+        <Button
+            android:layout_width="@dimen/dp_91"
+            android:layout_height="@dimen/dp_27"
+            android:id="@+id/btn_ok"
+            android:text="申请"
+            android:background="@drawable/btn_okbg"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/btn_no"
+            ></Button>
+        <Button
+            android:layout_width="@dimen/dp_91"
+            android:layout_height="@dimen/dp_30"
+            android:id="@+id/btn_no"
+            android:text="取消"
+            android:textColor="#F45C44"
+            android:textSize="15sp"
+            android:background="@drawable/btn_nobg"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/btn_ok"
+            ></Button>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

@@ -128,8 +128,11 @@ public class WithdrawalRecordActivity extends BaseActivity {
                             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
                             String allRebatez = df.format(allRebate);//累计返佣
                             String cashRebatez = df.format(cashRebate);//可提返佣
+                            String createdMoney = data.getCreatedMoney();
+                            int ccc = Integer.valueOf(createdMoney.substring(0, createdMoney.indexOf(".")));
                             String thismothRebatez = df.format(thismothRebate);//本月返佣
-                            accumulativeWithdrawal.setText("您已累计提现积分" + allRebatez + "积分");
+                            String ccccreatedMoney = df.format(ccc);//带结算
+                            accumulativeWithdrawal.setText("您已累计提现积分" + ccccreatedMoney + "积分。");
                         }
                     }
 

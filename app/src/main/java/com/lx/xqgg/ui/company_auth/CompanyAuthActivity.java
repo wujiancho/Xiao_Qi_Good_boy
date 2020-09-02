@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -122,7 +124,7 @@ public class CompanyAuthActivity extends BaseActivity implements ChooseDialogFra
     private ChooseDialogFragment chooseDialogFragment;
 
     private Tiny.FileCompressOptions options;
-
+    private boolean isSelected=false;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_company_auth;
@@ -152,12 +154,47 @@ public class CompanyAuthActivity extends BaseActivity implements ChooseDialogFra
                         if (!TextUtils.isEmpty(etCpmpanyName.getText().toString())) {
                             Log.e("zlz", "查询");
                             searchInfo(etCpmpanyName.getText().toString());
+                        }else {
+                            etCpmpanyName.setText("");
+                            etFzrName.setText("");
+                            etPhone.setText("");
+                            etAddressDetail.setText("");
+                            ivBgshj.setImageResource(R.drawable.add_image);
+                            ivQtzp.setImageResource(R.drawable.add_image);
+                            ivYyzz.setImageResource(R.drawable.add_image);
                         }
                     }
                     edFocus = false;
                 }
             }
         });
+       /* etCpmpanyName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                   if (!TextUtils.isEmpty(etCpmpanyName.getText().toString())) {
+                       Log.e("zlz", "查询");
+                       searchInfo(etCpmpanyName.getText().toString());
+                   }else {
+                       etCpmpanyName.setText("");
+                       etFzrName.setText("");
+                       etPhone.setText("");
+                       etAddressDetail.setText("");
+                       ivBgshj.setImageResource(R.drawable.add_image);
+                       ivQtzp.setImageResource(R.drawable.add_image);
+                       ivYyzz.setImageResource(R.drawable.add_image);
+               }
+            }
+        });*/
     }
 
     /**
@@ -209,8 +246,8 @@ public class CompanyAuthActivity extends BaseActivity implements ChooseDialogFra
                                     img3IsShown = true;
                                 }
 
-
-                                if (userServiceBeanBaseData.getData().getStatus().equals("normal")) {
+                                id = userServiceBeanBaseData.getData().getId();
+                              /*  if (userServiceBeanBaseData.getData().getStatus().equals("normal")) {
                                     etCpmpanyName.setEnabled(false);
                                     etFzrName.setEnabled(false);
                                     etPhone.setEnabled(false);
@@ -218,7 +255,7 @@ public class CompanyAuthActivity extends BaseActivity implements ChooseDialogFra
                                 } else {
                                     //未通过 可以修改
                                     id = userServiceBeanBaseData.getData().getId();
-                                }
+                                }*/
                             }
                         }
                     }

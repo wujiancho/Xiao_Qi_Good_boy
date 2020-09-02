@@ -1,8 +1,8 @@
 package com.lx.xqgg.ui.mycommission;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
@@ -28,22 +31,27 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.adapter.VIpListAdapter;
-import com.lx.xqgg.ui.mycommission.bean.BandinformationBean;
+import com.lx.xqgg.ui.mycommission.adapter.fanyongAdapter;
 import com.lx.xqgg.ui.mycommission.bean.CommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.ListofinterestsBean;
 import com.lx.xqgg.ui.mycommission.bean.MonthlysettlementBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
+import com.lx.xqgg.ui.vip.bean.PayListBean;
+import com.lx.xqgg.util.RoundedCornersTransformation;
 import com.lx.xqgg.util.SpUtil;
 import com.stx.xhb.xbanner.XBanner;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
@@ -53,6 +61,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class MycommissionActivity extends BaseActivity {
 
@@ -61,14 +71,12 @@ public class MycommissionActivity extends BaseActivity {
     View toobarBack;
     @BindView(R.id.toobar_title)
     TextView toobarTitle;
-    @BindView(R.id.xbanner_vip)
-    XBanner xbannerVip;
-    @BindView(R.id.vip_RecyclerView)
-    RecyclerView vipRecyclerView;
     @BindView(R.id.circleImageView)
     CircleImageView circleImageView;
     @BindView(R.id.user_name)
     TextView userName;
+    @BindView(R.id.riyuejie)
+    Button riyuejie;
     @BindView(R.id.usercompany_name)
     TextView usercompanyName;
     @BindView(R.id.accumulated_points)
@@ -85,41 +93,44 @@ public class MycommissionActivity extends BaseActivity {
     TextView accumulatedRebate;
     @BindView(R.id.accumulated_rebatez)
     LinearLayout accumulatedRebatez;
+    @BindView(R.id.diglogxx)
+    LinearLayout diglogxx;
+    @BindView(R.id.vipbg)
+    ImageView vipbg;
+    @BindView(R.id.dangq)
+    TextView dangq;
     @BindView(R.id.vip_name)
     TextView vipName;
+    @BindView(R.id.vip_name_qy)
+    TextView vipNameQy;
     @BindView(R.id.progress_bar_h)
     ProgressBar progressBarH;
     @BindView(R.id.vip_count)
     TextView vipCount;
+    @BindView(R.id.xbanner_vip)
+    XBanner xbannerVip;
     @BindView(R.id.jurisdiction_count)
     TextView jurisdictionCount;
     @BindView(R.id.vip_RecyclerViewstatus)
     TextView vipRecyclerViewstatus;
-
     @BindView(R.id.stuart_img)
     ImageView stuartImg;
+    @BindView(R.id.vip_RecyclerViewstatusly)
+    LinearLayout vipRecyclerViewstatusly;
+    @BindView(R.id.vip_RecyclerView)
+    RecyclerView vipRecyclerView;
+    @BindView(R.id.vip)
+    LinearLayout vip;
     @BindView(R.id.myjurisdiction)
     ConstraintLayout myjurisdiction;
+    @BindView(R.id.cotent)
+    TextView cotent;
     @BindView(R.id.logo)
     ImageView logo;
     @BindView(R.id.xqgg_gl)
-    ConstraintLayout xqggGl;
-    @BindView(R.id.logo2)
-    ImageView logo2;
-    @BindView(R.id.xqgg_fy)
-    ConstraintLayout xqggFy;
-    @BindView(R.id.vip_name_qy)
-    TextView vipNameQy;
-    @BindView(R.id.vipbg)
-    ImageView vipbg;
-    @BindView(R.id.riyuejie)
-    Button riyuejie;
-    @BindView(R.id.vip_RecyclerViewstatusly)
-    LinearLayout vipRecyclerViewstatusly;
-    @BindView(R.id.vip)
-    LinearLayout vip;
-    @BindView(R.id.dangq)
-    TextView dangq;
+    LinearLayout xqggGl;
+    @BindView(R.id.fanyong_RecyclerView)
+    RecyclerView fanyongRecyclerView;
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
@@ -127,6 +138,10 @@ public class MycommissionActivity extends BaseActivity {
     private int rightsNum;
     private String name;
     private int positions;
+
+    private static final float MIN_SCALE = 0.75f;
+    private fanyongAdapter fanyongAdapter;
+    private ArrayList<PayListBean> fanyonglist;
 
     @Override
     protected int getLayoutId() {
@@ -169,12 +184,14 @@ public class MycommissionActivity extends BaseActivity {
         Userlevel();
         //vip卡片
         vipcard();
-
+        //小麒乖乖的购买
+        goumai();
+        fanyong();
         //获取权益列表
         //Listofinterests();
     }
 
-    @OnClick({R.id.cash_withdrawal_rebatez, R.id.riyuejie, R.id.this_monthcommissionz, R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.xqgg_fy, R.id.toobar_back})
+    @OnClick({R.id.cash_withdrawal_rebatez, R.id.riyuejie, R.id.this_monthcommissionz, R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.toobar_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //跳转可提现返佣
@@ -204,12 +221,16 @@ public class MycommissionActivity extends BaseActivity {
                 break;
             //小麒乖乖的攻略
             case R.id.xqgg_gl:
-                toast("功能暂未开放");
+                Intent intenxieyi = new Intent(MycommissionActivity.this, XieYi2Activity.class);
+                intenxieyi.putExtra("group", "buyStrategy");
+                startActivity(intenxieyi);
                 break;
-            //小麒乖乖的返佣
+          /*  //小麒乖乖的返佣
             case R.id.xqgg_fy:
-                toast("功能暂未开放");
-                break;
+                Intent intenxieyi2 = new Intent(MycommissionActivity.this, XieYiActivity.class);
+                intenxieyi2.putExtra("group", "rakebackRule");
+                startActivity(intenxieyi2);
+                break;*/
             case R.id.toobar_back:
                 finish();
                 break;
@@ -262,12 +283,12 @@ public class MycommissionActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseData<CommissionlevelBean> commissionlevelBeanBaseData) {
                         CommissionlevelBean data = commissionlevelBeanBaseData.getData();
-                        if (data.getCurrentLevel() == null || "".equals(data.getCurrentLevel())) {
+                        if (data.getCurrentLevel() == null && "".equals(data.getCurrentLevel())) {
                             vipName.setText("准普通");
                             dangq.setVisibility(View.GONE);
                         } else {
                             vipName.setText(data.getCurrentLevel());
-                            if (data.getCurrentLevel().contains("准")){
+                            if (data.getCurrentLevel().contains("准")) {
                                 dangq.setVisibility(View.GONE);
                             }
                         }
@@ -280,11 +301,7 @@ public class MycommissionActivity extends BaseActivity {
                             progressBarH.setMax(data.getNextLevelMoney());
                         }
                         currentLevel = data.getCurrentLevel();
-                        Glide.with(mContext)
-                                .load(Config.IMGURL + data.getPicture())
-                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                                .into(vipbg);
-
+                        yuanjiaogrild(vipbg, Config.IMGURL + data.getPicture());
                         if ("".equals(data.getNextLevel()) || data.getNextLevel() == null || data.getNextLevelMoney() == 0) {
                             vipCount.setText("您享受最高返佣");
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
@@ -325,6 +342,31 @@ public class MycommissionActivity extends BaseActivity {
 
     }
 
+    //圆角图片
+    private void yuanjiaogrild(ImageView v, String url) {
+        // 圆角图片 new RoundedCornersTransformation 参数为 ：半径 , 外边距 , 圆角方向(ALL,BOTTOM,TOP,RIGHT,LEFT,BOTTOM_LEFT等等)
+        //顶部左边圆角
+        RoundedCornersTransformation transformation = new RoundedCornersTransformation
+                (20, 0, RoundedCornersTransformation.CornerType.TOP_LEFT);
+        //顶部右边圆角
+        RoundedCornersTransformation transformation1 = new RoundedCornersTransformation
+                (20, 0, RoundedCornersTransformation.CornerType.TOP_RIGHT);
+        //顶部左边圆角
+        RoundedCornersTransformation transformation2 = new RoundedCornersTransformation
+                (20, 0, RoundedCornersTransformation.CornerType.BOTTOM_LEFT);
+        //顶部右边圆角
+        RoundedCornersTransformation transformation3 = new RoundedCornersTransformation
+                (20, 0, RoundedCornersTransformation.CornerType.BOTTOM_RIGHT);
+        //组合各种Transformation,
+        MultiTransformation<Bitmap> mation = new MultiTransformation<>
+                //Glide设置圆角图片后设置ImageVIew的scanType="centerCrop"无效解决办法,将new CenterCrop()添加至此
+                (new CenterCrop(), transformation, transformation1, transformation2, transformation3);
+        Glide.with(mContext)
+                .load(url)
+                .apply(RequestOptions.bitmapTransform(mation))
+                .into(v);
+    }
+
     //vip卡片
     private void vipcard() {
         systemCommissionlevel = new ArrayList<>();
@@ -337,11 +379,38 @@ public class MycommissionActivity extends BaseActivity {
                         if (listBaseData.isSuccess()) {
                             systemCommissionlevel.addAll(listBaseData.getData());
                             xbannerVip.setBannerData(R.layout.xbanner_item, systemCommissionlevel);
+                            //设置XBanner滑动动画
+                            xbannerVip.setCustomPageTransformer(new ViewPager.PageTransformer() {
+                                @Override
+                                public void transformPage(@NonNull View page, float position) {
+                                    final int pageWidth = page.getWidth();
+                                    final float scaleFactor = MIN_SCALE + (1 - MIN_SCALE) * (1 - Math.abs(position));
+
+                                    if (position < 0) { // [-1,0]
+                                        // Scale the page down (between MIN_SCALE and 1)
+                                        page.setTranslationY(scaleFactor);
+                                        page.setTranslationX(scaleFactor);
+
+                                    } else if (position == 0) {
+                                        page.setTranslationY(scaleFactor);
+                                        page.setTranslationX(scaleFactor);
+
+                                    } else if (position <= 1) { // (0,1]
+                                        // Scale the page down (between MIN_SCALE and 1)
+                                        page.setTranslationY(scaleFactor);
+                                        page.setTranslationX(scaleFactor);
+
+                                    }
+                                }
+
+                            });
                             for (int i = 0; i < systemCommissionlevel.size(); i++) {
                                 if (systemCommissionlevel.get(i).isBuy() == true) {
                                     xbannerVip.setBannerCurrentItem(i);
+                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(i).getName() + "服务包已解锁" + systemCommissionlevel.get(i).getRightsNum() + "项权益");
                                     addviplist(listBaseData, i);
                                 } else {
+                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包解锁" + systemCommissionlevel.get(0).getRightsNum() + "项权益");
                                     addviplist(listBaseData, 0);
                                 }
                             }
@@ -354,14 +423,12 @@ public class MycommissionActivity extends BaseActivity {
                                     TextView termof_validity = (TextView) view.findViewById(R.id.termof_validity);
                                     TextView purchase = (TextView) view.findViewById(R.id.purchase);
                                     ImageView viplogo = (ImageView) view.findViewById(R.id.viplogo);
+                                    RelativeLayout tiaoz = (RelativeLayout) view.findViewById(R.id.tiaoz);
                                     rightsNum = systemCommissionlevel.get(position).getRightsNum();
                                     name = systemCommissionlevel.get(position).getName();
                                     vipname.setText(systemCommissionlevel.get(position).getName() + "服务包");
                                     tvContent.setText("购买" + systemCommissionlevel.get(position).getName() + "服务包享受更高返佣、额外" + systemCommissionlevel.get(position).getRightsNum() + "项权益");
-                                    Glide.with(mContext)
-                                            .load(Config.IMGURL + systemCommissionlevel.get(position).getPicture())
-                                            .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
-                                            .into(picture);
+                                    yuanjiaogrild(picture, Config.IMGURL + systemCommissionlevel.get(position).getPicture());
                                     Glide.with(mContext)
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getIco())
                                             .into(viplogo);
@@ -374,35 +441,24 @@ public class MycommissionActivity extends BaseActivity {
                                         } else {
                                             termof_validity.setVisibility(View.GONE);
                                         }
-                                 /*       if (!"".equals(systemCommissionlevel.get(position).getEndTime())||systemCommissionlevel.get(position).getEndTime()!=null){
-                                            termof_validity.setVisibility(View.GONE);
-                                        }else {
-                                            termof_validity.setVisibility(View.VISIBLE);
-                                            termof_validity.setText("有效期：" + systemCommissionlevel.get(position).getEndTime());
-                                        }*/
-
                                     } else {
                                         termof_validity.setVisibility(View.GONE);
-
-                                        purchase.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                //跳转购买服务包
-                                                Intent intentbuysp = new Intent(MycommissionActivity.this, BuyServicePackActivity.class);
-                                                if (!"".equals(currentLevel)) {
-                                                    intentbuysp.putExtra("buyname", currentLevel);
-                                                    intentbuysp.putExtra("buyname1", systemCommissionlevel.get(position).getName());
-                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(position).getId());
-                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(position).getPicture());
-                                                    intentbuysp.putExtra("icn", systemCommissionlevel.get(position).getIco());
-                                                    intentbuysp.putExtra("position", position);
-                                                    intentbuysp.putExtra("rightsNum", systemCommissionlevel.get(position).getRightsNum());
-                                                }
-                                                startActivity(intentbuysp);
-                                            }
-                                        });
                                     }
-
+                                    tiaoz.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            //跳转购买服务包
+                                            Intent intentbuysp = new Intent(MycommissionActivity.this, BuyServicePackActivity.class);
+                                            intentbuysp.putExtra("buyname", currentLevel);
+                                            intentbuysp.putExtra("buyname1", systemCommissionlevel.get(position).getName());
+                                            intentbuysp.putExtra("id", systemCommissionlevel.get(position).getId());
+                                            intentbuysp.putExtra("imgurl", systemCommissionlevel.get(position).getPicture());
+                                            intentbuysp.putExtra("icn", systemCommissionlevel.get(position).getIco());
+                                            intentbuysp.putExtra("position", position);
+                                            intentbuysp.putExtra("rightsNum", systemCommissionlevel.get(position).getRightsNum());
+                                            startActivity(intentbuysp);
+                                        }
+                                    });
                                 }
                             });
                             //联动改变权限
@@ -413,7 +469,11 @@ public class MycommissionActivity extends BaseActivity {
 
                                 @Override
                                 public void onPageSelected(int position) {
-                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" + systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    if (systemCommissionlevel.get(position).isBuy() == true) {
+                                        jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包已解锁" + systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    } else {
+                                        jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包可以解锁" + systemCommissionlevel.get(position).getRightsNum() + "个权限");
+                                    }
                                     positions = position;
                                     vip.setVisibility(View.VISIBLE);
                                     viplist.clear();
@@ -466,20 +526,46 @@ public class MycommissionActivity extends BaseActivity {
     //申请月结提示
     private void initPopWindow() {
         LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitem, null);
-        AlertDialog dialog = new AlertDialog.Builder(this).setPositiveButton("申请", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Monthlysettlement();
-            }
-        }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).create();
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
 
         TextView mlinearViewById = mlinear.findViewById(R.id.riyuejiename);
+        Button btn_ok = mlinear.findViewById(R.id.btn_ok);
+        Button btn_no = mlinear.findViewById(R.id.btn_no);
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Monthlysettlement();
+            }
+        });
+        btn_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         mlinearViewById.setText(SharedPrefManager.getUserInfo().getUsername() + "您好,您的返佣结算为日结,在业绩返佣内无法提现，数据仅供参考。");
+        dialog.setView(mlinear);
+        //设置弹出位置
+        int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;//父布局的宽度
+
+        //ViewGroup.inflate(mContext,null);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = matchParent;
+        lp.height = matchParent;
+        lp.x = matchParent;
+        lp.y = 150;  //设置出现的高度，距离顶部
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+
+    }
+
+    //申请月结确认
+    private void initPopWindowqued() {
+        LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitemqued, null);
+        AlertDialog dialog = new AlertDialog.Builder(this).create();
         dialog.setView(mlinear);
         Window window = dialog.getWindow();
         //设置弹出位置
@@ -494,39 +580,6 @@ public class MycommissionActivity extends BaseActivity {
         lp.y = 150;  //设置出现的高度，距离顶部
         window.setAttributes(lp);
         dialog.show();
-
-    }
-
-    //申请月结确认
-    private void initPopWindowqued() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(MycommissionActivity.this);
-        builder1.setMessage("您已成功提交，次月返佣将变为月结，同时，享受更高返佣。如有疑问，请联系小麒乖乖相关服务人员。");
-        builder1.setTitle("温馨提示");
-        builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder1.show();
-    }
-
-    //佣金提现获取银行信息
-    private void Accesstobankinformation() {
-        addSubscribe(ApiManage.getInstance().getMainApi().getBandinformation(SharedPrefManager.getUser().getToken())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
-                        BandinformationBean data = bandinformationBeanBaseData.getData();
-                        if (data != null || !"".equals(data)) {
-                            String bankName2 = data.getBankName();
-                            String bankNo2 = data.getBankNo();
-                        }
-
-                    }
-                }));
     }
 
     //返回刷新积分
@@ -547,7 +600,6 @@ public class MycommissionActivity extends BaseActivity {
         vIpListAdapter = new VIpListAdapter(viplist);
         vipRecyclerView.setAdapter(vIpListAdapter);
         vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
-        jurisdictionCount.setText("当前" + systemCommissionlevel.get(position).getName() + "服务包解锁" + systemCommissionlevel.get(position).getRightsNum() + "项权益");
         viplist.clear();
         viplist.addAll(listBaseData.getData().get(position).getRights());
         vIpListAdapter.notifyDataSetChanged();
@@ -570,5 +622,57 @@ public class MycommissionActivity extends BaseActivity {
         });
     }
 
+    //小麒乖乖的返佣
+    private void fanyong() {
+        HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        paramsMap.put("group", "buyRule");
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
+                        Log.e("zlz", new Gson().toJson(listBaseData));
+                        if (listBaseData.isSuccess()) {
+                            if (listBaseData.getData() != null) {
+                                fanyonglist = new ArrayList<>();
+                                fanyonglist.addAll(listBaseData.getData());
+                                fanyongAdapter = new fanyongAdapter(fanyonglist);
+                                fanyongRecyclerView.setAdapter(fanyongAdapter);
+                                fanyongRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                            }
+                        }
+                    }
+                }));
+
+    }
+
+    //小麒乖乖的购买
+    private void goumai() {
+        HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        paramsMap.put("group", "buyStrategy");
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
+                        Log.e("zlz", new Gson().toJson(listBaseData));
+                        if (listBaseData.isSuccess()) {
+                            if (listBaseData.getData() != null) {
+                                cotent.setText(listBaseData.getData().get(0).getName());
+                                Glide.with(mContext)
+                                        .load(Config.IMGURL + listBaseData.getData().get(0).getValue())
+                                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(20)))
+                                        .into(logo);
+                            }
+                        }
+                    }
+                }));
+    }
 
 }

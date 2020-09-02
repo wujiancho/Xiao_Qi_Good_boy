@@ -103,6 +103,7 @@
                 android:layout_marginLeft="@dimen/dp_25"
                 android:background="@null"
                 android:textSize="10sp"
+                android:lines="1"
                 android:hint="请输入银行账户名称"
                 ></EditText>
         </LinearLayout>
@@ -136,6 +137,7 @@
                 android:layout_marginLeft="@dimen/dp_25"
                 android:textSize="10sp"
                 android:background="@null"
+                android:lines="1"
                 android:hint="请输入银行名称"
                 ></EditText>
         </LinearLayout>
@@ -169,6 +171,7 @@
                 android:layout_marginLeft="@dimen/dp_25"
                 android:background="@null"
                 android:textSize="10sp"
+                android:lines="1"
                 android:hint="请输入银行卡号"
                 ></EditText>
         </LinearLayout>

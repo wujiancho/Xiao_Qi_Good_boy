@@ -63,9 +63,9 @@ public class RefundDetailsActivity extends BaseActivity {
         //  if (!"".equals(token)||token!=null){
         // }
         integral = getIntent().getIntExtra("integral",-1);
-        if (!"".equals(month)||month!=null){
+        if (!"".equals(month)&&month!=null){
             //跳转时获取会动态改变
-            toobarTitle.setText(month+"佣金积分明细");
+            toobarTitle.setText(month+" 佣金积分明细");
         }
         if (!"".equals(integral)){
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
