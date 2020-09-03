@@ -80,6 +80,9 @@ public class VIpListAdapter extends BaseQuickAdapter<SystemCommissionlevelBean.R
     }
     @Override
     public int getItemCount() {
+        if (listsize>getData().size()){
+            return getData().size();
+        }
         return listsize;
     }
 

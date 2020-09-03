@@ -121,6 +121,7 @@ public class BuyServicePackActivity extends BaseActivity {
     private String icn;
     private String buyname1;
     private int rightsNum;
+    private String endTime;
 
     @Override
     protected int getLayoutId() {
@@ -142,10 +143,16 @@ public class BuyServicePackActivity extends BaseActivity {
         vipnameChange.setText(buyname1 + "服务包");
         icn = getIntent().getStringExtra("icn");
         positions = getIntent().getIntExtra("position", 0);
+        endTime = getIntent().getStringExtra("endTime");
         if (!"".equals(id) && !"".equals(imgurl)) {
             selectCommissionlevel(id, imgurl, positions);
         }
         bugid = id;
+           if (!"".equals(endTime) && endTime != null) {
+            termOfValidity.setText("有效期：" + endTime);
+        } else {
+            termOfValidity.setVisibility(View.GONE);
+        }
     }
 
     //获取eventbus参数
@@ -163,11 +170,11 @@ public class BuyServicePackActivity extends BaseActivity {
         selectCommissionlevel(id, imgurl, positions);
         bugid = id;
         //jurisdictionCount.setText("当前" + vipname + "服务包解锁" + rightsNum + "项权益");
-        if (!"".equals(endTime) && endTime != null) {
+       /* if (!"".equals(endTime) && endTime != null) {
             termOfValidity.setText("有效期：" + endTime);
         } else {
             termOfValidity.setVisibility(View.GONE);
-        }
+        }*/
 
     }
 

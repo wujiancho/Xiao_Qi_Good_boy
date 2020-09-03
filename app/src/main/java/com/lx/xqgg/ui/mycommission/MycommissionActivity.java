@@ -1,13 +1,12 @@
 package com.lx.xqgg.ui.mycommission;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,6 +22,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.hymane.expandtextview.utils.DensityUtils;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
@@ -39,6 +39,7 @@ import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
 import com.lx.xqgg.ui.vip.bean.PayListBean;
 import com.lx.xqgg.util.RoundedCornersTransformation;
+import com.lx.xqgg.util.ScreenUtil;
 import com.lx.xqgg.util.SpUtil;
 import com.stx.xhb.xbanner.XBanner;
 
@@ -49,6 +50,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -131,6 +133,8 @@ public class MycommissionActivity extends BaseActivity {
     LinearLayout xqggGl;
     @BindView(R.id.fanyong_RecyclerView)
     RecyclerView fanyongRecyclerView;
+    @BindView(R.id.btn_riyuejie)
+    ImageView btnRiyuejie;
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
@@ -151,6 +155,27 @@ public class MycommissionActivity extends BaseActivity {
     @Override
     protected void initView() {
         toobarTitle.setText("业绩返佣服务包");
+        viplist = new ArrayList<>();
+        //设置vip权限服务列表
+        vIpListAdapter = new VIpListAdapter(viplist);
+        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+        vipRecyclerView.setAdapter(vIpListAdapter);
+        vipRecyclerViewstatusly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
+                    vIpListAdapter.statusvip(viplist.size());
+                    vIpListAdapter.notifyDataSetChanged();
+                    vipRecyclerViewstatus.setText("收起");
+                    stuartImg.setImageResource(R.drawable.sla);
+                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
+                    vIpListAdapter.statusvip(4);
+                    vIpListAdapter.notifyDataSetChanged();
+                    vipRecyclerViewstatus.setText("展开");
+                    stuartImg.setImageResource(R.drawable.xla);
+                }
+            }
+        });
     }
 
     @Override
@@ -172,9 +197,10 @@ public class MycommissionActivity extends BaseActivity {
         String chargeType = SharedPrefManager.getUserInfo().getCharge_type();
         if ("2".equals(chargeType)) {
             riyuejie.setText("日结");
+            btnRiyuejie.setVisibility(View.VISIBLE);
         } else if ("1".equals(chargeType)) {
             riyuejie.setText("月结");
-            riyuejie.setVisibility(View.GONE);
+            btnRiyuejie.setVisibility(View.GONE);
         } else {
             riyuejie.setVisibility(View.GONE);
         }
@@ -191,7 +217,7 @@ public class MycommissionActivity extends BaseActivity {
         //Listofinterests();
     }
 
-    @OnClick({R.id.cash_withdrawal_rebatez, R.id.riyuejie, R.id.this_monthcommissionz, R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.toobar_back})
+    @OnClick({R.id.cash_withdrawal_rebatez, R.id.riyuejie, R.id.this_monthcommissionz, R.id.btn_riyuejie,R.id.accumulated_rebatez, R.id.vip_RecyclerViewstatus, R.id.myjurisdiction, R.id.xqgg_gl, R.id.toobar_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //跳转可提现返佣
@@ -234,9 +260,11 @@ public class MycommissionActivity extends BaseActivity {
             case R.id.toobar_back:
                 finish();
                 break;
-            case R.id.riyuejie:
+            case R.id.btn_riyuejie:
                 //申请月结
                 initPopWindow();
+                //DigyueFragment digyueFragment=new DigyueFragment();
+               //digyueFragment.show(getSupportFragmentManager(), "");
                 break;
         }
     }
@@ -284,7 +312,7 @@ public class MycommissionActivity extends BaseActivity {
                     public void onNext(BaseData<CommissionlevelBean> commissionlevelBeanBaseData) {
                         CommissionlevelBean data = commissionlevelBeanBaseData.getData();
                         if (data.getCurrentLevel() == null && "".equals(data.getCurrentLevel())) {
-                            vipName.setText(data.getCurrentLevel());
+                            vipName.setText("准黄金");
                             /*vipName.setText("准普通");
                             dangq.setVisibility(View.GONE);
                         } else {
@@ -292,15 +320,16 @@ public class MycommissionActivity extends BaseActivity {
                             if (data.getCurrentLevel().contains("准")) {
                                 dangq.setVisibility(View.GONE);
                             }*/
+                        } else {
+                            vipName.setText(data.getCurrentLevel());
                         }
-                        if ((int) data.getOrderMoney() == 0 ) {
+                        if ((int) data.getOrderMoney() == 0) {
                             progressBarH.setProgress(5);
                             progressBarH.setMax(100);
-                        } else if ( data.getNextLevelMoney() == 0){
+                        } else if (data.getNextLevelMoney() == 0) {
                             progressBarH.setProgress(100);
                             progressBarH.setMax(100);
-                        }
-                        else {
+                        } else {
                             //设置进度条经验 根据用户动态改变的
                             progressBarH.setProgress((int) data.getOrderMoney());
                             progressBarH.setMax(data.getNextLevelMoney());
@@ -409,17 +438,24 @@ public class MycommissionActivity extends BaseActivity {
                                 }
 
                             });
+                            boolean selectbuy = false;
                             for (int i = 0; i < systemCommissionlevel.size(); i++) {
                                 if (systemCommissionlevel.get(i).isBuy() == true) {
                                     xbannerVip.setBannerCurrentItem(i);
                                     jurisdictionCount.setText("当前" + systemCommissionlevel.get(i).getName() + "服务包已解锁" + systemCommissionlevel.get(i).getRightsNum() + "项权益");
-                                    addviplist(listBaseData, i);
-                                } else {
-                                    jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包解锁" + systemCommissionlevel.get(0).getRightsNum() + "项权益");
-                                    addviplist(listBaseData, 0);
+                                    addviplist(i);
+                                    selectbuy = true;
+                                    break;
                                 }
                             }
+                            if (!selectbuy) {
+                                jurisdictionCount.setText("当前" + systemCommissionlevel.get(0).getName() + "服务包解锁" + systemCommissionlevel.get(0).getRightsNum() + "项权益");
+                                addviplist(0);
+                            }
                             xbannerVip.loadImage(new XBanner.XBannerAdapter() {
+
+                                private String endTime;
+
                                 @Override
                                 public void loadBanner(XBanner banner, Object model, View view, int position) {
                                     TextView vipname = (TextView) view.findViewById(R.id.vip_name);
@@ -439,6 +475,7 @@ public class MycommissionActivity extends BaseActivity {
                                             .into(viplogo);
                                     if (systemCommissionlevel.get(position).isBuy() == true) {
                                         purchase.setText("已购买");
+                                        endTime = systemCommissionlevel.get(position).getEndTime();
                                         if (!"".equals(systemCommissionlevel.get(position).getEndTime()) && systemCommissionlevel.get(position).getEndTime() != null) {
                                             termof_validity.setVisibility(View.VISIBLE);
                                             termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
@@ -461,6 +498,7 @@ public class MycommissionActivity extends BaseActivity {
                                             intentbuysp.putExtra("icn", systemCommissionlevel.get(position).getIco());
                                             intentbuysp.putExtra("position", position);
                                             intentbuysp.putExtra("rightsNum", systemCommissionlevel.get(position).getRightsNum());
+                                            intentbuysp.putExtra("endTime", endTime);
                                             startActivity(intentbuysp);
                                         }
                                     });
@@ -481,9 +519,7 @@ public class MycommissionActivity extends BaseActivity {
                                     }
                                     positions = position;
                                     vip.setVisibility(View.VISIBLE);
-                                    viplist.clear();
-                                    viplist.addAll(listBaseData.getData().get(position).getRights());
-                                    vIpListAdapter.notifyDataSetChanged();
+                                    addviplist(positions);
                                 }
 
                                 @Override
@@ -552,15 +588,13 @@ public class MycommissionActivity extends BaseActivity {
         mlinearViewById.setText(SharedPrefManager.getUserInfo().getUsername() + "您好,您的返佣结算为日结,在业绩返佣内无法提现，数据仅供参考。");
         dialog.setView(mlinear);
         //设置弹出位置
-        int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;//父布局的宽度
-
-        //ViewGroup.inflate(mContext,null);
         Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = matchParent;
-        lp.height = matchParent;
-        lp.x = matchParent;
+        float px2dp50 = DensityUtils.px2dp(mContext, 50);
+        float px2dp150 = DensityUtils.px2dp(mContext, 150);
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.y = 150;  //设置出现的高度，距离顶部
         dialogWindow.setAttributes(lp);
         dialog.show();
@@ -574,14 +608,13 @@ public class MycommissionActivity extends BaseActivity {
         dialog.setView(mlinear);
         Window window = dialog.getWindow();
         //设置弹出位置
-        window.setGravity(Gravity.TOP);
-        int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;//父布局的宽度
         Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.width = matchParent;
-        lp.height = matchParent;
-        lp.x = matchParent;
+        float px2dp50 = DensityUtils.px2dp(mContext, 50);
+        float px2dp150 = DensityUtils.px2dp(mContext, 150);
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.y = 150;  //设置出现的高度，距离顶部
         window.setAttributes(lp);
         dialog.show();
@@ -599,32 +632,11 @@ public class MycommissionActivity extends BaseActivity {
     }
 
     //复用权益适配器
-    private void addviplist(BaseData<List<SystemCommissionlevelBean>> listBaseData, int position) {
-        viplist = new ArrayList<>();
-        //设置vip权限服务列表
-        vIpListAdapter = new VIpListAdapter(viplist);
-        vipRecyclerView.setAdapter(vIpListAdapter);
-        vipRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 4));
+    private void addviplist(int position) {
         viplist.clear();
-        viplist.addAll(listBaseData.getData().get(position).getRights());
-        vIpListAdapter.notifyDataSetChanged();
+        viplist.addAll(systemCommissionlevel.get(position).getRights());
         vIpListAdapter.statusvip(4);
-        vipRecyclerViewstatusly.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ("展开".equals(vipRecyclerViewstatus.getText().toString())) {
-                    vIpListAdapter.statusvip(viplist.size());
-                    vIpListAdapter.notifyDataSetChanged();
-                    vipRecyclerViewstatus.setText("收起");
-                    stuartImg.setImageResource(R.drawable.sla);
-                } else if ("收起".equals(vipRecyclerViewstatus.getText().toString())) {
-                    vIpListAdapter.statusvip(4);
-                    vIpListAdapter.notifyDataSetChanged();
-                    vipRecyclerViewstatus.setText("展开");
-                    stuartImg.setImageResource(R.drawable.xla);
-                }
-            }
-        });
+        vIpListAdapter.notifyDataSetChanged();
     }
 
     //小麒乖乖的返佣

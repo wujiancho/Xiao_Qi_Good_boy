@@ -69,18 +69,30 @@
                android:layout_marginLeft="@dimen/dp_97"
                />
            <Button
-               android:layout_width="@dimen/dp_30"
-               android:layout_height="@dimen/dp_12"
+               android:layout_width="@dimen/dp_33"
+               android:layout_height="@dimen/dp_20"
                app:layout_constraintTop_toTopOf="parent"
-               android:layout_marginTop="@dimen/dp_70"
-               android:layout_marginLeft="@dimen/dp_20"
+               android:layout_marginTop="@dimen/dp_65"
+               android:layout_marginLeft="@dimen/dp_10"
                android:text="日结"
-               android:textSize="9sp"
-               android:textColor="#ff303030"
+               android:textSize="12sp"
+               android:textColor="#fff"
                android:background="@drawable/riyuejie_bg"
                android:id="@+id/riyuejie"
                app:layout_constraintLeft_toRightOf="@+id/user_name"
                ></Button>
+           <ImageView
+               android:layout_width="@dimen/dp_91"
+               android:layout_height="@dimen/dp_25"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginTop="@dimen/dp_65"
+               android:layout_marginLeft="@dimen/dp_20"
+               android:background="@drawable/yuejie"
+               android:textColor="#F35B43"
+               android:id="@+id/btn_riyuejie"
+               app:layout_constraintRight_toRightOf="parent"
+
+               ></ImageView>
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -314,11 +326,12 @@
             android:textColor="#ff593605"
             android:textSize="9sp" />
     </RelativeLayout>
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_8"
+        android:fillViewport="true"
         android:layout_marginRight="@dimen/dp_10">
         <LinearLayout
             android:layout_width="match_parent"
@@ -392,7 +405,6 @@
                         android:id="@+id/vip_RecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp_13"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp_20"
@@ -523,9 +535,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginBottom="@dimen/dp_5"
                 >
             </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout >

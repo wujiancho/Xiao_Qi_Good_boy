@@ -89,7 +89,7 @@
                    android:id="@+id/user_viplogo"
                    android:layout_width="@dimen/dp_60"
                    android:layout_height="@dimen/dp_12"
-                   android:layout_marginLeft="@dimen/dp_20"
+                   android:layout_marginLeft="@dimen/dp_10"
                    android:layout_marginTop="@dimen/dp_32"
                    android:src="@drawable/tx_buttombg"
                    android:scaleType="fitXY"

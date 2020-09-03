@@ -232,7 +232,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         toast("请先勾选小麒乖乖返佣规则");
         return;
         }
-        if ("添加银行卡".equals(addbankName.getText().toString().trim())){
+        if ("".equals(bankName)){
                     toast("请先绑定银行卡");
                     return;
                 }
@@ -261,38 +261,13 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         }*/
 
         HashMap<String, Object> paramsMap = new HashMap<>();
-        if (!"".equals(bankName2)&&!"".equals(bankNo2)&&!"".equals(bankUser2)){
-            paramsMap.put("token", SharedPrefManager.getUser().getToken());
-            paramsMap.put("bankName", bankName2);
-            paramsMap.put("bankNo", bankNo2);
-            paramsMap.put("bankUser", bankUser2);
-            paramsMap.put("money", money);
-            /* if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)&&!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
-                paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                paramsMap.put("bankName", bankName2);
-                paramsMap.put("bankNo", bankNo2);
-                paramsMap.put("bankUser", bankUser2);
-                paramsMap.put("money", money);
-            }else {
-                 paramsMap.put("token", SharedPrefManager.getUser().getToken());
-                 paramsMap.put("bankName", bankName);
-                 paramsMap.put("bankNo", bankNo);
-                 paramsMap.put("bankUser", bankUser);
-                 paramsMap.put("money", money);
-             }*/
-        }
-        else {
+        if (!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)) {
             paramsMap.put("token", SharedPrefManager.getUser().getToken());
             paramsMap.put("bankName", bankName);
             paramsMap.put("bankNo", bankNo);
             paramsMap.put("bankUser", bankUser);
             paramsMap.put("money", money);
         }
-    /*    paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("bankName", bankName);
-        paramsMap.put("bankNo", bankNo);
-        paramsMap.put("bankUser", bankUser);
-        paramsMap.put("money", money);*/
                 RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
                 addSubscribe(ApiManage.getInstance().getMainApi().getCommissionwithdrawal(body)
                         .subscribeOn(Schedulers.io())
@@ -378,47 +353,20 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                         if (bandinformationBeanBaseData.isSuccess()){
                             BandinformationBean data = bandinformationBeanBaseData.getData();
                             if (!"".equals(data)&&data!=null){
-                                bankName2 = data.getBankName();
-                                bankNo2 = data.getBankNo();
-                                bankUser2 = data.getBankUser();
+                                bankName= data.getBankName();
+                                bankNo= data.getBankNo();
+                                bankUser = data.getBankUser();
                                 //获取银行卡信息
-                                if (!"".equals(bankName2)&&!"".equals(bankNo2)&&!"".equals(bankUser2)&&bankName2!=null&&bankNo2!=null&&bankUser2!=null){
-                                    addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
-                                /*    if (bankName.equals(bankName2)&&bankNo.equals(bankNo2)&&bankUser.equals(bankUser2)&&!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
-                                        addbankName.setText(bankName2.substring(bankName2.length() - 4, bankName2.length()) + "(" + bankNo2.substring(bankNo2.length() - 5, bankNo2.length()) + ")");
-                                    }
-                                    else {
-                                        String spdata = SpUtil.getInstance().getSpString("bankinfortion");
-                                        SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(spdata, SaveBankinfortionBean.class);
-                                        if (!"".equals(spdata)) {
-                                            bankName = saveBankinfortionBean.getBankName();
-                                            bankNo = saveBankinfortionBean.getBankNo();
-                                            bankUser = saveBankinfortionBean.getBankUser();
-                                            addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
-                                        }
-                                    }*/
+                                if (!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
+                                    addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
                                 }
                                 else {
-                                    String spdata = SpUtil.getInstance().getSpString("bankinfortion");
-                                    SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(spdata, SaveBankinfortionBean.class);
-                                    if (!"".equals(spdata)) {
-                                        bankName = saveBankinfortionBean.getBankName();
-                                        bankNo = saveBankinfortionBean.getBankNo();
-                                        bankUser = saveBankinfortionBean.getBankUser();
-                                        addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
+                                        addbankName.setText("添加银行卡");
                                     }
                                 }
                             }
                           else {
-                                String spdata = SpUtil.getInstance().getSpString("bankinfortion");
-                                SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(spdata, SaveBankinfortionBean.class);
-                                if (!"".equals(spdata)) {
-                                    bankName = saveBankinfortionBean.getBankName();
-                                    bankNo = saveBankinfortionBean.getBankNo();
-                                    bankUser = saveBankinfortionBean.getBankUser();
-                                    addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
-                                }
-                            }
+                            addbankName.setText("添加银行卡");
                         }
                     }
 
