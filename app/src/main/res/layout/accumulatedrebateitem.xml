@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/dp_51"
     android:layout_marginBottom="@dimen/dp_2"
     android:id="@+id/integraldetailed"
-    android:background="@drawable/bg_txfy"
-    >
+    android:background="@drawable/bg_txfy">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,11 +18,48 @@
         android:layout_marginLeft="@dimen/dp_14"
         android:id="@+id/accumulated_pointscontent"
         />
-    <ImageView
-        android:layout_width="@dimen/dp_69"
-        android:layout_height="@dimen/dp_21"
+    <LinearLayout
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_20"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_gravity="center"
-        android:src="@drawable/bg_logo"
-        android:id="@+id/accumulated_pointsimg"
-        ></ImageView>
+        android:layout_marginRight="@dimen/dp_15"
+        >
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_21"
+            android:src="@drawable/bg_logo"
+            android:id="@+id/accumulated_pointsimglogo"
+            android:scaleType="centerCrop"
+            ></ImageView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_18"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/bg_logo"
+                android:id="@+id/accumulated_pointsimg"
+                android:scaleType="centerCrop"
+                ></ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFEFE"
+                android:textSize="10sp"
+                android:text="钻石会员"
+                android:layout_gravity="center"
+                android:id="@+id/accumulated_pointsname"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 </LinearLayout>

@@ -186,11 +186,7 @@ public class BuyServicePackActivity extends BaseActivity {
         buyname = getIntent().getStringExtra("buyname");
         Returningaservant();
         if (!"".equals(buyname) && buyname != null) {
-            if (buyname.contains("准") || buyname.contains("黄金")) {
-                vipCommissionno.setText("未购买");
-            } else {
                 vipCommissionno.setText("当前用户等级：" + buyname);
-            }
         }
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)) {

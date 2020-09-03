@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="您已累计提现积分30,000积分。"
+                android:text="您已累计提现积分0积分。"
                 android:textColor="#ffeb3349"
                 android:textSize="16sp"
                 android:shadowDx="0"

@@ -29,7 +29,7 @@ public static final String IMGURL = "http://192.168.1.144:8081/xiaoqiguaiguai-mo
 //public static final String IMGURL = "http://xq.xhsqy.com/xiaoqiguaiguai-mobile/";
 
  // 测试
-// public static final String URL = "http://app.xhsqy.com/xiaoqiguaiguai-mobile/";
+//public static final String URL = "http://app.xhsqy.com/xiaoqiguaiguai-mobile/";
 //
 //public static final String IMGURL = "http://app.xhsqy.com/xiaoqiguaiguai-mobile/";
 
