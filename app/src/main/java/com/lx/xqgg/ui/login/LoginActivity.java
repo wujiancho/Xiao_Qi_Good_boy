@@ -125,6 +125,12 @@ public class LoginActivity extends BaseActivity {
                                     toast(msgBean.getMessage());
                                 }
                             }
+
+                            @Override
+                            public void onError(Throwable t) {
+                                super.onError(t);
+                                toast(t.getMessage());
+                            }
                         }));
                 break;
             case R.id.btn_login:

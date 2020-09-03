@@ -80,11 +80,8 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     TextView fanyongguiz;
     private boolean checked;
     private String bankName;
-    private String bankName2;
     private String bankNo;
-    private String bankNo2;
     private String bankUser;
-    private String bankUser2;
     private String token;
     private int cashRebate;
     private String riyuejie;
@@ -111,30 +108,10 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             riqitix.setText("提示：每月25日~29日可申请提现积分");
         }
 
-      /*  String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
-        if (!"".equals(returningservantdata)) {
-            ReturningservantBean returningservantBean = new Gson().fromJson(returningservantdata, ReturningservantBean.class);
-            cashCharge = returningservantBean.getCashCharge();
-            String createdMoney = returningservantBean.getCreatedMoney();
-            int ccc = Integer.valueOf(createdMoney.substring(0, createdMoney.indexOf(".")));
-            DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String cashRebatez = df.format(cashCharge);
-            withdrawablePointsZong.setText((cashCharge + ccc) + "");
-            withSettlement.setText(createdMoney);
-            withdrawalRebate.setText(cashRebatez);
-        }*/
         //返佣方法
       Returningaservant();
         //佣金提现获取银行信息
       Accesstobankinformation();
-            String data = SpUtil.getInstance().getSpString("bankinfortion");
-            SaveBankinfortionBean saveBankinfortionBean = new Gson().fromJson(data, SaveBankinfortionBean.class);
-            if (!"".equals(data)) {
-                bankName = saveBankinfortionBean.getBankName();
-                bankNo = saveBankinfortionBean.getBankNo();
-                bankUser = saveBankinfortionBean.getBankUser();
-                addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
-        }
         addbankName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,10 +176,13 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
             case R.id.btt_txmoney:
                 checked = checkTx.isChecked();
                 //提现方法
-                tixian(bankName, bankNo, bankUser);
-                if (!"".equals(bankName2)||!"".equals(bankNo2)||!"".equals(bankUser2)){
-                    tixian(bankName2, bankNo2, bankUser2);
+                if ("添加银行卡".equals(addbankName.getText().toString().trim())){
+                    toast("请先绑定银行卡");
+                    return;
+                }else {
+                    tixian(bankName, bankNo, bankUser);
                 }
+
                 break;
             //提现记录
             case R.id.btt_txjl:
@@ -232,10 +212,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
         toast("请先勾选小麒乖乖返佣规则");
         return;
         }
-        if ("".equals(bankName)){
-                    toast("请先绑定银行卡");
-                    return;
-                }
+
              if ("日结".equals(riyuejie)) {
                    toast("您是日结用户，已完成提现，请转为月结，方可在返佣系统内提现");
                    return;
@@ -251,22 +228,24 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                     return;
                 }
         //day>=25&&day<=29
-       /* //获取系统的 日期
+     /*   //获取系统的 日期
         Calendar calendar = Calendar.getInstance();
         //日
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (day<=25||day>=29) {
+        if (day<=25&&day>=29) {
             toast("提示：每月25日~29日可申请提现积分");
             return;
         }*/
 
         HashMap<String, Object> paramsMap = new HashMap<>();
-        if (!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)) {
+        if (!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null) {
             paramsMap.put("token", SharedPrefManager.getUser().getToken());
             paramsMap.put("bankName", bankName);
             paramsMap.put("bankNo", bankNo);
             paramsMap.put("bankUser", bankUser);
             paramsMap.put("money", money);
+        }else {
+            toast("请先绑定银行卡");
         }
                 RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
                 addSubscribe(ApiManage.getInstance().getMainApi().getCommissionwithdrawal(body)
@@ -287,11 +266,6 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                                 }
                             }
                         }));
-              /*  Intent intencwdcf = new Intent(CashWithdrawalRebateActivity.this, CashWithdrawalConfirmationActivity.class);
-                intencwdcf.putExtra("bankName", bankName);
-                intencwdcf.putExtra("bankNo", bankNo);
-                intencwdcf.putExtra("money", money);
-                startActivity(intencwdcf);*/
         }
 
     //返佣方法
@@ -330,7 +304,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==1||data!=null){
+        if (resultCode==1&&data!=null){
             bankName = data.getStringExtra("bankname");
             bankNo = data.getStringExtra("bankno");
             bankUser = data.getStringExtra("bankUser");
@@ -360,14 +334,12 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                                 if (!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
                                     addbankName.setText(bankName.substring(bankName.length() - 4, bankName.length()) + "(" + bankNo.substring(bankNo.length() - 5, bankNo.length()) + ")");
                                 }
-                                else {
-                                        addbankName.setText("添加银行卡");
-                                    }
                                 }
+                            else {
+                                addbankName.setText("添加银行卡");
                             }
-                          else {
-                            addbankName.setText("添加银行卡");
-                        }
+                            }
+
                     }
 
                     @Override

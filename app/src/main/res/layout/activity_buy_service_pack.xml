@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#E0E0E0"
+    android:background="#E9E9E9"
     tools:context=".ui.mycommission.BuyServicePackActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,8 +14,8 @@
         >
         <View
             android:id="@+id/toobar_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/ic_back"
@@ -69,28 +69,28 @@
                 app:layout_constraintVertical_bias="0.6" />
 
            <LinearLayout
-               android:layout_width="match_parent"
+               android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:orientation="horizontal"
                app:layout_constraintLeft_toLeftOf="parent"
                app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginLeft="@dimen/dp_97"
+               android:layout_marginTop="@dimen/dp_27"
+               android:gravity="center"
                >
                <TextView
                    android:id="@+id/user_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginLeft="@dimen/dp_97"
-                   android:layout_marginTop="@dimen/dp_27"
                    android:text="张三"
                    android:textColor="#ff70460a"
                    android:textSize="15sp"
                    />
                <ImageView
                    android:id="@+id/user_viplogo"
-                   android:layout_width="@dimen/dp_60"
-                   android:layout_height="@dimen/dp_12"
-                   android:layout_marginLeft="@dimen/dp_10"
-                   android:layout_marginTop="@dimen/dp_32"
+                   android:layout_width="@dimen/dp_10"
+                   android:layout_height="@dimen/dp_10"
+                   android:layout_marginLeft="@dimen/dp_5"
                    android:src="@drawable/tx_buttombg"
                    android:scaleType="fitXY"
                    android:layout_alignLeft="@+id/user_name"
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="苏州罗信网络科技有限公司"
+                android:text="苏州有限公司"
                 android:textColor="#ff70460a"
                 android:textSize="12sp"
                 android:id="@+id/usercompany_name"
@@ -111,7 +111,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小麒乖乖已累计为您返佣30,000积分"
+                android:text="小麒乖乖已累计为您返佣0积分"
                 android:textColor="#ff70460a"
                 android:id="@+id/accumulated_points"
                 android:textSize="10sp"
@@ -126,10 +126,10 @@
                 android:text=""
                 android:textColor="#ff70460a"
                 android:id="@+id/term_of_validity"
-                android:textSize="9sp"
+                android:textSize="11sp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dp_29"
-                android:layout_marginRight="4dp"
+                android:layout_marginRight="9dp"
                 />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -225,9 +225,10 @@
         android:textSize="8sp" />
 </LinearLayout>
     </LinearLayout>
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+        android:fillViewport="true"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -312,21 +313,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_17"
+            android:layout_marginLeft="@dimen/dp_5"
             >
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:id="@+id/check_tx"
+                ></CheckBox>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="开通服务先阅读并同意"
                 android:textColor="#ff686868"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《小麒乖乖服务包协议》"
                 android:textColor="#EB3349"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:id="@+id/guizhe1"
                 />
             <TextView
@@ -334,14 +341,14 @@
                 android:layout_height="wrap_content"
                 android:text="及"
                 android:textColor="#ff686868"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《返佣规则》"
                 android:textColor="#EB3349"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:id="@+id/guizhe2"
                 />
         </LinearLayout>
@@ -349,15 +356,15 @@
             android:layout_width="@dimen/dp_107"
             android:layout_height="@dimen/dp_30"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_40"
             android:text="立即开通"
             android:textColor="#ffffffff"
             android:textSize="18sp"
             android:id="@+id/btn_activate_now"
-            android:background="@drawable/btn_activate_nowbg"
+            android:background="@drawable/tx_fy"
             ></Button>
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

@@ -63,7 +63,7 @@
                 android:textColor="#ff686868"
                 android:lineSpacingExtra="3dp"
                 android:lineSpacingMultiplier="1"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/logo2"

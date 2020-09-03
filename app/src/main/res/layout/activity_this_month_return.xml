@@ -13,8 +13,8 @@
         >
         <View
             android:id="@+id/toobar_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/ic_back"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_70"
-            android:text="2,000"
+            android:text="0"
             android:textColor="#ffffffff"
             android:textSize="36sp"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -99,8 +99,6 @@ public class MycommissionActivity extends BaseActivity {
     LinearLayout diglogxx;
     @BindView(R.id.vipbg)
     ImageView vipbg;
-    @BindView(R.id.dangq)
-    TextView dangq;
     @BindView(R.id.vip_name)
     TextView vipName;
     @BindView(R.id.vip_name_qy)
@@ -139,8 +137,6 @@ public class MycommissionActivity extends BaseActivity {
     private List<SystemCommissionlevelBean.RightsBean> viplist;
     private List<SystemCommissionlevelBean> systemCommissionlevel;
     private String currentLevel;
-    private int rightsNum;
-    private String name;
     private int positions;
 
     private static final float MIN_SCALE = 0.75f;
@@ -313,15 +309,12 @@ public class MycommissionActivity extends BaseActivity {
                         CommissionlevelBean data = commissionlevelBeanBaseData.getData();
                         if (data.getCurrentLevel() == null && "".equals(data.getCurrentLevel())) {
                             vipName.setText("准黄金");
-                            /*vipName.setText("准普通");
-                            dangq.setVisibility(View.GONE);
+                            vipNameQy.setText("享受准黄金返佣权益");
+                            currentLevel = "准黄金";
                         } else {
                             vipName.setText(data.getCurrentLevel());
-                            if (data.getCurrentLevel().contains("准")) {
-                                dangq.setVisibility(View.GONE);
-                            }*/
-                        } else {
-                            vipName.setText(data.getCurrentLevel());
+                            vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
+                            currentLevel = data.getCurrentLevel();
                         }
                         if ((int) data.getOrderMoney() == 0) {
                             progressBarH.setProgress(5);
@@ -334,14 +327,11 @@ public class MycommissionActivity extends BaseActivity {
                             progressBarH.setProgress((int) data.getOrderMoney());
                             progressBarH.setMax(data.getNextLevelMoney());
                         }
-                        currentLevel = data.getCurrentLevel();
+
                         yuanjiaogrild(vipbg, Config.IMGURL + data.getPicture());
                         if ("".equals(data.getNextLevel()) || data.getNextLevel() == null || data.getNextLevelMoney() == 0) {
                             vipCount.setText("您享受最高返佣");
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
-                        } else if ("".equals(data.getCurrentLevel()) && data.getCurrentLevel() == null) {
-                            vipNameQy.setText("享受准普通返佣权益");
-
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
                             vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + (data.getNextLevelMoney() - data.getOrderMoney()) + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
@@ -465,17 +455,17 @@ public class MycommissionActivity extends BaseActivity {
                                     TextView purchase = (TextView) view.findViewById(R.id.purchase);
                                     ImageView viplogo = (ImageView) view.findViewById(R.id.viplogo);
                                     RelativeLayout tiaoz = (RelativeLayout) view.findViewById(R.id.tiaoz);
-                                    rightsNum = systemCommissionlevel.get(position).getRightsNum();
-                                    name = systemCommissionlevel.get(position).getName();
                                     vipname.setText(systemCommissionlevel.get(position).getName() + "服务包");
                                     tvContent.setText("购买" + systemCommissionlevel.get(position).getName() + "服务包享受更高返佣、额外" + systemCommissionlevel.get(position).getRightsNum() + "项权益");
                                     yuanjiaogrild(picture, Config.IMGURL + systemCommissionlevel.get(position).getPicture());
                                     Glide.with(mContext)
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getIco())
                                             .into(viplogo);
+
                                     if (systemCommissionlevel.get(position).isBuy() == true) {
                                         purchase.setText("已购买");
                                         endTime = systemCommissionlevel.get(position).getEndTime();
+
                                         if (!"".equals(systemCommissionlevel.get(position).getEndTime()) && systemCommissionlevel.get(position).getEndTime() != null) {
                                             termof_validity.setVisibility(View.VISIBLE);
                                             termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());

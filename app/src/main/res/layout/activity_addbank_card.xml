@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#E0E0E0"
+    android:background="#ECEAEA"
     tools:context=".ui.mycommission.AddbankCardActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,8 +14,8 @@
         >
         <View
             android:id="@+id/toobar_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/ic_back"
@@ -102,7 +102,7 @@
                 android:id="@+id/bank_of_deposit"
                 android:layout_marginLeft="@dimen/dp_25"
                 android:background="@null"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:lines="1"
                 android:hint="请输入银行账户名称"
                 ></EditText>
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/account_name"
                 android:layout_marginLeft="@dimen/dp_25"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:background="@null"
                 android:lines="1"
                 android:hint="请输入银行名称"
@@ -170,7 +170,7 @@
                 android:id="@+id/bank_card_number"
                 android:layout_marginLeft="@dimen/dp_25"
                 android:background="@null"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:lines="1"
                 android:hint="请输入银行卡号"
                 ></EditText>

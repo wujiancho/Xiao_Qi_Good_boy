@@ -8,24 +8,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/bgpicture"
-        android:src="@drawable/btn_activate_nowbg"
+
         android:scaleType="fitXY"
         ></ImageView>
+ <LinearLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:orientation="horizontal"
+     android:layout_alignParentLeft="true"
+     android:layout_marginTop="@dimen/dp_47"
+     android:layout_marginLeft="@dimen/dp_24"
+     android:gravity="center"
+     >
+     <TextView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text=""
+         android:textColor="#ff70460a"
+         android:textSize="19sp"
+         android:id="@+id/vip_name"
+         />
+     <ImageView
+         android:layout_width="@dimen/dp_10"
+         android:layout_height="@dimen/dp_10"
+         android:id="@+id/viplogo"
+         android:layout_marginLeft="@dimen/dp_5"
+         ></ImageView>
+
+ </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="黄金服务包"
-        android:textColor="#ff70460a"
-        android:textSize="19sp"
-        android:id="@+id/vip_name"
-        android:layout_marginTop="@dimen/dp_47"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_alignParentLeft="true"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="购买黄金服务包享受更高返佣、额外13项权益"
+        android:text=""
         android:textColor="#ff593605"
         android:textSize="9sp"
         android:id="@+id/vip_jurisdiction"
@@ -33,17 +47,11 @@
         android:layout_marginLeft="@dimen/dp_24"
          android:layout_marginTop="@dimen/dp_76"
         />
-    <ImageView
-        android:layout_width="@dimen/dp_10"
-        android:layout_height="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_55"
-        android:id="@+id/viplogo"
-        android:layout_marginLeft="@dimen/dp_125"
-        ></ImageView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="有效期2021-12-31"
+        android:text=""
         android:textColor="#ff6f460a"
         android:textSize="12sp"
         android:layout_marginLeft="@dimen/dp_24"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.lx.xqgg.R;
@@ -108,6 +108,8 @@ public class BuyServicePackActivity extends BaseActivity {
     ImageView userViplogo;
     @BindView(R.id.vip_RecyclerViewstatusly)
     LinearLayout vipRecyclerViewstatusly;
+    @BindView(R.id.check_tx)
+    CheckBox checkTx;
     private String token;
     private VIpListAdapter vIpListAdapter;
     private List<SystemCommissionlevelBean.RightsBean> viplist;
@@ -122,7 +124,7 @@ public class BuyServicePackActivity extends BaseActivity {
     private String buyname1;
     private int rightsNum;
     private String endTime;
-
+    private boolean checked;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_buy_service_pack;
@@ -148,7 +150,7 @@ public class BuyServicePackActivity extends BaseActivity {
             selectCommissionlevel(id, imgurl, positions);
         }
         bugid = id;
-           if (!"".equals(endTime) && endTime != null) {
+        if (!"".equals(endTime) && endTime != null) {
             termOfValidity.setText("有效期：" + endTime);
         } else {
             termOfValidity.setVisibility(View.GONE);
@@ -183,10 +185,10 @@ public class BuyServicePackActivity extends BaseActivity {
 
         buyname = getIntent().getStringExtra("buyname");
         Returningaservant();
-        if (!"".equals(buyname)&&buyname!=null) {
-            if (buyname.contains("准")||buyname.contains("普通")){
+        if (!"".equals(buyname) && buyname != null) {
+            if (buyname.contains("准") || buyname.contains("黄金")) {
                 vipCommissionno.setText("未购买");
-            }else {
+            } else {
                 vipCommissionno.setText("当前用户等级：" + buyname);
             }
         }
@@ -200,9 +202,9 @@ public class BuyServicePackActivity extends BaseActivity {
         }
 
         //获取用户信息
-        userName.setText(SharedPrefManager.getUserInfo().getUsername());
+        userName.setText(SharedPrefManager.getUserInfo().getUsername());//
         String servisername = SpUtil.getInstance().getSpString("servisername");
-        if (!"".equals(servisername)&&servisername!=null) {
+        if (!"".equals(servisername) && servisername != null) {
             usercompanyName.setText(servisername);
         }
 
@@ -232,6 +234,11 @@ public class BuyServicePackActivity extends BaseActivity {
                /* if(){
 
                 }*/
+                checked = checkTx.isChecked();
+                if (checked == false) {
+                    toast("请先勾选小麒乖乖服务包协议与返佣规则");
+                    return;
+                }
                 //立即开通
                 activatenow(bugid);
                 break;
@@ -293,7 +300,7 @@ public class BuyServicePackActivity extends BaseActivity {
                     public void onNext(BaseData<List<SystemCommissionlevelBean>> listBaseData) {
                         if (listBaseData.isSuccess()) {
                             systemCommissionlevel.addAll(listBaseData.getData());
-                            vipPackAdapter = new VipPackAdapter(systemCommissionlevel, mContext,positions);
+                            vipPackAdapter = new VipPackAdapter(systemCommissionlevel, mContext, positions);
                             vipPackRecyclerView.setAdapter(vipPackAdapter);
                             vipPackRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
                             Glide.with(mContext)
@@ -308,25 +315,20 @@ public class BuyServicePackActivity extends BaseActivity {
 //                                 把点击的下标回传给适配器 确定下标
                                     vipPackAdapter.setmPosition(position);
                                     vipPackAdapter.notifyDataSetChanged();
-                                    addviplist(listBaseData,position);
-                                    if (!"".equals(listBaseData.getData().get(position).getEndTime()) && listBaseData.getData().get(position).getEndTime() != null) {
-                                        termOfValidity.setText("有效期：" + listBaseData.getData().get(position).getEndTime());
+                                    addviplist(listBaseData, position);
+                                    if (systemCommissionlevel.get(position).isBuy() == true) {
+                                        btnActivateNow.setVisibility(View.GONE);
                                     } else {
-                                        termOfValidity.setVisibility(View.GONE);
+                                        btnActivateNow.setVisibility(View.VISIBLE);
                                     }
-                                   if ( systemCommissionlevel.get(position).isBuy() == true){
-                                       btnActivateNow.setVisibility(View.GONE);
-                                   }else {
-                                       btnActivateNow.setVisibility(View.VISIBLE);
-                                   }
                                 }
                             });
                         }
 
-                        addviplist(listBaseData,positions);
-                        if ( systemCommissionlevel.get(positions).isBuy() == true){
+                        addviplist(listBaseData, positions);
+                        if (systemCommissionlevel.get(positions).isBuy() == true) {
                             btnActivateNow.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             btnActivateNow.setVisibility(View.VISIBLE);
                         }
                     }
@@ -359,7 +361,8 @@ public class BuyServicePackActivity extends BaseActivity {
                 });
 
     }
-    private  void addviplist(BaseData<List<SystemCommissionlevelBean>> data,int position){
+
+    private void addviplist(BaseData<List<SystemCommissionlevelBean>> data, int position) {
         jurisdictionCount.setText("当前" + data.getData().get(position).getName() + "服务包解锁" + data.getData().get(position).getRightsNum() + "项权益");
         viplist = new ArrayList<>();
         viplist.clear();
@@ -387,6 +390,7 @@ public class BuyServicePackActivity extends BaseActivity {
             }
         });
     }
+
     //立即开通
     private void activatenow(int id) {
         HashMap<String, Object> paramsMap = new HashMap<>();
@@ -462,6 +466,7 @@ public class BuyServicePackActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 
 
 }

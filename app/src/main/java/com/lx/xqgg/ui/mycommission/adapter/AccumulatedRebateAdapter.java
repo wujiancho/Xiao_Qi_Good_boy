@@ -31,7 +31,7 @@ public class AccumulatedRebateAdapter extends BaseQuickAdapter<HistoryPointsdeta
         String productChargez= df.format(productCharge);
        helper.setText(R.id.accumulated_pointscontent,item.getMonth()+" 佣金积分 "+productChargez);
         Glide.with(mContext)
-                .load(Config.IMGURL+item.getIco())
+                .load(Config.IMGURL+item.getPicture())
                 .into((ImageView) helper.getView(R.id.accumulated_pointsimg));
         //Config.IMGURL + item.getPicture()
        helper.addOnClickListener(R.id.integraldetailed);
