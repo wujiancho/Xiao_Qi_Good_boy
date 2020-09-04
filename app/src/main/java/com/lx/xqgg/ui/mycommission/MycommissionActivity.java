@@ -510,6 +510,12 @@ public class MycommissionActivity extends BaseActivity {
                                     positions = position;
                                     vip.setVisibility(View.VISIBLE);
                                     addviplist(positions);
+                                    if ("收起".equals(vipRecyclerViewstatus.getText().toString())){
+                                        if (viplist.size()>4){
+                                            vIpListAdapter.statusvip(viplist.size());
+                                            vIpListAdapter.notifyDataSetChanged();
+                                        }
+                                    }
                                 }
 
                                 @Override

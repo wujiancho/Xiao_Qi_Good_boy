@@ -87,6 +87,17 @@
                 android:text="失败"
                 android:textColor="@drawable/txt_selector" />
         </RadioGroup>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_txfy"
+            android:layout_marginBottom="@dimen/dp_20"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,6 +110,8 @@
                 android:layout_height="@dimen/dp_1"
                 android:background="#DCDCDC"
                 ></View>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -170,11 +183,27 @@
                     android:background="#DCDCDC"
                     ></View>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="#DCDCDC"
+                ></View>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tuokerecyclerView"
                 ></androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"
+                android:text="无数据"
+                android:textColor="#ff686868"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:id="@+id/wudata"
+                android:visibility="gone"
+                />
+
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -225,5 +254,7 @@
                 android:textSize="13sp"
                 />
         </LinearLayout>
+        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>

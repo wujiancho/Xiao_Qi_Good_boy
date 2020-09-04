@@ -16,15 +16,15 @@ public class TokeAdapter extends BaseQuickAdapter<TokeBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, TokeBean item) {
-        helper.setText(R.id.user_time,item.getTime());
-        helper.setText(R.id.user_name,item.getServiceprovider());
-        helper.setText(R.id.user_phone,item.getPhone());
-        if ("fail".equals(item.getStatus())){
+        helper.setText(R.id.user_time,item.getCreatetime());
+        helper.setText(R.id.user_name,item.getService_name());
+        helper.setText(R.id.user_phone,item.getMobile());
+        if ("fail".equals(item.getVerification())){
             helper.setText(R.id.user_status,"失败");
-        }else if ("normal".equals(item.getStatus())){
+        }else if ("normal".equals(item.getVerification())){
             helper.setText(R.id.user_status,"已完成");
         }
-        else if ("uncertified".equals(item.getStatus())){
+        else if ("uncertified".equals(item.getVerification())){
             helper.setText(R.id.user_status,"未完成");
         }
     }

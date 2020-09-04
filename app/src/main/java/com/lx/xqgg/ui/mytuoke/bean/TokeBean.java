@@ -3,47 +3,88 @@ package com.lx.xqgg.ui.mytuoke.bean;
 import java.io.Serializable;
 
 public class TokeBean implements Serializable {
-    private String time;
-    private String Serviceprovider;
-    private String phone;
-    private String status;
 
-    public TokeBean(String time, String serviceprovider, String phone, String status) {
-        this.time = time;
-        Serviceprovider = serviceprovider;
-        this.phone = phone;
-        this.status = status;
+    /**
+     * createtime : 2020-05-06 12:07:09
+     * id : 2987
+     * mobile :
+     * puid : 0
+     * service_name : null
+     * userServiceId : 0
+     * username :
+     * verification :
+     */
+
+    private String createtime;
+    private int id;
+    private String mobile;
+    private int puid;
+    private String service_name;
+    private int userServiceId;
+    private String username;
+    private String verification;
+
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public String getTime() {
-        return time;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public int getId() {
+        return id;
     }
 
-    public String getServiceprovider() {
-        return Serviceprovider;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setServiceprovider(String serviceprovider) {
-        Serviceprovider = serviceprovider;
+    public String getMobile() {
+        return mobile;
     }
 
-    public String getPhone() {
-        return phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public int getPuid() {
+        return puid;
     }
 
-    public String getStatus() {
-        return status;
+    public void setPuid(int puid) {
+        this.puid = puid;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getService_name() {
+        return service_name;
+    }
+
+    public void setService_name(String service_name) {
+        this.service_name = service_name;
+    }
+
+    public int getUserServiceId() {
+        return userServiceId;
+    }
+
+    public void setUserServiceId(int userServiceId) {
+        this.userServiceId = userServiceId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getVerification() {
+        return verification;
+    }
+
+    public void setVerification(String verification) {
+        this.verification = verification;
     }
 }

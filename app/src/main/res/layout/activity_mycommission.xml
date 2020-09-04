@@ -372,7 +372,7 @@
                             android:layout_weight="1"
                             android:text="当前黄金服务包可以解锁4个权限"
                             android:textColor="#ff303030"
-                            android:textSize="12sp"></TextView>
+                            android:textSize="15sp"></TextView>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -385,11 +385,11 @@
                                 android:text="展开"
                                 android:textColor="#ff303030"
                                 android:id="@+id/vip_RecyclerViewstatus"
-                                android:textSize="11sp"></TextView>
+                                android:textSize="15sp"></TextView>
                             <ImageView
                                 android:id="@+id/stuart_img"
-                                android:layout_width="7dp"
-                                android:layout_height="4dp"
+                                android:layout_width="8dp"
+                                android:layout_height="5dp"
                                 android:layout_marginRight="@dimen/dp_27"
                                 android:layout_marginLeft="@dimen/dp_5"
                                 android:layout_gravity="center"

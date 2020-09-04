@@ -1,12 +1,12 @@
 package com.lx.xqgg.ui.mycommission;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
@@ -15,10 +15,8 @@ import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.adapter.AccumulatedRebateAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
-import com.lx.xqgg.ui.mycommission.adapter.PointsDetailsAdapter;
 import com.lx.xqgg.ui.mycommission.bean.HistoryPointsdetailstBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
-import com.lx.xqgg.util.SpUtil;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ import java.util.List;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -43,6 +42,8 @@ public class AccumulatedRebateActivity extends BaseActivity {
     TextView accumulatedPoints;
     @BindView(R.id.accumulatedrebate_RecyclerView)
     RecyclerView accumulatedrebateRecyclerView;
+    @BindView(R.id.wudata)
+    TextView wudata;
     private List<HistoryPointsdetailstBean.DataBean.ListBean> historyaccumulatedPointslist;
     private AccumulatedRebateAdapter accumulatedRebateAdapter;
 
@@ -63,14 +64,15 @@ public class AccumulatedRebateActivity extends BaseActivity {
             //网络获取积分
             accumulatedPoints.setText(allRebatez);
         }*/
-      Returningaservant();
+        Returningaservant();
     }
 
     @Override
     protected void initData() {
-     //获取累计积分
+        //获取累计积分
         Accumulatedpoints();
     }
+
     //返佣方法
     public void Returningaservant() {
         addSubscribe(ApiManage.getInstance().getMainApi().getReturningservant(SharedPrefManager.getUser().getToken())
@@ -106,7 +108,7 @@ public class AccumulatedRebateActivity extends BaseActivity {
         finish();
     }
 
-    private  void Accumulatedpoints(){
+    private void Accumulatedpoints() {
         Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
         addSubscribe(ApiManage.getInstance().getMainApi().getHistoryPointsdetailst(SharedPrefManager.getUser().getToken())
                 .subscribeOn(Schedulers.io())
@@ -114,28 +116,27 @@ public class AccumulatedRebateActivity extends BaseActivity {
                 .subscribeWith(new BaseSubscriber<HistoryPointsdetailstBean>(mContext, null) {
                     @Override
                     public void onNext(HistoryPointsdetailstBean listBean) {
-                        if (listBean.isSuccess()){
-                            if (listBean.getData()!= null && listBean.getData().getList().size()>0){
+                        if (listBean.isSuccess()) {
+                            if (listBean.getData() != null && listBean.getData().getList().size() > 0) {
                                 historyaccumulatedPointslist = new ArrayList<>();
                                 historyaccumulatedPointslist.addAll(listBean.getData().getList());
                                 accumulatedRebateAdapter = new AccumulatedRebateAdapter(historyaccumulatedPointslist);
                                 accumulatedrebateRecyclerView.setAdapter(accumulatedRebateAdapter);
-                                accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext,RecyclerView.VERTICAL,false));
-                                 accumulatedRebateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                                     @Override
-                                     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                                         Intent intentrd=new Intent(mContext, RefundDetailsActivity.class);
-                                         intentrd.putExtra("month",listBean.getData().getList().get(position).getMonth());
-                                         intentrd.putExtra("integral",listBean.getData().getList().get(position).getProductCharge());
-                                         mContext.startActivity(intentrd);
-                                     }
-                                 });
-                            }else {
-                                List<String> error =new ArrayList<>();
-                                ErrorAdapter eerr = new ErrorAdapter(error);
                                 accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                                accumulatedrebateRecyclerView.setAdapter(eerr);
-                                eerr.setEmptyView(R.layout.layout_empty, accumulatedrebateRecyclerView);
+                                accumulatedRebateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                                    @Override
+                                    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                                        Intent intentrd = new Intent(mContext, RefundDetailsActivity.class);
+                                        intentrd.putExtra("month", listBean.getData().getList().get(position).getMonth());
+                                        intentrd.putExtra("integral", listBean.getData().getList().get(position).getProductCharge());
+                                        mContext.startActivity(intentrd);
+                                    }
+                                });
+                                accumulatedrebateRecyclerView.setVisibility(View.VISIBLE);
+                                wudata.setVisibility(View.GONE);
+                            } else {
+                                accumulatedrebateRecyclerView.setVisibility(View.GONE);
+                                wudata.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -143,13 +144,11 @@ public class AccumulatedRebateActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable t) {
                         super.onError(t);
-                        List<String> error =new ArrayList<>();
-                        ErrorAdapter eerr = new ErrorAdapter(error);
-                        accumulatedrebateRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                        accumulatedrebateRecyclerView.setAdapter(eerr);
-                        eerr.setEmptyView(R.layout.layout_empty, accumulatedrebateRecyclerView);
+                        accumulatedrebateRecyclerView.setVisibility(View.GONE);
+                        wudata.setVisibility(View.VISIBLE);
                     }
                 }));
 
     }
+
 }

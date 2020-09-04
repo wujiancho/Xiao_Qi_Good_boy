@@ -42,22 +42,48 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提示：本月佣金于次月转入可提现佣金积分"
+            android:text="您已在小麒乖乖累计提现12,000积分"
             android:textColor="#ffffffff"
             android:textSize="9sp"
             android:layout_marginTop="@dimen/dp_85"
+            android:id="@+id/alltixjiftuoke"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_117"
+        android:layout_marginRight="@dimen/dp_10"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/withdraw_alrecord_TuokeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_117"
-        android:layout_marginRight="@dimen/dp_10"></androidx.recyclerview.widget.RecyclerView>
+        ></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="无数据"
+        android:textColor="#ff686868"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:id="@+id/wudata"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_180"
+        />
+
 </RelativeLayout>

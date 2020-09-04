@@ -1,22 +1,19 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
-import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.PointsDetailsAdapter;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
-import com.lx.xqgg.util.SpUtil;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -26,8 +23,8 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -46,6 +43,8 @@ public class ThisMonthReturnActivity extends BaseActivity {
     RecyclerView thisMonthpointsRecyclerView;
     @BindView(R.id.vip_name)
     TextView vipName;
+    @BindView(R.id.wudata)
+    TextView wudata;
     private List<ThisMothPointsdetailstBean.DataBean> pointsdetailslist;
     private PointsDetailsAdapter pointsDetailsAdapter;
     private String time;
@@ -65,8 +64,8 @@ public class ThisMonthReturnActivity extends BaseActivity {
     protected void initData() {
 
         vipname = getIntent().getStringExtra("vipname");
-        if (!"".equals(vipname)){
-            vipName.setText("享受"+vipname+"返佣权益");
+        if (!"".equals(vipname)) {
+            vipName.setText("享受" + vipname + "返佣权益");
         }
         Returningaservant();
         //当月佣金明细
@@ -114,48 +113,44 @@ public class ThisMonthReturnActivity extends BaseActivity {
                     }
                 }));
     }
+
     //当月佣金明细
-    private void ThisMothpointsdetails(){
+    private void ThisMothpointsdetails() {
         Date t = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
         time = df.format(t);
-        Log.d("tome00000", "ThisMothpointsdetails: "+time);
+        Log.d("tome00000", "ThisMothpointsdetails: " + time);
         Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
-        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(SharedPrefManager.getUser().getToken(),time)
-              .subscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribeWith(new BaseSubscriber<ThisMothPointsdetailstBean>(mContext, null) {
-                  @Override
-                  public void onNext(ThisMothPointsdetailstBean listBaseData) {
-                      if (listBaseData.isSuccess()) {
-                          if (listBaseData.getData() != null && listBaseData.getData().size() > 0) {
-                              pointsdetailslist = new ArrayList<>();
-                              pointsdetailslist.addAll(listBaseData.getData());
-                              vipName.setText("享受" + listBaseData.getData().get(0).getChargeName() + "返佣权益");
-                              pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
-                              thisMonthpointsRecyclerView.setAdapter(pointsDetailsAdapter);
-                              thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                          }
-                          else {
-                              List<String> error =new ArrayList<>();
-                              ErrorAdapter eerr = new ErrorAdapter(error);
-                              thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                              thisMonthpointsRecyclerView.setAdapter(eerr);
-                              eerr.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
-                          }
-                      }
-                  }
+        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(SharedPrefManager.getUser().getToken(), time)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<ThisMothPointsdetailstBean>(mContext, null) {
+                    @Override
+                    public void onNext(ThisMothPointsdetailstBean listBaseData) {
+                        if (listBaseData.isSuccess()) {
+                            if (listBaseData.getData() != null && listBaseData.getData().size() > 0) {
+                                pointsdetailslist = new ArrayList<>();
+                                pointsdetailslist.addAll(listBaseData.getData());
+                                vipName.setText("享受" + listBaseData.getData().get(0).getChargeName() + "返佣权益");
+                                pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
+                                thisMonthpointsRecyclerView.setAdapter(pointsDetailsAdapter);
+                                thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+                                thisMonthpointsRecyclerView.setVisibility(View.VISIBLE);
+                                wudata.setVisibility(View.GONE);
+                            } else {
+                                thisMonthpointsRecyclerView.setVisibility(View.GONE);
+                                wudata.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
 
-                  @Override
-                  public void onError(Throwable t) {
-                      super.onError(t);
-                      List<String> error =new ArrayList<>();
-                      ErrorAdapter eerr = new ErrorAdapter(error);
-                      thisMonthpointsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                      thisMonthpointsRecyclerView.setAdapter(eerr);
-                      eerr.setEmptyView(R.layout.layout_empty, thisMonthpointsRecyclerView);
-                  }
-              }));
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        thisMonthpointsRecyclerView.setVisibility(View.GONE);
+                        wudata.setVisibility(View.VISIBLE);
+                    }
+                }));
     }
 
 

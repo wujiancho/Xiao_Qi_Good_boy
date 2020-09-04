@@ -65,13 +65,37 @@
             app:layout_constraintRight_toRightOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_170"
+    android:layout_marginRight="@dimen/dp_10"
+    android:fillViewport="true"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/accumulatedrebate_RecyclerView"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:orientation="vertical"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/accumulatedrebate_RecyclerView"
+
+            ></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="无数据"
+        android:textColor="#ff686868"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:id="@+id/wudata"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/dp_170"
-        android:layout_marginRight="@dimen/dp_10"
-        ></androidx.recyclerview.widget.RecyclerView>
+        />
 </RelativeLayout>

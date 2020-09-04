@@ -66,7 +66,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提示：每月25日~29日可申请提现积分"
+            android:text="提示：满1000积分可申请提现，预计2小时内到账"
             android:textColor="#ffffffff"
             android:textSize="9sp"
             android:layout_marginTop="@dimen/dp_152"

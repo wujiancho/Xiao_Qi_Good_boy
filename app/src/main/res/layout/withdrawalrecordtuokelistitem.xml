@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="@dimen/dp_5"
+    app:cardCornerRadius="4dp"
+    android:background="@drawable/bg_txfy"
+    app:cardElevation="0dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_zfborder_num"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textColor="@color/txt_normal"
+                android:textSize="13sp"
+                tools:text="支付宝账号：17312615026" />
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/txt_normal"
+                android:textSize="13sp"
+                tools:text="￥100" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_bg" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/tv_zfb_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="申请提现时间"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_zfb_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="到账时间"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_zfb_starttime" />
+
+            <TextView
+                android:id="@+id/tv_tuokezz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="扣除拓客积分"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_zfb_endtime" />
+
+            <TextView
+                android:id="@+id/tv_txmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="提现金额"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tuokezz" />
+
+            <TextView
+                android:id="@+id/tv_stuart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="提现状态"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_txmoney" />
+
+            <TextView
+                android:id="@+id/tv_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2020-08-05 13:20" />
+                <TextView
+                android:id="@+id/tuoke_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textSize="12sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_starttime"
+                tools:text="2020-08-06 13:35" />
+            <TextView
+                android:id="@+id/tuoke_jj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textSize="12sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tuoke_endtime"
+                tools:text="-1000" />
+            <TextView
+                android:id="@+id/txmoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textSize="12sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tuoke_jj"
+                tools:text="100" />
+            <TextView
+                android:id="@+id/txstuart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textSize="12sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txmoney"
+                tools:text="已到账" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -158,6 +158,16 @@
                 android:layout_marginRight="@dimen/dp_10"
                 ></androidx.recyclerview.widget.RecyclerView>
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"
+                android:text="无数据"
+                android:textColor="#ff686868"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:id="@+id/wudata"
+                android:visibility="gone"
+                />
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="提现规则："

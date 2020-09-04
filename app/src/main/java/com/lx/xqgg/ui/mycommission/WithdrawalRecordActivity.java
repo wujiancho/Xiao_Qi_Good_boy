@@ -39,6 +39,8 @@ public class WithdrawalRecordActivity extends BaseActivity {
     TextView accumulativeWithdrawal;
     @BindView(R.id.withdrawal_recordRecyclerView)
     RecyclerView withdrawalRecordRecyclerView;
+    @BindView(R.id.wudata)
+    TextView wudata;
     private List<HistoryCommissionwithdrawalBean.DataBean.ListBean> withdrawalrecordlist;
     private WithdrawalrecordAdapter withdrawalrecordAdapter;
     private String token;
@@ -84,12 +86,11 @@ public class WithdrawalRecordActivity extends BaseActivity {
                                                withdrawalrecordAdapter = new WithdrawalrecordAdapter(withdrawalrecordlist);
                                                withdrawalRecordRecyclerView.setAdapter(withdrawalrecordAdapter);
                                                withdrawalRecordRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
+                                               withdrawalRecordRecyclerView.setVisibility(View.VISIBLE);
+                                               wudata.setVisibility(View.GONE);
                                            } else {
-                                               List<String> error = new ArrayList<>();
-                                               ErrorAdapter eerr = new ErrorAdapter(error);
-                                               withdrawalRecordRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                                               withdrawalRecordRecyclerView.setAdapter(eerr);
-                                               eerr.setEmptyView(R.layout.layout_empty, withdrawalRecordRecyclerView);
+                                               withdrawalRecordRecyclerView.setVisibility(View.GONE);
+                                               wudata.setVisibility(View.VISIBLE);
                                            }
                                        }
                                    }
@@ -97,11 +98,8 @@ public class WithdrawalRecordActivity extends BaseActivity {
                                    @Override
                                    public void onError(Throwable t) {
                                        super.onError(t);
-                                       List<String> error = new ArrayList<>();
-                                       ErrorAdapter eerr = new ErrorAdapter(error);
-                                       withdrawalRecordRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                                       withdrawalRecordRecyclerView.setAdapter(eerr);
-                                       eerr.setEmptyView(R.layout.layout_empty, withdrawalRecordRecyclerView);
+                                       withdrawalRecordRecyclerView.setVisibility(View.GONE);
+                                       wudata.setVisibility(View.VISIBLE);
                                    }
                                }
                 ));

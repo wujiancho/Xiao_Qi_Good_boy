@@ -317,6 +317,12 @@ public class BuyServicePackActivity extends BaseActivity {
                                     } else {
                                         btnActivateNow.setVisibility(View.VISIBLE);
                                     }
+                                    if ("收起".equals(vipRecyclerViewstatus.getText().toString())){
+                                        if (viplist.size()>4){
+                                            vIpListAdapter.statusvip(viplist.size());
+                                            vIpListAdapter.notifyDataSetChanged();
+                                        }
+                                    }
                                 }
                             });
                         }
@@ -326,6 +332,12 @@ public class BuyServicePackActivity extends BaseActivity {
                             btnActivateNow.setVisibility(View.GONE);
                         } else {
                             btnActivateNow.setVisibility(View.VISIBLE);
+                        }
+                        if ("收起".equals(vipRecyclerViewstatus.getText().toString())){
+                            if (viplist.size()>4){
+                                vIpListAdapter.statusvip(viplist.size());
+                                vIpListAdapter.notifyDataSetChanged();
+                            }
                         }
                     }
 

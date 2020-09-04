@@ -3,6 +3,7 @@ package com.lx.xqgg.api;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.config.Config;
 import com.lx.xqgg.face_ui.home.bean.FaceProductBean;
+import com.lx.xqgg.face_ui.home.bean.TopListBean;
 import com.lx.xqgg.ui.city.bean.CityBean;
 import com.lx.xqgg.ui.company_auth.bean.ImgBean;
 import com.lx.xqgg.ui.home.bean.AdvertBean;
@@ -34,6 +35,7 @@ import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
+import com.lx.xqgg.ui.mytuoke.bean.TokeBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
 import com.lx.xqgg.ui.order.bean.OrderUserBean;
 import com.lx.xqgg.ui.order.bean.TjBean;
@@ -623,5 +625,15 @@ public interface MainApi {
      */
     @POST("share/updateChargeType")
     Flowable<MonthlysettlementBean>getMonthlysettlement(@Query("token") String token);
+
+
+    /**
+     * 拓客查询
+     * @param
+     * @return
+     */
+    @POST("share//myShareUser")
+    Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);
+
 
 }

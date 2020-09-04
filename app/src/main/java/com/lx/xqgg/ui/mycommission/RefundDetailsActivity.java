@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -18,14 +19,13 @@ import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
 import com.lx.xqgg.util.SpUtil;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -40,6 +40,8 @@ public class RefundDetailsActivity extends BaseActivity {
     TextView selectPointsDetails;
     @BindView(R.id.points_details_RecyclerView)
     RecyclerView pointsDetailsRecyclerView;
+    @BindView(R.id.wudata)
+    TextView wudata;
     private List<ThisMothPointsdetailstBean.DataBean> pointsdetailslist;
     private PointsDetailsAdapter pointsDetailsAdapter;
     private String month;
@@ -58,18 +60,18 @@ public class RefundDetailsActivity extends BaseActivity {
     @Override
     protected void initData() {
         //获取用户token
-          month = getIntent().getStringExtra("month");
-        Log.d("getTokenddddd", "initData: "+SharedPrefManager.getUser().getToken());
+        month = getIntent().getStringExtra("month");
+        Log.d("getTokenddddd", "initData: " + SharedPrefManager.getUser().getToken());
         //  if (!"".equals(token)||token!=null){
         // }
-        integral = getIntent().getIntExtra("integral",-1);
-        if (!"".equals(month)&&month!=null){
+        integral = getIntent().getIntExtra("integral", -1);
+        if (!"".equals(month) && month != null) {
             //跳转时获取会动态改变
-            toobarTitle.setText(month+" 佣金积分明细");
+            toobarTitle.setText(month + " 佣金积分明细");
         }
-        if (!"".equals(integral)){
+        if (!"".equals(integral)) {
             DecimalFormat df = new DecimalFormat("#,###");// 数字格式转换
-            String cashRebatez= df.format(integral);
+            String cashRebatez = df.format(integral);
             selectPointsDetails.setText(cashRebatez);
         }
         ThisMothpointsdetails();
@@ -82,30 +84,28 @@ public class RefundDetailsActivity extends BaseActivity {
     }
 
     //当月佣金明细
-    private void ThisMothpointsdetails(){
+    private void ThisMothpointsdetails() {
         Log.d("mytoken", "vipcard: " + SharedPrefManager.getUser().getToken());
-        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(SharedPrefManager.getUser().getToken(),month)
+        addSubscribe(ApiManage.getInstance().getMainApi().getThisMothPointsdetailst(SharedPrefManager.getUser().getToken(), month)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseSubscriber<ThisMothPointsdetailstBean>(mContext, null) {
 
                     @Override
                     public void onNext(ThisMothPointsdetailstBean listBaseData) {
-                        if (listBaseData.isSuccess()){
-                            Log.d("listBaseData/////", "onNext: "+listBaseData.getData());
-                            if (listBaseData.getData()!= null && listBaseData.getData().size() > 0){
+                        if (listBaseData.isSuccess()) {
+                            Log.d("listBaseData/////", "onNext: " + listBaseData.getData());
+                            if (listBaseData.getData() != null && listBaseData.getData().size() > 0) {
                                 pointsdetailslist = new ArrayList<>();
                                 pointsdetailslist.addAll(listBaseData.getData());
                                 pointsDetailsAdapter = new PointsDetailsAdapter(pointsdetailslist);
                                 pointsDetailsRecyclerView.setAdapter(pointsDetailsAdapter);
                                 pointsDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                            }
-                            else {
-                                List<String> error =new ArrayList<>();
-                                ErrorAdapter eerr = new ErrorAdapter(error);
-                                pointsDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                                pointsDetailsRecyclerView.setAdapter(eerr);
-                                eerr.setEmptyView(R.layout.layout_empty, pointsDetailsRecyclerView);
+                                pointsDetailsRecyclerView.setVisibility(View.VISIBLE);
+                                wudata.setVisibility(View.GONE);
+                            } else {
+                                pointsDetailsRecyclerView.setVisibility(View.GONE);
+                                wudata.setVisibility(View.VISIBLE);
                             }
 
                         }
@@ -114,11 +114,8 @@ public class RefundDetailsActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable t) {
                         super.onError(t);
-                        List<String> error =new ArrayList<>();
-                        ErrorAdapter eerr = new ErrorAdapter(error);
-                        pointsDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
-                        pointsDetailsRecyclerView.setAdapter(eerr);
-                        eerr.setEmptyView(R.layout.layout_empty, pointsDetailsRecyclerView);
+                        pointsDetailsRecyclerView.setVisibility(View.GONE);
+                        wudata.setVisibility(View.VISIBLE);
                     }
                 }));
     }
@@ -151,4 +148,5 @@ public class RefundDetailsActivity extends BaseActivity {
                     }
                 }));
     }
+
 }
