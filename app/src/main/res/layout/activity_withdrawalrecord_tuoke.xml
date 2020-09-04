@@ -12,8 +12,8 @@
         >
         <View
             android:id="@+id/toobar_back"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/ic_back"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="您已在小麒乖乖累计提现12,000积分"
             android:textColor="#ffffffff"
-            android:textSize="9sp"
+            android:textSize="12sp"
             android:layout_marginTop="@dimen/dp_85"
             android:id="@+id/alltixjiftuoke"
             app:layout_constraintLeft_toLeftOf="parent"

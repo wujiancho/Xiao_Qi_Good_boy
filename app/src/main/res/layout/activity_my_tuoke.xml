@@ -119,22 +119,14 @@
                     android:textColor="#ff303030"
                     android:textSize="15sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_14"
-                    android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="可提积分"
                         android:textColor="#ff303030"
                         android:textSize="12sp"
-
+                        android:layout_marginTop="@dimen/dp_14"
                         />
-
-                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -159,6 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
+                    android:gravity="center"
                     android:textColor="#ff303030"
                     android:textSize="15sp" />
 
@@ -202,6 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
+                    android:gravity="center"
                     android:textColor="#ff303030"
                     android:textSize="15sp" />
 

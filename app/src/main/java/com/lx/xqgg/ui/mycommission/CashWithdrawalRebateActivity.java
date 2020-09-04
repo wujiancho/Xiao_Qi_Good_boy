@@ -171,7 +171,7 @@ public class CashWithdrawalRebateActivity extends BaseActivity {
                 break;
             case R.id.but_alltx:
                 txCountsr.setText(cashRebate + "");
-                txMoney.setText("￥" + (cashRebate / 10));
+                txMoney.setText("¥" + (cashRebate / 10));
                 break;
             case R.id.btt_txmoney:
                 checked = checkTx.isChecked();

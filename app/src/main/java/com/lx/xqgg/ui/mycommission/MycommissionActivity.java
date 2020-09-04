@@ -199,6 +199,7 @@ public class MycommissionActivity extends BaseActivity {
             btnRiyuejie.setVisibility(View.GONE);
         } else {
             riyuejie.setVisibility(View.GONE);
+            btnRiyuejie.setVisibility(View.GONE);
         }
         //获取用户的可提返佣-本月返佣-累计返佣
         Returningaservant();

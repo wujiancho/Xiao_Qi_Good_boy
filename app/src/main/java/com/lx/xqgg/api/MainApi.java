@@ -632,8 +632,21 @@ public interface MainApi {
      * @param
      * @return
      */
-    @POST("share//myShareUser")
+    @POST("share/myShareUser")
     Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);
 
-
+  /*  *//**
+     * 用户绑定支付宝
+     * @param
+     * @return
+     *//*
+    @POST("share/insertOrUpdateZfb")
+    Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);*/
+   /* *//**
+     * 获取用户支付宝信息
+     * @param
+     * @return
+     *//*
+    @POST("share//getZfb")
+    Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);*/
 }

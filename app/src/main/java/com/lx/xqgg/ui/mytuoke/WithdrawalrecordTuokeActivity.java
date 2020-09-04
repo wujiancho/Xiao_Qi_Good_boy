@@ -50,13 +50,16 @@ public class WithdrawalrecordTuokeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+       // withdrawAlrecordTuokelist.addAll();
+        withdrawAlrecordTuoke();
     }
-
-
     @OnClick(R.id.toobar_back)
     public void onViewClicked() {
         finish();
+    }
+    //拓客提现记录列表
+    private void withdrawAlrecordTuoke(){
+
     }
 
 }

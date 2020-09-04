@@ -22,6 +22,7 @@ import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mycommission.CashWithdrawalRebateActivity;
+import com.lx.xqgg.ui.mycommission.XieYiActivity;
 import com.lx.xqgg.ui.vip.bean.PayListBean;
 
 import java.util.HashMap;
@@ -149,39 +150,13 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
                 break;
             //规则权益
             case R.id.fanyongguiztuoke:
-                initCharacter();
+                Intent intenxieyi = new Intent(DerivableintegralTuokeActivity.this, XieYiActivity.class);
+                intenxieyi.putExtra("group","rakebackTackOutRule");
+                startActivity(intenxieyi);
                 break;
 
         }
     }
 
-    private void initCharacter() {
-        HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("group", "buyStrategy");
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
-        addSubscribe(ApiManage.getInstance().getMainApi().getPayList(body)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<List<PayListBean>>>(mContext, null) {
-                    @Override
-                    public void onNext(BaseData<List<PayListBean>> listBaseData) {
-                        Log.e("zlz", new Gson().toJson(listBaseData));
-                        if (listBaseData.isSuccess()) {
-                            if (listBaseData.getData() != null) {
-                                AlertDialog.Builder builder1 = new AlertDialog.Builder(DerivableintegralTuokeActivity.this);
-                                builder1.setMessage(listBaseData.getData().get(0).getValue());
-                                builder1.setTitle(listBaseData.getData().get(0).getName());
-                                builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder1.show();
-                            }
-                        }
-                    }
-                }));
-    }
+
 }
