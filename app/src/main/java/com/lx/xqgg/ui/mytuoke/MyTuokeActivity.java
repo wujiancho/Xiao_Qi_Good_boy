@@ -101,6 +101,8 @@ public class MyTuokeActivity extends BaseActivity {
         message.add("2020.06.11您开拓的服务商苏州罗信网络科技有限公司完成一笔新的订单，获得1000积分。");
         message.add("2020.06.12您开拓的服务商苏州罗信网络科技有限公司完成一笔新的订单，获得800积分。");
         message.add("2020.06.13您开拓的服务商苏州罗信网络科技有限公司完成一笔新的订单，获得400积分。");
+        message.add("2020.06.13您开拓的服务商苏州罗信网络科技有限公司完成一笔新的订单，获得400积分。");
+        message.add("2020.06.13您开拓的服务商苏州罗信网络科技有限公司完成一笔新的订单，获得400积分。");
         message_adapter = new Message_Adapter(message);
         messageRecyclerviewtuoke.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
         messageRecyclerviewtuoke.setAdapter(message_adapter);

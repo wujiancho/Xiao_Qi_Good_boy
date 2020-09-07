@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
@@ -462,6 +463,7 @@ public class MycommissionActivity extends BaseActivity {
                                     yuanjiaogrild(picture, Config.IMGURL + systemCommissionlevel.get(position).getPicture());
                                     Glide.with(mContext)
                                             .load(Config.IMGURL + systemCommissionlevel.get(position).getIco())
+                                            .apply(new RequestOptions().transform(new CircleCrop()))
                                             .into(viplogo);
 
                                     if (systemCommissionlevel.get(position).isBuy() == true) {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.lx.xqgg.R;
@@ -309,12 +310,14 @@ public class BuyServicePackActivity extends BaseActivity {
                             vipPackRecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false));
                             Glide.with(mContext)
                                     .load(Config.IMGURL + icn)
+                                    .apply(new RequestOptions().transform(new CircleCrop()))
                                     .into(userViplogo);
                             vipPackAdapter.setGetListener(new VipPackAdapter.GetListener() {
                                 @Override
                                 public void onClick(int position) {
                                     Glide.with(mContext)
                                             .load(Config.IMGURL + listBaseData.getData().get(position).getIco())
+                                            .apply(new RequestOptions().transform(new CircleCrop()))
                                             .into(userViplogo);
 //                                 把点击的下标回传给适配器 确定下标
                                     vipPackAdapter.setmPosition(position);
@@ -440,7 +443,7 @@ public class BuyServicePackActivity extends BaseActivity {
     private void activatenow(int id) {
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("token", SharedPrefManager.getUser().getToken());
-        paramsMap.put("configId", id);
+        paramsMap.put("configId", id+"");
         Log.d("mydata", "activatenow: " + id + token);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         ApiManage.getInstance().getMainApi().getBuynow(body)
@@ -449,9 +452,10 @@ public class BuyServicePackActivity extends BaseActivity {
                 .subscribe(new DisposableSubscriber<BuynowBean>() {
                     @Override
                     public void onNext(BuynowBean buynowBean) {
+                        Log.e("zlzqwe", new Gson().toJson(buynowBean));
                         if (buynowBean.isSuccess()) {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(BuyServicePackActivity.this);
-                            builder1.setMessage("您已申请线下购买，小麒乖乖处理中，会有渠道人员联系您开通服务包申请，请耐心等待");
+                            builder1.setMessage(buynowBean.getMessage() );
                             builder1.setTitle("温馨提示");
                             builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
