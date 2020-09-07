@@ -230,7 +230,7 @@ public class ShareFaceActivity extends BaseActivity {
         //加密json
         String jiajson= Base64.encode(json.getBytes());
         //生成注册的接口
-        String jiekong=Config.URL+"view/register.html?bean="+jiajson;
+        String jiekong=Config.URLS+"view/register.html?bean="+jiajson;
         Log.e("erma",jiekong);
         //生成二维码
         bitmap= CodeUtils.createImage(jiekong, 600, 600, null);

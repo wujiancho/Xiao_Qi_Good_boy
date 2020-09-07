@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.mytuoke.MyTuokeActivity"
     android:orientation="vertical"
+    android:background="#F0F0F0"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -238,7 +239,7 @@
                 android:textColor="#ff303030"
                 android:textSize="12sp"
                 android:layout_marginLeft="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -248,7 +249,7 @@
                 android:gravity="right"
                 android:textSize="12sp"
                 android:layout_marginRight="@dimen/dp_8"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
                 android:id="@+id/accumulated_pointstuoke"
                 />
         </LinearLayout>
@@ -258,11 +259,9 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="8dp"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_15"
             android:paddingTop="8dp">
-
-
             <RadioButton
                 android:id="@+id/rb_this_monthtuoke"
                 android:layout_width="0dp"
@@ -334,7 +333,8 @@
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/dp_5"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/tv_start_timetuoke"
@@ -342,9 +342,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="36dp"
             android:background="@drawable/txtsoild"
-            android:paddingLeft="12dp"
+            android:paddingLeft="8dp"
             android:paddingTop="8dp"
-            android:paddingRight="12dp"
+            android:paddingRight="8dp"
             android:paddingBottom="8dp"
             android:text="2020-2-20" />
 
@@ -359,9 +359,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/txtsoild"
-            android:paddingLeft="12dp"
+            android:paddingLeft="8dp"
             android:paddingTop="8dp"
-            android:paddingRight="12dp"
+            android:paddingRight="8dp"
             android:paddingBottom="8dp"
             android:text="2020-2-20" />
         <View
@@ -370,21 +370,32 @@
             android:layout_weight="1"/>
         <Button
             android:id="@+id/btn_confirm_timetuoke"
-            android:layout_width="64dp"
-            android:layout_height="36dp"
-            android:layout_marginRight="12dp"
+            android:layout_width="70dp"
+            android:layout_height="27dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/common_btn_yzm"
             android:text="确定"
             android:textColor="@color/white" />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/message_recyclerviewtuoke"
+    android:layout_marginTop="@dimen/dp_5"
+    android:layout_weight="1"
+    android:background="@drawable/message_recyclerview_bg"
+    android:layout_marginRight="7.5dp"
+    android:layout_marginLeft="7.5dp"
+
+    ></androidx.recyclerview.widget.RecyclerView>
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/message_recyclerviewtuoke"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_weight="1"
-        android:background="@drawable/message_recyclerview_bg"
-        android:layout_marginRight="7.5dp"
-        android:layout_marginLeft="7.5dp"
-        ></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:text="无数据"
+        android:textColor="#ff686868"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:id="@+id/wudata"
+        android:visibility="gone"
+        />
 </LinearLayout>

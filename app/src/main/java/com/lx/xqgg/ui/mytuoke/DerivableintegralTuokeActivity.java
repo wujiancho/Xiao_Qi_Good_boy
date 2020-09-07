@@ -3,38 +3,28 @@ package com.lx.xqgg.ui.mytuoke;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
-import com.lx.xqgg.ui.mycommission.CashWithdrawalRebateActivity;
 import com.lx.xqgg.ui.mycommission.XieYiActivity;
-import com.lx.xqgg.ui.vip.bean.PayListBean;
+import com.lx.xqgg.ui.mytuoke.bean.getZfbBean;
 
-import java.util.HashMap;
-import java.util.List;
-
+import androidx.annotation.Nullable;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 //可提现积分--拓客
 public class DerivableintegralTuokeActivity extends BaseActivity {
@@ -72,7 +62,7 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
     TextView fanyongguiztuoke;
     @BindView(R.id.addzfb)
     ImageView addzfb;
-
+    private boolean checked;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_derivableintegral_tuoke;
@@ -104,7 +94,10 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
 
         }
     });
+        //获取用户支付宝信息
+        zfbmassage();
     }
+
 
 
     @OnClick({R.id.addzfb,R.id.toobar_back, R.id.yihuo, R.id.addzfb_name, R.id.but_alltxtuoke, R.id.btt_txmoneytuoke, R.id.btt_txjltuoke, R.id.fanyongguiztuoke})
@@ -127,7 +120,8 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
                 break;
             //绑定支付宝
             case R.id.addzfb:
-                toast("功能待定");
+                Intent intenaddzfbtuoke = new Intent(DerivableintegralTuokeActivity.this, AddzfbnumActivity.class);
+                startActivity(intenaddzfbtuoke);
                 break;
             //全部提现
             case R.id.but_alltxtuoke:
@@ -141,7 +135,12 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
                 break;
             //提现
             case R.id.btt_txmoneytuoke:
-                toast("提现成功");
+                checked = checkTxtuoke.isChecked();
+                if ("支付宝绑定".equals(addzfbName.getText().toString().trim())){
+                    toast("请先绑定支付宝");
+                    return;
+                }
+                tixian();
                 break;
             //提现记录
             case R.id.btt_txjltuoke:
@@ -157,6 +156,61 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
 
         }
     }
+   //提现
+    private  void tixian(){
+        String count2 = txCountsrtuoke.getText().toString().trim();
+        if (checked == false) {
+            toast("请先勾选小麒乖乖返佣规则");
+            return;
+        }
+        int jftuoke = Integer.valueOf(count2);
+        if("".equals(count2)){
+            toast("提现积分不能为空");
+            return;
+        }
+        if(jftuoke<0||count2.length()<4){
+            toast("提现积分不能少于4位");
+            return;
+        }
+        String money1 = txMoneytuoke.getText().toString();
+        String money = money1.substring(1, money1.length());
+        if (money.length() < 3) {
+            toast("提现金额不能小于3位");
+            return;
+        }
+        Intent intenddtuoke = new Intent(DerivableintegralTuokeActivity.this, WithdrawaldeterminetuokeActivity.class);
+        startActivity(intenddtuoke);
+    }
 
 
+    //获取用户支付宝信息
+    private void zfbmassage() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getgetZfb(SharedPrefManager.getUser().getToken())
+         .subscribeOn(Schedulers.io())
+         .observeOn(AndroidSchedulers.mainThread())
+         .subscribeWith(new BaseSubscriber<BaseData<getZfbBean>>(mContext, null) {
+             @Override
+             public void onNext(BaseData<getZfbBean> getZfbBeanBaseData) {
+                 getZfbBean data= getZfbBeanBaseData.getData();
+                 if (data!=null&&"".equals(data)){
+                   addzfbName.setText(data.getZfb_account()+data.getZfb_name());
+                 }else{
+                     addzfbName.setText("支付宝绑定");
+                 }
+
+             }
+
+             @Override
+             public void onError(Throwable t) {
+                 super.onError(t);
+                 toast(t.getMessage());
+             }
+         }));
+    }
+
+    //回显刷新数据
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

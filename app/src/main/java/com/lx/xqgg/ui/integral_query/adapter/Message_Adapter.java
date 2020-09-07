@@ -18,10 +18,11 @@ public class Message_Adapter extends BaseQuickAdapter<String , BaseViewHolder> {
         helper.setText(R.id.messagecoument,item);
        switch (helper.getItemViewType()){
            case typeji:
-               helper.setBackgroundColor(R.id.itembg,Color.parseColor("#F0F0F0"));
+               helper.setBackgroundColor(R.id.itembg,Color.parseColor("#FFFFFF"));
                break;
            case typeo:
-               helper.setBackgroundColor(R.id.itembg,Color.parseColor("#FFFFFF"));
+               helper.setBackgroundColor(R.id.itembg,Color.parseColor("#F0F0F0"));
+
                break;
        }
     }

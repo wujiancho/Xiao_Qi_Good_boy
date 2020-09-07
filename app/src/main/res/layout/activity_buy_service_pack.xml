@@ -88,8 +88,8 @@
                    />
                <ImageView
                    android:id="@+id/user_viplogo"
-                   android:layout_width="@dimen/dp_10"
-                   android:layout_height="@dimen/dp_10"
+                   android:layout_width="@dimen/dp_15"
+                   android:layout_height="@dimen/dp_15"
                    android:layout_marginLeft="@dimen/dp_5"
                    android:src="@drawable/tx_buttombg"
                    android:scaleType="fitXY"
@@ -321,7 +321,6 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:id="@+id/check_tx"
                 ></CheckBox>
             <TextView

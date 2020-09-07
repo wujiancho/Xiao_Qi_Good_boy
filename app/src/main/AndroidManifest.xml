@@ -39,7 +39,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".ui.mytuoke.AddzfbnumActivity"></activity>
+        <activity android:name=".ui.mytuoke.WithdrawaldeterminetuokeActivity"></activity>
+        <activity android:name=".ui.mytuoke.AddzfbnumActivity" />
         <activity android:name=".ui.mycommission.XieYi2Activity" />
         <activity android:name=".ui.mycommission.XieYiActivity" />
         <activity

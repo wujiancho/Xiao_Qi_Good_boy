@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="待结算积分?"
+                    android:text="待结算积分"
                     android:layout_marginTop="@dimen/dp_16"
 
                     android:textColor="#2F2F2F"
@@ -327,7 +327,6 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:id="@+id/check_tx"
             ></CheckBox>
         <TextView

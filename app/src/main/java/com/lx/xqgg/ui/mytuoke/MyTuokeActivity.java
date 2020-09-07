@@ -31,8 +31,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 //我的拓客首页
 public class MyTuokeActivity extends BaseActivity {
-
-
     @BindView(R.id.toobar_back)
     View toobarBack;
     @BindView(R.id.toobar_title)

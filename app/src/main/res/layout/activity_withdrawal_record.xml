@@ -170,29 +170,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="提现规则："
-                android:textColor="#ff686868"
-                android:textSize="13sp"
+                android:text="《返佣提现规则》"
+                android:textColor="#EB3349"
+                android:id="@+id/fanyongguiz"
+                android:textSize="12sp"
                 android:layout_marginTop="@dimen/dp_14"
                 android:layout_marginLeft="@dimen/dp_18"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1.10积分=1元，最低不得低于5000分。"
-                android:textColor="#ff686868"
-                android:textSize="12sp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginLeft="@dimen/dp_19"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.服务商最少每个月可提积分一次。"
-                android:textColor="#ff686868"
-                android:textSize="12sp"
-                android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginLeft="@dimen/dp_19"
                 />
         </LinearLayout>
     </ScrollView>

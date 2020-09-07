@@ -63,8 +63,8 @@ public class ThisMonthReturnActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-        vipname = getIntent().getStringExtra("vipname");
-        if (!"".equals(vipname)) {
+        vipname = getIntent().getStringExtra("vipnamedq");
+        if (!"".equals(vipname)&&vipname!=null) {
             vipName.setText("享受" + vipname + "返佣权益");
         }
         Returningaservant();

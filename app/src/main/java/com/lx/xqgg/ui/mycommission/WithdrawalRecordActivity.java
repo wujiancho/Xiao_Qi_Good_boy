@@ -1,5 +1,6 @@
 package com.lx.xqgg.ui.mycommission;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,7 +11,6 @@ import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
-import com.lx.xqgg.ui.mycommission.adapter.ErrorAdapter;
 import com.lx.xqgg.ui.mycommission.adapter.WithdrawalrecordAdapter;
 import com.lx.xqgg.ui.mycommission.bean.HistoryCommissionwithdrawalBean;
 import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
@@ -41,6 +41,8 @@ public class WithdrawalRecordActivity extends BaseActivity {
     RecyclerView withdrawalRecordRecyclerView;
     @BindView(R.id.wudata)
     TextView wudata;
+    @BindView(R.id.fanyongguiz)
+    TextView fanyongguiz;
     private List<HistoryCommissionwithdrawalBean.DataBean.ListBean> withdrawalrecordlist;
     private WithdrawalrecordAdapter withdrawalrecordAdapter;
     private String token;
@@ -105,10 +107,6 @@ public class WithdrawalRecordActivity extends BaseActivity {
                 ));
     }
 
-    @OnClick(R.id.toobar_back)
-    public void onViewClicked() {
-        finish();
-    }
 
     //返佣方法
     public void Returningaservant() {
@@ -143,4 +141,19 @@ public class WithdrawalRecordActivity extends BaseActivity {
     }
 
 
+
+
+    @OnClick({R.id.toobar_back, R.id.fanyongguiz})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toobar_back:
+                finish();
+                break;
+            case R.id.fanyongguiz:
+                Intent intenxieyi = new Intent(WithdrawalRecordActivity.this, XieYiActivity.class);
+                intenxieyi.putExtra("group","rakebackTackOutRule");
+                startActivity(intenxieyi);
+                break;
+        }
+    }
 }

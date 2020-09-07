@@ -397,7 +397,7 @@ public class PersonFragment extends BaseFragment {
         homeBaseAdapter2.notifyDataSetChanged();
 
         list3.add(new MatterBean("智能匹配", "MatchFirstActivity", R.drawable.ic_znpp));
-        list3.add(new MatterBean("小麒数据", "", R.drawable.ic_p_xqsj));
+        list3.add(new MatterBean("小麒数据", "DataMainActivity", R.drawable.ic_p_xqsj));
         list3.add(new MatterBean("企查查", "QccMainSearchActivity", R.drawable.ic_p_qcc));
         list3.add(new MatterBean("计算器", "CounterActivity", R.drawable.ic_p_jsj));
         list3.add(new MatterBean("征信网点", "", R.drawable.ic_p_zxwd));

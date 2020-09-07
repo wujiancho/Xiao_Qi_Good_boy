@@ -35,7 +35,10 @@ import com.lx.xqgg.ui.mycommission.bean.ReturningservantBean;
 import com.lx.xqgg.ui.mycommission.bean.SelectCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.SystemCommissionlevelBean;
 import com.lx.xqgg.ui.mycommission.bean.ThisMothPointsdetailstBean;
+import com.lx.xqgg.ui.mytuoke.bean.InsertOrUpdateZfbBean;
 import com.lx.xqgg.ui.mytuoke.bean.TokeBean;
+import com.lx.xqgg.ui.mytuoke.bean.XqdataBean;
+import com.lx.xqgg.ui.mytuoke.bean.getZfbBean;
 import com.lx.xqgg.ui.order.bean.OrderBean;
 import com.lx.xqgg.ui.order.bean.OrderUserBean;
 import com.lx.xqgg.ui.order.bean.TjBean;
@@ -635,18 +638,28 @@ public interface MainApi {
     @POST("share/myShareUser")
     Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);
 
-  /*  *//**
+  /*
      * 用户绑定支付宝
      * @param
      * @return
-     *//*
+     */
     @POST("share/insertOrUpdateZfb")
-    Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);*/
-   /* *//**
+    Flowable<BaseData<InsertOrUpdateZfbBean>>getInsertOrUpdateZfb(@Body RequestBody body);
+   /*
      * 获取用户支付宝信息
      * @param
      * @return
-     *//*
-    @POST("share//getZfb")
-    Flowable<BaseData<List<TokeBean>>>getTokeBean(@Query("token") String token,@Query("status") String status);*/
+     */
+    @GET("share//getZfb")
+    Flowable<BaseData<getZfbBean>>getgetZfb(@Query("token") String token);
+
+
+    /**
+     * 获取计算小麒数据的产品接口
+     * @param
+     * @return
+     */
+    @GET("xqdata/getProduct")
+    Flowable<BaseData<XqdataBean>>getXqdata();
+
 }

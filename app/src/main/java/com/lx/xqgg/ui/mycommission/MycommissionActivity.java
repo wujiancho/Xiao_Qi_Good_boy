@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.mycommission;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -138,11 +139,11 @@ public class MycommissionActivity extends BaseActivity {
     private List<SystemCommissionlevelBean> systemCommissionlevel;
     private String currentLevel;
     private int positions;
-
+    private String chargeType;
     private static final float MIN_SCALE = 0.75f;
     private fanyongAdapter fanyongAdapter;
     private ArrayList<PayListBean> fanyonglist;
-
+    private String vipnamedq;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_mycommission;
@@ -150,7 +151,7 @@ public class MycommissionActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        toobarTitle.setText("业绩返佣服务包");
+        toobarTitle.setText("业绩返佣");
         viplist = new ArrayList<>();
         //设置vip权限服务列表
         vIpListAdapter = new VIpListAdapter(viplist);
@@ -190,7 +191,7 @@ public class MycommissionActivity extends BaseActivity {
             String allRebatez = df.format(allRebate);
             accumulatedPoints.setText("小麒乖乖已累计为您返佣" + allRebatez + "积分");
         }
-        String chargeType = SharedPrefManager.getUserInfo().getCharge_type();
+        chargeType= SharedPrefManager.getUserInfo().getCharge_type();
         if ("2".equals(chargeType)) {
             riyuejie.setText("日结");
             btnRiyuejie.setVisibility(View.VISIBLE);
@@ -227,7 +228,7 @@ public class MycommissionActivity extends BaseActivity {
             //跳转本月返佣
             case R.id.this_monthcommissionz:
                 Intent intenthistmr = new Intent(MycommissionActivity.this, ThisMonthReturnActivity.class);
-                intenthistmr.putExtra("vipname", currentLevel);
+                intenthistmr.putExtra("vipnamedq", vipnamedq);
                 startActivity(intenthistmr);
                 break;
             //跳转累计返佣
@@ -315,8 +316,8 @@ public class MycommissionActivity extends BaseActivity {
                         } else {
                             vipName.setText(data.getCurrentLevel());
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
-                            currentLevel = data.getCurrentLevel();
                         }
+                        vipnamedq =data.getCurrentLevel();
                         if ((int) data.getOrderMoney() == 0) {
                             progressBarH.setProgress(5);
                             progressBarH.setMax(100);
@@ -466,7 +467,7 @@ public class MycommissionActivity extends BaseActivity {
                                     if (systemCommissionlevel.get(position).isBuy() == true) {
                                         purchase.setText("已购买");
                                         endTime = systemCommissionlevel.get(position).getEndTime();
-
+                                        currentLevel = systemCommissionlevel.get(position).getName();
                                         if (!"".equals(systemCommissionlevel.get(position).getEndTime()) && systemCommissionlevel.get(position).getEndTime() != null) {
                                             termof_validity.setVisibility(View.VISIBLE);
                                             termof_validity.setText("有效期至：" + systemCommissionlevel.get(position).getEndTime());
@@ -477,6 +478,28 @@ public class MycommissionActivity extends BaseActivity {
                                     } else {
                                         termof_validity.setVisibility(View.GONE);
                                     }
+                             /*           tiaoz.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                if ("2".equals(chargeType)) {
+                                                    toast("您是日结用户，请先转为月结用户后购买服务包");
+                                                } else if ("1".equals(chargeType)) {
+                                                    //跳转购买服务包
+                                                    Intent intentbuysp = new Intent(MycommissionActivity.this, BuyServicePackActivity.class);
+                                                    intentbuysp.putExtra("buyname", currentLevel);
+                                                    intentbuysp.putExtra("buyname1", systemCommissionlevel.get(position).getName());
+                                                    intentbuysp.putExtra("id", systemCommissionlevel.get(position).getId());
+                                                    intentbuysp.putExtra("imgurl", systemCommissionlevel.get(position).getPicture());
+                                                    intentbuysp.putExtra("icn", systemCommissionlevel.get(position).getIco());
+                                                    intentbuysp.putExtra("position", position);
+                                                    intentbuysp.putExtra("rightsNum", systemCommissionlevel.get(position).getRightsNum());
+                                                    intentbuysp.putExtra("endTime", endTime);
+                                                    startActivity(intentbuysp);
+                                                }
+
+                                            }
+                                        });*/
+
                                     tiaoz.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -493,6 +516,8 @@ public class MycommissionActivity extends BaseActivity {
                                             startActivity(intentbuysp);
                                         }
                                     });
+
+
                                 }
                             });
                             //联动改变权限
@@ -565,7 +590,7 @@ public class MycommissionActivity extends BaseActivity {
     private void initPopWindow() {
         LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitem, null);
         AlertDialog dialog = new AlertDialog.Builder(this).create();
-
+        //Dialog dialog = new Dialog(this,R.style.DialogTheme);
         TextView mlinearViewById = mlinear.findViewById(R.id.riyuejiename);
         Button btn_ok = mlinear.findViewById(R.id.btn_ok);
         Button btn_no = mlinear.findViewById(R.id.btn_no);
@@ -588,11 +613,11 @@ public class MycommissionActivity extends BaseActivity {
         Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.TOP | Gravity.CENTER);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        float px2dp50 = DensityUtils.px2dp(mContext, 50);
-        float px2dp150 = DensityUtils.px2dp(mContext, 150);
+        float px2dp25 = DensityUtils.px2dp(mContext, 45);
+        float px2dp65 = DensityUtils.dp2px(mContext, 65);
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.y = 150;  //设置出现的高度，距离顶部
+        lp.y = (int) px2dp65;  //设置出现的高度，距离顶部
         dialogWindow.setAttributes(lp);
         dialog.show();
 
@@ -600,7 +625,7 @@ public class MycommissionActivity extends BaseActivity {
 
     //申请月结确认
     private void initPopWindowqued() {
-        LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitemqued, null);
+  /*     LinearLayout mlinear = (LinearLayout) getLayoutInflater().inflate(R.layout.monthlybalanceitemqued, null);
         AlertDialog dialog = new AlertDialog.Builder(this).create();
         dialog.setView(mlinear);
         Window window = dialog.getWindow();
@@ -614,7 +639,11 @@ public class MycommissionActivity extends BaseActivity {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.y = 150;  //设置出现的高度，距离顶部
         window.setAttributes(lp);
-        dialog.show();
+        dialog.show();*/
+            android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(MycommissionActivity.this);
+            builder1.setMessage("您已成功提交，次月返佣将变为月结，同时，享受更高返佣。\n如有疑问，请联系小麒乖乖相关服务人员。");
+            builder1.setTitle("温馨提示");
+            builder1.show();
     }
 
     //返回刷新积分

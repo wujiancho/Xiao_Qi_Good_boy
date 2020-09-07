@@ -186,7 +186,9 @@ public class BuyServicePackActivity extends BaseActivity {
         buyname = getIntent().getStringExtra("buyname");
         Returningaservant();
         if (!"".equals(buyname) && buyname != null) {
-                vipCommissionno.setText("当前用户等级：" + buyname);
+                vipCommissionno.setText("已购买" + buyname);
+        }else {
+            vipCommissionno.setText("未购买服务包");
         }
         String returningservantdata = SpUtil.getInstance().getSpString("returningservantdata");
         if (!"".equals(returningservantdata)) {
@@ -279,7 +281,13 @@ public class BuyServicePackActivity extends BaseActivity {
                                     .load(Config.IMGURL + imgurl)
                                     .apply(RequestOptions.bitmapTransform(mation))
                                     .into(vipselectbg);
-                            welfare.setText("佣金至少提升" + promote + "%,获得额外" + rightsNum + "项权益");
+                            if (!"".equals(promote)&&promote!=null){
+                                welfare.setText("佣金至少提升" + promote + "%,获得额外" + rightsNum + "项权益");
+                            }
+                           else {
+                                welfare.setText("佣金至少提升0%,获得额外" + rightsNum + "项权益");
+                            }
+
                         }
                     }
                 }));
@@ -312,11 +320,24 @@ public class BuyServicePackActivity extends BaseActivity {
                                     vipPackAdapter.setmPosition(position);
                                     vipPackAdapter.notifyDataSetChanged();
                                     addviplist(listBaseData, position);
-                                    if (systemCommissionlevel.get(position).isBuy() == true) {
-                                        btnActivateNow.setVisibility(View.GONE);
-                                    } else {
-                                        btnActivateNow.setVisibility(View.VISIBLE);
+                                    for (int i = 0; i < systemCommissionlevel.size(); i++) {
+                                        if (systemCommissionlevel.get(i).isBuy() == true) {
+                                            if (position==i){
+                                                btnActivateNow.setVisibility(View.GONE);
+                                            }
+                                            if (i>position){
+                                                btnActivateNow.setVisibility(View.GONE);
+                                            }
+                                            if (i<position){
+                                                btnActivateNow.setVisibility(View.VISIBLE);
+                                            }
+                                        } else {
+                                            btnActivateNow.setVisibility(View.VISIBLE);
+                                        }
+
                                     }
+
+
                                     if ("收起".equals(vipRecyclerViewstatus.getText().toString())){
                                         if (viplist.size()>4){
                                             vIpListAdapter.statusvip(viplist.size());
@@ -328,11 +349,27 @@ public class BuyServicePackActivity extends BaseActivity {
                         }
 
                         addviplist(listBaseData, positions);
-                        if (systemCommissionlevel.get(positions).isBuy() == true) {
-                            btnActivateNow.setVisibility(View.GONE);
-                        } else {
-                            btnActivateNow.setVisibility(View.VISIBLE);
+                        for (int i = 0; i < systemCommissionlevel.size(); i++) {
+                            if (systemCommissionlevel.get(i).isBuy() == true) {
+                                if (positions==i){
+                                    btnActivateNow.setVisibility(View.GONE);
+                                }
+                                if (i>positions){
+                                    btnActivateNow.setVisibility(View.GONE);
+                                }
+                                if (i<positions){
+                                    btnActivateNow.setVisibility(View.VISIBLE);
+                                }
+                            } else {
+                                btnActivateNow.setVisibility(View.VISIBLE);
+                            }
+
                         }
+
+
+
+
+
                         if ("收起".equals(vipRecyclerViewstatus.getText().toString())){
                             if (viplist.size()>4){
                                 vIpListAdapter.statusvip(viplist.size());

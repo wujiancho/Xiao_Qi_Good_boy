@@ -23,23 +23,25 @@
      <TextView
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text=""
+         android:text="sssss"
          android:textColor="#ff70460a"
          android:textSize="19sp"
          android:id="@+id/vip_name"
+         android:gravity="center"
          />
      <ImageView
-         android:layout_width="@dimen/dp_10"
-         android:layout_height="@dimen/dp_10"
+         android:layout_width="@dimen/dp_17"
+         android:layout_height="@dimen/dp_17"
          android:id="@+id/viplogo"
          android:layout_marginLeft="@dimen/dp_5"
+         android:gravity="center"
          ></ImageView>
 
  </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="sssss"
         android:textColor="#ff593605"
         android:textSize="9sp"
         android:id="@+id/vip_jurisdiction"
@@ -51,7 +53,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="sss"
         android:textColor="#ff6f460a"
         android:textSize="12sp"
         android:layout_marginLeft="@dimen/dp_24"
