@@ -322,13 +322,13 @@ public class BuyServicePackActivity extends BaseActivity {
                                     addviplist(listBaseData, position);
                                     for (int i = 0; i < systemCommissionlevel.size(); i++) {
                                         if (systemCommissionlevel.get(i).isBuy() == true) {
-                                            if (position==i){
+                                            if (i==position){
                                                 btnActivateNow.setVisibility(View.GONE);
                                             }
-                                            if (i>position){
+                                            else if (i>position){
                                                 btnActivateNow.setVisibility(View.GONE);
                                             }
-                                            if (i<position){
+                                            else if (i<position){
                                                 btnActivateNow.setVisibility(View.VISIBLE);
                                             }
                                         } else {
@@ -351,13 +351,13 @@ public class BuyServicePackActivity extends BaseActivity {
                         addviplist(listBaseData, positions);
                         for (int i = 0; i < systemCommissionlevel.size(); i++) {
                             if (systemCommissionlevel.get(i).isBuy() == true) {
-                                if (positions==i){
+                                if (i==positions){
                                     btnActivateNow.setVisibility(View.GONE);
                                 }
-                                if (i>positions){
+                                else if (i>positions){
                                     btnActivateNow.setVisibility(View.GONE);
                                 }
-                                if (i<positions){
+                                else if (i<positions){
                                     btnActivateNow.setVisibility(View.VISIBLE);
                                 }
                             } else {
