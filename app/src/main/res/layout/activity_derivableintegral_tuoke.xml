@@ -332,7 +332,7 @@
                 android:id="@+id/check_txtuoke"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:checked="true"></CheckBox>
+                ></CheckBox>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -337,7 +337,7 @@ public class MycommissionActivity extends BaseActivity {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
                         } else {
                             vipNameQy.setText("享受" + data.getCurrentLevel() + "返佣权益");
-                            vipCount.setText(data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + (data.getNextLevelMoney() - data.getOrderMoney()) + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
+                            vipCount.setText((int) data.getOrderMoney() + "/" + data.getNextLevelMoney() + " 本月还放款" + (data.getNextLevelMoney() - (int) data.getOrderMoney()) + "，可升级" + (data.getNextLevel() + "，享受更高返佣"));
                         }
                     }
 
@@ -480,7 +480,7 @@ public class MycommissionActivity extends BaseActivity {
                                     } else {
                                         termof_validity.setVisibility(View.GONE);
                                     }
-                             /*           tiaoz.setOnClickListener(new View.OnClickListener() {
+                                        tiaoz.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 if ("2".equals(chargeType)) {
@@ -500,9 +500,9 @@ public class MycommissionActivity extends BaseActivity {
                                                 }
 
                                             }
-                                        });*/
+                                        });
 
-                                    tiaoz.setOnClickListener(new View.OnClickListener() {
+                                 /*   tiaoz.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             //跳转购买服务包
@@ -517,7 +517,7 @@ public class MycommissionActivity extends BaseActivity {
                                             intentbuysp.putExtra("endTime", endTime);
                                             startActivity(intentbuysp);
                                         }
-                                    });
+                                    });*/
 
 
                                 }

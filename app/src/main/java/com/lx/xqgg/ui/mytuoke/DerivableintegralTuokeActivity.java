@@ -168,14 +168,14 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
             toast("提现积分不能为空");
             return;
         }
-        if(jftuoke<0||count2.length()<4){
-            toast("提现积分不能少于4位");
+        if(jftuoke<0){
+            toast("提现积分不能为0");
             return;
         }
         String money1 = txMoneytuoke.getText().toString();
         String money = money1.substring(1, money1.length());
-        if (money.length() < 3) {
-            toast("提现金额不能小于3位");
+        if ("0".equals(money)) {
+            toast("提现金额不能为0");
             return;
         }
         Intent intenddtuoke = new Intent(DerivableintegralTuokeActivity.this, WithdrawaldeterminetuokeActivity.class);
@@ -192,7 +192,7 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
              @Override
              public void onNext(BaseData<getZfbBean> getZfbBeanBaseData) {
                  getZfbBean data= getZfbBeanBaseData.getData();
-                 if (data!=null&&"".equals(data)){
+                 if (data!=null){
                    addzfbName.setText(data.getZfb_account()+data.getZfb_name());
                  }else{
                      addzfbName.setText("支付宝绑定");

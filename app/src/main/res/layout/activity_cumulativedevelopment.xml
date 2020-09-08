@@ -205,55 +205,16 @@
                 />
 
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="拓客规则："
-            android:textColor="#ff686868"
-            android:textSize="14sp"
-            android:layout_marginLeft="@dimen/dp_17"
-            android:layout_marginTop="@dimen/dp_20"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_28"
-            android:layout_marginRight="@dimen/dp_37"
-            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.拓客操作，由客户扫码您小麒乖乖内的“推荐有礼”二维码完成。"
-                android:textColor="#ff686868"
-                android:textSize="13sp"
+                android:text="《拓客规则》"
+                android:textColor="#EB3349"
+                android:textSize="14sp"
+                android:id="@+id/tuokeguize"
+                android:layout_marginLeft="@dimen/dp_17"
+                android:layout_marginTop="@dimen/dp_20"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.客户扫码后，必须根据页面提示，提交手机号与验证码完成用户注册。"
-                android:textColor="#ff686868"
-                android:layout_marginTop="@dimen/dp_5"
-                android:textSize="13sp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3.拓客操作，由客户扫码您小麒乖乖内的“推荐有礼”二维码完成。"
-                android:textColor="#ff686868"
-                android:textSize="13sp"
-                android:layout_marginTop="@dimen/dp_5"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4.客户扫码后，必须根据页面提示，提交手机号与验证码完成用户注册。"
-                android:textColor="#ff686868"
-                android:layout_marginTop="@dimen/dp_5"
-                android:textSize="13sp"
-                />
-        </LinearLayout>
         </LinearLayout>
         </ScrollView>
     </LinearLayout>

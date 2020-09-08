@@ -660,6 +660,6 @@ public interface MainApi {
      * @return
      */
     @GET("xqdata/getProduct")
-    Flowable<BaseData<XqdataBean>>getXqdata();
+    Flowable<BaseData<List<XqdataBean>>>getXqdata();
 
 }

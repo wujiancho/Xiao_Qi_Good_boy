@@ -1,18 +1,27 @@
 package com.lx.xqgg.ui.mytuoke;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lx.xqgg.R;
 import com.lx.xqgg.api.ApiManage;
 import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.helper.SharedPrefManager;
+import com.lx.xqgg.ui.login.bean.MsgBean;
+import com.lx.xqgg.ui.mytuoke.bean.InsertOrUpdateZfbBean;
 import com.lx.xqgg.ui.mytuoke.bean.getZfbBean;
+import com.lx.xqgg.util.CountDownTimerUtils;
+import com.lx.xqgg.util.FastClickUtil;
 
 import java.util.HashMap;
 
@@ -22,6 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public class AddzfbnumActivity extends BaseActivity {
 
@@ -44,6 +55,7 @@ public class AddzfbnumActivity extends BaseActivity {
     Button btnGetCode;
     @BindView(R.id.btn_addzfbfinish)
     Button btnAddzfbfinish;
+    private CountDownTimerUtils countDownTimer;
 
     @Override
     protected int getLayoutId() {
@@ -58,8 +70,20 @@ public class AddzfbnumActivity extends BaseActivity {
     @Override
     protected void initData() {
         zfbmassage();
-    }
+        countDownTimer = new CountDownTimerUtils(btnGetCode, 60000, 1000, handler);
 
+    }
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (countDownTimer != null) {
+                countDownTimer.onFinish();
+                countDownTimer.cancel();
+            }
+        }
+    };
 
     @OnClick()
     public void onViewClicked() {
@@ -71,7 +95,35 @@ public class AddzfbnumActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_getCode:
+                if (zfbPhone.getText().toString().length() < 11) {
+                    toast("请输入正确的手机号码");
+                    return;
+                }
+                if (FastClickUtil.isFastClick()) {
+                    return;
+                }
+                addSubscribe(ApiManage.getInstance().getMainApi().getMsg(zfbPhone.getText().toString(), "zfb",null,null)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new BaseSubscriber<MsgBean>(mContext, null) {
+                            @Override
+                            public void onNext(MsgBean msgBean) {
+                                Log.e("zlz", new Gson().toJson(msgBean));
 
+                                if (msgBean.isSuccess()) {
+                                    countDownTimer.start();
+                                    toast(msgBean.getMessage());
+                                } else {
+                                    toast(msgBean.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+                                super.onError(t);
+                                toast(t.getMessage());
+                            }
+                        }));
                 break;
             case R.id.btn_addzfbfinish:
                 if (zfbName.getText().toString().length()<2){
@@ -79,18 +131,21 @@ public class AddzfbnumActivity extends BaseActivity {
                     return;
                 }
                 if (zfbNum.getText().toString().length()<10){
-                    toast("请输入支付宝账号");
+                    toast("请输入正确的支付宝账号");
                     return;
                 }
-                if (zfbPhone.getText().toString().length()<10){
-                    toast("请输入支付宝绑定的手机号");
+                if (zfbPhone.getText().toString().length()<11){
+                    toast("请输入正确的支付宝绑定的手机号");
                     return;
                 }
-
-                finish();
+                if (etCode.getText().toString().length() < 4) {
+                    toast("请输入正确的短信验证码");
+                    return;
+                }
+                addzfbmassage();
                 break;
             case R.id.v_close:
-                fileList();
+                finish();
                 break;
         }
     }
@@ -103,7 +158,7 @@ public class AddzfbnumActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseData<getZfbBean> getZfbBeanBaseData) {
                         getZfbBean data= getZfbBeanBaseData.getData();
-                        if (data!=null&&"".equals(data)){
+                        if (data!=null){
                            zfbName.setText(data.getZfb_name());
                            zfbNum.setText(data.getZfb_account());
                            zfbPhone.setText(data.getUser_phone());
@@ -125,28 +180,22 @@ public class AddzfbnumActivity extends BaseActivity {
 
     //绑定用户支付宝信息
     private void addzfbmassage() {
-     /*   HashMap<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("bankName", );
-        paramsMap.put("bankUser", );
-        paramsMap.put("bankNo", );
-        paramsMap.put("bankNo", );*/
-        addSubscribe(ApiManage.getInstance().getMainApi().getgetZfb(SharedPrefManager.getUser().getToken())
+        HashMap<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("token", SharedPrefManager.getUser().getToken());
+        paramsMap.put("zfb_name", zfbName.getText().toString());
+        paramsMap.put("zfb_account", zfbNum.getText().toString());
+        paramsMap.put("user_phone", zfbPhone.getText().toString());
+        paramsMap.put("captcha", etCode.getText().toString());
+        paramsMap.put("id", "");
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
+        addSubscribe(ApiManage.getInstance().getMainApi().getInsertOrUpdateZfb(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new BaseSubscriber<BaseData<getZfbBean>>(mContext, null) {
+                .subscribeWith(new BaseSubscriber<BaseData<InsertOrUpdateZfbBean>>(mContext, null) {
                     @Override
-                    public void onNext(BaseData<getZfbBean> getZfbBeanBaseData) {
-                        getZfbBean data= getZfbBeanBaseData.getData();
-                        if (data!=null&&"".equals(data)){
-                            zfbName.setText(data.getZfb_name());
-                            zfbNum.setText(data.getZfb_account());
-                            zfbPhone.setText(data.getUser_phone());
-                        }else{
-                            zfbName.setText("");
-                            zfbNum.setText("");
-                            zfbPhone.setText("");
-                        }
-
+                    public void onNext(BaseData<InsertOrUpdateZfbBean> insertOrUpdateZfbBeanBaseData) {
+                            toast("支付宝绑定成功");
+                            finish();
                     }
 
                     @Override
@@ -155,5 +204,13 @@ public class AddzfbnumActivity extends BaseActivity {
                         toast(t.getMessage());
                     }
                 }));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }

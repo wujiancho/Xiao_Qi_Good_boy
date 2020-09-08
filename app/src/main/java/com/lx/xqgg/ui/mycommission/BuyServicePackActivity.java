@@ -328,14 +328,12 @@ public class BuyServicePackActivity extends BaseActivity {
                                             if (i==position){
                                                 btnActivateNow.setVisibility(View.GONE);
                                             }
-                                            else if (i>position){
+                                             if (i>position){
                                                 btnActivateNow.setVisibility(View.GONE);
                                             }
-                                            else if (i<position){
+                                             if (i<position){
                                                 btnActivateNow.setVisibility(View.VISIBLE);
                                             }
-                                        } else {
-                                            btnActivateNow.setVisibility(View.VISIBLE);
                                         }
 
                                     }
@@ -357,16 +355,13 @@ public class BuyServicePackActivity extends BaseActivity {
                                 if (i==positions){
                                     btnActivateNow.setVisibility(View.GONE);
                                 }
-                                else if (i>positions){
+                                 if (i>positions){
                                     btnActivateNow.setVisibility(View.GONE);
                                 }
-                                else if (i<positions){
+                                 if (i<positions){
                                     btnActivateNow.setVisibility(View.VISIBLE);
                                 }
-                            } else {
-                                btnActivateNow.setVisibility(View.VISIBLE);
                             }
-
                         }
 
 
@@ -455,7 +450,7 @@ public class BuyServicePackActivity extends BaseActivity {
                         Log.e("zlzqwe", new Gson().toJson(buynowBean));
                         if (buynowBean.isSuccess()) {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(BuyServicePackActivity.this);
-                            builder1.setMessage(buynowBean.getMessage() );
+                            builder1.setMessage("您已购买服务包，15分钟后会有渠道人员联系您");
                             builder1.setTitle("温馨提示");
                             builder1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override

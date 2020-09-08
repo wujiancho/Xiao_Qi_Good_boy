@@ -3,48 +3,153 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#f3f3f3"
+
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_normal" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_txfy"
+        android:orientation="vertical"
+        >
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="每日产品数据分析"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp_10"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_10"
+            android:id="@+id/cpbg"
+            android:scaleType="centerCrop"
+            ></ImageView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/xqdata_RecyclerView"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_10"
+            ></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_8"
+    android:layout_marginRight="@dimen/dp_8"
+    android:layout_marginTop="@dimen/dp_8"
+    android:background="@drawable/bg_txfy"
+    android:orientation="horizontal"
+    >
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/dp_30"
+    android:layout_marginTop="@dimen/dp_30"
+    android:layout_weight="1"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公司月报"
+        android:textColor="#ff000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="@dimen/dp_124"
+        android:layout_height="wrap_content"
+        android:text="服务商的进件数、通过率、批款件均、提款率"
+        android:textColor="#ff000000"
+        android:textSize="11sp"
+        android:layout_marginTop="@dimen/dp_5"
+        />
+    <Button
+        android:layout_width="@dimen/dp_62"
+        android:layout_height="@dimen/dp_18"
+        android:text="查看详情"
+        android:textColor="#F45C43"
+        android:textSize="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/xqdataxqbg"
+        android:id="@+id/yuedao"
+        ></Button>
+</LinearLayout>
+    <ImageView
+        android:layout_width="@dimen/dp_111"
+        android:layout_height="@dimen/dp_98"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
+         android:layout_marginBottom="@dimen/dp_16"
+        android:src="@drawable/cpjjly"
+        android:scaleType="centerCrop"
+        ></ImageView>
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/img_data_1"
-                app:layout_constraintDimensionRatio="750:372"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/img_data_2"
-                app:layout_constraintDimensionRatio="750:267"
-                app:layout_constraintTop_toBottomOf="@+id/imageView1" />
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/img_data_3"
-                app:layout_constraintDimensionRatio="750:270"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/img_data_4"
-                app:layout_constraintDimensionRatio="750:299"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/bg_txfy"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产品拒绝理由分析"
+                android:textColor="#ff000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="产品拒绝理由占比和建议"
+                android:textColor="#ff000000"
+                android:textSize="11sp"
+                android:layout_marginTop="@dimen/dp_5"
+                />
+            <Button
+                android:layout_width="@dimen/dp_62"
+                android:layout_height="@dimen/dp_18"
+                android:text="查看详情"
+                android:textColor="#F45C43"
+                android:textSize="@dimen/dp_10"
+                android:background="@drawable/xqdataxqbg"
+                android:layout_marginTop="@dimen/dp_10"
+                android:id="@+id/cpjjll"
+                ></Button>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="@dimen/dp_111"
+            android:layout_height="@dimen/dp_98"
+            android:layout_marginRight="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_16"
+            android:src="@drawable/gonsiyuebao"
+            android:scaleType="centerCrop"
+            ></ImageView>
+    </LinearLayout>
 </LinearLayout>

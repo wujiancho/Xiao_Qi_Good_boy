@@ -65,26 +65,13 @@ public class AddbankCardActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        Accesstobankinformation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //回显
-        String  data=   SpUtil.getInstance().getSpString("bankinfortion");
-        if(!"".equals(data)){
-            SaveBankinfortionBean saveBankinfortionBean=new Gson().fromJson(data, SaveBankinfortionBean.class);
-            if (!"".equals(saveBankinfortionBean.getBankName())){
-                accountName.setText(saveBankinfortionBean.getBankName());
-            }
-            if (!"".equals(saveBankinfortionBean.getBankNo())){
-                bankCardNumber.setText(saveBankinfortionBean.getBankNo());
-            }
-            if (!"".equals(saveBankinfortionBean.getBankUser())){
-                bankOfDeposit.setText(saveBankinfortionBean.getBankUser());
-            }
-        }
+
     }
 
     //添加银行卡信息保存
@@ -106,7 +93,7 @@ public class AddbankCardActivity extends BaseActivity {
                 break;
             case R.id.btn_addbankfinish:
                 if (bankOfDeposit.getText().toString().length()<4){
-                    toast("请输入正确的企业名称");
+                    toast("请输入正确的开户银行名称");
                     return;
                 }
                 if (accountName.getText().toString().length()<4){
@@ -129,5 +116,53 @@ public class AddbankCardActivity extends BaseActivity {
                 break;
         }
     }
+    //佣金提现获取银行信息
+    private void Accesstobankinformation() {
+        addSubscribe(ApiManage.getInstance().getMainApi().getBandinformation(SharedPrefManager.getUser().getToken())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new BaseSubscriber<BaseData<BandinformationBean>>(mContext, null) {
+                    @Override
+                    public void onNext(BaseData<BandinformationBean> bandinformationBeanBaseData) {
+                        if (bandinformationBeanBaseData.isSuccess()){
+                            BandinformationBean data = bandinformationBeanBaseData.getData();
+                            if (!"".equals(data)&&data!=null){
+                                String bankName= data.getBankName();
+                                String bankNo= data.getBankNo();
+                                String bankUser = data.getBankUser();
+                                //获取银行卡信息
+                                if (!"".equals(bankName)&&!"".equals(bankNo)&&!"".equals(bankUser)&&bankName!=null&&bankNo!=null&&bankUser!=null){
+                                    accountName.setText(data.getBankName());
+                                    bankCardNumber.setText(data.getBankNo());
+                                    bankOfDeposit.setText(data.getBankUser());
+                                }
+                            }
+                            else {
+                                //回显
+                                String  datasp=   SpUtil.getInstance().getSpString("bankinfortion");
+                                if(!"".equals(datasp)){
+                                    SaveBankinfortionBean saveBankinfortionBean=new Gson().fromJson(datasp, SaveBankinfortionBean.class);
+                                    if (!"".equals(saveBankinfortionBean.getBankName())){
+                                        accountName.setText(saveBankinfortionBean.getBankName());
+                                    }
+                                    if (!"".equals(saveBankinfortionBean.getBankNo())){
+                                        bankCardNumber.setText(saveBankinfortionBean.getBankNo());
+                                    }
+                                    if (!"".equals(saveBankinfortionBean.getBankUser())){
+                                        bankOfDeposit.setText(saveBankinfortionBean.getBankUser());
+                                    }
+                                }
 
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        toast(t.getMessage());
+                    }
+                }));
+    }
 }
