@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.mytuoke.WithdrawaldeterminetuokeActivity">
+    <include layout="@layout/tooblar_white"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:background="#fff">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_303"
+            android:background="@drawable/sqlc"></ImageView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_240"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="#F3F3F3"
+            ></View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_255"
+            android:text="提现金额"
+            android:textColor="#ff959595"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tx_moneyzfb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_256"
+            android:layout_marginRight="@dimen/dp_26"
+            android:text=""
+            android:textColor="#ff303030"
+            android:textSize="15sp"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_288"
+            android:text="到账支付宝账户"
+            android:textColor="#ff959595"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_zfb_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_286"
+            android:layout_marginRight="@dimen/dp_26"
+            android:text=""
+            android:textColor="#ff303030"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_txfinishafb"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_29"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="441dp"
+            android:background="@drawable/tx_finishbg"
+            android:text="完成"
+            android:textColor="#ff22ac38"
+            android:textSize="15sp"></Button>
+    </RelativeLayout>
+</LinearLayout>

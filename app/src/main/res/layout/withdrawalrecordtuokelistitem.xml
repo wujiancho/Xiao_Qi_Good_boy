@@ -30,9 +30,8 @@
                 tools:text="支付宝账号：17312615026" />
             <TextView
                 android:id="@+id/tv_money"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:gravity="right"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:ellipsize="end"

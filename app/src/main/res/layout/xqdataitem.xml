@@ -8,6 +8,8 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:id="@+id/xqdataxq"
+    android:layout_marginLeft="@dimen/dp_5"
+    android:layout_marginRight="@dimen/dp_5"
     >
  <ImageView
      android:layout_width="@dimen/dp_60"
@@ -16,10 +18,10 @@
      android:scaleType="centerCrop"
      ></ImageView>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_60"
         android:layout_height="wrap_content"
         android:text="张农银行"
-        android:textColor="@color/txt_normal"
+        android:textColor="#000000"
         android:textSize="12sp"
         android:layout_marginTop="@dimen/dp_10"
         android:id="@+id/xqdataname"

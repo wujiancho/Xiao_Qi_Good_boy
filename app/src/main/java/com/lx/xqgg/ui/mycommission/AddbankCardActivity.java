@@ -100,7 +100,7 @@ public class AddbankCardActivity extends BaseActivity {
                     toast("请输入正确的银行名称");
                     return;
                 }
-                if (bankCardNumber.getText().toString().length()<4){
+                if (bankCardNumber.getText().toString().length()<5){
                     toast("请输入正确的银行卡号");
                     return;
                 }
