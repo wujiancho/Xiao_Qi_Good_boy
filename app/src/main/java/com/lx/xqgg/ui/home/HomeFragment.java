@@ -373,7 +373,7 @@ public class HomeFragment extends BaseFragment {
         listXlgj.add(new MatterBean("智能匹配", "MatchFirstActivity", R.drawable.ic_home_znpp));
         listXlgj.add(new MatterBean("征信网点", "", R.drawable.ic_zxwd));
         listXlgj.add(new MatterBean("人法网", "", R.drawable.icon_rfw));
-        listXlgj.add(new MatterBean("小麒数据", "", R.drawable.ic_sj));
+        listXlgj.add(new MatterBean("小麒数据", "DataMainActivity", R.drawable.ic_sj));
         xlgjAdapter.notifyDataSetChanged();
     }
 

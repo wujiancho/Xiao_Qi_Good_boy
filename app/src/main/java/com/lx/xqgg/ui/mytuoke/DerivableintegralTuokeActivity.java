@@ -63,6 +63,10 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
     @BindView(R.id.addzfb)
     ImageView addzfb;
     private boolean checked;
+    private String zfbname;
+    private String zfbnum;
+    private String zfbphone;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_derivableintegral_tuoke;
@@ -96,11 +100,12 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
     });
         //获取用户支付宝信息
         zfbmassage();
+
     }
 
 
 
-    @OnClick({R.id.addzfb,R.id.toobar_back, R.id.yihuo, R.id.addzfb_name, R.id.but_alltxtuoke, R.id.btt_txmoneytuoke, R.id.btt_txjltuoke, R.id.fanyongguiztuoke})
+    @OnClick({R.id.toobar_back, R.id.yihuo, R.id.addzfb_name, R.id.but_alltxtuoke, R.id.btt_txmoneytuoke, R.id.btt_txjltuoke, R.id.fanyongguiztuoke})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toobar_back:
@@ -118,11 +123,7 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
                 });
                 builder1.show();
                 break;
-            //绑定支付宝
-            case R.id.addzfb:
-                Intent intenaddzfbtuoke = new Intent(DerivableintegralTuokeActivity.this, AddzfbnumActivity.class);
-                startActivity(intenaddzfbtuoke);
-                break;
+
             //全部提现
             case R.id.but_alltxtuoke:
                 txCountsrtuoke.setText(withdrawalRebatetuoke.getText().toString().trim());
@@ -179,7 +180,9 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
             return;
         }
         Intent intenddtuoke = new Intent(DerivableintegralTuokeActivity.this, WithdrawaldeterminetuokeActivity.class);
-        startActivity(intenddtuoke);
+        intenddtuoke.putExtra("zfbnum", zfbnum);
+        intenddtuoke.putExtra("money", money);
+        startActivityForResult(intenddtuoke,2);
     }
 
 
@@ -193,11 +196,31 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
              public void onNext(BaseData<getZfbBean> getZfbBeanBaseData) {
                  getZfbBean data= getZfbBeanBaseData.getData();
                  if (data!=null){
-                   addzfbName.setText(data.getZfb_account()+data.getZfb_name());
+                     zfbname=data.getZfb_name();
+                     zfbnum=data.getZfb_account();
+                     zfbphone=data.getUser_phone();
+                     addzfbName.setText(zfbnum+"  "+zfbname);
+                     addzfb.setVisibility(View.GONE);
+                     addzfbName.setOnClickListener(new View.OnClickListener() {
+                         @Override
+                         public void onClick(View v) {
+                             Intent intenaddzfbtuoke = new Intent(DerivableintegralTuokeActivity.this, AddzfbnumActivity.class);
+                             intenaddzfbtuoke.addCategory(Intent.CATEGORY_DEFAULT);
+                             startActivityForResult(intenaddzfbtuoke, 2);
+                         }
+                     });
+
                  }else{
                      addzfbName.setText("支付宝绑定");
+                     addzfb.setOnClickListener(new View.OnClickListener() {
+                         @Override
+                         public void onClick(View v) {
+                             Intent intenaddzfbtuoke = new Intent(DerivableintegralTuokeActivity.this, AddzfbnumActivity.class);
+                             intenaddzfbtuoke.addCategory(Intent.CATEGORY_DEFAULT);
+                             startActivityForResult(intenaddzfbtuoke, 2);
+                         }
+                     });
                  }
-
              }
 
              @Override
@@ -212,5 +235,16 @@ public class DerivableintegralTuokeActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==1&&data!=null){
+            zfbname = data.getStringExtra("zfbname");
+            zfbnum = data.getStringExtra("zfbnum");
+            zfbphone = data.getStringExtra("zfbphone");
+            addzfbName.setText(zfbnum+"  "+zfbname);
+        }
+        if (requestCode == 2) {
+            if (resultCode == 2) {
+
+            }
+        }
     }
 }

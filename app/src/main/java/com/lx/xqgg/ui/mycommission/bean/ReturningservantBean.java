@@ -13,7 +13,7 @@ public class ReturningservantBean implements Serializable {
     private int allCharge;
     private int cashCharge;
     private int currentMonthCharge;
-    private String createdMoney;
+    private int createdMoney;
 
     public int getAllCharge() {
         return allCharge;
@@ -39,14 +39,11 @@ public class ReturningservantBean implements Serializable {
         this.currentMonthCharge = currentMonthCharge;
     }
 
-    public String getCreatedMoney() {
+    public int getCreatedMoney() {
         return createdMoney;
     }
 
-    public void setCreatedMoney(String createdMoney) {
+    public void setCreatedMoney(int createdMoney) {
         this.createdMoney = createdMoney;
     }
-
-
-
 }

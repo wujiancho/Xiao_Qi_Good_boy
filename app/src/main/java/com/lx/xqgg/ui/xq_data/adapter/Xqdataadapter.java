@@ -35,7 +35,7 @@ public class Xqdataadapter extends BaseQuickAdapter<XqdataBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, XqdataBean item) {
-      helper.setText(R.id.xqdataname,item.getName());
+        helper.setText(R.id.xqdataname,item.getName().substring(item.getName().indexOf("-")+1,item.getName().length()));
         RoundedCornersTransformation transformation = new RoundedCornersTransformation
                 (20, 0, RoundedCornersTransformation.CornerType.TOP_LEFT);
         //顶部右边圆角

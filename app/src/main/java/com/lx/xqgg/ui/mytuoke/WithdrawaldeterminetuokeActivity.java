@@ -1,6 +1,8 @@
 package com.lx.xqgg.ui.mytuoke;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ public class WithdrawaldeterminetuokeActivity extends BaseActivity {
     TextView tvZfbNum;
     @BindView(R.id.btn_txfinishafb)
     Button btnTxfinishafb;
+    private String zfbnum;
+    private String money;
 
     @Override
     protected int getLayoutId() {
@@ -42,7 +46,10 @@ public class WithdrawaldeterminetuokeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        zfbnum = getIntent().getStringExtra("zfbnum");
+        money = getIntent().getStringExtra("money");
+        tvZfbNum.setText(zfbnum);
+        txMoneyzfb.setText("￥"+money);
     }
 
 
@@ -53,8 +60,18 @@ public class WithdrawaldeterminetuokeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_txfinishafb:
+                setResult(2);
                 finish();
                 break;
         }
+    }
+    //点击返回上一页面
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            setResult(2, intent);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

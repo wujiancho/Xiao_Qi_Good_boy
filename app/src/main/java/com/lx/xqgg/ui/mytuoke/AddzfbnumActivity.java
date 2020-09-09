@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.mytuoke;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,7 +57,7 @@ public class AddzfbnumActivity extends BaseActivity {
     @BindView(R.id.btn_addzfbfinish)
     Button btnAddzfbfinish;
     private CountDownTimerUtils countDownTimer;
-
+    private int id;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_addzfbnum;
@@ -162,6 +163,7 @@ public class AddzfbnumActivity extends BaseActivity {
                            zfbName.setText(data.getZfb_name());
                            zfbNum.setText(data.getZfb_account());
                            zfbPhone.setText(data.getUser_phone());
+                            id = data.getId();
                         }else{
                             zfbName.setText("");
                             zfbNum.setText("");
@@ -186,7 +188,7 @@ public class AddzfbnumActivity extends BaseActivity {
         paramsMap.put("zfb_account", zfbNum.getText().toString());
         paramsMap.put("user_phone", zfbPhone.getText().toString());
         paramsMap.put("captcha", etCode.getText().toString());
-        paramsMap.put("id", "");
+        paramsMap.put("id", id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(paramsMap));
         addSubscribe(ApiManage.getInstance().getMainApi().getInsertOrUpdateZfb(body)
                 .subscribeOn(Schedulers.io())
@@ -194,8 +196,13 @@ public class AddzfbnumActivity extends BaseActivity {
                 .subscribeWith(new BaseSubscriber<BaseData<InsertOrUpdateZfbBean>>(mContext, null) {
                     @Override
                     public void onNext(BaseData<InsertOrUpdateZfbBean> insertOrUpdateZfbBeanBaseData) {
-                            toast("支付宝绑定成功");
-                            finish();
+                        toast("支付宝绑定成功");
+                        Intent intenaddzfbtuoke = new Intent(AddzfbnumActivity.this, DerivableintegralTuokeActivity.class);
+                        intenaddzfbtuoke.putExtra("zfbname",zfbName.getText().toString().trim());
+                        intenaddzfbtuoke.putExtra("zfbnum",zfbNum.getText().toString().trim());
+                        intenaddzfbtuoke.putExtra("zfbphone",zfbPhone.getText().toString().trim());
+                        setResult(1, intenaddzfbtuoke);
+                        finish();
                     }
 
                     @Override
