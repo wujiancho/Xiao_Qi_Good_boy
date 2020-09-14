@@ -75,7 +75,7 @@ public class CounterDetailActivity extends BaseActivity {
         String bji = SharedPrefManager.getImitationexamination().getPro_bji();
         tvTitle.setText("个人" + loa + "明细");
         money = getIntent().getDoubleExtra("money", 0);
-        month = getIntent().getIntExtra("year", 0) * 12;
+        month = getIntent().getIntExtra("month", 0);
         rate = getIntent().getDoubleExtra("rate", 0);
         type = getIntent().getIntExtra("type", 0);
         Log.e("zlz", "money" + money + "month" + month + "rate" + rate);

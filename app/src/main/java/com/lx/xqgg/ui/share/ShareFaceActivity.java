@@ -310,13 +310,20 @@ public class ShareFaceActivity extends BaseActivity {
     }
     //合拼图片
     private Bitmap mergeBitmap(Bitmap firstBitmap, Bitmap secondBitmap) {
-        firstBitmap=secalBitmap(firstBitmap,0.5f);
- Bitmap bitmap = Bitmap.createBitmap(secondBitmap.getWidth(), secondBitmap.getHeight(),
-                secondBitmap.getConfig());
-Canvas canvas = new Canvas(bitmap);
-canvas.drawBitmap(secondBitmap, new Matrix(), null);
- canvas.drawBitmap(firstBitmap, 230f, 450f, null);
- return bitmap;
+
+        if (secondBitmap!=null){
+            firstBitmap=secalBitmap(firstBitmap,0.5f);
+            Bitmap bitmap = Bitmap.createBitmap(secondBitmap.getWidth(), secondBitmap.getHeight(),
+                    secondBitmap.getConfig());
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawBitmap(secondBitmap, new Matrix(), null);
+            canvas.drawBitmap(firstBitmap, 230f, 450f, null);
+            return bitmap;
+        }else {
+            toast("分享图片不完整");
+            return null;
+        }
+
     }
     @OnClick({R.id.v_close, R.id.tv_share})
     public void onViewClicked(View v) {

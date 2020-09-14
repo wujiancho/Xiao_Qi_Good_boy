@@ -86,11 +86,11 @@ public class CounterActivity extends BaseActivity {
         jin = SharedPrefManager.getImitationexamination().getPro_jin();
         pro_xi = SharedPrefManager.getImitationexamination().getPro_xi();
         daijin.setText(loa + mon+"（"+wan+"）");
-        dainian.setText(loa + "年限（年）");
+        dainian.setText(loa + "年限（月）");
         daili.setText(loa + rat + "（%）");
         etDkje.setHint("请输入" + loa + mon);
         etDkll.setHint("请输入" + loa + rat);
-        etDknx.setHint("请输入" + loa + "年限");
+        etDknx.setHint("请输入" + loa + "月限");
         ljhk.setText("累计" + pay + "(元)");
         huankfs.setText(pay + "方式");
         qsqlx.setText("支付"+lxi+"(元)");
@@ -142,7 +142,7 @@ public class CounterActivity extends BaseActivity {
                     return;
                 }
                 if (TextUtils.isEmpty(etDknx.getText().toString())) {
-                    toast("请输入" + loa + "年限");
+                    toast("请输入" + loa + "月限");
                     return;
                 }
                 if (TextUtils.isEmpty(etDkll.getText().toString())) {
@@ -163,7 +163,7 @@ public class CounterActivity extends BaseActivity {
                 }
 
                 double money = (Double.valueOf(etDkje.getText().toString()) * 10000);
-                int month = Integer.parseInt(etDknx.getText().toString()) * 12;
+                int month = Integer.parseInt(etDknx.getText().toString());
                 double rate = Double.parseDouble(etDkll.getText().toString());
 
                 switch (type) {
@@ -184,7 +184,7 @@ public class CounterActivity extends BaseActivity {
                 }
                 Intent intent = new Intent(mContext, CounterDetailActivity.class);
                 intent.putExtra("money", money);
-                intent.putExtra("year", Integer.parseInt(etDknx.getText().toString()));
+                intent.putExtra("month", Integer.parseInt(etDknx.getText().toString()));
                 intent.putExtra("rate", rate);
                 intent.putExtra("type", type);
                 startActivity(intent);

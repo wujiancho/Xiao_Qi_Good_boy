@@ -1,6 +1,7 @@
 package com.lx.xqgg.ui.xq_data.adapter;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -70,18 +71,16 @@ public class Xqdataadapter extends BaseQuickAdapter<XqdataBean, BaseViewHolder> 
               //加密json
               String jiajson = Base64.encode( new Gson().toJson(paramsMap).getBytes());
 
-              String jiekong = Config.URL + "view/productDetails.html?bean=" + jiajson;
+              String jiekong = Config.URL + "view/productDaily.html?bean=" + jiajson;
 
-
-              if (!"".equals(jiekong)) {
+              Log.d("cpdd", "onViewClicked: "+jiajson);
+              Log.d("cpdd", "onViewClicked: "+jiekong);
                   WebViewActivity.open(new WebViewActivity.Builder()
                           .setContext(mContext)
                           .setAutoTitle(false)
                           .setIsFwb(false)
-                          .setTitle("每日产品数据分析")
                           .setNeedShare(false)
                           .setUrl(jiekong),false);
-              }
           }
       });
     }

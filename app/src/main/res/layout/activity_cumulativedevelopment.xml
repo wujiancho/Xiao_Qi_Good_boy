@@ -87,10 +87,18 @@
                 android:text="失败"
                 android:textColor="@drawable/txt_selector" />
         </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="#F5F2F5"
+            ></View>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_txfy"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_20"
             >
         <LinearLayout

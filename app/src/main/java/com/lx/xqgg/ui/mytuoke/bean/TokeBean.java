@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 public class TokeBean implements Serializable {
 
+    public TokeBean(String createtime, String mobile, String service_name, String verification) {
+        this.createtime = createtime;
+        this.mobile = mobile;
+        this.service_name = service_name;
+        this.verification = verification;
+    }
+
     /**
      * createtime : 2020-05-06 12:07:09
      * id : 2987

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_8"
         android:layout_marginRight="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_18"
         android:background="@drawable/bg_txfy"
         android:orientation="vertical"
         >
@@ -49,16 +49,17 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/dp_8"
     android:layout_marginRight="@dimen/dp_8"
-    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginTop="@dimen/dp_10"
     android:background="@drawable/bg_txfy"
     android:orientation="horizontal"
+    android:id="@+id/yuedao"
     >
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginLeft="@dimen/dp_30"
-    android:layout_marginTop="@dimen/dp_30"
+    android:layout_marginTop="@dimen/dp_25"
     android:layout_weight="1"
     >
     <TextView
@@ -85,7 +86,7 @@
         android:textSize="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/xqdataxqbg"
-        android:id="@+id/yuedao"
+
         ></Button>
 </LinearLayout>
     <ImageView
@@ -104,18 +105,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_8"
         android:layout_marginRight="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/bg_txfy"
         android:orientation="horizontal"
+        android:id="@+id/cpjjll"
         >
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_25"
             android:layout_weight="1"
-            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_25"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -141,7 +143,7 @@
                 android:textSize="@dimen/dp_10"
                 android:background="@drawable/xqdataxqbg"
                 android:layout_marginTop="@dimen/dp_10"
-                android:id="@+id/cpjjll"
+
                 ></Button>
         </LinearLayout>
         <ImageView

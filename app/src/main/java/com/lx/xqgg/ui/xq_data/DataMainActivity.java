@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,11 +20,15 @@ import com.lx.xqgg.base.BaseActivity;
 import com.lx.xqgg.base.BaseData;
 import com.lx.xqgg.base.BaseSubscriber;
 import com.lx.xqgg.config.Config;
+import com.lx.xqgg.helper.SharedPrefManager;
 import com.lx.xqgg.ui.mytuoke.bean.XqdataBean;
+import com.lx.xqgg.ui.webview.WebViewActivity;
 import com.lx.xqgg.ui.xq_data.adapter.Xqdataadapter;
+import com.lx.xqgg.util.Base64;
 import com.lx.xqgg.util.RoundedCornersTransformation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -45,9 +50,9 @@ public class DataMainActivity extends BaseActivity {
     @BindView(R.id.xqdata_RecyclerView)
     RecyclerView xqdataRecyclerView;
     @BindView(R.id.yuedao)
-    Button yuedao;
+    LinearLayout yuedao;
     @BindView(R.id.cpjjll)
-    Button cpjjll;
+    LinearLayout cpjjll;
     @BindView(R.id.cpbg)
     ImageView cpbg;
     private Xqdataadapter xqdataadapter;
@@ -128,54 +133,42 @@ public class DataMainActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.yuedao:
-            /*    HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("productId",item.getId());
-                paramsMap.put("proName", item.getName());
-                paramsMap.put("logo", item.getLogo());
+               HashMap<String, Object> paramsMap = new HashMap<>();
+                paramsMap.put("token", SharedPrefManager.getUser().getToken());
                 paramsMap.put("statusHeight","30");
                 //RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),);
 
                 //加密json
                 String jiajson = Base64.encode( new Gson().toJson(paramsMap).getBytes());
-
-                String jiekong = Config.URL + "view/productDetails.html?bean=" + jiajson;
-
-
-                if (!"".equals(jiekong)) {
+                String jiekong = Config.URL + "view/monthlyRreport.html?bean=" + jiajson;
+                Log.d("yuedao", "onViewClicked: "+jiajson);
+                Log.d("yuedao", "onViewClicked: "+jiekong);
                     WebViewActivity.open(new WebViewActivity.Builder()
                             .setContext(mContext)
                             .setAutoTitle(false)
                             .setIsFwb(false)
-                            .setTitle("每日产品数据分析")
                             .setNeedShare(false)
                             .setUrl(jiekong),false);
-                }*/
-                toast("公司月报");
                 break;
             case R.id.cpjjll:
-             /*   HashMap<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("productId",item.getId());
-                paramsMap.put("proName", item.getName());
-                paramsMap.put("logo", item.getLogo());
-                paramsMap.put("statusHeight","30");
+              HashMap<String, Object> paramsMapcpjjll = new HashMap<>();
+                paramsMapcpjjll.put("statusHeight","30");
                 //RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),);
 
                 //加密json
-                String jiajson = Base64.encode( new Gson().toJson(paramsMap).getBytes());
+                String jiajsoncpjjll = Base64.encode( new Gson().toJson(paramsMapcpjjll).getBytes());
 
-                String jiekong = Config.URL + "view/productDetails.html?bean=" + jiajson;
+                String jiecpjjll = Config.URL + "view/refuseReason.html?bean="+jiajsoncpjjll;
 
-
-                if (!"".equals(jiekong)) {
+                Log.d("cpjj", "onViewClicked: "+jiecpjjll);
+                if (!"".equals(jiecpjjll)) {
                     WebViewActivity.open(new WebViewActivity.Builder()
                             .setContext(mContext)
                             .setAutoTitle(false)
                             .setIsFwb(false)
-                            .setTitle("每日产品数据分析")
                             .setNeedShare(false)
-                            .setUrl(jiekong),false);
-                }*/
-                toast("小麒乖乖产品拒绝理由统计");
+                            .setUrl(jiecpjjll),false);
+                }
                 break;
         }
     }

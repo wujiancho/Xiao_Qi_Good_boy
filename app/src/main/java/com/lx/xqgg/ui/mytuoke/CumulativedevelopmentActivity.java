@@ -60,6 +60,13 @@ public class CumulativedevelopmentActivity extends BaseActivity {
     protected void initView() {
         tvTitle.setText("累计拓客");
         toke = new ArrayList<>();
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","失败"));
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","已完成"));
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","失败"));
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","未完成"));
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","失败"));
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","已完成"));
+        toke.add(new TokeBean("2020-08-20","18360186490","苏州罗信****","失败"));
         tokeAdapter = new TokeAdapter(toke);
         tuokerecyclerView.setAdapter(tokeAdapter);
         tuokerecyclerView.setLayoutManager(new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false));
@@ -67,7 +74,7 @@ public class CumulativedevelopmentActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        tokenlist(SharedPrefManager.getUser().getToken(), "");
+        //tokenlist(SharedPrefManager.getUser().getToken(), "");
     }
 
     @OnClick({R.id.v_close, R.id.rb_all, R.id.rb_finish, R.id.rb_nofinish, R.id.rb_fail})

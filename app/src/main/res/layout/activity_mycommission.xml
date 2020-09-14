@@ -101,7 +101,7 @@
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="苏州罗信网络科技有限公司"
+               android:text=""
                android:textColor="#ffffffff"
                android:textSize="12sp"
                android:id="@+id/usercompany_name"
@@ -113,7 +113,7 @@
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="小麒乖乖已累计为您返佣30,000积分"
+               android:text="小麒乖乖已累计为您返佣0积分"
                android:textColor="#ffffffff"
                android:id="@+id/accumulated_points"
                android:textSize="10sp"
