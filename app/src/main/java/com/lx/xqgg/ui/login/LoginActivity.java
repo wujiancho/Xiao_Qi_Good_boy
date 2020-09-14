@@ -178,7 +178,9 @@ public class LoginActivity extends BaseActivity {
                                                         if (objectBaseData.isSuccess()) {
                                                             if (0 == objectBaseData.getCode() ||
                                                                     -1 == objectBaseData.getCode() ||
-                                                                    -2 == objectBaseData.getCode()) {
+                                                                    -2 == objectBaseData.getCode()||
+                                                                    -5 == objectBaseData.getCode()
+                                                                    ||-6 == objectBaseData.getCode()) {
                                                                 startActivity(new Intent(LoginActivity.this, FaceMainActivity.class));
                                                                 finish();
                                                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -187,15 +189,13 @@ public class LoginActivity extends BaseActivity {
                                                         }
                                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                                         finish();
-                                                        /*startActivity(new Intent(LoginActivity.this, FaceMainActivity.class));
-                                                        finish();*/
                                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                                     }
 
                                                     @Override
                                                     public void onError(Throwable t) {
                                                         super.onError(t);
-                                                        toast("服务器错误"+t.toString());
+                                                        toast(t.toString());
                                                         startActivity(new Intent(LoginActivity.this, FaceMainActivity.class));
                                                         finish();
                                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

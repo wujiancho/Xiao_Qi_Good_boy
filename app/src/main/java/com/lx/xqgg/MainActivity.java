@@ -174,8 +174,7 @@ public class MainActivity extends BaseActivity implements OnTabSelectListener {
                             if (objectBaseData.getCode() != 1) {
                                 userServiceFragment = new UserServiceFragment(objectBaseData);
                                 userServiceFragment.show(getSupportFragmentManager(), "");
-                                SpUtil.getInstance().saveString("servisername", objectBaseData.getData().getService_name());
-                            } else {
+                            }else {
                                 SpUtil.getInstance().saveString("servisername", objectBaseData.getData().getService_name());
                             }
                         }
